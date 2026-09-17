@@ -58,6 +58,7 @@ const saveBtn = document.getElementById('saveBtn');
 const status = document.getElementById('status');
 const timer = document.getElementById('timer');
 let stream = null, recorder = null, chunks = [], recordedBlob = null;
+
 startBtn.addEventListener('click', async () => {
   try {
     status.textContent = 'جاري فتح الكاميرا...';
@@ -66,12 +67,12 @@ startBtn.addEventListener('click', async () => {
     startBtn.classList.add('hidden'); recBtn.classList.remove('hidden');
     status.textContent = '✅ الكاميرا شغالة';
   } catch (err) { status.textContent = '❌ خطأ: ' + err.message; }
-});const mimeType = MediaRecorder.isTypeSupported('video/mp4') ? 'video/mp4' : 'video/webm';
-recorder = new MediaRecorder(stream, { mimeType: mimeType });
+});
+
 recBtn.addEventListener('click', () => {
   if (!stream) return;
   chunks = [];
-  
+  recorder = new MediaRecorder(stream);
   recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
   recorder.onstop = () => {
     recordedBlob = new Blob(chunks, { type: 'video/webm' });
@@ -89,6 +90,7 @@ recBtn.addEventListener('click', () => {
     recBtn.classList.remove('recording'); recBtn.textContent = '● سجّل ثانية';
   }, 1000);
 });
+
 saveBtn.addEventListener('click', () => {
   if (!recordedBlob) return;
   const url = URL.createObjectURL(recordedBlob);
