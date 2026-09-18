@@ -24,7 +24,6 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  /* ===== التبويبات ===== */
   .tabs {
     position: fixed;
     bottom: 0; left: 0; right: 0;
@@ -72,8 +71,6 @@
   .btn:active { background: #1a1a1a; }
   .btn.primary { background: #4ade80; color: #000; border-color: #4ade80; font-weight: 500; }
   .btn.primary:active { background: #22c55e; }
-  .btn.rec { border-color: #ef4444; color: #ef4444; }
-  .btn.rec.recording { background: #ef4444; color: #fff; }
   .btn.small { padding: 12px; font-size: 0.9rem; max-width: 200px; }
   .btn.danger { border-color: #ef4444; color: #ef4444; }
 
@@ -120,10 +117,8 @@
   .color-dot.active { border-color: #fff; transform: scale(1.1); }
 
   #status { margin-top: 14px; color: #4ade80; font-size: 0.9rem; min-height: 20px; text-align: center; }
-  #timer { font-size: 3rem; color: #ef4444; text-align: center; display: none; margin: 10px 0; }
   .hidden { display: none !important; }
 
-  /* ===== التايم لاين ===== */
   .timeline {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -197,7 +192,6 @@
   .empty { text-align: center; color: #666; margin-top: 80px; font-size: 1rem; line-height: 2; }
   .counter { text-align: center; color: #666; font-size: 0.85rem; margin-top: 20px; }
 
-  /* ===== الشاشات الكاملة ===== */
   .screen-full {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -220,7 +214,6 @@
   }
   .screen-full .close:active { color: #fff; }
 
-  /* ===== نافذة عرض اللقطة ===== */
   #momentModal {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -281,19 +274,9 @@
     margin-bottom: 6px;
     display: block;
   }
-  #momentModal textarea {
-    max-width: 100%;
-  }
-  #momentModal .modal-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 16px;
-  }
-  #momentModal .modal-actions .btn {
-    max-width: none;
-    flex: 1;
-    margin: 0;
-  }
+  #momentModal textarea { max-width: 100%; }
+  #momentModal .modal-actions { display: flex; gap: 10px; margin-top: 16px; }
+  #momentModal .modal-actions .btn { max-width: none; flex: 1; margin: 0; }
 </style>
 </head>
 <body>
@@ -329,7 +312,7 @@
     </button>
   </div>
 
-  <!-- شاشة الصورة -->
+  <!-- شاشة الصورة (كاميرا داخلية) -->
   <div class="screen-full hidden" id="photoScreen">
     <button class="close" id="photoClose">×</button>
     <video id="photoVideo" autoplay playsinline muted></video>
@@ -337,12 +320,15 @@
     <button class="btn small" id="switchPhotoCam">🔄 تبديل الكاميرا</button>
   </div>
 
-  <!-- شاشة الفيديو -->
+  <!-- شاشة الفيديو (كاميرا iOS) -->
   <div class="screen-full hidden" id="videoScreen">
     <button class="close" id="videoClose">×</button>
-    <video id="recVideo" autoplay playsinline muted></video>
-    <div id="timer">1</div>
-    <button class="btn rec" id="recBtn">● سجّل ثانية</button>
+    <h1>🎥 فيديو</h1>
+    <p class="subtitle">سجّل مقطع من كاميرا الآيفون.<br>الفيديو رح يشتغل مباشرة في التطبيق.</p>
+    <div style="text-align:center;color:#888;font-size:0.9rem;margin:20px 0;">
+      الكاميرا الحالية: <span id="camLabel">خلفية</span>
+    </div>
+    <button class="btn primary" id="startVideoRec">🎥 ابدأ التسجيل</button>
     <button class="btn small" id="switchVideoCam">🔄 تبديل الكاميرا</button>
   </div>
 
@@ -377,6 +363,9 @@
     </div>
   </div>
 
+  <!-- Input مخفي للفيديو -->
+  <input type="file" accept="video/*" capture="environment" id="videoInput" style="display:none;">
+
 <script>
 const DB_NAME = 'lahza-db';
 const DB_VERSION = 1;
@@ -384,13 +373,12 @@ const STORE_NAME = 'moments';
 
 let db = null;
 let stream = null;
-let recorder = null;
-let chunks = [];
 let pendingBlob = null;
 let pendingType = null;
 let selectedColor = '#0a0a0a';
 let currentFacing = 'environment';
 let currentMomentId = null;
+let videoFacing = 'environment';
 
 const COLORS = ['#0a0a0a', '#1e293b', '#7c2d12', '#14532d', '#581c87', '#831843'];
 
@@ -556,9 +544,7 @@ async function renderMoments() {
       };
       div.appendChild(del);
 
-      // ضغطة على اللقطة تفتح النافذة
       div.onclick = () => openMomentModal(m.id);
-
       timeline.appendChild(div);
     }
   } catch (err) {
@@ -633,7 +619,7 @@ document.getElementById('modalDelete').onclick = async () => {
   }
 };
 
-// ===== الكاميرا =====
+// ===== الصورة (كاميرا داخلية) =====
 async function openCamera(videoEl) {
   try {
     if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
@@ -684,45 +670,44 @@ document.getElementById('snapBtn').addEventListener('click', () => {
   }, 'image/jpeg', 0.9);
 });
 
-document.getElementById('chooseVideo').addEventListener('click', async () => {
+// ===== الفيديو (كاميرا iOS) =====
+const videoInput = document.getElementById('videoInput');
+
+document.getElementById('chooseVideo').addEventListener('click', () => {
   document.getElementById('videoScreen').classList.remove('hidden');
-  await openCamera(document.getElementById('recVideo'));
-});
-document.getElementById('videoClose').addEventListener('click', () => {
-  closeCamera();
-  document.getElementById('videoScreen').classList.add('hidden');
-});
-document.getElementById('switchVideoCam').addEventListener('click', () => {
-  toggleCamera(document.getElementById('recVideo'));
-});
-document.getElementById('recBtn').addEventListener('click', () => {
-  if (!stream) return;
-  chunks = [];
-  recorder = new MediaRecorder(stream);
-  recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
-  recorder.onstop = () => {
-    pendingBlob = new Blob(chunks, { type: 'video/webm' });
-    pendingType = 'video';
-    closeCamera();
-    document.getElementById('videoScreen').classList.add('hidden');
-    showPreview();
-    document.getElementById('saveScreen').classList.remove('hidden');
-  };
-  recorder.start();
-  const btn = document.getElementById('recBtn');
-  btn.classList.add('recording');
-  btn.textContent = '● جاري التسجيل';
-  const timer = document.getElementById('timer');
-  timer.style.display = 'block';
-  timer.textContent = '1';
-  setTimeout(() => {
-    timer.style.display = 'none';
-    if (recorder.state === 'recording') recorder.stop();
-    btn.classList.remove('recording');
-    btn.textContent = '● سجّل ثانية';
-  }, 1000);
+  updateCamLabel();
 });
 
+document.getElementById('videoClose').addEventListener('click', () => {
+  document.getElementById('videoScreen').classList.add('hidden');
+});
+
+document.getElementById('switchVideoCam').addEventListener('click', () => {
+  videoFacing = (videoFacing === 'environment') ? 'user' : 'environment';
+  videoInput.setAttribute('capture', videoFacing);
+  updateCamLabel();
+});
+
+function updateCamLabel() {
+  document.getElementById('camLabel').textContent = (videoFacing === 'environment') ? 'خلفية' : 'أمامية';
+}
+
+document.getElementById('startVideoRec').addEventListener('click', () => {
+  videoInput.value = '';
+  videoInput.click();
+});
+
+videoInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  pendingBlob = file;
+  pendingType = 'video';
+  document.getElementById('videoScreen').classList.add('hidden');
+  showPreview();
+  document.getElementById('saveScreen').classList.remove('hidden');
+});
+
+// ===== الكلام =====
 const colorPicker = document.getElementById('colorPicker');
 COLORS.forEach((c, i) => {
   const dot = document.createElement('div');
@@ -763,10 +748,7 @@ function showPreview() {
     const vid = document.createElement('video');
     vid.src = URL.createObjectURL(pendingBlob);
     vid.controls = true;
-    vid.muted = true;
     vid.playsInline = true;
-    vid.loop = true;
-    vid.autoplay = true;
     preview.appendChild(vid);
   } else if (pendingType === 'text') {
     pendingBlob.text().then(t => {
