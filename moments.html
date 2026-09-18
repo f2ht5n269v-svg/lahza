@@ -1,1 +1,207 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لقطاتي - لحظة</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    color: #fff;
+    font-family: -apple-system, system-ui, sans-serif;
+    padding: 20px;
+    min-height: 100vh;
+  }
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+  .count {
+    color: #666;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .timeline {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .moment {
+    background: #111;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 9 / 16;
+  }
+  .moment video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .moment .date {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    background: rgba(0,0,0,0.7);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    color: #ddd;
+  }
+  .moment .del {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background: rgba(239,68,68,0.9);
+    border: none;
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .empty {
+    text-align: center;
+    color: #666;
+    margin-top: 60px;
+    font-size: 1rem;
+    line-height: 2;
+  }
+  .back {
+    display: block;
+    margin: 24px auto 0;
+    padding: 14px 40px;
+    border: 1px solid #333;
+    border-radius: 100px;
+    background: transparent;
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+    text-decoration: none;
+    width: fit-content;
+  }
+</style>
+</head>
+<body>
+  <h1>لقطاتي</h1>
+  <div class="count" id="count">جاري التحميل...</div>
+  <div class="timeline" id="timeline"></div>
+  <div class="empty hidden" id="empty">ما في لقطات بعد<br>ارجع للتطبيق وسجّل أول لحظة 📸</div>
+  <a href="index.html" class="back">← رجوع للتطبيق</a>
+
+<script>
+const DB_NAME = 'lahza-db';
+const DB_VERSION = 1;
+const STORE_NAME = 'moments';
+
+const timeline = document.getElementById('timeline');
+const count = document.getElementById('count');
+const empty = document.getElementById('empty');
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+      }
+    };
+    req.onsuccess = (e) => resolve(e.target.result);
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+
+function getAllMoments(db) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readonly');
+    const store = tx.objectStore(STORE_NAME);
+    const req = store.getAll();
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+
+function deleteMoment(db, id) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const store = tx.objectStore(STORE_NAME);
+    const req = store.delete(id);
+    req.onsuccess = () => resolve();
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+
+function formatDate(iso) {
+  const d = new Date(iso);
+  const day = d.getDate();
+  const month = d.getMonth() + 1;
+  const year = d.getFullYear();
+  return day + '/' + month + '/' + year;
+}
+
+async function render() {
+  try {
+    const db = await openDB();
+    const moments = await getAllMoments(db);
+    moments.reverse();
+
+    if (moments.length === 0) {
+      count.textContent = '';
+      empty.classList.remove('hidden');
+      return;
+    }
+
+    count.textContent = '📸 ' + moments.length + (moments.length === 1 ? ' لقطة' : ' لقطات');
+
+    timeline.innerHTML = '';
+    moments.forEach(m => {
+      const div = document.createElement('div');
+      div.className = 'moment';
+
+      const video = document.createElement('video');
+      video.src = URL.createObjectURL(m.blob);
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.autoplay = true;
+
+      const date = document.createElement('div');
+      date.className = 'date';
+      date.textContent = formatDate(m.date);
+
+      const del = document.createElement('button');
+      del.className = 'del';
+      del.textContent = '×';
+      del.onclick = async () => {
+        if (confirm('تحذف هاللقطة؟')) {
+          await deleteMoment(db, m.id);
+          render();
+        }
+      };
+
+      div.appendChild(video);
+      div.appendChild(date);
+      div.appendChild(del);
+      timeline.appendChild(div);
+    });
+  } catch (err) {
+    count.textContent = '❌ خطأ: ' + err.message;
+  }
+}
+
+render();
+</script>
+</body>
+</html>
