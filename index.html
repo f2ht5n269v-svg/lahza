@@ -17,18 +17,19 @@
   h1 { font-size: 2.2rem; font-weight: 300; letter-spacing: 2px; margin: 8px 0; }
   p { color: #888; font-size: 0.95rem; line-height: 1.7; margin-bottom: 20px; }
   button {
-    margin: 10px 6px;
-    padding: 16px 40px;
+    margin: 8px 4px;
+    padding: 14px 28px;
     border: 1px solid #333;
     border-radius: 100px;
     background: transparent;
     color: #fff;
-    font-size: 1.1rem;
+    font-size: 1rem;
     cursor: pointer;
   }
   button.rec { border-color: #ef4444; color: #ef4444; }
   button.recording { background: #ef4444; color: #fff; }
-  video {
+  button.primary { background: #4ade80; color: #000; border-color: #4ade80; font-weight: 500; }
+  video, img {
     width: 100%;
     max-width: 300px;
     border-radius: 16px;
@@ -36,46 +37,105 @@
     display: block;
     background: #000;
   }
+  textarea, input[type="text"] {
+    width: 100%;
+    max-width: 320px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: #fff;
+    padding: 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    margin: 8px auto;
+    display: block;
+    resize: none;
+  }
+  .colors {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 12px 0;
+    flex-wrap: wrap;
+  }
+  .color-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
+  .color-dot.active { border-color: #fff; }
   #status { margin-top: 14px; color: #4ade80; font-size: 0.9rem; min-height: 20px; }
   #timer { font-size: 3rem; color: #ef4444; display: none; margin: 10px 0; }
   .hidden { display: none !important; }
-  .counter {
-    margin-top: 20px;
-    color: #666;
-    font-size: 0.85rem;
-  }
+  .counter { margin-top: 20px; color: #666; font-size: 0.85rem; }
+  .choice { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
 </style>
 </head>
 <body>
   <h1>لحظة</h1>
-  <p>صوّر ثانية واحدة كل يوم.<br>خلي ذكرياتك تتراكم لحالها.</p>
-  <video id="video" autoplay playsinline muted></video>
-  <div id="timer">1</div>
-  <button id="startBtn">ابدأ</button>
-  <button id="recBtn" class="hidden">● سجّل ثانية</button>
-  <button id="saveBtn" class="hidden">💾 احفظ اللقطة</button>
-  <button id="againBtn" class="hidden">🔄 سجّل مرة تانية</button>
+  <p>وثّق لحظتك. صورة، فيديو، أو كلام.<br>خلي ذكرياتك تتراكم لحالها.</p>
+
+  <!-- اختيار النوع -->
+  <div id="choiceScreen">
+    <div class="choice">
+      <button id="choosePhoto">📷 صورة</button>
+      <button id="chooseVideo">🎥 فيديو</button>
+      <button id="chooseText">✍️ كلام</button>
+    </div>
+  </div>
+
+  <!-- شاشة الصورة -->
+  <div id="photoScreen" class="hidden">
+    <video id="photoVideo" autoplay playsinline muted></video>
+    <button class="primary" id="snapBtn">📸 التقط</button>
+    <button id="photoBack">← رجوع</button>
+  </div>
+
+  <!-- شاشة الفيديو -->
+  <div id="videoScreen" class="hidden">
+    <video id="recVideo" autoplay playsinline muted></video>
+    <div id="timer">1</div>
+    <button class="rec" id="recBtn">● سجّل ثانية</button>
+    <button id="videoBack">← رجوع</button>
+  </div>
+
+  <!-- شاشة الكلام -->
+  <div id="textScreen" class="hidden">
+    <textarea id="textInput" rows="5" placeholder="اكتب لحظتك..."></textarea>
+    <div class="colors" id="colorPicker"></div>
+    <button class="primary" id="saveTextBtn">💾 احفظ</button>
+    <button id="textBack">← رجوع</button>
+  </div>
+
+  <!-- شاشة الحفظ -->
+  <div id="saveScreen" class="hidden">
+    <div id="preview"></div>
+    <textarea id="captionInput" rows="2" placeholder="أضف جملة (اختياري)..."></textarea>
+    <button class="primary" id="saveBtn">💾 احفظ اللقطة</button>
+    <button id="againBtn">🔄 من جديد</button>
+  </div>
+
   <div id="status"></div>
   <div class="counter" id="counter"></div>
 
 <script>
-const video = document.getElementById('video');
-const startBtn = document.getElementById('startBtn');
-const recBtn = document.getElementById('recBtn');
-const saveBtn = document.getElementById('saveBtn');
-const againBtn = document.getElementById('againBtn');
-const status = document.getElementById('status');
-const timer = document.getElementById('timer');
-const counter = document.getElementById('counter');
-
-let stream = null, recorder = null, chunks = [], recordedBlob = null;
-let db = null;
-
-// ============ قاعدة البيانات ============
 const DB_NAME = 'lahza-db';
 const DB_VERSION = 1;
 const STORE_NAME = 'moments';
 
+let db = null;
+let stream = null;
+let recorder = null;
+let chunks = [];
+let pendingBlob = null;
+let pendingType = null;
+let selectedColor = '#0a0a0a';
+
+const COLORS = ['#0a0a0a', '#1e293b', '#7c2d12', '#14532d', '#581c87', '#831843'];
+
+// ============ قاعدة البيانات ============
 function openDB() {
   return new Promise((resolve, reject) => {
     const req = indexedDB.open(DB_NAME, DB_VERSION);
@@ -90,15 +150,10 @@ function openDB() {
   });
 }
 
-function saveMoment(blob) {
+function saveMoment(moment) {
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE_NAME, 'readwrite');
     const store = tx.objectStore(STORE_NAME);
-    const moment = {
-      date: new Date().toISOString(),
-      blob: blob,
-      type: blob.type
-    };
     const req = store.add(moment);
     req.onsuccess = () => resolve(req.result);
     req.onerror = (e) => reject(e.target.error);
@@ -120,69 +175,197 @@ function updateCounter() {
     if (n === 0) counter.textContent = 'ما في لقطات بعد';
     else if (n === 1) counter.textContent = '📸 لقطة واحدة محفوظة';
     else counter.textContent = '📸 ' + n + ' لقطات محفوظة';
-  }).catch(() => {});
+  });
+}
+
+// ============ التنقل ============
+const screens = ['choiceScreen', 'photoScreen', 'videoScreen', 'textScreen', 'saveScreen'];
+function showScreen(id) {
+  screens.forEach(s => document.getElementById(s).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
 }
 
 // ============ فتح الكاميرا ============
-startBtn.addEventListener('click', async () => {
+async function openCamera(videoEl) {
   try {
-    status.textContent = 'جاري فتح الكاميرا...';
     stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
-    video.srcObject = stream; video.muted = true; video.style.display = 'block';
-    startBtn.classList.add('hidden'); recBtn.classList.remove('hidden');
-    status.textContent = '✅ الكاميرا شغالة';
-  } catch (err) { status.textContent = '❌ خطأ: ' + err.message; }
+    videoEl.srcObject = stream;
+    videoEl.muted = true;
+    return true;
+  } catch (err) {
+    status.textContent = '❌ خطأ: ' + err.message;
+    return false;
+  }
+}
+
+function closeCamera() {
+  if (stream) {
+    stream.getTracks().forEach(t => t.stop());
+    stream = null;
+  }
+}
+
+// ============ الصورة ============
+document.getElementById('choosePhoto').addEventListener('click', async () => {
+  showScreen('photoScreen');
+  await openCamera(document.getElementById('photoVideo'));
 });
 
-// ============ التسجيل ============
-recBtn.addEventListener('click', () => {
+document.getElementById('snapBtn').addEventListener('click', () => {
+  const videoEl = document.getElementById('photoVideo');
+  const canvas = document.createElement('canvas');
+  canvas.width = videoEl.videoWidth;
+  canvas.height = videoEl.videoHeight;
+  canvas.getContext('2d').drawImage(videoEl, 0, 0);
+  canvas.toBlob((blob) => {
+    pendingBlob = blob;
+    pendingType = 'photo';
+    closeCamera();
+    showPreview();
+    showScreen('saveScreen');
+    status.textContent = '✅ تم التقاط الصورة';
+  }, 'image/jpeg', 0.9);
+});
+
+document.getElementById('photoBack').addEventListener('click', () => {
+  closeCamera();
+  showScreen('choiceScreen');
+});
+
+// ============ الفيديو ============
+document.getElementById('chooseVideo').addEventListener('click', async () => {
+  showScreen('videoScreen');
+  await openCamera(document.getElementById('recVideo'));
+});
+
+document.getElementById('recBtn').addEventListener('click', () => {
   if (!stream) return;
   chunks = [];
   recorder = new MediaRecorder(stream);
   recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
   recorder.onstop = () => {
-    recordedBlob = new Blob(chunks, { type: 'video/webm' });
-    recBtn.classList.add('hidden'); saveBtn.classList.remove('hidden');
-    againBtn.classList.remove('hidden');
-    status.textContent = '✅ تم التسجيل! اضغط حفظ';
+    pendingBlob = new Blob(chunks, { type: 'video/webm' });
+    pendingType = 'video';
+    closeCamera();
+    showPreview();
+    showScreen('saveScreen');
+    status.textContent = '✅ تم التسجيل';
   };
   recorder.start();
-  recBtn.classList.add('recording'); recBtn.textContent = '● جاري التسجيل';
-  timer.style.display = 'block'; timer.textContent = '1';
+  const btn = document.getElementById('recBtn');
+  btn.classList.add('recording');
+  btn.textContent = '● جاري التسجيل';
+  const timer = document.getElementById('timer');
+  timer.style.display = 'block';
+  timer.textContent = '1';
   setTimeout(() => {
     timer.style.display = 'none';
     if (recorder.state === 'recording') recorder.stop();
-    recBtn.classList.remove('recording'); recBtn.textContent = '● سجّل ثانية';
+    btn.classList.remove('recording');
+    btn.textContent = '● سجّل ثانية';
   }, 1000);
 });
 
-// ============ الحفظ في قاعدة البيانات ============
-saveBtn.addEventListener('click', async () => {
-  if (!recordedBlob) return;
+document.getElementById('videoBack').addEventListener('click', () => {
+  closeCamera();
+  showScreen('choiceScreen');
+});
+
+// ============ الكلام ============
+const colorPicker = document.getElementById('colorPicker');
+COLORS.forEach((c, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'color-dot' + (i === 0 ? ' active' : '');
+  dot.style.background = c;
+  dot.onclick = () => {
+    document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+    dot.classList.add('active');
+    selectedColor = c;
+  };
+  colorPicker.appendChild(dot);
+});
+
+document.getElementById('chooseText').addEventListener('click', () => {
+  showScreen('textScreen');
+});
+
+document.getElementById('saveTextBtn').addEventListener('click', () => {
+  const text = document.getElementById('textInput').value.trim();
+  if (!text) { status.textContent = '⚠️ اكتب شي'; return; }
+  pendingBlob = new Blob([text], { type: 'text/plain' });
+  pendingType = 'text';
+  showPreview();
+  showScreen('saveScreen');
+  status.textContent = '✅ جاهز للحفظ';
+});
+
+document.getElementById('textBack').addEventListener('click', () => {
+  showScreen('choiceScreen');
+});
+
+// ============ المعاينة ============
+function showPreview() {
+  const preview = document.getElementById('preview');
+  preview.innerHTML = '';
+  if (pendingType === 'photo') {
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(pendingBlob);
+    preview.appendChild(img);
+  } else if (pendingType === 'video') {
+    const vid = document.createElement('video');
+    vid.src = URL.createObjectURL(pendingBlob);
+    vid.controls = true;
+    vid.muted = true;
+    vid.playsInline = true;
+    vid.loop = true;
+    vid.autoplay = true;
+    preview.appendChild(vid);
+  } else if (pendingType === 'text') {
+    pendingBlob.text().then(t => {
+      const div = document.createElement('div');
+      div.style.cssText = 'background:' + selectedColor + ';padding:40px 20px;border-radius:16px;max-width:300px;margin:0 auto;font-size:1.3rem;line-height:1.8;';
+      div.textContent = t;
+      preview.appendChild(div);
+    });
+  }
+}
+
+// ============ الحفظ ============
+document.getElementById('saveBtn').addEventListener('click', async () => {
+  if (!pendingBlob) return;
+  const caption = document.getElementById('captionInput').value.trim();
   try {
-    status.textContent = 'جاري الحفظ...';
-    await saveMoment(recordedBlob);
-    status.textContent = '💾 تم الحفظ في التطبيق!';
-    saveBtn.classList.add('hidden');
-    againBtn.classList.remove('hidden');
+    await saveMoment({
+      date: new Date().toISOString(),
+      blob: pendingBlob,
+      type: pendingType,
+      caption: caption,
+      color: selectedColor
+    });
+    status.textContent = '💾 تم الحفظ!';
     updateCounter();
+    setTimeout(() => {
+      resetAll();
+    }, 800);
   } catch (err) {
-    status.textContent = '❌ خطأ في الحفظ: ' + err.message;
+    status.textContent = '❌ خطأ: ' + err.message;
   }
 });
 
-// ============ إعادة التسجيل ============
-againBtn.addEventListener('click', () => {
-  recordedBlob = null;
-  saveBtn.classList.add('hidden'); againBtn.classList.add('hidden');
-  recBtn.classList.remove('hidden');
-  status.textContent = '✅ الكاميرا شغالة';
-});
+document.getElementById('againBtn').addEventListener('click', resetAll);
 
-// ============ بدء التطبيق ============
-openDB().then(() => {
-  updateCounter();
-}).catch((err) => {
+function resetAll() {
+  pendingBlob = null;
+  pendingType = null;
+  document.getElementById('captionInput').value = '';
+  document.getElementById('textInput').value = '';
+  document.getElementById('preview').innerHTML = '';
+  status.textContent = '';
+  showScreen('choiceScreen');
+}
+
+// ============ بدء ============
+openDB().then(updateCounter).catch(err => {
   status.textContent = '❌ خطأ في قاعدة البيانات: ' + err.message;
 });
 </script>
