@@ -1,1 +1,716 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>لحظة</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    background: #0a0a0a;
+    color: #fff;
+    font-family: -apple-system, system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 16px 90px 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tabs {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #111;
+    border-top: 1px solid #222;
+    display: flex;
+    padding-bottom: env(safe-area-inset-bottom);
+    z-index: 100;
+  }
+  .tab {
+    flex: 1;
+    background: none;
+    border: none;
+    color: #666;
+    padding: 14px 0;
+    font-size: 0.75rem;
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s;
+  }
+  .tab.active { color: #4ade80; }
+  .tab .icon { font-size: 1.4rem; }
+  h1 { font-size: 1.8rem; font-weight: 300; letter-spacing: 2px; text-align: center; margin-bottom: 6px; }
+  .subtitle { color: #888; font-size: 0.9rem; line-height: 1.6; text-align: center; margin-bottom: 24px; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+  .btn {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    margin: 10px auto;
+    padding: 18px;
+    border: 1px solid #333;
+    border-radius: 100px;
+    color: #fff;
+    font-size: 1.05rem;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .btn:active { background: #1a1a1a; }
+  .btn.primary { background: #4ade80; color: #000; border-color: #4ade80; font-weight: 500; }
+  .btn.primary:active { background: #22c55e; }
+  .btn.small { padding: 12px; font-size: 0.9rem; max-width: 200px; }
+  .btn.danger { border-color: #ef4444; color: #ef4444; }
+  video, img.preview {
+    width: 100%;
+    max-width: 320px;
+    border-radius: 16px;
+    margin: 16px auto;
+    display: block;
+    background: #000;
+  }
+  textarea, input[type="text"] {
+    width: 100%;
+    max-width: 320px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: #fff;
+    padding: 14px;
+    font-family: inherit;
+    font-size: 1rem;
+    margin: 8px auto;
+    display: block;
+    resize: none;
+  }
+  textarea:focus, input:focus { outline: none; border-color: #4ade80; }
+  .colors {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 14px 0;
+    flex-wrap: wrap;
+  }
+  .color-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .color-dot.active { border-color: #fff; transform: scale(1.1); }
+  #status { margin-top: 14px; color: #4ade80; font-size: 0.9rem; min-height: 20px; text-align: center; }
+  .hidden { display: none !important; }
+  .timeline {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .moment {
+    background: #111;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 9 / 16;
+    cursor: pointer;
+  }
+  .moment img, .moment video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    position: absolute;
+    top: 0; left: 0;
+  }
+  .moment .text-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 14px;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #fff;
+    position: absolute;
+    top: 0; left: 0;
+  }
+  .moment .bottom-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 2;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    padding: 8px;
+  }
+  .moment .date { font-size: 0.65rem; color: #ddd; text-align: right; }
+  .moment .caption {
+    font-size: 0.7rem;
+    color: #fff;
+    margin-top: 2px;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .moment .del {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background: rgba(239,68,68,0.9);
+    border: none;
+    color: #fff;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+  }
+  .empty { text-align: center; color: #666; margin-top: 80px; font-size: 1rem; line-height: 2; }
+  .counter { text-align: center; color: #666; font-size: 0.85rem; margin-top: 20px; }
+  .screen-full {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #0a0a0a;
+    z-index: 200;
+    overflow-y: auto;
+    padding: 20px 16px 90px 16px;
+  }
+  .screen-full .close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-size: 1.6rem;
+    color: #888;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .screen-full .close:active { color: #fff; }
+  #momentModal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 300;
+    overflow-y: auto;
+    padding: 50px 20px 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #momentModal .close-modal {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    font-size: 2rem;
+    color: #fff;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 310;
+    background: rgba(0,0,0,0.5);
+    border-radius: 50%;
+  }
+  #momentModal .modal-content {
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+  #momentModal img, #momentModal video {
+    width: 100%;
+    border-radius: 16px;
+    background: #000;
+    display: block;
+    margin-bottom: 16px;
+  }
+  #momentModal .modal-text {
+    width: 100%;
+    padding: 50px 20px;
+    border-radius: 16px;
+    font-size: 1.3rem;
+    line-height: 1.8;
+    text-align: center;
+    margin-bottom: 16px;
+    color: #fff;
+  }
+  #momentModal .modal-date {
+    color: #888;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  #momentModal .modal-label {
+    color: #888;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+    display: block;
+  }
+  #momentModal textarea { max-width: 100%; }
+  #momentModal .modal-actions { display: flex; gap: 10px; margin-top: 16px; }
+  #momentModal .modal-actions .btn { max-width: none; flex: 1; margin: 0; }
+</style>
+</head>
+<body>
+  <div class="content" id="tabRecord">
+    <h1>لحظة</h1>
+    <p class="subtitle">وثّق لحظتك. صورة، فيديو، أو كلام.</p>
+    <button class="btn" id="choosePhoto">📷 صورة</button>
+    <button class="btn" id="chooseVideo">🎥 فيديو</button>
+    <button class="btn" id="chooseText">✍️ كلام</button>
+    <div class="counter" id="counter">جاري التحميل...</div>
+    <div id="status"></div>
+  </div>
+  <div class="content hidden" id="tabMoments">
+    <h1>لقطاتي</h1>
+    <div class="counter" id="countMoments"></div>
+    <div class="timeline" id="timeline"></div>
+    <div class="empty hidden" id="empty">ما في لقطات بعد<br>ارجع لتبويب "سجّل" ووثّق أول لحظة 📸</div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" id="tabBtnRecord">
+      <span class="icon">📝</span>
+      <span>سجّل</span>
+    </button>
+    <button class="tab" id="tabBtnMoments">
+      <span class="icon">📸</span>
+      <span>لقطاتي</span>
+    </button>
+  </div>
+  <div class="screen-full hidden" id="photoScreen">
+    <button class="close" id="photoClose">×</button>
+    <video id="photoVideo" autoplay playsinline muted></video>
+    <button class="btn primary" id="snapBtn">📸 التقط</button>
+    <button class="btn small" id="switchPhotoCam">🔄 تبديل الكاميرا</button>
+  </div>
+  <div class="screen-full hidden" id="videoScreen">
+    <button class="close" id="videoClose">×</button>
+    <h1>🎥 فيديو</h1>
+    <p class="subtitle">سجّل مقطع من كاميرا الآيفون.<br>الفيديو رح يشتغل مباشرة في التطبيق.</p>
+    <div style="text-align:center;color:#888;font-size:0.9rem;margin:20px 0;">
+      الكاميرا الحالية: <span id="camLabel">خلفية</span>
+    </div>
+    <button class="btn primary" id="startVideoRec">🎥 ابدأ التسجيل</button>
+    <button class="btn small" id="switchVideoCam">🔄 تبديل الكاميرا</button>
+  </div>
+  <div class="screen-full hidden" id="textScreen">
+    <button class="close" id="textClose">×</button>
+    <h1>اكتب لحظتك</h1>
+    <textarea id="textInput" rows="5" placeholder="شو صار اليوم؟"></textarea>
+    <div class="colors" id="colorPicker"></div>
+    <button class="btn primary" id="saveTextBtn">التالي</button>
+  </div>
+  <div class="screen-full hidden" id="saveScreen">
+    <button class="close" id="saveClose">×</button>
+    <div id="preview"></div>
+    <textarea id="captionInput" rows="3" placeholder="أضف جملة (اختياري)..."></textarea>
+    <button class="btn primary" id="saveBtn">💾 احفظ اللقطة</button>
+  </div>
+  <div class="hidden" id="momentModal">
+    <button class="close-modal" id="modalClose">×</button>
+    <div class="modal-content" id="modalContent"></div>
+    <div class="modal-content">
+      <label class="modal-label">📝 التعليق:</label>
+      <textarea id="modalCaption" rows="3" placeholder="أضف جملة..."></textarea>
+      <div class="modal-actions">
+        <button class="btn primary" id="modalSave">💾 حفظ</button>
+        <button class="btn danger" id="modalDelete">🗑️ حذف</button>
+      </div>
+    </div>
+  </div>
+  <input type="file" accept="video/*" capture="environment" id="videoInput" style="display:none;">
+<script>
+const DB_NAME = 'lahza-db';
+const DB_VERSION = 1;
+const STORE_NAME = 'moments';
+let db = null;
+let stream = null;
+let pendingBlob = null;
+let pendingType = null;
+let selectedColor = '#0a0a0a';
+let currentFacing = 'environment';
+let currentMomentId = null;
+let videoFacing = 'environment';
+const COLORS = ['#0a0a0a', '#1e293b', '#7c2d12', '#14532d', '#581c87', '#831843'];
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = (e) => {
+      const database = e.target.result;
+      if (!database.objectStoreNames.contains(STORE_NAME)) {
+        database.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+      }
+    };
+    req.onsuccess = (e) => { db = e.target.result; resolve(db); };
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+function saveMoment(moment) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const req = tx.objectStore(STORE_NAME).add(moment);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+function updateMoment(moment) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const req = tx.objectStore(STORE_NAME).put(moment);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+function getMoment(id) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readonly');
+    const req = tx.objectStore(STORE_NAME).get(id);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+function getAllMoments() {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readonly');
+    const req = tx.objectStore(STORE_NAME).getAll();
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+function deleteMoment(id) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const req = tx.objectStore(STORE_NAME).delete(id);
+    req.onsuccess = () => resolve();
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+function countMoments() {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readonly');
+    const req = tx.objectStore(STORE_NAME).count();
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+const tabBtnRecord = document.getElementById('tabBtnRecord');
+const tabBtnMoments = document.getElementById('tabBtnMoments');
+const tabRecord = document.getElementById('tabRecord');
+const tabMoments = document.getElementById('tabMoments');
+tabBtnRecord.addEventListener('click', () => {
+  tabBtnRecord.classList.add('active');
+  tabBtnMoments.classList.remove('active');
+  tabRecord.classList.remove('hidden');
+  tabMoments.classList.add('hidden');
+});
+tabBtnMoments.addEventListener('click', () => {
+  tabBtnMoments.classList.add('active');
+  tabBtnRecord.classList.remove('active');
+  tabMoments.classList.remove('hidden');
+  tabRecord.classList.add('hidden');
+  renderMoments();
+});
+function updateCounter() {
+  countMoments().then(n => {
+    if (n === 0) document.getElementById('counter').textContent = 'ما في لقطات بعد';
+    else if (n === 1) document.getElementById('counter').textContent = '📸 لقطة واحدة محفوظة';
+    else document.getElementById('counter').textContent = '📸 ' + n + ' لقطات محفوظة';
+  });
+}
+async function renderMoments() {
+  const timeline = document.getElementById('timeline');
+  const empty = document.getElementById('empty');
+  const countEl = document.getElementById('countMoments');
+  try {
+    const moments = await getAllMoments();
+    moments.reverse();
+    if (moments.length === 0) {
+      countEl.textContent = '';
+      empty.classList.remove('hidden');
+      timeline.innerHTML = '';
+      return;
+    }
+    empty.classList.add('hidden');
+    countEl.textContent = '📸 ' + moments.length + (moments.length === 1 ? ' لقطة' : ' لقطات');
+    timeline.innerHTML = '';
+    for (const m of moments) {
+      const div = document.createElement('div');
+      div.className = 'moment';
+      if (m.type === 'photo') {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(m.blob);
+        div.appendChild(img);
+      } else if (m.type === 'video') {
+        const video = document.createElement('video');
+        video.src = URL.createObjectURL(m.blob);
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.autoplay = true;
+        div.appendChild(video);
+      } else if (m.type === 'text') {
+        const txt = document.createElement('div');
+        txt.className = 'text-content';
+        txt.style.background = m.color || '#0a0a0a';
+        const content = await m.blob.text();
+        txt.textContent = content;
+        div.appendChild(txt);
+      }
+      const bar = document.createElement('div');
+      bar.className = 'bottom-bar';
+      const d = new Date(m.date);
+      const dateStr = d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+      bar.innerHTML = '<div class="date">' + dateStr + '</div>' + (m.caption ? '<div class="caption">' + m.caption + '</div>' : '');
+      div.appendChild(bar);
+      const del = document.createElement('button');
+      del.className = 'del';
+      del.textContent = '×';
+      del.onclick = async (e) => {
+        e.stopPropagation();
+        if (confirm('تحذف هاللقطة؟')) {
+          await deleteMoment(m.id);
+          renderMoments();
+          updateCounter();
+        }
+      };
+      div.appendChild(del);
+      div.onclick = () => openMomentModal(m.id);
+      timeline.appendChild(div);
+    }
+  } catch (err) {
+    countEl.textContent = '❌ خطأ: ' + err.message;
+  }
+}
+async function openMomentModal(id) {
+  const m = await getMoment(id);
+  if (!m) return;
+  currentMomentId = id;
+  const modal = document.getElementById('momentModal');
+  const content = document.getElementById('modalContent');
+  content.innerHTML = '';
+  if (m.type === 'photo') {
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(m.blob);
+    content.appendChild(img);
+  } else if (m.type === 'video') {
+    const video = document.createElement('video');
+    video.src = URL.createObjectURL(m.blob);
+    video.controls = true;
+    video.playsInline = true;
+    content.appendChild(video);
+  } else if (m.type === 'text') {
+    const txt = document.createElement('div');
+    txt.className = 'modal-text';
+    txt.style.background = m.color || '#0a0a0a';
+    txt.textContent = await m.blob.text();
+    content.appendChild(txt);
+  }
+  const d = new Date(m.date);
+  const dateStr = d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() + ' - ' + d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0');
+  const dateDiv = document.createElement('div');
+  dateDiv.className = 'modal-date';
+  dateDiv.textContent = '📅 ' + dateStr;
+  content.appendChild(dateDiv);
+  document.getElementById('modalCaption').value = m.caption || '';
+  modal.classList.remove('hidden');
+}
+document.getElementById('modalClose').onclick = () => {
+  document.getElementById('momentModal').classList.add('hidden');
+  currentMomentId = null;
+};
+document.getElementById('modalSave').onclick = async () => {
+  if (!currentMomentId) return;
+  const m = await getMoment(currentMomentId);
+  if (!m) return;
+  m.caption = document.getElementById('modalCaption').value.trim();
+  await updateMoment(m);
+  document.getElementById('momentModal').classList.add('hidden');
+  currentMomentId = null;
+  renderMoments();
+};
+document.getElementById('modalDelete').onclick = async () => {
+  if (!currentMomentId) return;
+  if (confirm('تحذف هاللقطة؟')) {
+    await deleteMoment(currentMomentId);
+    document.getElementById('momentModal').classList.add('hidden');
+    currentMomentId = null;
+    renderMoments();
+    updateCounter();
+  }
+};
+async function openCamera(videoEl) {
+  try {
+    if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: currentFacing },
+      audio: false
+    });
+    videoEl.srcObject = stream;
+    videoEl.muted = true;
+  } catch (err) {
+    document.getElementById('status').textContent = '❌ خطأ: ' + err.message;
+  }
+}
+function closeCamera() {
+  if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+}
+async function toggleCamera(videoEl) {
+  currentFacing = (currentFacing === 'environment') ? 'user' : 'environment';
+  await openCamera(videoEl);
+}
+document.getElementById('choosePhoto').addEventListener('click', async () => {
+  document.getElementById('photoScreen').classList.remove('hidden');
+  await openCamera(document.getElementById('photoVideo'));
+});
+document.getElementById('photoClose').addEventListener('click', () => {
+  closeCamera();
+  document.getElementById('photoScreen').classList.add('hidden');
+});
+document.getElementById('switchPhotoCam').addEventListener('click', () => {
+  toggleCamera(document.getElementById('photoVideo'));
+});
+document.getElementById('snapBtn').addEventListener('click', () => {
+  const v = document.getElementById('photoVideo');
+  const canvas = document.createElement('canvas');
+  canvas.width = v.videoWidth;
+  canvas.height = v.videoHeight;
+  canvas.getContext('2d').drawImage(v, 0, 0);
+  canvas.toBlob((blob) => {
+    pendingBlob = blob;
+    pendingType = 'photo';
+    closeCamera();
+    document.getElementById('photoScreen').classList.add('hidden');
+    showPreview();
+    document.getElementById('saveScreen').classList.remove('hidden');
+  }, 'image/jpeg', 0.9);
+});
+const videoInput = document.getElementById('videoInput');
+document.getElementById('chooseVideo').addEventListener('click', () => {
+  document.getElementById('videoScreen').classList.remove('hidden');
+  updateCamLabel();
+});
+document.getElementById('videoClose').addEventListener('click', () => {
+  document.getElementById('videoScreen').classList.add('hidden');
+});
+document.getElementById('switchVideoCam').addEventListener('click', () => {
+  videoFacing = (videoFacing === 'environment') ? 'user' : 'environment';
+  videoInput.setAttribute('capture', videoFacing);
+  updateCamLabel();
+});
+function updateCamLabel() {
+  document.getElementById('camLabel').textContent = (videoFacing === 'environment') ? 'خلفية' : 'أمامية';
+}
+document.getElementById('startVideoRec').addEventListener('click', () => {
+  videoInput.value = '';
+  videoInput.click();
+});
+videoInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  pendingBlob = file;
+  pendingType = 'video';
+  document.getElementById('videoScreen').classList.add('hidden');
+  showPreview();
+  document.getElementById('saveScreen').classList.remove('hidden');
+});
+const colorPicker = document.getElementById('colorPicker');
+COLORS.forEach((c, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'color-dot' + (i === 0 ? ' active' : '');
+  dot.style.background = c;
+  dot.onclick = () => {
+    document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+    dot.classList.add('active');
+    selectedColor = c;
+  };
+  colorPicker.appendChild(dot);
+});
+document.getElementById('chooseText').addEventListener('click', () => {
+  document.getElementById('textScreen').classList.remove('hidden');
+});
+document.getElementById('textClose').addEventListener('click', () => {
+  document.getElementById('textScreen').classList.add('hidden');
+});
+document.getElementById('saveTextBtn').addEventListener('click', () => {
+  const text = document.getElementById('textInput').value.trim();
+  if (!text) { alert('اكتب شي أول'); return; }
+  pendingBlob = new Blob([text], { type: 'text/plain' });
+  pendingType = 'text';
+  document.getElementById('textScreen').classList.add('hidden');
+  showPreview();
+  document.getElementById('saveScreen').classList.remove('hidden');
+});
+function showPreview() {
+  const preview = document.getElementById('preview');
+  preview.innerHTML = '';
+  if (pendingType === 'photo') {
+    const img = document.createElement('img');
+    img.className = 'preview';
+    img.src = URL.createObjectURL(pendingBlob);
+    preview.appendChild(img);
+  } else if (pendingType === 'video') {
+    const vid = document.createElement('video');
+    vid.src = URL.createObjectURL(pendingBlob);
+    vid.controls = true;
+    vid.playsInline = true;
+    preview.appendChild(vid);
+  } else if (pendingType === 'text') {
+    pendingBlob.text().then(t => {
+      const div = document.createElement('div');
+      div.style.cssText = 'background:' + selectedColor + ';padding:50px 20px;border-radius:16px;max-width:320px;margin:16px auto;font-size:1.3rem;line-height:1.8;text-align:center;';
+      div.textContent = t;
+      preview.appendChild(div);
+    });
+  }
+}
+document.getElementById('saveBtn').addEventListener('click', async () => {
+  if (!pendingBlob) return;
+  const caption = document.getElementById('captionInput').value.trim();
+  try {
+    await saveMoment({
+      date: new Date().toISOString(),
+      blob: pendingBlob,
+      type: pendingType,
+      caption: caption,
+      color: selectedColor
+    });
+    document.getElementById('captionInput').value = '';
+    document.getElementById('preview').innerHTML = '';
+    pendingBlob = null;
+    pendingType = null;
+    document.getElementById('saveScreen').classList.add('hidden');
+    updateCounter();
+  } catch (err) {
+    alert('خطأ: ' + err.message);
+  }
+});
+document.getElementById('saveClose').addEventListener('click', () => {
+  document.getElementById('captionInput').value = '';
+  document.getElementById('preview').innerHTML = '';
+  pendingBlob = null;
+  pendingType = null;
+  document.getElementById('saveScreen').classList.add('hidden');
+});
+openDB().then(updateCounter).catch(err => {
+  document.getElementById('status').textContent = '❌ خطأ: ' + err.message;
+});
+</script>
+</body>
+</html>
