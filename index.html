@@ -5,15 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>لحظة</title>
 <style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     background: #0a0a0a;
     color: #fff;
-    font-family: -apple-system, sans-serif;
+    font-family: -apple-system, system-ui, sans-serif;
     text-align: center;
     padding: 24px;
-    margin: 0;
     min-height: 100vh;
-    box-sizing: border-box;
   }
   h1 { font-size: 2.2rem; font-weight: 300; letter-spacing: 2px; margin: 8px 0; }
   p { color: #888; font-size: 0.95rem; line-height: 1.7; margin-bottom: 20px; }
@@ -25,6 +24,7 @@
     background: transparent;
     color: #fff;
     font-size: 1.1rem;
+    cursor: pointer;
   }
   button.rec { border-color: #ef4444; color: #ef4444; }
   button.recording { background: #ef4444; color: #fff; }
@@ -39,6 +39,11 @@
   #status { margin-top: 14px; color: #4ade80; font-size: 0.9rem; min-height: 20px; }
   #timer { font-size: 3rem; color: #ef4444; display: none; margin: 10px 0; }
   .hidden { display: none !important; }
+  .counter {
+    margin-top: 20px;
+    color: #666;
+    font-size: 0.85rem;
+  }
 </style>
 </head>
 <body>
@@ -48,9 +53,11 @@
   <div id="timer">1</div>
   <button id="startBtn">ابدأ</button>
   <button id="recBtn" class="hidden">● سجّل ثانية</button>
-  <button id="saveBtn" class="hidden">💾 احفظ</button>
+  <button id="saveBtn" class="hidden">💾 احفظ اللقطة</button>
   <button id="againBtn" class="hidden">🔄 سجّل مرة تانية</button>
   <div id="status"></div>
+  <div class="counter" id="counter"></div>
+
 <script>
 const video = document.getElementById('video');
 const startBtn = document.getElementById('startBtn');
@@ -59,8 +66,64 @@ const saveBtn = document.getElementById('saveBtn');
 const againBtn = document.getElementById('againBtn');
 const status = document.getElementById('status');
 const timer = document.getElementById('timer');
-let stream = null, recorder = null, chunks = [], recordedBlob = null;
+const counter = document.getElementById('counter');
 
+let stream = null, recorder = null, chunks = [], recordedBlob = null;
+let db = null;
+
+// ============ قاعدة البيانات ============
+const DB_NAME = 'lahza-db';
+const DB_VERSION = 1;
+const STORE_NAME = 'moments';
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = (e) => {
+      const database = e.target.result;
+      if (!database.objectStoreNames.contains(STORE_NAME)) {
+        database.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+      }
+    };
+    req.onsuccess = (e) => { db = e.target.result; resolve(db); };
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+
+function saveMoment(blob) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const store = tx.objectStore(STORE_NAME);
+    const moment = {
+      date: new Date().toISOString(),
+      blob: blob,
+      type: blob.type
+    };
+    const req = store.add(moment);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+
+function countMoments() {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readonly');
+    const store = tx.objectStore(STORE_NAME);
+    const req = store.count();
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+
+function updateCounter() {
+  countMoments().then(n => {
+    if (n === 0) counter.textContent = 'ما في لقطات بعد';
+    else if (n === 1) counter.textContent = '📸 لقطة واحدة محفوظة';
+    else counter.textContent = '📸 ' + n + ' لقطات محفوظة';
+  }).catch(() => {});
+}
+
+// ============ فتح الكاميرا ============
 startBtn.addEventListener('click', async () => {
   try {
     status.textContent = 'جاري فتح الكاميرا...';
@@ -71,6 +134,7 @@ startBtn.addEventListener('click', async () => {
   } catch (err) { status.textContent = '❌ خطأ: ' + err.message; }
 });
 
+// ============ التسجيل ============
 recBtn.addEventListener('click', () => {
   if (!stream) return;
   chunks = [];
@@ -80,7 +144,7 @@ recBtn.addEventListener('click', () => {
     recordedBlob = new Blob(chunks, { type: 'video/webm' });
     recBtn.classList.add('hidden'); saveBtn.classList.remove('hidden');
     againBtn.classList.remove('hidden');
-    status.textContent = '✅ تم التسجيل! اضغط حفظ أو سجل من جديد';
+    status.textContent = '✅ تم التسجيل! اضغط حفظ';
   };
   recorder.start();
   recBtn.classList.add('recording'); recBtn.textContent = '● جاري التسجيل';
@@ -92,21 +156,34 @@ recBtn.addEventListener('click', () => {
   }, 1000);
 });
 
-saveBtn.addEventListener('click', () => {
+// ============ الحفظ في قاعدة البيانات ============
+saveBtn.addEventListener('click', async () => {
   if (!recordedBlob) return;
-  const url = URL.createObjectURL(recordedBlob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'lahza-' + new Date().toISOString().slice(0,10) + '.webm';
-  a.click();
-  status.textContent = '💾 تم الحفظ في الملفات!';
+  try {
+    status.textContent = 'جاري الحفظ...';
+    await saveMoment(recordedBlob);
+    status.textContent = '💾 تم الحفظ في التطبيق!';
+    saveBtn.classList.add('hidden');
+    againBtn.classList.remove('hidden');
+    updateCounter();
+  } catch (err) {
+    status.textContent = '❌ خطأ في الحفظ: ' + err.message;
+  }
 });
 
+// ============ إعادة التسجيل ============
 againBtn.addEventListener('click', () => {
   recordedBlob = null;
   saveBtn.classList.add('hidden'); againBtn.classList.add('hidden');
   recBtn.classList.remove('hidden');
   status.textContent = '✅ الكاميرا شغالة';
+});
+
+// ============ بدء التطبيق ============
+openDB().then(() => {
+  updateCounter();
+}).catch((err) => {
+  status.textContent = '❌ خطأ في قاعدة البيانات: ' + err.message;
 });
 </script>
 </body>
