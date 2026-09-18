@@ -1,1 +1,213 @@
-
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>لحظة</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+:root{--bg:#0a0a0a;--text:#fff;--text-dim:#888;--text-faint:#666;--border:#333;--card:#111;--btn-bg:transparent;--btn-text:#fff;--btn-primary-bg:#4ade80;--btn-primary-text:#000;--overlay:rgba(0,0,0,0.95);--shadow:rgba(0,0,0,0.7);}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,system-ui,sans-serif;display:flex;flex-direction:column;transition:background .5s,color .5s;}
+.content{flex:1;overflow-y:auto;padding:20px 16px 90px;-webkit-overflow-scrolling:touch;}
+.tabs{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:100;transition:background .5s,border-color .5s;}
+.tab{flex:1;background:none;border:none;color:var(--text-faint);padding:14px 0;font-size:.75rem;font-family:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:color .2s;}
+.tab.active{color:var(--btn-primary-bg);}
+.tab .icon{font-size:1.4rem;}
+h1{font-size:1.8rem;font-weight:300;letter-spacing:2px;text-align:center;margin-bottom:6px;color:var(--text);}
+.subtitle{color:var(--text-dim);font-size:.9rem;line-height:1.6;text-align:center;margin-bottom:24px;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+.btn{display:block;width:100%;max-width:320px;margin:10px auto;padding:18px;border:1px solid var(--border);border-radius:100px;color:var(--btn-text);font-size:1.05rem;text-align:center;transition:all .2s;background:var(--btn-bg);}
+.btn:active{opacity:.7;}
+.btn.primary{background:var(--btn-primary-bg);color:var(--btn-primary-text);border-color:var(--btn-primary-bg);font-weight:500;}
+.btn.small{padding:12px;font-size:.9rem;max-width:200px;}
+.btn.danger{border-color:#ef4444;color:#ef4444;}
+video,img.preview{width:100%;max-width:320px;border-radius:16px;margin:16px auto;display:block;background:#000;}
+textarea,input[type="text"]{width:100%;max-width:320px;background:var(--card);border:1px solid var(--border);border-radius:12px;color:var(--text);padding:14px;font-family:inherit;font-size:1rem;margin:8px auto;display:block;resize:none;}
+textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
+.colors{display:flex;justify-content:center;gap:10px;margin:14px 0;flex-wrap:wrap;}
+.color-dot{width:36px;height:36px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:transform .2s;}
+.color-dot.active{border-color:var(--text);transform:scale(1.1);}
+#status{margin-top:14px;color:#4ade80;font-size:.9rem;min-height:20px;text-align:center;}
+.hidden{display:none !important;}
+.timeline{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+.moment{background:var(--card);border-radius:12px;overflow:hidden;position:relative;aspect-ratio:9/16;cursor:pointer;}
+.moment img,.moment video{width:100%;height:100%;object-fit:cover;display:block;position:absolute;top:0;left:0;}
+.moment .text-content{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;font-size:1rem;line-height:1.6;color:#fff;position:absolute;top:0;left:0;}
+.moment .bottom-bar{position:absolute;bottom:0;left:0;right:0;z-index:2;background:linear-gradient(to top,var(--shadow),transparent);padding:8px;}
+.moment .date{font-size:.65rem;color:#ddd;text-align:right;}
+.moment .caption{font-size:.7rem;color:#fff;margin-top:2px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.moment .del{position:absolute;top:6px;left:6px;background:rgba(239,68,68,.9);border:none;color:#fff;width:26px;height:26px;border-radius:50%;font-size:.9rem;display:flex;align-items:center;justify-content:center;z-index:3;}
+.empty{text-align:center;color:var(--text-faint);margin-top:80px;font-size:1rem;line-height:2;}
+.counter{text-align:center;color:var(--text-faint);font-size:.85rem;margin-top:20px;}
+.screen-full{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:200;overflow-y:auto;padding:20px 16px 90px;transition:background .5s;}
+.screen-full .close{position:absolute;top:14px;right:14px;font-size:1.6rem;color:var(--text-dim);width:40px;height:40px;display:flex;align-items:center;justify-content:center;}
+.screen-full .close:active{color:var(--text);}
+#momentModal{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--overlay);z-index:300;overflow-y:auto;padding:50px 20px 40px;display:flex;flex-direction:column;align-items:center;}
+#momentModal .close-modal{position:fixed;top:14px;right:14px;font-size:2rem;color:var(--text);width:44px;height:44px;display:flex;align-items:center;justify-content:center;z-index:310;background:rgba(0,0,0,.5);border-radius:50%;}
+#momentModal .modal-content{width:100%;max-width:340px;margin:0 auto;}
+#momentModal img,#momentModal video{width:100%;border-radius:16px;background:#000;display:block;margin-bottom:16px;}
+#momentModal .modal-text{width:100%;padding:50px 20px;border-radius:16px;font-size:1.3rem;line-height:1.8;text-align:center;margin-bottom:16px;color:#fff;}
+#momentModal .modal-date{color:var(--text-dim);font-size:.9rem;text-align:center;margin-bottom:20px;}
+#momentModal .modal-label{color:var(--text-dim);font-size:.85rem;margin-bottom:6px;display:block;}
+#momentModal textarea{max-width:100%;}
+#momentModal .modal-actions{display:flex;gap:10px;margin-top:16px;}
+#momentModal .modal-actions .btn{max-width:none;flex:1;margin:0;}
+.settings-section{background:var(--card);border-radius:16px;padding:20px;margin-bottom:16px;border:1px solid var(--border);}
+.settings-title{color:var(--text);font-size:1.1rem;font-weight:500;margin-bottom:16px;display:block;}
+.settings-sub{color:var(--text-dim);font-size:.8rem;margin-bottom:10px;display:block;}
+.mode-row{display:flex;gap:10px;margin-bottom:20px;}
+.mode-btn{flex:1;padding:14px;border:1px solid var(--border);border-radius:12px;background:transparent;color:var(--text);font-size:.9rem;text-align:center;transition:all .2s;}
+.mode-btn.active{background:var(--btn-primary-bg);color:var(--btn-primary-text);border-color:var(--btn-primary-bg);}
+.color-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.color-option{padding:14px;border:2px solid transparent;border-radius:12px;text-align:center;font-size:.85rem;cursor:pointer;transition:all .2s;color:#fff;font-weight:500;}
+.color-option.active{border-color:var(--text);transform:scale(1.05);}
+.color-option .emoji{display:block;font-size:1.5rem;margin-bottom:4px;}
+</style>
+</head><body>
+<div class="content" id="tabRecord">
+<h1>لحظة</h1>
+<p class="subtitle">وثّق لحظتك. صورة، فيديو، أو كلام.</p>
+<button class="btn" id="choosePhoto">📷 صورة</button>
+<button class="btn" id="chooseVideo">🎥 فيديو</button>
+<button class="btn" id="chooseText">✍️ كلام</button>
+<div class="counter" id="counter">جاري التحميل...</div>
+<div id="status"></div>
+</div>
+<div class="content hidden" id="tabMoments">
+<h1>لقطاتي</h1>
+<div class="counter" id="countMoments"></div>
+<div class="timeline" id="timeline"></div>
+<div class="empty hidden" id="empty">ما في لقطات بعد<br>ارجع لتبويب "سجّل" ووثّق أول لحظة 📸</div>
+</div>
+<div class="content hidden" id="tabSettings">
+<h1>إعدادات</h1>
+<div class="settings-section">
+<span class="settings-title">🎨 لون الخلفية</span>
+<span class="settings-sub">الوضع</span>
+<div class="mode-row">
+<button class="mode-btn active" id="modeDark">🌙 غامق</button>
+<button class="mode-btn" id="modeLight">☀️ فاتح</button>
+<button class="mode-btn" id="modeAuto">🕐 تلقائي</button>
+</div>
+<span class="settings-sub">اللون</span>
+<div class="color-grid" id="colorGrid"></div>
+</div>
+<div class="settings-section">
+<span class="settings-title">🌅 حسب الوقت</span>
+<span class="settings-sub">يتغير تلقائياً حسب ساعة اليوم</span>
+<button class="btn small" id="applyTime">تفعيل الوضع الزمني</button>
+</div>
+<div class="settings-section">
+<span class="settings-title">🍂 حسب الموسم</span>
+<span class="settings-sub">يتغير تلقائياً حسب الفصل</span>
+<button class="btn small" id="applySeason">تفعيل الوضع الموسمي</button>
+</div>
+</div>
+<div class="tabs">
+<button class="tab active" id="tabBtnRecord"><span class="icon">📝</span><span>سجّل</span></button>
+<button class="tab" id="tabBtnMoments"><span class="icon">📸</span><span>لقطاتي</span></button>
+<button class="tab" id="tabBtnSettings"><span class="icon">⚙️</span><span>إعدادات</span></button>
+</div>
+<div class="screen-full hidden" id="photoScreen">
+<button class="close" id="photoClose">×</button>
+<video id="photoVideo" autoplay playsinline muted></video>
+<button class="btn primary" id="snapBtn">📸 التقط</button>
+<button class="btn small" id="switchPhotoCam">🔄 تبديل الكاميرا</button>
+</div>
+<div class="screen-full hidden" id="videoScreen">
+<button class="close" id="videoClose">×</button>
+<h1>🎥 فيديو</h1>
+<p class="subtitle">سجّل مقطع من كاميرا الآيفون.<br>الفيديو رح يشتغل مباشرة في التطبيق.</p>
+<div style="text-align:center;color:var(--text-dim);font-size:.9rem;margin:20px 0;">الكاميرا الحالية: <span id="camLabel">خلفية</span></div>
+<button class="btn primary" id="startVideoRec">🎥 ابدأ التسجيل</button>
+<button class="btn small" id="switchVideoCam">🔄 تبديل الكاميرا</button>
+</div>
+<div class="screen-full hidden" id="textScreen">
+<button class="close" id="textClose">×</button>
+<h1>اكتب لحظتك</h1>
+<textarea id="textInput" rows="5" placeholder="شو صار اليوم؟"></textarea>
+<div class="colors" id="colorPicker"></div>
+<button class="btn primary" id="saveTextBtn">التالي</button>
+</div>
+<div class="screen-full hidden" id="saveScreen">
+<button class="close" id="saveClose">×</button>
+<div id="preview"></div>
+<textarea id="captionInput" rows="3" placeholder="أضف جملة (اختياري)..."></textarea>
+<button class="btn primary" id="saveBtn">💾 احفظ اللقطة</button>
+</div>
+<div class="hidden" id="momentModal">
+<button class="close-modal" id="modalClose">×</button>
+<div class="modal-content" id="modalContent"></div>
+<div class="modal-content">
+<label class="modal-label">📝 التعليق:</label>
+<textarea id="modalCaption" rows="3" placeholder="أضف جملة..."></textarea>
+<div class="modal-actions">
+<button class="btn primary" id="modalSave">💾 حفظ</button>
+<button class="btn danger" id="modalDelete">🗑️ حذف</button>
+</div>
+</div>
+</div>
+<input type="file" accept="video/*" capture="environment" id="videoInput" style="display:none;">
+ثم<script>
+const DB_NAME='lahza-db',DB_VERSION=1,STORE_NAME='moments';
+let db=null,stream=null,pendingBlob=null,pendingType=null,selectedColor='#0a0a0a',currentFacing='environment',currentMomentId=null,videoFacing='environment';
+const COLORS=['#0a0a0a','#1e293b','#7c2d12','#14532d','#581c87','#831843'];
+const THEMES={dark:{blue:{bg:'#0a1929',text:'#fff',dim:'#8899aa',faint:'#556677',border:'#1e3a5f',card:'#0f2438',primary:'#4ade80',primaryText:'#000'},purple:{bg:'#1a0a29',text:'#fff',dim:'#9988aa',faint:'#665577',border:'#3a1e5f',card:'#231038',primary:'#c084fc',primaryText:'#000'},green:{bg:'#0a2919',text:'#fff',dim:'#88aa99',faint:'#557766',border:'#1e5f3a',card:'#0f3823',primary:'#4ade80',primaryText:'#000'},red:{bg:'#290a0a',text:'#fff',dim:'#aa8888',faint:'#775555',border:'#5f1e1e',card:'#380f0f',primary:'#f87171',primaryText:'#000'},orange:{bg:'#291a0a',text:'#fff',dim:'#aa9988',faint:'#776655',border:'#5f3a1e',card:'#38230f',primary:'#fb923c',primaryText:'#000'},yellow:{bg:'#29290a',text:'#fff',dim:'#aaaa88',faint:'#777755',border:'#5f5f1e',card:'#38380f',primary:'#facc15',primaryText:'#000'}},light:{blue:{bg:'#e3f2fd',text:'#0a1929',dim:'#5a7a9a',faint:'#8899aa',border:'#b3d9f2',card:'#fff',primary:'#1976d2',primaryText:'#fff'},purple:{bg:'#f3e5f5',text:'#2a0a3a',dim:'#7a5a8a',faint:'#a888b8',border:'#d9b3e0',card:'#fff',primary:'#7b1fa2',primaryText:'#fff'},green:{bg:'#e8f5e9',text:'#0a2919',dim:'#5a7a5a',faint:'#889988',border:'#b3d9b3',card:'#fff',primary:'#388e3c',primaryText:'#fff'},red:{bg:'#ffebee',text:'#290a0a',dim:'#8a5a5a',faint:'#b88888',border:'#f2b3b3',card:'#fff',primary:'#d32f2f',primaryText:'#fff'},orange:{bg:'#fff3e0',text:'#2a1a0a',dim:'#8a6a4a',faint:'#b89878',border:'#f2d9b3',card:'#fff',primary:'#f57c00',primaryText:'#fff'},yellow:{bg:'#fffde7',text:'#2a2a0a',dim:'#8a8a4a',faint:'#b8b878',border:'#f2f2b3',card:'#fff',primary:'#f9a825',primaryText:'#fff'}}};
+const COLOR_NAMES={blue:'أزرق',purple:'بنفسجي',green:'أخضر',red:'أحمر',orange:'برتقالي',yellow:'أصفر'};
+let currentTheme={mode:'dark',color:'blue'};
+function applyTheme(){let m=currentTheme.mode;if(m==='auto'){let h=new Date().getHours();m=(h>=6&&h<18)?'light':'dark';}const t=THEMES[m][currentTheme.color];document.documentElement.style.setProperty('--bg',t.bg);document.documentElement.style.setProperty('--text',t.text);document.documentElement.style.setProperty('--text-dim',t.dim);document.documentElement.style.setProperty('--text-faint',t.faint);document.documentElement.style.setProperty('--border',t.border);document.documentElement.style.setProperty('--card',t.card);document.documentElement.style.setProperty('--btn-primary-bg',t.primary);document.documentElement.style.setProperty('--btn-primary-text',t.primaryText);localStorage.setItem('lahza-theme',JSON.stringify(currentTheme));}
+function loadTheme(){try{const s=localStorage.getItem('lahza-theme');if(s)currentTheme=JSON.parse(s);}catch(e){currentTheme={mode:'dark',color:'blue'};}applyTheme();}
+function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open(DB_NAME,DB_VERSION);r.onupgradeneeded=e=>{const d=e.target.result;if(!d.objectStoreNames.contains(STORE_NAME))d.createObjectStore(STORE_NAME,{keyPath:'id',autoIncrement:true});};r.onsuccess=e=>{db=e.target.result;res(db);};r.onerror=e=>rej(e.target.error);});}
+function saveMoment(m){return new Promise((res,rej)=>{const t=db.transaction(STORE_NAME,'readwrite');const r=t.objectStore(STORE_NAME).add(m);r.onsuccess=()=>res(r.result);r.onerror=e=>rej(e.target.error);});}
+function updateMoment(m){return new Promise((res,rej)=>{const t=db.transaction(STORE_NAME,'readwrite');const r=t.objectStore(STORE_NAME).put(m);r.onsuccess=()=>res(r.result);r.onerror=e=>rej(e.target.error);});}
+function getMoment(id){return new Promise((res,rej)=>{const t=db.transaction(STORE_NAME,'readonly');const r=t.objectStore(STORE_NAME).get(id);r.onsuccess=()=>res(r.result);r.onerror=e=>rej(e.target.error);});}
+function getAllMoments(){return new Promise((res,rej)=>{const t=db.transaction(STORE_NAME,'readonly');const r=t.objectStore(STORE_NAME).getAll();r.onsuccess=()=>res(r.result);r.onerror=e=>rej(e.target.error);});}
+function deleteMoment(id){return new Promise((res,rej)=>{const t=db.transaction(STORE_NAME,'readwrite');const r=t.objectStore(STORE_NAME).delete(id);r.onsuccess=()=>res();r.onerror=e=>rej(e.target.error);});}
+function countMoments(){return new Promise((res,rej)=>{const t=db.transaction(STORE_NAME,'readonly');const r=t.objectStore(STORE_NAME).count();r.onsuccess=()=>res(r.result);r.onerror=e=>rej(e.target.error);});}
+const tabBtnRecord=document.getElementById('tabBtnRecord'),tabBtnMoments=document.getElementById('tabBtnMoments'),tabBtnSettings=document.getElementById('tabBtnSettings'),tabRecord=document.getElementById('tabRecord'),tabMoments=document.getElementById('tabMoments'),tabSettings=document.getElementById('tabSettings');
+function switchTab(t){[tabBtnRecord,tabBtnMoments,tabBtnSettings].forEach(b=>b.classList.remove('active'));[tabRecord,tabMoments,tabSettings].forEach(c=>c.classList.add('hidden'));if(t==='record'){tabBtnRecord.classList.add('active');tabRecord.classList.remove('hidden');}else if(t==='moments'){tabBtnMoments.classList.add('active');tabMoments.classList.remove('hidden');renderMoments();}else{tabBtnSettings.classList.add('active');tabSettings.classList.remove('hidden');}}
+tabBtnRecord.onclick=()=>switchTab('record');
+tabBtnMoments.onclick=()=>switchTab('moments');
+tabBtnSettings.onclick=()=>switchTab('settings');
+function updateCounter(){countMoments().then(n=>{const c=document.getElementById('counter');if(n===0)c.textContent='ما في لقطات بعد';else if(n===1)c.textContent='📸 لقطة واحدة محفوظة';else c.textContent='📸 '+n+' لقطات محفوظة';});}
+async function renderMoments(){const tl=document.getElementById('timeline'),em=document.getElementById('empty'),ce=document.getElementById('countMoments');try{const ms=await getAllMoments();ms.reverse();if(ms.length===0){ce.textContent='';em.classList.remove('hidden');tl.innerHTML='';return;}em.classList.add('hidden');ce.textContent='📸 '+ms.length+(ms.length===1?' لقطة':' لقطات');tl.innerHTML='';for(const m of ms){const d=document.createElement('div');d.className='moment';if(m.type==='photo'){const i=document.createElement('img');i.src=URL.createObjectURL(m.blob);d.appendChild(i);}else if(m.type==='video'){const v=document.createElement('video');v.src=URL.createObjectURL(m.blob);v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=true;d.appendChild(v);}else if(m.type==='text'){const t=document.createElement('div');t.className='text-content';t.style.background=m.color||'#0a0a0a';t.textContent=await m.blob.text();d.appendChild(t);}const b=document.createElement('div');b.className='bottom-bar';const dt=new Date(m.date);const ds=dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();b.innerHTML='<div class="date">'+ds+'</div>'+(m.caption?'<div class="caption">'+m.caption+'</div>':'');d.appendChild(b);const del=document.createElement('button');del.className='del';del.textContent='×';del.onclick=async(e)=>{e.stopPropagation();if(confirm('تحذف هاللقطة؟')){await deleteMoment(m.id);renderMoments();updateCounter();}};d.appendChild(del);d.onclick=()=>openMomentModal(m.id);tl.appendChild(d);}}catch(err){ce.textContent='❌ خطأ: '+err.message;}}
+async function openMomentModal(id){const m=await getMoment(id);if(!m)return;currentMomentId=id;const mod=document.getElementById('momentModal'),c=document.getElementById('modalContent');c.innerHTML='';if(m.type==='photo'){const i=document.createElement('img');i.src=URL.createObjectURL(m.blob);c.appendChild(i);}else if(m.type==='video'){const v=document.createElement('video');v.src=URL.createObjectURL(m.blob);v.controls=true;v.playsInline=true;c.appendChild(v);}else if(m.type==='text'){const t=document.createElement('div');t.className='modal-text';t.style.background=m.color||'#0a0a0a';t.textContent=await m.blob.text();c.appendChild(t);}const dt=new Date(m.date);const ds=dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear()+' - '+dt.getHours()+':'+String(dt.getMinutes()).padStart(2,'0');const dd=document.createElement('div');dd.className='modal-date';dd.textContent='📅 '+ds;c.appendChild(dd);document.getElementById('modalCaption').value=m.caption||'';mod.classList.remove('hidden');}
+document.getElementById('modalClose').onclick=()=>{document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;};
+document.getElementById('modalSave').onclick=async()=>{if(!currentMomentId)return;const m=await getMoment(currentMomentId);if(!m)return;m.caption=document.getElementById('modalCaption').value.trim();await updateMoment(m);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();};
+document.getElementById('modalDelete').onclick=async()=>{if(!currentMomentId)return;if(confirm('تحذف هاللقطة؟')){await deleteMoment(currentMomentId);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();updateCounter();}};
+async function openCamera(v){try{if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:currentFacing},audio:false});v.srcObject=stream;v.muted=true;}catch(e){document.getElementById('status').textContent='❌ خطأ: '+e.message;}}
+function closeCamera(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}}
+async function toggleCamera(v){currentFacing=(currentFacing==='environment')?'user':'environment';await openCamera(v);}
+document.getElementById('choosePhoto').onclick=async()=>{document.getElementById('photoScreen').classList.remove('hidden');await openCamera(document.getElementById('photoVideo'));};
+document.getElementById('photoClose').onclick=()=>{closeCamera();document.getElementById('photoScreen').classList.add('hidden');};
+document.getElementById('switchPhotoCam').onclick=()=>toggleCamera(document.getElementById('photoVideo'));
+document.getElementById('snapBtn').onclick=()=>{const v=document.getElementById('photoVideo');const cv=document.createElement('canvas');cv.width=v.videoWidth;cv.height=v.videoHeight;cv.getContext('2d').drawImage(v,0,0);cv.toBlob(b=>{pendingBlob=b;pendingType='photo';closeCamera();document.getElementById('photoScreen').classList.add('hidden');showPreview();document.getElementById('saveScreen').classList.remove('hidden');},'image/jpeg',.9);};
+const videoInput=document.getElementById('videoInput');
+document.getElementById('chooseVideo').onclick=()=>{document.getElementById('videoScreen').classList.remove('hidden');updateCamLabel();};
+document.getElementById('videoClose').onclick=()=>{document.getElementById('videoScreen').classList.add('hidden');};
+document.getElementById('switchVideoCam').onclick=()=>{videoFacing=(videoFacing==='environment')?'user':'environment';videoInput.setAttribute('capture',videoFacing);updateCamLabel();};
+function updateCamLabel(){document.getElementById('camLabel').textContent=(videoFacing==='environment')?'خلفية':'أمامية';}
+document.getElementById('startVideoRec').onclick=()=>{videoInput.value='';videoInput.click();};
+videoInput.onchange=e=>{const f=e.target.files[0];if(!f)return;pendingBlob=f;pendingType='video';document.getElementById('videoScreen').classList.add('hidden');showPreview();document.getElementById('saveScreen').classList.remove('hidden');};
+const cp=document.getElementById('colorPicker');COLORS.forEach((c,i)=>{const d=document.createElement('div');d.className='color-dot'+(i===0?' active':'');d.style.background=c;d.onclick=()=>{document.querySelectorAll('.color-dot').forEach(x=>x.classList.remove('active'));d.classList.add('active');selectedColor=c;};cp.appendChild(d);});
+document.getElementById('chooseText').onclick=()=>document.getElementById('textScreen').classList.remove('hidden');
+document.getElementById('textClose').onclick=()=>document.getElementById('textScreen').classList.add('hidden');
+document.getElementById('saveTextBtn').onclick=()=>{const t=document.getElementById('textInput').value.trim();if(!t){alert('اكتب شي أول');return;}pendingBlob=new Blob([t],{type:'text/plain'});pendingType='text';document.getElementById('textScreen').classList.add('hidden');showPreview();document.getElementById('saveScreen').classList.remove('hidden');};
+function showPreview(){const p=document.getElementById('preview');p.innerHTML='';if(pendingType==='photo'){const i=document.createElement('img');i.className='preview';i.src=URL.createObjectURL(pendingBlob);p.appendChild(i);}else if(pendingType==='video'){const v=document.createElement('video');v.src=URL.createObjectURL(pendingBlob);v.controls=true;v.playsInline=true;p.appendChild(v);}else if(pendingType==='text'){pendingBlob.text().then(t=>{const d=document.createElement('div');d.style.cssText='background:'+selectedColor+';padding:50px 20px;border-radius:16px;max-width:320px;margin:16px auto;font-size:1.3rem;line-height:1.8;text-align:center;';d.textContent=t;p.appendChild(d);});}}
+document.getElementById('saveBtn').onclick=async()=>{if(!pendingBlob)return;const c=document.getElementById('captionInput').value.trim();try{await saveMoment({date:new Date().toISOString(),blob:pendingBlob,type:pendingType,caption:c,color:selectedColor});document.getElementById('captionInput').value='';document.getElementById('preview').innerHTML='';pendingBlob=null;pendingType=null;document.getElementById('saveScreen').classList.add('hidden');updateCounter();}catch(e){alert('خطأ: '+e.message);}};
+document.getElementById('saveClose').onclick=()=>{document.getElementById('captionInput').value='';document.getElementById('preview').innerHTML='';pendingBlob=null;pendingType=null;document.getElementById('saveScreen').classList.add('hidden');};
+function buildColorGrid(){const g=document.getElementById('colorGrid');g.innerHTML='';Object.keys(COLOR_NAMES).forEach(c=>{const d=document.createElement('div');d.className='color-option'+(currentTheme.color===c?' active':'');d.style.background=THEMES[currentTheme.mode==='auto'?'dark':currentTheme.mode][c].bg;d.innerHTML='<span class="emoji">🎨</span>'+COLOR_NAMES[c];d.onclick=()=>{currentTheme.color=c;applyTheme();buildColorGrid();};g.appendChild(d);});}
+document.getElementById('modeDark').onclick=()=>{currentTheme.mode='dark';applyTheme();updateModeButtons();buildColorGrid();};
+document.getElementById('modeLight').onclick=()=>{currentTheme.mode='light';applyTheme();updateModeButtons();buildColorGrid();};
+document.getElementById('modeAuto').onclick=()=>{currentTheme.mode='auto';applyTheme();updateModeButtons();buildColorGrid();};
+function updateModeButtons(){document.getElementById('modeDark').classList.toggle('active',currentTheme.mode==='dark');document.getElementById('modeLight').classList.toggle('active',currentTheme.mode==='light');document.getElementById('modeAuto').classList.toggle('active',currentTheme.mode==='auto');}
+document.getElementById('applyTime').onclick=()=>{currentTheme.mode='auto';applyTheme();updateModeButtons();alert('تم تفعيل الوضع الزمني');};
+document.getElementById('applySeason').onclick=()=>{const m=new Date().getMonth()+1;let c='blue';if(m>=3&&m<=5)c='green';else if(m>=6&&m<=8)c='yellow';else if(m>=9&&m<=11)c='orange';else c='blue';currentTheme.color=c;applyTheme();buildColorGrid();alert('تم تفعيل الوضع الموسمي');};
+loadTheme();updateModeButtons();buildColorGrid();
+openDB().then(()=>{updateCounter();}).catch(e=>{document.getElementById('status').textContent='❌ خطأ: '+e.message;});
+</script>
+</body>
+</html>
