@@ -29,6 +29,7 @@
   button.rec { border-color: #ef4444; color: #ef4444; }
   button.recording { background: #ef4444; color: #fff; }
   button.primary { background: #4ade80; color: #000; border-color: #4ade80; font-weight: 500; }
+  button.small { padding: 10px 20px; font-size: 0.9rem; }
   video, img {
     width: 100%;
     max-width: 300px;
@@ -71,6 +72,7 @@
   .hidden { display: none !important; }
   .counter { margin-top: 20px; color: #666; font-size: 0.85rem; }
   .choice { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .cam-controls { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; align-items: center; }
 </style>
 </head>
 <body>
@@ -89,16 +91,22 @@
   <!-- شاشة الصورة -->
   <div id="photoScreen" class="hidden">
     <video id="photoVideo" autoplay playsinline muted></video>
-    <button class="primary" id="snapBtn">📸 التقط</button>
-    <button id="photoBack">← رجوع</button>
+    <div class="cam-controls">
+      <button class="primary" id="snapBtn">📸 التقط</button>
+      <button class="small" id="switchPhotoCam">🔄 تبديل الكاميرا</button>
+    </div>
+    <button class="small" id="photoBack">← رجوع</button>
   </div>
 
   <!-- شاشة الفيديو -->
   <div id="videoScreen" class="hidden">
     <video id="recVideo" autoplay playsinline muted></video>
     <div id="timer">1</div>
-    <button class="rec" id="recBtn">● سجّل ثانية</button>
-    <button id="videoBack">← رجوع</button>
+    <div class="cam-controls">
+      <button class="rec" id="recBtn">● سجّل ثانية</button>
+      <button class="small" id="switchVideoCam">🔄 تبديل الكاميرا</button>
+    </div>
+    <button class="small" id="videoBack">← رجوع</button>
   </div>
 
   <!-- شاشة الكلام -->
@@ -106,7 +114,7 @@
     <textarea id="textInput" rows="5" placeholder="اكتب لحظتك..."></textarea>
     <div class="colors" id="colorPicker"></div>
     <button class="primary" id="saveTextBtn">💾 احفظ</button>
-    <button id="textBack">← رجوع</button>
+    <button class="small" id="textBack">← رجوع</button>
   </div>
 
   <!-- شاشة الحفظ -->
@@ -114,7 +122,7 @@
     <div id="preview"></div>
     <textarea id="captionInput" rows="2" placeholder="أضف جملة (اختياري)..."></textarea>
     <button class="primary" id="saveBtn">💾 احفظ اللقطة</button>
-    <button id="againBtn">🔄 من جديد</button>
+    <button class="small" id="againBtn">🔄 من جديد</button>
   </div>
 
   <div id="status"></div>
@@ -132,6 +140,7 @@ let chunks = [];
 let pendingBlob = null;
 let pendingType = null;
 let selectedColor = '#0a0a0a';
+let currentFacing = 'environment';
 
 const COLORS = ['#0a0a0a', '#1e293b', '#7c2d12', '#14532d', '#581c87', '#831843'];
 
@@ -188,7 +197,14 @@ function showScreen(id) {
 // ============ فتح الكاميرا ============
 async function openCamera(videoEl) {
   try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+    if (stream) {
+      stream.getTracks().forEach(t => t.stop());
+      stream = null;
+    }
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: currentFacing },
+      audio: false
+    });
     videoEl.srcObject = stream;
     videoEl.muted = true;
     return true;
@@ -205,10 +221,19 @@ function closeCamera() {
   }
 }
 
+async function toggleCamera(videoEl) {
+  currentFacing = (currentFacing === 'environment') ? 'user' : 'environment';
+  await openCamera(videoEl);
+}
+
 // ============ الصورة ============
 document.getElementById('choosePhoto').addEventListener('click', async () => {
   showScreen('photoScreen');
   await openCamera(document.getElementById('photoVideo'));
+});
+
+document.getElementById('switchPhotoCam').addEventListener('click', () => {
+  toggleCamera(document.getElementById('photoVideo'));
 });
 
 document.getElementById('snapBtn').addEventListener('click', () => {
@@ -236,6 +261,10 @@ document.getElementById('photoBack').addEventListener('click', () => {
 document.getElementById('chooseVideo').addEventListener('click', async () => {
   showScreen('videoScreen');
   await openCamera(document.getElementById('recVideo'));
+});
+
+document.getElementById('switchVideoCam').addEventListener('click', () => {
+  toggleCamera(document.getElementById('recVideo'));
 });
 
 document.getElementById('recBtn').addEventListener('click', () => {
