@@ -18,6 +18,17 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,system-ui,
 .tab .icon{font-size:1.4rem;}
 h1{font-size:1.8rem;font-weight:300;letter-spacing:2px;text-align:center;margin-bottom:6px;color:var(--text);}
 .subtitle{color:var(--text-dim);font-size:.9rem;line-height:1.6;text-align:center;margin-bottom:24px;}
+
+.today-date{text-align:center;color:var(--text-dim);font-size:.9rem;margin-bottom:14px;letter-spacing:.5px;}
+.question-card{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:20px;margin:0 auto 20px;max-width:380px;text-align:center;transition:background .5s,border-color .5s;}
+.question-icon{font-size:1.8rem;display:block;margin-bottom:8px;}
+.question-text{color:var(--text);font-size:1.05rem;line-height:1.7;font-weight:400;}
+.streak-card{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:16px 20px;margin:0 auto 20px;max-width:380px;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .5s,border-color .5s;}
+.streak-card.active{border-color:var(--btn-primary-bg);}
+.streak-fire{font-size:1.6rem;}
+.streak-text{color:var(--text);font-size:1rem;font-weight:500;}
+.streak-sub{color:var(--text-dim);font-size:.8rem;display:block;margin-top:2px;font-weight:400;}
+
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
 .btn{display:block;width:100%;max-width:320px;margin:10px auto;padding:18px;border:1.5px solid var(--border);border-radius:100px;color:var(--text);font-size:1.05rem;text-align:center;transition:all .2s;background:var(--card);}
 .btn:active{transform:scale(.97);opacity:.85;}
@@ -72,8 +83,18 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 </head>
 <body>
 <div class="content" id="tabRecord">
-<h1>لحظة</h1>
-<p class="subtitle">وثّق لحظتك. صورة، فيديو، أو كلام.</p>
+<div class="today-date" id="todayDate"></div>
+<div class="question-card">
+<span class="question-icon">💭</span>
+<div class="question-text" id="dailyQuestion">...</div>
+</div>
+<div class="streak-card" id="streakCard">
+<span class="streak-fire">🔥</span>
+<div>
+<span class="streak-text" id="streakText">0 يوم</span>
+<span class="streak-sub" id="streakSub">ابدأ وثّق اليوم</span>
+</div>
+</div>
 <button class="btn" id="choosePhoto">📷 صورة</button>
 <button class="btn" id="chooseVideo">🎥 فيديو</button>
 <button class="btn" id="chooseText">✍️ كلام</button>
@@ -113,7 +134,7 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 <div class="tabs">
 <button class="tab active" id="tabBtnRecord"><span class="icon">📝</span><span>سجّل</span></button>
 <button class="tab" id="tabBtnMoments"><span class="icon">📸</span><span>لقطاتي</span></button>
-<button class="tab" id="tabBtnSettings"><</span class="icon">⚙️</span><span>إعداداتspan></button>
+<button class="tab" id="tabBtnSettings"><span class="icon">⚙️</span><span>إعدادات</span></button>
 </div>
 <div class="screen-full hidden" id="photoScreen">
 <button class="close" id="photoClose">×</button>
@@ -158,6 +179,30 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 <script>
 const DB_NAME='lahza-db',DB_VERSION=1,STORE_NAME='moments';
 let db=null,stream=null,pendingBlob=null,pendingType=null,selectedColor='#0a0a0a',currentFacing='environment',currentMomentId=null,videoFacing='environment';
+
+const QUESTIONS=[
+"شو أحلى شي صار اليوم؟",
+"شو الشي اللي ممتن إله اليوم؟",
+"شو تعلمت اليوم؟",
+"شو اللحظة اللي ما بدك تنساها؟",
+"شو الشي اللي ضحكك اليوم؟",
+"شو الإنجاز الصغير تبع اليوم؟",
+"مين الشخص اللي أثّر فيك اليوم؟",
+"شو الشي اللي كان صعب اليوم؟",
+"شو الشي اللي بدك تعمله بكرة؟",
+"شو الإحساس اللي عشتو اليوم؟",
+"شو المكان اللي زرتو اليوم؟",
+"شو الأكلة اللي أكلتها وانبسطت فيها؟",
+"شو الشي اللي كنت خايف منه وواجهتو؟",
+"شو الشي اللي بتفتخر فيه اليوم؟",
+"لو ترجع بالزمن ساعة، شو بتغير؟",
+"شو الشي اللي حسّيت فيه بالراحة؟",
+"شو الشي اللي تعبت منه اليوم؟",
+"شو الشي اللي بدك تشكره لنفسك عليه؟",
+"شو أحلى خبر سمعتو اليوم؟",
+"شو الشي اللي ناوي عليه الشهر الجاي؟"
+];
+
 const COLORS=['#0a0a0a','#1e293b','#7c2d12','#14532d','#581c87','#831843'];
 const THEMES={
 dark:{
@@ -178,6 +223,9 @@ yellow:{bg:'#fffde7',text:'#2a2a0a',dim:'#8a8a4a',faint:'#b8b878',border:'#e0e09
 }};
 const COLOR_NAMES={blue:'أزرق',purple:'بنفسجي',green:'أخضر',red:'أحمر',orange:'برتقالي',yellow:'أصفر'};
 let currentTheme={mode:'dark',color:'blue'};
+
+const DAYS_AR=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const MONTHS_AR=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 
 function applyTheme(){
 let m=currentTheme.mode;
@@ -202,6 +250,32 @@ function getMoment(id){return new Promise((res,rej)=>{const t=db.transaction(STO
 function getAllMoments(){return new Promise((res,rej)=>{const t=db.transaction(STORE_NAME,'readonly');const r=t.objectStore(STORE_NAME).getAll();r.onsuccess=()=>res(r.result);r.onerror=e=>rej(e.target.error);});}
 function deleteMoment(id){return new Promise((res,rej)=>{const t=db.transaction(STORE_NAME,'readwrite');const r=t.objectStore(STORE_NAME).delete(id);r.onsuccess=()=>res();r.onerror=e=>rej(e.target.error);});}
 function countMoments(){return new Promise((res,rej)=>{const t=db.transaction(STORE_NAME,'readonly');const r=t.objectStore(STORE_NAME).count();r.onsuccess=()=>res(r.result);r.onerror=e=>rej(e.target.error);});}
+
+function showToday(){
+const d=new Date();
+document.getElementById('todayDate').textContent=DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()]+' '+d.getFullYear();
+const doy=Math.floor((d-new Date(d.getFullYear(),0,0))/86400000);
+document.getElementById('dailyQuestion').textContent=QUESTIONS[doy%QUESTIONS.length];
+}
+
+function getDateStr(date){const d=new Date(date);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+
+async function updateStreak(){
+try{
+const ms=await getAllMoments();
+if(ms.length===0){document.getElementById('streakText').textContent='0 يوم';document.getElementById('streakSub').textContent='ابدأ وثّق اليوم';document.getElementById('streakCard').classList.remove('active');return;}
+const days=new Set(ms.map(m=>getDateStr(m.date)));
+const today=getDateStr(new Date());
+let streak=0;
+let check=new Date();
+if(!days.has(today)){check.setDate(check.getDate()-1);}
+while(days.has(getDateStr(check))){streak++;check.setDate(check.getDate()-1);}
+const hasToday=days.has(today);
+document.getElementById('streakText').textContent=streak+(streak===1?' يوم':' أيام');
+if(hasToday){document.getElementById('streakSub').textContent='وثّقت اليوم ✓';document.getElementById('streakCard').classList.add('active');}
+else{document.getElementById('streakSub').textContent='لا تنسَ توثّق اليوم';document.getElementById('streakCard').classList.remove('active');}
+}catch(e){}
+}
 
 const tabBtnRecord=document.getElementById('tabBtnRecord'),tabBtnMoments=document.getElementById('tabBtnMoments'),tabBtnSettings=document.getElementById('tabBtnSettings'),tabRecord=document.getElementById('tabRecord'),tabMoments=document.getElementById('tabMoments'),tabSettings=document.getElementById('tabSettings');
 function switchTab(t){
@@ -241,7 +315,7 @@ d.appendChild(b);
 const del=document.createElement('button');
 del.className='del';
 del.textContent='×';
-del.onclick=async(e)=>{e.stopPropagation();if(confirm('تحذف هاللقطة؟')){await deleteMoment(m.id);renderMoments();updateCounter();}};
+del.onclick=async(e)=>{e.stopPropagation();if(confirm('تحذف هاللقطة؟')){await deleteMoment(m.id);renderMoments();updateCounter();updateStreak();}};
 d.appendChild(del);
 d.onclick=()=>openMomentModal(m.id);
 tl.appendChild(d);
@@ -269,7 +343,7 @@ mod.classList.remove('hidden');
 }
 document.getElementById('modalClose').onclick=()=>{document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;};
 document.getElementById('modalSave').onclick=async()=>{if(!currentMomentId)return;const m=await getMoment(currentMomentId);if(!m)return;m.caption=document.getElementById('modalCaption').value.trim();await updateMoment(m);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();};
-document.getElementById('modalDelete').onclick=async()=>{if(!currentMomentId)return;if(confirm('تحذف هاللقطة؟')){await deleteMoment(currentMomentId);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();updateCounter();}};
+document.getElementById('modalDelete').onclick=async()=>{if(!currentMomentId)return;if(confirm('تحذف هاللقطة؟')){await deleteMoment(currentMomentId);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();updateCounter();updateStreak();}};
 
 async function openCamera(v){try{if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:currentFacing},audio:false});v.srcObject=stream;v.muted=true;}catch(e){document.getElementById('status').textContent='❌ خطأ: '+e.message;}}
 function closeCamera(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}}
@@ -318,6 +392,7 @@ document.getElementById('preview').innerHTML='';
 pendingBlob=null;pendingType=null;
 document.getElementById('saveScreen').classList.add('hidden');
 updateCounter();
+updateStreak();
 }catch(e){alert('خطأ: '+e.message);}
 };
 document.getElementById('saveClose').onclick=()=>{document.getElementById('captionInput').value='';document.getElementById('preview').innerHTML='';pendingBlob=null;pendingType=null;document.getElementById('saveScreen').classList.add('hidden');};
@@ -330,10 +405,11 @@ function updateModeButtons(){document.getElementById('modeDark').classList.toggl
 document.getElementById('applyTime').onclick=()=>{currentTheme.mode='auto';applyTheme();updateModeButtons();buildColorGrid();alert('تم تفعيل الوضع الزمني');};
 document.getElementById('applySeason').onclick=()=>{const m=new Date().getMonth()+1;let c='blue';if(m>=3&&m<=5)c='green';else if(m>=6&&m<=8)c='yellow';else if(m>=9&&m<=11)c='orange';else c='blue';currentTheme.color=c;applyTheme();buildColorGrid();alert('تم تفعيل الوضع الموسمي');};
 
+showToday();
 loadTheme();
 updateModeButtons();
 buildColorGrid();
-openDB().then(()=>{updateCounter();}).catch(e=>{document.getElementById('status').textContent='❌ خطأ: '+e.message;});
+openDB().then(()=>{updateCounter();updateStreak();}).catch(e=>{document.getElementById('status').textContent='❌ خطأ: '+e.message;});
 </script>
 </body>
 </html>
