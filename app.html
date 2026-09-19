@@ -42,8 +42,20 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 .color-dot.active{border-color:var(--text);transform:scale(1.1);}
 #status{margin-top:14px;color:#4ade80;font-size:.9rem;min-height:20px;text-align:center;}
 .hidden{display:none !important;}
-.timeline{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
-.moment{background:var(--card);border-radius:12px;overflow:hidden;position:relative;aspect-ratio:9/16;cursor:pointer;transition:transform .15s;}
+.counter{text-align:center;color:var(--text-faint);font-size:.85rem;margin-top:20px;}
+.empty{text-align:center;color:var(--text-faint);margin-top:80px;font-size:1rem;line-height:2;}
+.day-group{background:var(--card);border:1.5px solid var(--border);border-radius:16px;margin-bottom:12px;overflow:hidden;transition:background .5s,border-color .5s;}
+.day-header{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
+.day-header:active{opacity:.7;}
+.day-info{display:flex;flex-direction:column;gap:2px;}
+.day-title{color:var(--text);font-size:.95rem;font-weight:500;}
+.day-count{color:var(--text-dim);font-size:.78rem;}
+.day-arrow{color:var(--text-dim);font-size:1rem;transition:transform .3s;}
+.day-group.open .day-arrow{transform:rotate(90deg);}
+.day-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+.day-group.open .day-body{max-height:2000px;}
+.day-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px 14px;}
+.moment{background:var(--bg);border-radius:12px;overflow:hidden;position:relative;aspect-ratio:9/16;cursor:pointer;transition:transform .15s;}
 .moment img,.moment video{width:100%;height:100%;object-fit:cover;display:block;position:absolute;top:0;left:0;}
 .moment .text-content{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;font-size:1rem;line-height:1.6;color:#fff;position:absolute;top:0;left:0;}
 .moment .bottom-bar{position:absolute;bottom:0;left:0;right:0;z-index:2;background:linear-gradient(to top,rgba(0,0,0,.85),transparent);padding:8px;}
@@ -51,8 +63,6 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 .moment .caption{font-size:.7rem;color:#fff;margin-top:2px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .moment .del{position:absolute;top:6px;left:6px;background:rgba(239,68,68,.9);border:none;color:#fff;width:26px;height:26px;border-radius:50%;font-size:.9rem;display:flex;align-items:center;justify-content:center;z-index:3;}
 .moment:active{transform:scale(.98);}
-.empty{text-align:center;color:var(--text-faint);margin-top:80px;font-size:1rem;line-height:2;}
-.counter{text-align:center;color:var(--text-faint);font-size:.85rem;margin-top:20px;}
 .screen-full{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:200;overflow-y:auto;padding:20px 16px 90px;animation:slideUp .25s ease;}
 .screen-full .close{position:absolute;top:14px;right:14px;font-size:1.6rem;color:var(--text-dim);width:40px;height:40px;display:flex;align-items:center;justify-content:center;}
 .screen-full .close:active{color:var(--text);}
@@ -78,12 +88,18 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 .color-option{padding:14px;border:2px solid transparent;border-radius:12px;text-align:center;font-size:.85rem;cursor:pointer;transition:all .2s;color:#fff;font-weight:500;}
 .color-option.active{border-color:var(--btn-primary-bg);transform:scale(1.05);}
 .color-option .emoji{display:block;font-size:1.5rem;margin-bottom:4px;}
+.sheet-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.55);z-index:400;display:flex;align-items:flex-end;justify-content:center;animation:fadeIn .2s ease;}
+.sheet{width:100%;max-width:500px;background:var(--card);border-radius:24px 24px 0 0;padding:16px 16px 32px;animation:slideUpSheet .3s ease;border-top:1.5px solid var(--border);}
+@keyframes slideUpSheet{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.sheet-title{text-align:center;color:var(--text-dim);font-size:.85rem;margin-bottom:14px;}
+.sheet .btn{margin:6px auto;background:var(--bg);}
+.sheet-cancel{margin-top:8px !important;background:transparent !important;color:var(--text-dim) !important;border-color:transparent !important;}
 </style>
 </head>
 <body>
 <div class="content" id="tabRecord">
 <div class="today-date" id="todayDate"></div>
-<div class="question-card">
+<div class="question-card" id="questionCard">
 <span class="question-icon">💭</span>
 <div class="question-text" id="dailyQuestion">...</div>
 </div>
@@ -103,7 +119,7 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 <div class="content hidden" id="tabMoments">
 <h1>لقطاتي</h1>
 <div class="counter" id="countMoments"></div>
-<div class="timeline" id="timeline"></div>
+<div id="timeline"></div>
 <div class="empty hidden" id="empty">لا توجد لقطات بعد<br>ارجع إلى تبويب التسجيل ووثّق أول لحظة 📸</div>
 </div>
 <div class="content hidden" id="tabSettings">
@@ -174,6 +190,17 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 </div>
 </div>
 </div>
+<div class="hidden" id="questionSheet">
+<div class="sheet-overlay" id="sheetOverlay">
+<div class="sheet">
+<div class="sheet-title">كيف تريد الإجابة؟</div>
+<button class="btn" id="sheetPhoto">📷 صورة</button>
+<button class="btn" id="sheetVideo">🎥 فيديو</button>
+<button class="btn" id="sheetText">✍️ كتابة</button>
+<button class="btn small sheet-cancel" id="sheetCancel">إلغاء</button>
+</div>
+</div>
+</div>
 <input type="file" accept="video/*" capture="environment" id="videoInput" style="display:none;">
 <script>
 const DB_NAME='lahza-db',DB_VERSION=1,STORE_NAME='moments';
@@ -199,6 +226,15 @@ function deleteMoment(id){return new Promise((res,rej)=>{const t=db.transaction(
 function countMoments(){return new Promise((res,rej)=>{const t=db.transaction(STORE_NAME,'readonly');const r=t.objectStore(STORE_NAME).count();r.onsuccess=()=>res(r.result);r.onerror=e=>rej(e.target.error);});}
 function showToday(){const d=new Date();document.getElementById('todayDate').textContent=DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()]+' '+d.getFullYear();const doy=Math.floor((d-new Date(d.getFullYear(),0,0))/86400000);document.getElementById('dailyQuestion').textContent=QUESTIONS[doy%QUESTIONS.length];}
 function getDateStr(date){const d=new Date(date);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function getDayLabel(dateStr){
+const today=getDateStr(new Date());
+const yest=new Date();yest.setDate(yest.getDate()-1);
+const yestStr=getDateStr(yest);
+if(dateStr===today)return 'اليوم';
+if(dateStr===yestStr)return 'أمس';
+const d=new Date(dateStr+'T12:00:00');
+return DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()]+' '+d.getFullYear();
+}
 async function updateStreak(){try{const ms=await getAllMoments();if(ms.length===0){document.getElementById('streakText').textContent='0 يوم';document.getElementById('streakSub').textContent='ابدأ بتوثيق يومك';document.getElementById('streakCard').classList.remove('active');return;}const days=new Set(ms.map(m=>getDateStr(m.date)));const today=getDateStr(new Date());let streak=0;let check=new Date();if(!days.has(today)){check.setDate(check.getDate()-1);}while(days.has(getDateStr(check))){streak++;check.setDate(check.getDate()-1);}const hasToday=days.has(today);document.getElementById('streakText').textContent=streak+(streak===1?' يوم':' أيام');if(hasToday){document.getElementById('streakSub').textContent='وثّقت اليوم ✓';document.getElementById('streakCard').classList.add('active');}else{document.getElementById('streakSub').textContent='لا تنسَ توثيق يومك';document.getElementById('streakCard').classList.remove('active');}}catch(e){}}
 const tabBtnRecord=document.getElementById('tabBtnRecord'),tabBtnMoments=document.getElementById('tabBtnMoments'),tabBtnSettings=document.getElementById('tabBtnSettings'),tabRecord=document.getElementById('tabRecord'),tabMoments=document.getElementById('tabMoments'),tabSettings=document.getElementById('tabSettings');
 function switchTab(t){[tabBtnRecord,tabBtnMoments,tabBtnSettings].forEach(b=>b.classList.remove('active'));[tabRecord,tabMoments,tabSettings].forEach(c=>c.classList.add('hidden'));if(t==='record'){tabBtnRecord.classList.add('active');tabRecord.classList.remove('hidden');}else if(t==='moments'){tabBtnMoments.classList.add('active');tabMoments.classList.remove('hidden');renderMoments();}else{tabBtnSettings.classList.add('active');tabSettings.classList.remove('hidden');}}
@@ -210,22 +246,53 @@ async function renderMoments(){
 const tl=document.getElementById('timeline'),em=document.getElementById('empty'),ce=document.getElementById('countMoments');
 try{
 const ms=await getAllMoments();
-ms.reverse();
 if(ms.length===0){ce.textContent='';em.classList.remove('hidden');tl.innerHTML='';return;}
 em.classList.add('hidden');
 ce.textContent='📸 '+ms.length+(ms.length===1?' لقطة':' لقطات');
+const groups={};
+ms.forEach(m=>{const k=getDateStr(m.date);if(!groups[k])groups[k]=[];groups[k].push(m);});
+const keys=Object.keys(groups).sort().reverse();
+const todayKey=getDateStr(new Date());
 tl.innerHTML='';
-for(const m of ms){
+for(const k of keys){
+const list=groups[k];
+const grp=document.createElement('div');
+grp.className='day-group'+(k===todayKey?' open':'');
+const header=document.createElement('div');
+header.className='day-header';
+const info=document.createElement('div');
+info.className='day-info';
+const title=document.createElement('div');
+title.className='day-title';
+title.textContent=getDayLabel(k);
+const cnt=document.createElement('div');
+cnt.className='day-count';
+cnt.textContent=(list.length===1?'لقطة واحدة':list.length+' لقطات');
+info.appendChild(title);
+info.appendChild(cnt);
+const arrow=document.createElement('div');
+arrow.className='day-arrow';
+arrow.textContent='▶';
+header.appendChild(info);
+header.appendChild(arrow);
+header.onclick=()=>{grp.classList.toggle('open');};
+grp.appendChild(header);
+const body=document.createElement('div');
+body.className='day-body';
+const grid=document.createElement('div');
+grid.className='day-grid';
+list.sort((a,b)=>new Date(b.date)-new Date(a.date));
+for(const m of list){
 const d=document.createElement('div');
 d.className='moment';
 if(m.type==='photo'){const i=document.createElement('img');i.src=URL.createObjectURL(m.blob);d.appendChild(i);}
 else if(m.type==='video'){const v=document.createElement('video');v.src=URL.createObjectURL(m.blob);v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=true;d.appendChild(v);}
 else if(m.type==='text'){const t=document.createElement('div');t.className='text-content';t.style.background=m.color||'#0a0a0a';t.textContent=await m.blob.text();d.appendChild(t);}
+const dt=new Date(m.date);
+const timeStr=dt.getHours()+':'+String(dt.getMinutes()).padStart(2,'0');
 const b=document.createElement('div');
 b.className='bottom-bar';
-const dt=new Date(m.date);
-const ds=dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
-b.innerHTML='<div class="date">'+ds+'</div>'+(m.caption?'<div class="caption">'+m.caption+'</div>':'');
+b.innerHTML='<div class="date">'+timeStr+'</div>'+(m.caption?'<div class="caption">'+m.caption+'</div>':'');
 d.appendChild(b);
 const del=document.createElement('button');
 del.className='del';
@@ -233,7 +300,11 @@ del.textContent='×';
 del.onclick=async(e)=>{e.stopPropagation();if(confirm('هل تريد حذف هذه اللقطة؟')){await deleteMoment(m.id);renderMoments();updateCounter();updateStreak();}};
 d.appendChild(del);
 d.onclick=()=>openMomentModal(m.id);
-tl.appendChild(d);
+grid.appendChild(d);
+}
+body.appendChild(grid);
+grp.appendChild(body);
+tl.appendChild(grp);
 }
 }catch(err){ce.textContent='❌ خطأ: '+err.message;}
 }
@@ -258,6 +329,12 @@ mod.classList.remove('hidden');
 document.getElementById('modalClose').onclick=()=>{document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;};
 document.getElementById('modalSave').onclick=async()=>{if(!currentMomentId)return;const m=await getMoment(currentMomentId);if(!m)return;m.caption=document.getElementById('modalCaption').value.trim();await updateMoment(m);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();};
 document.getElementById('modalDelete').onclick=async()=>{if(!currentMomentId)return;if(confirm('هل تريد حذف هذه اللقطة؟')){await deleteMoment(currentMomentId);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();updateCounter();updateStreak();}};
+document.getElementById('questionCard').onclick=()=>{document.getElementById('questionSheet').classList.remove('hidden');};
+document.getElementById('sheetCancel').onclick=()=>{document.getElementById('questionSheet').classList.add('hidden');};
+document.getElementById('sheetOverlay').onclick=(e)=>{if(e.target.id==='sheetOverlay')document.getElementById('questionSheet').classList.add('hidden');};
+document.getElementById('sheetPhoto').onclick=async()=>{document.getElementById('questionSheet').classList.add('hidden');document.getElementById('photoScreen').classList.remove('hidden');await openCamera(document.getElementById('photoVideo'));};
+document.getElementById('sheetVideo').onclick=()=>{document.getElementById('questionSheet').classList.add('hidden');document.getElementById('videoScreen').classList.remove('hidden');updateCamLabel();};
+document.getElementById('sheetText').onclick=()=>{document.getElementById('questionSheet').classList.add('hidden');document.getElementById('textScreen').classList.remove('hidden');};
 async function openCamera(v){try{if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:currentFacing},audio:false});v.srcObject=stream;v.muted=true;}catch(e){document.getElementById('status').textContent='❌ خطأ: '+e.message;}}
 function closeCamera(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}}
 async function toggleCamera(v){currentFacing=(currentFacing==='environment')?'user':'environment';await openCamera(v);}
