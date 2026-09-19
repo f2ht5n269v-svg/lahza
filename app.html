@@ -91,12 +91,12 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 <span class="streak-fire">🔥</span>
 <div>
 <span class="streak-text" id="streakText">0 يوم</span>
-<span class="streak-sub" id="streakSub">ابدأ وثّق اليوم</span>
+<span class="streak-sub" id="streakSub">ابدأ بتوثيق يومك</span>
 </div>
 </div>
 <button class="btn" id="choosePhoto">📷 صورة</button>
 <button class="btn" id="chooseVideo">🎥 فيديو</button>
-<button class="btn" id="chooseText">✍️ كلام</button>
+<button class="btn" id="chooseText">✍️ كتابة</button>
 <div class="counter" id="counter">جاري التحميل...</div>
 <div id="status"></div>
 </div>
@@ -104,7 +104,7 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 <h1>لقطاتي</h1>
 <div class="counter" id="countMoments"></div>
 <div class="timeline" id="timeline"></div>
-<div class="empty hidden" id="empty">ما في لقطات بعد<br>ارجع لتبويب "سجّل" ووثّق أول لحظة 📸</div>
+<div class="empty hidden" id="empty">لا توجد لقطات بعد<br>ارجع إلى تبويب التسجيل ووثّق أول لحظة 📸</div>
 </div>
 <div class="content hidden" id="tabSettings">
 <h1>إعدادات</h1>
@@ -144,15 +144,15 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 <div class="screen-full hidden" id="videoScreen">
 <button class="close" id="videoClose">×</button>
 <h1>🎥 فيديو</h1>
-<p class="subtitle">سجّل مقطع من كاميرا الآيفون.<br>الفيديو رح يشتغل مباشرة في التطبيق.</p>
-<div style="text-align:center;color:var(--text-dim);font-size:.9rem;margin:20px 0;">الكاميرا الحالية: <span id="camLabel">خلفية</span></div>
+<p class="subtitle">سجّل مقطعاً من كاميرا الآيفون.<br>سيعمل الفيديو مباشرة في التطبيق.</p>
+<div style="text-align:center;color:var(--text-dim);font-size:.9rem;margin:20px 0;">الكاميرا الحالية: <span id="camLabel">الخلفية</span></div>
 <button class="btn primary" id="startVideoRec">🎥 ابدأ التسجيل</button>
 <button class="btn small" id="switchVideoCam">🔄 تبديل الكاميرا</button>
 </div>
 <div class="screen-full hidden" id="textScreen">
 <button class="close" id="textClose">×</button>
 <h1>اكتب لحظتك</h1>
-<textarea id="textInput" rows="5" placeholder="شو صار اليوم؟"></textarea>
+<textarea id="textInput" rows="5" placeholder="ماذا حدث اليوم؟"></textarea>
 <div class="colors" id="colorPicker"></div>
 <button class="btn primary" id="saveTextBtn">التالي</button>
 </div>
@@ -178,7 +178,7 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 <script>
 const DB_NAME='lahza-db',DB_VERSION=1,STORE_NAME='moments';
 let db=null,stream=null,pendingBlob=null,pendingType=null,selectedColor='#0a0a0a',currentFacing='environment',currentMomentId=null,videoFacing='environment';
-const QUESTIONS=["شو أحلى شي صار اليوم؟","شو الشي اللي ضحكك اليوم؟","مين الشخص اللي فرحت تشوفيه اليوم؟","شو اللحظة اللي بدك تحتفظ فيها؟","شو الشي اللي حسّيت فيه بالراحة؟","شو الأكلة اللي انبسطت فيها اليوم؟","شو المكان اللي زرتو اليوم؟","شو الشي اللي شفتو وحبيتو؟","شو اللعبة أو الفيلم اللي تابعته؟","شو الشي اللي اشتريتو اليوم؟","كيف كان مزاجك اليوم؟","لو تصف يومك بكلمة وحدة، شو بتقول؟","شو اللون اللي بيعبر عن يومك؟","شو الإحساس اللي غلب على يومك؟","شو الشي اللي بدك تشكره لنفسك عليه؟","شو الإنجاز الصغير تبع اليوم؟","شو الشي اللي كنت خايف منه وواجهتو؟","شو الشي اللي بتفتخر فيه اليوم؟","شو الشي اللي بدك تعمله بكرة؟","شو أحلى خبر سمعتو اليوم؟"];
+const QUESTIONS=["ما أجمل ما حدث اليوم؟","ما الذي أضحكك اليوم؟","من الشخص الذي أسعدك لقاؤه اليوم؟","ما اللحظة التي تود الاحتفاظ بها؟","ما الشيء الذي شعرت فيه بالراحة؟","ما الطعام الذي استمتعت به اليوم؟","ما المكان الذي زرته اليوم؟","ما الشيء الذي رأيته وأحببته؟","ما العمل الفني الذي تابعته اليوم؟","ما الشيء الذي اشتريته اليوم؟","كيف كان مزاجك اليوم؟","لو وصفت يومك بكلمة واحدة، فماذا تقول؟","ما اللون الذي يعبر عن يومك؟","ما الشعور الذي غلب على يومك؟","ما الذي تشكر نفسك عليه؟","ما الإنجاز الصغير لهذا اليوم؟","ما الأمر الذي كنت تخشاه فواجهته؟","ما الذي تفتخر به اليوم؟","ما الذي تنوي فعله غداً؟","ما أجمل خبر سمعته اليوم؟"];
 const COLORS=['#0a0a0a','#1e293b','#7c2d12','#14532d','#581c87','#831843'];
 const THEMES={
 dark:{blue:{bg:'#0a1929',text:'#fff',dim:'#8899aa',faint:'#667788',border:'#2a4a6e',card:'#142a44',primary:'#4ade80',primaryText:'#000'},purple:{bg:'#1a0a29',text:'#fff',dim:'#9988aa',faint:'#776688',border:'#4a2a6e',card:'#2a1444',primary:'#c084fc',primaryText:'#000'},green:{bg:'#0a2919',text:'#fff',dim:'#88aa99',faint:'#668877',border:'#2a6e4a',card:'#14442a',primary:'#4ade80',primaryText:'#000'},red:{bg:'#290a0a',text:'#fff',dim:'#aa8888',faint:'#886666',border:'#6e2a2a',card:'#441414',primary:'#f87171',primaryText:'#000'},orange:{bg:'#291a0a',text:'#fff',dim:'#aa9988',faint:'#887766',border:'#6e4a2a',card:'#442a14',primary:'#fb923c',primaryText:'#000'},yellow:{bg:'#29290a',text:'#fff',dim:'#aaaa88',faint:'#888866',border:'#6e6e2a',card:'#444414',primary:'#facc15',primaryText:'#000'}},
@@ -188,10 +188,8 @@ const COLOR_NAMES={blue:'أزرق',purple:'بنفسجي',green:'أخضر',red:'�
 let currentTheme={mode:'dark',color:'blue'};
 const DAYS_AR=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
 const MONTHS_AR=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-
 function applyTheme(){let m=currentTheme.mode;if(m==='auto'){let h=new Date().getHours();m=(h>=6&&h<18)?'light':'dark';}const t=THEMES[m][currentTheme.color];document.documentElement.style.setProperty('--bg',t.bg);document.documentElement.style.setProperty('--text',t.text);document.documentElement.style.setProperty('--text-dim',t.dim);document.documentElement.style.setProperty('--text-faint',t.faint);document.documentElement.style.setProperty('--border',t.border);document.documentElement.style.setProperty('--card',t.card);document.documentElement.style.setProperty('--btn-primary-bg',t.primary);document.documentElement.style.setProperty('--btn-primary-text',t.primaryText);localStorage.setItem('lahza-theme',JSON.stringify(currentTheme));}
 function loadTheme(){try{const s=localStorage.getItem('lahza-theme');if(s)currentTheme=JSON.parse(s);}catch(e){currentTheme={mode:'dark',color:'blue'};}applyTheme();}
-
 function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open(DB_NAME,DB_VERSION);r.onupgradeneeded=e=>{const d=e.target.result;if(!d.objectStoreNames.contains(STORE_NAME))d.createObjectStore(STORE_NAME,{keyPath:'id',autoIncrement:true});};r.onsuccess=e=>{db=e.target.result;res(db);};r.onerror=e=>rej(e.target.error);});}
 function saveMoment(m){return new Promise((res,rej)=>{const t=db.transaction(STORE_NAME,'readwrite');const r=t.objectStore(STORE_NAME).add(m);r.onsuccess=()=>res(r.result);r.onerror=e=>rej(e.target.error);});}
 function updateMoment(m){return new Promise((res,rej)=>{const t=db.transaction(STORE_NAME,'readwrite');const r=t.objectStore(STORE_NAME).put(m);r.onsuccess=()=>res(r.result);r.onerror=e=>rej(e.target.error);});}
@@ -199,20 +197,15 @@ function getMoment(id){return new Promise((res,rej)=>{const t=db.transaction(STO
 function getAllMoments(){return new Promise((res,rej)=>{const t=db.transaction(STORE_NAME,'readonly');const r=t.objectStore(STORE_NAME).getAll();r.onsuccess=()=>res(r.result);r.onerror=e=>rej(e.target.error);});}
 function deleteMoment(id){return new Promise((res,rej)=>{const t=db.transaction(STORE_NAME,'readwrite');const r=t.objectStore(STORE_NAME).delete(id);r.onsuccess=()=>res();r.onerror=e=>rej(e.target.error);});}
 function countMoments(){return new Promise((res,rej)=>{const t=db.transaction(STORE_NAME,'readonly');const r=t.objectStore(STORE_NAME).count();r.onsuccess=()=>res(r.result);r.onerror=e=>rej(e.target.error);});}
-
 function showToday(){const d=new Date();document.getElementById('todayDate').textContent=DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()]+' '+d.getFullYear();const doy=Math.floor((d-new Date(d.getFullYear(),0,0))/86400000);document.getElementById('dailyQuestion').textContent=QUESTIONS[doy%QUESTIONS.length];}
 function getDateStr(date){const d=new Date(date);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
-
-async function updateStreak(){try{const ms=await getAllMoments();if(ms.length===0){document.getElementById('streakText').textContent='0 يوم';document.getElementById('streakSub').textContent='ابدأ وثّق اليوم';document.getElementById('streakCard').classList.remove('active');return;}const days=new Set(ms.map(m=>getDateStr(m.date)));const today=getDateStr(new Date());let streak=0;let check=new Date();if(!days.has(today)){check.setDate(check.getDate()-1);}while(days.has(getDateStr(check))){streak++;check.setDate(check.getDate()-1);}const hasToday=days.has(today);document.getElementById('streakText').textContent=streak+(streak===1?' يوم':' أيام');if(hasToday){document.getElementById('streakSub').textContent='وثّقت اليوم ✓';document.getElementById('streakCard').classList.add('active');}else{document.getElementById('streakSub').textContent='لا تنسَ توثّق اليوم';document.getElementById('streakCard').classList.remove('active');}}catch(e){}}
-
+async function updateStreak(){try{const ms=await getAllMoments();if(ms.length===0){document.getElementById('streakText').textContent='0 يوم';document.getElementById('streakSub').textContent='ابدأ بتوثيق يومك';document.getElementById('streakCard').classList.remove('active');return;}const days=new Set(ms.map(m=>getDateStr(m.date)));const today=getDateStr(new Date());let streak=0;let check=new Date();if(!days.has(today)){check.setDate(check.getDate()-1);}while(days.has(getDateStr(check))){streak++;check.setDate(check.getDate()-1);}const hasToday=days.has(today);document.getElementById('streakText').textContent=streak+(streak===1?' يوم':' أيام');if(hasToday){document.getElementById('streakSub').textContent='وثّقت اليوم ✓';document.getElementById('streakCard').classList.add('active');}else{document.getElementById('streakSub').textContent='لا تنسَ توثيق يومك';document.getElementById('streakCard').classList.remove('active');}}catch(e){}}
 const tabBtnRecord=document.getElementById('tabBtnRecord'),tabBtnMoments=document.getElementById('tabBtnMoments'),tabBtnSettings=document.getElementById('tabBtnSettings'),tabRecord=document.getElementById('tabRecord'),tabMoments=document.getElementById('tabMoments'),tabSettings=document.getElementById('tabSettings');
 function switchTab(t){[tabBtnRecord,tabBtnMoments,tabBtnSettings].forEach(b=>b.classList.remove('active'));[tabRecord,tabMoments,tabSettings].forEach(c=>c.classList.add('hidden'));if(t==='record'){tabBtnRecord.classList.add('active');tabRecord.classList.remove('hidden');}else if(t==='moments'){tabBtnMoments.classList.add('active');tabMoments.classList.remove('hidden');renderMoments();}else{tabBtnSettings.classList.add('active');tabSettings.classList.remove('hidden');}}
 tabBtnRecord.onclick=()=>switchTab('record');
 tabBtnMoments.onclick=()=>switchTab('moments');
 tabBtnSettings.onclick=()=>switchTab('settings');
-
-function updateCounter(){countMoments().then(n=>{const c=document.getElementById('counter');if(n===0)c.textContent='ما في لقطات بعد';else if(n===1)c.textContent='📸 لقطة واحدة محفوظة';else c.textContent='📸 '+n+' لقطات محفوظة';});}
-
+function updateCounter(){countMoments().then(n=>{const c=document.getElementById('counter');if(n===0)c.textContent='لا توجد لقطات بعد';else if(n===1)c.textContent='📸 لقطة واحدة محفوظة';else c.textContent='📸 '+n+' لقطات محفوظة';});}
 async function renderMoments(){
 const tl=document.getElementById('timeline'),em=document.getElementById('empty'),ce=document.getElementById('countMoments');
 try{
@@ -237,14 +230,13 @@ d.appendChild(b);
 const del=document.createElement('button');
 del.className='del';
 del.textContent='×';
-del.onclick=async(e)=>{e.stopPropagation();if(confirm('تحذف هاللقطة؟')){await deleteMoment(m.id);renderMoments();updateCounter();updateStreak();}};
+del.onclick=async(e)=>{e.stopPropagation();if(confirm('هل تريد حذف هذه اللقطة؟')){await deleteMoment(m.id);renderMoments();updateCounter();updateStreak();}};
 d.appendChild(del);
 d.onclick=()=>openMomentModal(m.id);
 tl.appendChild(d);
 }
 }catch(err){ce.textContent='❌ خطأ: '+err.message;}
 }
-
 async function openMomentModal(id){
 const m=await getMoment(id);
 if(!m)return;
@@ -265,36 +257,29 @@ mod.classList.remove('hidden');
 }
 document.getElementById('modalClose').onclick=()=>{document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;};
 document.getElementById('modalSave').onclick=async()=>{if(!currentMomentId)return;const m=await getMoment(currentMomentId);if(!m)return;m.caption=document.getElementById('modalCaption').value.trim();await updateMoment(m);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();};
-document.getElementById('modalDelete').onclick=async()=>{if(!currentMomentId)return;if(confirm('تحذف هاللقطة؟')){await deleteMoment(currentMomentId);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();updateCounter();updateStreak();}};
-
+document.getElementById('modalDelete').onclick=async()=>{if(!currentMomentId)return;if(confirm('هل تريد حذف هذه اللقطة؟')){await deleteMoment(currentMomentId);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();updateCounter();updateStreak();}};
 async function openCamera(v){try{if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:currentFacing},audio:false});v.srcObject=stream;v.muted=true;}catch(e){document.getElementById('status').textContent='❌ خطأ: '+e.message;}}
 function closeCamera(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}}
 async function toggleCamera(v){currentFacing=(currentFacing==='environment')?'user':'environment';await openCamera(v);}
-
 document.getElementById('choosePhoto').onclick=async()=>{document.getElementById('photoScreen').classList.remove('hidden');await openCamera(document.getElementById('photoVideo'));};
 document.getElementById('photoClose').onclick=()=>{closeCamera();document.getElementById('photoScreen').classList.add('hidden');};
 document.getElementById('switchPhotoCam').onclick=()=>toggleCamera(document.getElementById('photoVideo'));
 document.getElementById('snapBtn').onclick=()=>{const v=document.getElementById('photoVideo');const cv=document.createElement('canvas');cv.width=v.videoWidth;cv.height=v.videoHeight;cv.getContext('2d').drawImage(v,0,0);cv.toBlob(b=>{pendingBlob=b;pendingType='photo';closeCamera();document.getElementById('photoScreen').classList.add('hidden');showPreview();document.getElementById('saveScreen').classList.remove('hidden');},'image/jpeg',.9);};
-
 const videoInput=document.getElementById('videoInput');
 document.getElementById('chooseVideo').onclick=()=>{document.getElementById('videoScreen').classList.remove('hidden');updateCamLabel();};
 document.getElementById('videoClose').onclick=()=>{document.getElementById('videoScreen').classList.add('hidden');};
 document.getElementById('switchVideoCam').onclick=()=>{videoFacing=(videoFacing==='environment')?'user':'environment';videoInput.setAttribute('capture',videoFacing);updateCamLabel();};
-function updateCamLabel(){document.getElementById('camLabel').textContent=(videoFacing==='environment')?'خلفية':'أمامية';}
+function updateCamLabel(){document.getElementById('camLabel').textContent=(videoFacing==='environment')?'الخلفية':'الأمامية';}
 document.getElementById('startVideoRec').onclick=()=>{videoInput.value='';videoInput.click();};
 videoInput.onchange=e=>{const f=e.target.files[0];if(!f)return;pendingBlob=f;pendingType='video';document.getElementById('videoScreen').classList.add('hidden');showPreview();document.getElementById('saveScreen').classList.remove('hidden');};
-
 const cp=document.getElementById('colorPicker');
 COLORS.forEach((c,i)=>{const d=document.createElement('div');d.className='color-dot'+(i===0?' active':'');d.style.background=c;d.onclick=()=>{document.querySelectorAll('.color-dot').forEach(x=>x.classList.remove('active'));d.classList.add('active');selectedColor=c;};cp.appendChild(d);});
 document.getElementById('chooseText').onclick=()=>document.getElementById('textScreen').classList.remove('hidden');
 document.getElementById('textClose').onclick=()=>document.getElementById('textScreen').classList.add('hidden');
-document.getElementById('saveTextBtn').onclick=()=>{const t=document.getElementById('textInput').value.trim();if(!t){alert('اكتب شي أول');return;}pendingBlob=new Blob([t],{type:'text/plain'});pendingType='text';document.getElementById('textScreen').classList.add('hidden');showPreview();document.getElementById('saveScreen').classList.remove('hidden');};
-
+document.getElementById('saveTextBtn').onclick=()=>{const t=document.getElementById('textInput').value.trim();if(!t){alert('اكتب شيئاً أولاً');return;}pendingBlob=new Blob([t],{type:'text/plain'});pendingType='text';document.getElementById('textScreen').classList.add('hidden');showPreview();document.getElementById('saveScreen').classList.remove('hidden');};
 function showPreview(){const p=document.getElementById('preview');p.innerHTML='';if(pendingType==='photo'){const i=document.createElement('img');i.className='preview';i.src=URL.createObjectURL(pendingBlob);p.appendChild(i);}else if(pendingType==='video'){const v=document.createElement('video');v.src=URL.createObjectURL(pendingBlob);v.controls=true;v.playsInline=true;p.appendChild(v);}else if(pendingType==='text'){pendingBlob.text().then(t=>{const d=document.createElement('div');d.style.cssText='background:'+selectedColor+';padding:50px 20px;border-radius:16px;max-width:320px;margin:16px auto;font-size:1.3rem;line-height:1.8;text-align:center;color:#fff;';d.textContent=t;p.appendChild(d);});}}
-
 document.getElementById('saveBtn').onclick=async()=>{if(!pendingBlob)return;const c=document.getElementById('captionInput').value.trim();try{await saveMoment({date:new Date().toISOString(),blob:pendingBlob,type:pendingType,caption:c,color:selectedColor});document.getElementById('captionInput').value='';document.getElementById('preview').innerHTML='';pendingBlob=null;pendingType=null;document.getElementById('saveScreen').classList.add('hidden');updateCounter();updateStreak();}catch(e){alert('خطأ: '+e.message);}};
 document.getElementById('saveClose').onclick=()=>{document.getElementById('captionInput').value='';document.getElementById('preview').innerHTML='';pendingBlob=null;pendingType=null;document.getElementById('saveScreen').classList.add('hidden');};
-
 function buildColorGrid(){const g=document.getElementById('colorGrid');g.innerHTML='';Object.keys(COLOR_NAMES).forEach(c=>{const d=document.createElement('div');d.className='color-option'+(currentTheme.color===c?' active':'');const m=currentTheme.mode==='auto'?'dark':currentTheme.mode;d.style.background=THEMES[m][c].bg;d.style.color=THEMES[m][c].text;d.style.border='2px solid '+THEMES[m][c].border;d.innerHTML='<span class="emoji">🎨</span>'+COLOR_NAMES[c];d.onclick=()=>{currentTheme.color=c;applyTheme();buildColorGrid();};g.appendChild(d);});}
 document.getElementById('modeDark').onclick=()=>{currentTheme.mode='dark';applyTheme();updateModeButtons();buildColorGrid();};
 document.getElementById('modeLight').onclick=()=>{currentTheme.mode='light';applyTheme();updateModeButtons();buildColorGrid();};
@@ -302,7 +287,6 @@ document.getElementById('modeAuto').onclick=()=>{currentTheme.mode='auto';applyT
 function updateModeButtons(){document.getElementById('modeDark').classList.toggle('active',currentTheme.mode==='dark');document.getElementById('modeLight').classList.toggle('active',currentTheme.mode==='light');document.getElementById('modeAuto').classList.toggle('active',currentTheme.mode==='auto');}
 document.getElementById('applyTime').onclick=()=>{currentTheme.mode='auto';applyTheme();updateModeButtons();buildColorGrid();alert('تم تفعيل الوضع الزمني');};
 document.getElementById('applySeason').onclick=()=>{const m=new Date().getMonth()+1;let c='blue';if(m>=3&&m<=5)c='green';else if(m>=6&&m<=8)c='yellow';else if(m>=9&&m<=11)c='orange';else c='blue';currentTheme.color=c;applyTheme();buildColorGrid();alert('تم تفعيل الوضع الموسمي');};
-
 showToday();
 loadTheme();
 updateModeButtons();
