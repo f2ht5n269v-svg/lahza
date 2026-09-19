@@ -23,7 +23,8 @@ h1{font-size:1.8rem;font-weight:300;letter-spacing:2px;text-align:center;margin-
 .question-card:active{transform:scale(.98);opacity:.9;}
 .question-icon{font-size:1.8rem;display:block;margin-bottom:8px;}
 .question-text{color:var(--text);font-size:1.05rem;line-height:1.7;font-weight:400;}
-.streak-card{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:16px 20px;margin:0 auto 20px;max-width:380px;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .5s,border-color .5s;}
+.streak-card{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:16px 20px;margin:0 auto 20px;max-width:380px;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;transition:background .5s,border-color .5s,transform .15s;cursor:pointer;}
+.streak-card:active{transform:scale(.98);opacity:.9;}
 .streak-card.active{border-color:var(--btn-primary-bg);}
 .streak-fire{font-size:1.6rem;}
 .streak-text{color:var(--text);font-size:1rem;font-weight:500;}
@@ -68,6 +69,21 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 .screen-full .close:active{color:var(--text);}
 @keyframes slideUp{from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:translateY(0);}}
 #momentModal{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--overlay);z-index:300;overflow-y:auto;padding:50px 20px 40px;display:flex;flex-direction:column;align-items:center;animation:fadeIn .25s ease;}
+#statsModal{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--overlay);z-index:300;overflow-y:auto;padding:50px 20px 40px;animation:fadeIn .25s ease;}
+#statsModal .close-modal{position:fixed;top:14px;right:14px;font-size:2rem;color:#fff;width:44px;height:44px;display:flex;align-items:center;justify-content:center;z-index:310;background:rgba(0,0,0,.5);border-radius:50%;}
+.stats-content{width:100%;max-width:400px;margin:0 auto;}
+.stats-title{color:#fff;font-size:1.5rem;font-weight:300;text-align:center;margin-bottom:24px;letter-spacing:1px;}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.stat-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:18px;text-align:center;backdrop-filter:blur(10px);}
+.stat-icon{font-size:1.8rem;display:block;margin-bottom:6px;}
+.stat-num{color:#fff;font-size:1.8rem;font-weight:300;display:block;margin-bottom:2px;}
+.stat-label{color:#ccc;font-size:.78rem;}
+.stats-types{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:16px 20px;backdrop-filter:blur(10px);}
+.stats-types-title{color:#fff;font-size:1rem;margin-bottom:12px;display:block;}
+.type-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1);}
+.type-row:last-child{border-bottom:none;}
+.type-name{color:#ccc;font-size:.9rem;}
+.type-val{color:#fff;font-size:.9rem;font-weight:500;}
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 #momentModal .close-modal{position:fixed;top:14px;right:14px;font-size:2rem;color:#fff;width:44px;height:44px;display:flex;align-items:center;justify-content:center;z-index:310;background:rgba(0,0,0,.5);border-radius:50%;}
 #momentModal .modal-content{width:100%;max-width:340px;margin:0 auto;}
@@ -190,6 +206,50 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 </div>
 </div>
 </div>
+<div class="hidden" id="statsModal">
+<button class="close-modal" id="statsClose">×</button>
+<div class="stats-content">
+<div class="stats-title">📊 إحصائياتي</div>
+<div class="stats-grid">
+<div class="stat-card">
+<span class="stat-icon">📸</span>
+<span class="stat-num" id="statTotal">0</span>
+<span class="stat-label">لقطة محفوظة</span>
+</div>
+<div class="stat-card">
+<span class="stat-icon">📅</span>
+<span class="stat-num" id="statDays">0</span>
+<span class="stat-label">يوم موثّق</span>
+</div>
+<div class="stat-card">
+<span class="stat-icon">🔥</span>
+<span class="stat-num" id="statBest">0</span>
+<span class="stat-label">أطول سلسلة</span>
+</div>
+<div class="stat-card">
+<span class="stat-icon">📆</span>
+<span class="stat-num" id="statMonth">0</span>
+<span class="stat-label">هذا الشهر</span>
+</div>
+<div class="stat-card">
+<span class="stat-icon">🗓️</span>
+<span class="stat-num" id="statWeek">0</span>
+<span class="stat-label">هذا الأسبوع</span>
+</div>
+<div class="stat-card">
+<span class="stat-icon">⏰</span>
+<span class="stat-num" id="statLast">-</span>
+<span class="stat-label">آخر لقطة</span>
+</div>
+</div>
+<div class="stats-types">
+<span class="stats-types-title">📊 توزيع اللقطات</span>
+<div class="type-row"><span class="type-name">📷 صور</span><span class="type-val" id="statPhotos">0</span></div>
+<div class="type-row"><span class="type-name">🎥 فيديو</span><span class="type-val" id="statVideos">0</span></div>
+<div class="type-row"><span class="type-name">✍️ كتابة</span><span class="type-val" id="statTexts">0</span></div>
+</div>
+</div>
+</div>
 <div class="hidden" id="questionSheet">
 <div class="sheet-overlay" id="sheetOverlay">
 <div class="sheet">
@@ -236,6 +296,60 @@ const d=new Date(dateStr+'T12:00:00');
 return DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()]+' '+d.getFullYear();
 }
 async function updateStreak(){try{const ms=await getAllMoments();if(ms.length===0){document.getElementById('streakText').textContent='0 يوم';document.getElementById('streakSub').textContent='ابدأ بتوثيق يومك';document.getElementById('streakCard').classList.remove('active');return;}const days=new Set(ms.map(m=>getDateStr(m.date)));const today=getDateStr(new Date());let streak=0;let check=new Date();if(!days.has(today)){check.setDate(check.getDate()-1);}while(days.has(getDateStr(check))){streak++;check.setDate(check.getDate()-1);}const hasToday=days.has(today);document.getElementById('streakText').textContent=streak+(streak===1?' يوم':' أيام');if(hasToday){document.getElementById('streakSub').textContent='وثّقت اليوم ✓';document.getElementById('streakCard').classList.add('active');}else{document.getElementById('streakSub').textContent='لا تنسَ توثيق يومك';document.getElementById('streakCard').classList.remove('active');}}catch(e){}}
+async function openStats(){
+try{
+const ms=await getAllMoments();
+const total=ms.length;
+const daysSet=new Set(ms.map(m=>getDateStr(m.date)));
+const daysCount=daysSet.size;
+let best=0;
+if(ms.length>0){
+const sortedDays=Array.from(daysSet).sort();
+let cur=1;
+best=1;
+for(let i=1;i<sortedDays.length;i++){
+const prev=new Date(sortedDays[i-1]+'T12:00:00');
+const curr=new Date(sortedDays[i]+'T12:00:00');
+const diff=Math.round((curr-prev)/86400000);
+if(diff===1){cur++;if(cur>best)best=cur;}
+else{cur=1;}
+}
+}
+const now=new Date();
+const monthStart=new Date(now.getFullYear(),now.getMonth(),1);
+const monthCount=ms.filter(m=>new Date(m.date)>=monthStart).length;
+const dayOfWeek=now.getDay();
+const weekStart=new Date(now);
+weekStart.setDate(now.getDate()-dayOfWeek);
+weekStart.setHours(0,0,0,0);
+const weekCount=ms.filter(m=>new Date(m.date)>=weekStart).length;
+let lastStr='-';
+if(ms.length>0){
+const last=ms.map(m=>new Date(m.date)).sort((a,b)=>b-a)[0];
+const now2=new Date();
+const diff=Math.floor((now2-last)/86400000);
+if(diff===0)lastStr='اليوم';
+else if(diff===1)lastStr='أمس';
+else if(diff<7)lastStr='منذ '+diff+' أيام';
+else if(diff<30)lastStr='منذ '+Math.floor(diff/7)+' أسابيع';
+else lastStr='منذ '+Math.floor(diff/30)+' شهر';
+}
+const photos=ms.filter(m=>m.type==='photo').length;
+const videos=ms.filter(m=>m.type==='video').length;
+const texts=ms.filter(m=>m.type==='text').length;
+document.getElementById('statTotal').textContent=total;
+document.getElementById('statDays').textContent=daysCount;
+document.getElementById('statBest').textContent=best;
+document.getElementById('statMonth').textContent=monthCount;
+document.getElementById('statWeek').textContent=weekCount;
+document.getElementById('statLast').textContent=lastStr;
+document.getElementById('statPhotos').textContent=photos;
+document.getElementById('statVideos').textContent=videos;
+document.getElementById('statTexts').textContent=texts;
+document.getElementById('statsModal').classList.remove('hidden');
+}catch(e){alert('خطأ: '+e.message);}
+}
+document.getElementById('statsClose').onclick=()=>{document.getElementById('statsModal').classList.add('hidden');};
 const tabBtnRecord=document.getElementById('tabBtnRecord'),tabBtnMoments=document.getElementById('tabBtnMoments'),tabBtnSettings=document.getElementById('tabBtnSettings'),tabRecord=document.getElementById('tabRecord'),tabMoments=document.getElementById('tabMoments'),tabSettings=document.getElementById('tabSettings');
 function switchTab(t){[tabBtnRecord,tabBtnMoments,tabBtnSettings].forEach(b=>b.classList.remove('active'));[tabRecord,tabMoments,tabSettings].forEach(c=>c.classList.add('hidden'));if(t==='record'){tabBtnRecord.classList.add('active');tabRecord.classList.remove('hidden');}else if(t==='moments'){tabBtnMoments.classList.add('active');tabMoments.classList.remove('hidden');renderMoments();}else{tabBtnSettings.classList.add('active');tabSettings.classList.remove('hidden');}}
 tabBtnRecord.onclick=()=>switchTab('record');
@@ -330,6 +444,7 @@ document.getElementById('modalClose').onclick=()=>{document.getElementById('mome
 document.getElementById('modalSave').onclick=async()=>{if(!currentMomentId)return;const m=await getMoment(currentMomentId);if(!m)return;m.caption=document.getElementById('modalCaption').value.trim();await updateMoment(m);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();};
 document.getElementById('modalDelete').onclick=async()=>{if(!currentMomentId)return;if(confirm('هل تريد حذف هذه اللقطة؟')){await deleteMoment(currentMomentId);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();updateCounter();updateStreak();}};
 document.getElementById('questionCard').onclick=()=>{document.getElementById('questionSheet').classList.remove('hidden');};
+document.getElementById('streakCard').onclick=()=>{openStats();};
 document.getElementById('sheetCancel').onclick=()=>{document.getElementById('questionSheet').classList.add('hidden');};
 document.getElementById('sheetOverlay').onclick=(e)=>{if(e.target.id==='sheetOverlay')document.getElementById('questionSheet').classList.add('hidden');};
 document.getElementById('sheetPhoto').onclick=async()=>{document.getElementById('questionSheet').classList.add('hidden');document.getElementById('photoScreen').classList.remove('hidden');await openCamera(document.getElementById('photoVideo'));};
