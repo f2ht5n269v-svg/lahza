@@ -29,6 +29,17 @@ h1{font-size:1.8rem;font-weight:300;letter-spacing:2px;text-align:center;margin-
 .streak-fire{font-size:1.6rem;}
 .streak-text{color:var(--text);font-size:1rem;font-weight:500;}
 .streak-sub{color:var(--text-dim);font-size:.8rem;display:block;margin-top:2px;font-weight:400;}
+#reminderBanner{position:fixed;top:0;left:0;right:0;background:var(--card);border-bottom:1.5px solid var(--btn-primary-bg);z-index:150;padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top));animation:slideDown .4s ease;box-shadow:0 4px 20px rgba(0,0,0,.3);}
+@keyframes slideDown{from{transform:translateY(-100%);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.reminder-inner{display:flex;align-items:center;gap:12px;max-width:500px;margin:0 auto;}
+.reminder-icon{font-size:1.6rem;}
+.reminder-text{flex:1;display:flex;flex-direction:column;gap:2px;}
+.reminder-title{color:var(--text);font-size:.92rem;font-weight:500;}
+.reminder-sub{color:var(--text-dim);font-size:.78rem;}
+.reminder-btn{padding:8px 18px;border:1.5px solid var(--btn-primary-bg);border-radius:100px;background:var(--btn-primary-bg);color:var(--btn-primary-text);font-size:.85rem;font-family:inherit;font-weight:500;cursor:pointer;transition:all .2s;}
+.reminder-btn:active{transform:scale(.95);opacity:.85;}
+.reminder-close{background:none;border:none;color:var(--text-dim);font-size:1.4rem;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.reminder-close:active{color:var(--text);}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
 .btn{display:block;width:100%;max-width:320px;margin:10px auto;padding:18px;border:1.5px solid var(--border);border-radius:100px;color:var(--text);font-size:1.05rem;text-align:center;transition:all .2s;background:var(--card);}
 .btn:active{transform:scale(.97);opacity:.85;}
@@ -39,8 +50,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .filter-btn{padding:8px 16px;border:1.5px solid var(--border);border-radius:100px;background:var(--card);color:var(--text-dim);font-size:.82rem;font-family:inherit;cursor:pointer;transition:all .2s;}
 .filter-btn.active{background:var(--btn-primary-bg);color:var(--btn-primary-text);border-color:var(--btn-primary-bg);font-weight:500;}
 video,img.preview{width:100%;max-width:320px;border-radius:16px;margin:16px auto;display:block;background:#000;}
-textarea,input[type="text"]{width:100%;max-width:320px;background:var(--card);border:1.5px solid var(--border);border-radius:12px;color:var(--text);padding:14px;font-family:inherit;font-size:1rem;margin:8px auto;display:block;resize:none;}
+textarea,input[type="text"],input[type="time"]{width:100%;max-width:320px;background:var(--card);border:1.5px solid var(--border);border-radius:12px;color:var(--text);padding:14px;font-family:inherit;font-size:1rem;margin:8px auto;display:block;resize:none;}
 textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
+input[type="time"]{text-align:center;font-size:1.1rem;cursor:pointer;}
 .colors{display:flex;justify-content:center;gap:10px;margin:14px 0;flex-wrap:wrap;}
 .color-dot{width:36px;height:36px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:transform .2s;}
 .color-dot.active{border-color:var(--text);transform:scale(1.1);}
@@ -113,6 +125,11 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 .color-option{padding:14px;border:2px solid transparent;border-radius:12px;text-align:center;font-size:.85rem;cursor:pointer;transition:all .2s;color:#fff;font-weight:500;}
 .color-option.active{border-color:var(--btn-primary-bg);transform:scale(1.05);}
 .color-option .emoji{display:block;font-size:1.5rem;margin-bottom:4px;}
+.toggle-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;}
+.toggle-switch{position:relative;width:52px;height:30px;background:var(--border);border-radius:30px;cursor:pointer;transition:background .3s;}
+.toggle-switch.on{background:var(--btn-primary-bg);}
+.toggle-switch::after{content:'';position:absolute;top:3px;left:3px;width:24px;height:24px;background:#fff;border-radius:50%;transition:transform .3s;}
+.toggle-switch.on::after{transform:translateX(22px);}
 .sheet-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.55);z-index:400;display:flex;align-items:flex-end;justify-content:center;animation:fadeIn .2s ease;}
 .sheet{width:100%;max-width:500px;background:var(--card);border-radius:24px 24px 0 0;padding:16px 16px 32px;animation:slideUpSheet .3s ease;border-top:1.5px solid var(--border);}
 @keyframes slideUpSheet{from{transform:translateY(100%);}to{transform:translateY(0);}}
@@ -122,6 +139,17 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 </style>
 </head>
 <body>
+<div class="hidden" id="reminderBanner">
+<div class="reminder-inner">
+<span class="reminder-icon">📸</span>
+<div class="reminder-text">
+<span class="reminder-title">لم توثّق اليوم بعد!</span>
+<span class="reminder-sub">سجّل لحظتك الآن</span>
+</div>
+<button class="reminder-btn" id="reminderBtn">سجّل</button>
+<button class="reminder-close" id="reminderClose">×</button>
+</div>
+</div>
 <div class="content" id="tabRecord">
 <div class="today-date" id="todayDate"></div>
 <div class="question-card" id="questionCard">
@@ -156,6 +184,18 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 </div>
 <div class="content hidden" id="tabSettings">
 <h1>إعدادات</h1>
+<div class="settings-section">
+<span class="settings-title">🔔 التذكير اليومي</span>
+<div class="toggle-row">
+<span class="settings-sub" style="margin:0;">تفعيل التذكير</span>
+<div class="toggle-switch" id="reminderToggle"></div>
+</div>
+<div id="reminderTimeSection" class="hidden">
+<span class="settings-sub" style="margin-top:14px;">وقت التذكير</span>
+<input type="time" id="reminderTime" value="20:00">
+<button class="btn small" id="testReminder">تجربة التذكير</button>
+</div>
+</div>
 <div class="settings-section">
 <span class="settings-title">🎨 لون الخلفية</span>
 <span class="settings-sub">الوضع</span>
@@ -307,6 +347,37 @@ function showToday(){const d=new Date();document.getElementById('todayDate').tex
 function getDateStr(date){const d=new Date(date);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function getDayLabel(dateStr){const today=getDateStr(new Date());const yest=new Date();yest.setDate(yest.getDate()-1);const yestStr=getDateStr(yest);if(dateStr===today)return'اليوم';if(dateStr===yestStr)return'أمس';const d=new Date(dateStr+'T12:00:00');return DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()]+' '+d.getFullYear();}
 async function updateStreak(){try{const ms=await getAllMoments();if(ms.length===0){document.getElementById('streakText').textContent='0 يوم';document.getElementById('streakSub').textContent='ابدأ بتوثيق يومك';document.getElementById('streakCard').classList.remove('active');return;}const days=new Set(ms.map(m=>getDateStr(m.date)));const today=getDateStr(new Date());let streak=0;let check=new Date();if(!days.has(today)){check.setDate(check.getDate()-1);}while(days.has(getDateStr(check))){streak++;check.setDate(check.getDate()-1);}const hasToday=days.has(today);document.getElementById('streakText').textContent=streak+(streak===1?' يوم':' أيام');if(hasToday){document.getElementById('streakSub').textContent='وثّقت اليوم ✓';document.getElementById('streakCard').classList.add('active');}else{document.getElementById('streakSub').textContent='لا تنسَ توثيق يومك';document.getElementById('streakCard').classList.remove('active');}}catch(e){}}
+async function checkReminder(){
+try{
+const enabled=localStorage.getItem('lahza-reminder')==='true';
+if(!enabled){document.getElementById('reminderBanner').classList.add('hidden');return;}
+const ms=await getAllMoments();
+const today=getDateStr(new Date());
+const hasToday=ms.some(m=>getDateStr(m.date)===today);
+const dismissed=localStorage.getItem('lahza-reminder-dismissed')===today;
+if(hasToday||dismissed){document.getElementById('reminderBanner').classList.add('hidden');return;}
+document.getElementById('reminderBanner').classList.remove('hidden');
+}catch(e){}
+}
+async function scheduleNotification(){
+if(!('Notification' in window))return;
+if(Notification.permission!=='granted')return;
+const enabled=localStorage.getItem('lahza-reminder')==='true';
+if(!enabled)return;
+const ms=await getAllMoments();
+const today=getDateStr(new Date());
+const hasToday=ms.some(m=>getDateStr(m.date)===today);
+if(hasToday)return;
+const t=localStorage.getItem('lahza-reminder-time')||'20:00';
+const[h,m]=t.split(':').map(Number);
+const now=new Date();
+const target=new Date();
+target.setHours(h,m,0,0);
+const diff=target-now;
+if(diff>0&&diff<86400000){
+setTimeout(()=>{try{new Notification('لحظة',{body:'لم توثّق اليوم بعد! سجّل لحظتك 📸',icon:'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📸</text></svg>'});}catch(e){}},diff);
+}
+}
 async function openStats(){try{const ms=await getAllMoments();const total=ms.length;const daysSet=new Set(ms.map(m=>getDateStr(m.date)));const daysCount=daysSet.size;let best=0;if(ms.length>0){const sortedDays=Array.from(daysSet).sort();let cur=1;best=1;for(let i=1;i<sortedDays.length;i++){const prev=new Date(sortedDays[i-1]+'T12:00:00');const curr=new Date(sortedDays[i]+'T12:00:00');const diff=Math.round((curr-prev)/86400000);if(diff===1){cur++;if(cur>best)best=cur;}else{cur=1;}}}const now=new Date();const monthStart=new Date(now.getFullYear(),now.getMonth(),1);const monthCount=ms.filter(m=>new Date(m.date)>=monthStart).length;const dayOfWeek=now.getDay();const weekStart=new Date(now);weekStart.setDate(now.getDate()-dayOfWeek);weekStart.setHours(0,0,0,0);const weekCount=ms.filter(m=>new Date(m.date)>=weekStart).length;let lastStr='-';if(ms.length>0){const last=ms.map(m=>new Date(m.date)).sort((a,b)=>b-a)[0];const diff=Math.floor((new Date()-last)/86400000);if(diff===0)lastStr='اليوم';else if(diff===1)lastStr='أمس';else if(diff<7)lastStr='منذ '+diff+' أيام';else if(diff<30)lastStr='منذ '+Math.floor(diff/7)+' أسابيع';else lastStr='منذ '+Math.floor(diff/30)+' شهر';}const photos=ms.filter(m=>m.type==='photo').length;const videos=ms.filter(m=>m.type==='video').length;const texts=ms.filter(m=>m.type==='text').length;const favs=ms.filter(m=>m.favorite).length;document.getElementById('statTotal').textContent=total;document.getElementById('statDays').textContent=daysCount;document.getElementById('statBest').textContent=best;document.getElementById('statMonth').textContent=monthCount;document.getElementById('statWeek').textContent=weekCount;document.getElementById('statLast').textContent=lastStr;document.getElementById('statPhotos').textContent=photos;document.getElementById('statVideos').textContent=videos;document.getElementById('statTexts').textContent=texts;document.getElementById('statFavs').textContent=favs;document.getElementById('statsModal').classList.remove('hidden');}catch(e){alert('خطأ: '+e.message);}}
 const tabBtnRecord=document.getElementById('tabBtnRecord'),tabBtnMoments=document.getElementById('tabBtnMoments'),tabBtnSettings=document.getElementById('tabBtnSettings'),tabRecord=document.getElementById('tabRecord'),tabMoments=document.getElementById('tabMoments'),tabSettings=document.getElementById('tabSettings');
 function switchTab(t){[tabBtnRecord,tabBtnMoments,tabBtnSettings].forEach(b=>b.classList.remove('active'));[tabRecord,tabMoments,tabSettings].forEach(c=>c.classList.add('hidden'));if(t==='record'){tabBtnRecord.classList.add('active');tabRecord.classList.remove('hidden');}else if(t==='moments'){tabBtnMoments.classList.add('active');tabMoments.classList.remove('hidden');renderMoments();}else{tabBtnSettings.classList.add('active');tabSettings.classList.remove('hidden');}}
@@ -348,7 +419,7 @@ document.getElementById('chooseText').onclick=()=>document.getElementById('textS
 document.getElementById('textClose').onclick=()=>document.getElementById('textScreen').classList.add('hidden');
 document.getElementById('saveTextBtn').onclick=()=>{const t=document.getElementById('textInput').value.trim();if(!t){alert('اكتب شيئاً أولاً');return;}pendingBlob=new Blob([t],{type:'text/plain'});pendingType='text';document.getElementById('textScreen').classList.add('hidden');showPreview();document.getElementById('saveScreen').classList.remove('hidden');};
 function showPreview(){const p=document.getElementById('preview');p.innerHTML='';if(pendingType==='photo'){const i=document.createElement('img');i.className='preview';i.src=URL.createObjectURL(pendingBlob);p.appendChild(i);}else if(pendingType==='video'){const v=document.createElement('video');v.src=URL.createObjectURL(pendingBlob);v.controls=true;v.playsInline=true;p.appendChild(v);}else if(pendingType==='text'){pendingBlob.text().then(t=>{const d=document.createElement('div');d.style.cssText='background:'+selectedColor+';padding:50px 20px;border-radius:16px;max-width:320px;margin:16px auto;font-size:1.3rem;line-height:1.8;text-align:center;color:#fff;';d.textContent=t;p.appendChild(d);});}}
-document.getElementById('saveBtn').onclick=async()=>{if(!pendingBlob)return;const c=document.getElementById('captionInput').value.trim();try{await saveMoment({date:new Date().toISOString(),blob:pendingBlob,type:pendingType,caption:c,color:selectedColor,favorite:false});document.getElementById('captionInput').value='';document.getElementById('preview').innerHTML='';pendingBlob=null;pendingType=null;document.getElementById('saveScreen').classList.add('hidden');updateCounter();updateStreak();}catch(e){alert('خطأ: '+e.message);}};
+document.getElementById('saveBtn').onclick=async()=>{if(!pendingBlob)return;const c=document.getElementById('captionInput').value.trim();try{await saveMoment({date:new Date().toISOString(),blob:pendingBlob,type:pendingType,caption:c,color:selectedColor,favorite:false});document.getElementById('captionInput').value='';document.getElementById('preview').innerHTML='';pendingBlob=null;pendingType=null;document.getElementById('saveScreen').classList.add('hidden');updateCounter();updateStreak();checkReminder();}catch(e){alert('خطأ: '+e.message);}};
 document.getElementById('saveClose').onclick=()=>{document.getElementById('captionInput').value='';document.getElementById('preview').innerHTML='';pendingBlob=null;pendingType=null;document.getElementById('saveScreen').classList.add('hidden');};
 function buildColorGrid(){const g=document.getElementById('colorGrid');g.innerHTML='';Object.keys(COLOR_NAMES).forEach(c=>{const d=document.createElement('div');d.className='color-option'+(currentTheme.color===c?' active':'');const m=currentTheme.mode==='auto'?'dark':currentTheme.mode;d.style.background=THEMES[m][c].bg;d.style.color=THEMES[m][c].text;d.style.border='2px solid '+THEMES[m][c].border;d.innerHTML='<span class="emoji">🎨</span>'+COLOR_NAMES[c];d.onclick=()=>{currentTheme.color=c;applyTheme();buildColorGrid();};g.appendChild(d);});}
 document.getElementById('modeDark').onclick=()=>{currentTheme.mode='dark';applyTheme();updateModeButtons();buildColorGrid();};
@@ -357,11 +428,33 @@ document.getElementById('modeAuto').onclick=()=>{currentTheme.mode='auto';applyT
 function updateModeButtons(){document.getElementById('modeDark').classList.toggle('active',currentTheme.mode==='dark');document.getElementById('modeLight').classList.toggle('active',currentTheme.mode==='light');document.getElementById('modeAuto').classList.toggle('active',currentTheme.mode==='auto');}
 document.getElementById('applyTime').onclick=()=>{currentTheme.mode='auto';applyTheme();updateModeButtons();buildColorGrid();alert('تم تفعيل الوضع الزمني');};
 document.getElementById('applySeason').onclick=()=>{const m=new Date().getMonth()+1;let c='blue';if(m>=3&&m<=5)c='green';else if(m>=6&&m<=8)c='yellow';else if(m>=9&&m<=11)c='orange';else c='blue';currentTheme.color=c;applyTheme();buildColorGrid();alert('تم تفعيل الوضع الموسمي');};
+function loadReminderSettings(){
+const enabled=localStorage.getItem('lahza-reminder')==='true';
+document.getElementById('reminderToggle').classList.toggle('on',enabled);
+document.getElementById('reminderTimeSection').classList.toggle('hidden',!enabled);
+const t=localStorage.getItem('lahza-reminder-time')||'20:00';
+document.getElementById('reminderTime').value=t;
+}
+document.getElementById('reminderToggle').onclick=async()=>{
+const enabled=localStorage.getItem('lahza-reminder')==='true';
+if(!enabled){
+if('Notification' in window&&Notification.permission==='default'){try{await Notification.requestPermission();}catch(e){}}
+localStorage.setItem('lahza-reminder','true');
+}else{localStorage.setItem('lahza-reminder','false');}
+loadReminderSettings();
+checkReminder();
+scheduleNotification();
+};
+document.getElementById('reminderTime').onchange=(e)=>{localStorage.setItem('lahza-reminder-time',e.target.value);scheduleNotification();};
+document.getElementById('testReminder').onclick=()=>{if('Notification' in window&&Notification.permission==='granted'){new Notification('لحظة',{body:'لم توثّق اليوم بعد! سجّل لحظتك 📸'});}else{alert('يرجى السماح بالإشعارات أولاً');}};
+document.getElementById('reminderClose').onclick=()=>{localStorage.setItem('lahza-reminder-dismissed',getDateStr(new Date()));document.getElementById('reminderBanner').classList.add('hidden');};
+document.getElementById('reminderBtn').onclick=()=>{document.getElementById('reminderBanner').classList.add('hidden');switchTab('record');};
 showToday();
 loadTheme();
 updateModeButtons();
 buildColorGrid();
-openDB().then(()=>{updateCounter();updateStreak();}).catch(e=>{document.getElementById('status').textContent='❌ خطأ: '+e.message;});
+loadReminderSettings();
+openDB().then(()=>{updateCounter();updateStreak();checkReminder();scheduleNotification();}).catch(e=>{document.getElementById('status').textContent='❌ خطأ: '+e.message;});
 </script>
 </body>
 </html>
