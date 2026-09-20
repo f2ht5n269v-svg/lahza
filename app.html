@@ -66,6 +66,9 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 .moment .date{font-size:.65rem;color:#ddd;text-align:right;}
 .moment .caption{font-size:.7rem;color:#fff;margin-top:2px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .moment .del{position:absolute;top:6px;left:6px;background:rgba(239,68,68,.9);border:none;color:#fff;width:26px;height:26px;border-radius:50%;font-size:.9rem;display:flex;align-items:center;justify-content:center;z-index:3;}
+.moment .heart{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.6);border:none;color:#fff;width:30px;height:30px;border-radius:50%;font-size:1rem;display:flex;align-items:center;justify-content:center;z-index:3;transition:all .2s;}
+.moment .heart.active{background:rgba(239,68,68,.9);transform:scale(1.1);}
+.moment .heart:active{transform:scale(.9);}
 .moment:active{transform:scale(.98);}
 .screen-full{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:200;overflow-y:auto;padding:20px 16px 90px;animation:slideUp .25s ease;}
 .screen-full .close{position:absolute;top:14px;right:14px;font-size:1.6rem;color:var(--text-dim);width:40px;height:40px;display:flex;align-items:center;justify-content:center;}
@@ -97,6 +100,9 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 #momentModal textarea{max-width:100%;background:#1a1a1a;border-color:#444;color:#fff;}
 #momentModal .modal-actions{display:flex;gap:10px;margin-top:16px;}
 #momentModal .modal-actions .btn{max-width:none;flex:1;margin:0;}
+#momentModal .modal-heart{margin:16px auto 0;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);color:#fff;font-size:1.6rem;display:flex;align-items:center;justify-content:center;transition:all .2s;cursor:pointer;}
+#momentModal .modal-heart.active{background:rgba(239,68,68,.9);border-color:rgba(239,68,68,1);transform:scale(1.1);}
+#momentModal .modal-heart:active{transform:scale(.9);}
 .settings-section{background:var(--card);border-radius:16px;padding:20px;margin-bottom:16px;border:1.5px solid var(--border);}
 .settings-title{color:var(--text);font-size:1.1rem;font-weight:500;margin-bottom:16px;display:block;}
 .settings-sub{color:var(--text-dim);font-size:.8rem;margin-bottom:10px;display:block;}
@@ -143,6 +149,7 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 <button class="filter-btn" data-filter="photo">📷 صور</button>
 <button class="filter-btn" data-filter="video">🎥 فيديو</button>
 <button class="filter-btn" data-filter="text">✍️ كتابة</button>
+<button class="filter-btn" data-filter="favorite">❤️ المفضلة</button>
 </div>
 <div id="timeline"></div>
 <div class="empty hidden" id="empty">لا توجد لقطات بعد<br>ارجع إلى تبويب التسجيل ووثّق أول لحظة 📸</div>
@@ -207,6 +214,7 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 <button class="close-modal" id="modalClose">×</button>
 <div class="modal-content" id="modalContent"></div>
 <div class="modal-content">
+<button class="modal-heart" id="modalHeart">🤍</button>
 <label class="modal-label">📝 التعليق:</label>
 <textarea id="modalCaption" rows="3" placeholder="أضف جملة..."></textarea>
 <div class="modal-actions">
@@ -249,6 +257,11 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 <span class="stat-icon">⏰</span>
 <span class="stat-num" id="statLast">-</span>
 <span class="stat-label">آخر لقطة</span>
+</div>
+<div class="stat-card">
+<span class="stat-icon">❤️</span>
+<span class="stat-num" id="statFavs">0</span>
+<span class="stat-label">المفضلة</span>
 </div>
 </div>
 <div class="stats-types">
@@ -346,6 +359,7 @@ else lastStr='منذ '+Math.floor(diff/30)+' شهر';
 const photos=ms.filter(m=>m.type==='photo').length;
 const videos=ms.filter(m=>m.type==='video').length;
 const texts=ms.filter(m=>m.type==='text').length;
+const favs=ms.filter(m=>m.favorite).length;
 document.getElementById('statTotal').textContent=total;
 document.getElementById('statDays').textContent=daysCount;
 document.getElementById('statBest').textContent=best;
@@ -355,6 +369,7 @@ document.getElementById('statLast').textContent=lastStr;
 document.getElementById('statPhotos').textContent=photos;
 document.getElementById('statVideos').textContent=videos;
 document.getElementById('statTexts').textContent=texts;
+document.getElementById('statFavs').textContent=favs;
 document.getElementById('statsModal').classList.remove('hidden');
 }catch(e){alert('خطأ: '+e.message);}
 }
@@ -377,25 +392,25 @@ async function renderMoments(){
 const tl=document.getElementById('timeline'),em=document.getElementById('empty'),ce=document.getElementById('countMoments');
 try{
 let ms=await getAllMoments();
-if(currentFilter!=='all'){ms=ms.filter(m=>m.type===currentFilter);}
+if(currentFilter==='favorite'){ms=ms.filter(m=>m.favorite);}
+else if(currentFilter!=='all'){ms=ms.filter(m=>m.type===currentFilter);}
 if(ms.length===0){
 ce.textContent='';
-em.innerHTML=currentFilter==='all'?'لا توجد لقطات بعد<br>ارجع إلى تبويب التسجيل ووثّق أول لحظة 📸':(currentFilter==='photo'?'لا توجد صور بعد':(currentFilter==='video'?'لا توجد فيديوهات بعد':'لا توجد كتابات بعد'));
+if(currentFilter==='all')em.innerHTML='لا توجد لقطات بعد<br>ارجع إلى تبويب التسجيل ووثّق أول لحظة 📸';
+else if(currentFilter==='photo')em.innerHTML='لا توجد صور بعد';
+else if(currentFilter==='video')em.innerHTML='لا توجد فيديوهات بعد';
+else if(currentFilter==='text')em.innerHTML='لا توجد كتابات بعد';
+else em.innerHTML='لا توجد لقطات في المفضلة بعد<br>اضغط ❤️ على لقطة لإضافتها هنا';
 em.classList.remove('hidden');
 tl.innerHTML='';
 return;
 }
 em.classList.add('hidden');
-let label='';
-if(currentFilter==='all')label='لقطة';
-else if(currentFilter==='photo')label='صورة';
-else if(currentFilter==='video')label='فيديو';
-else label='كتابة';
-ce.textContent='📸 '+ms.length+' '+label+(ms.length===1?'':'ات').replace('ةات','ات').replace('ة','ات').replace('لقطةات','لقطات').replace('صورةات','صور').replace('فيديوات','فيديوهات').replace('كتابةات','كتابات');
 if(currentFilter==='all'){ce.textContent=ms.length===1?'📸 لقطة واحدة محفوظة':'📸 '+ms.length+' لقطات';}
 else if(currentFilter==='photo'){ce.textContent=ms.length===1?'📷 صورة واحدة':'📷 '+ms.length+' صور';}
 else if(currentFilter==='video'){ce.textContent=ms.length===1?'🎥 فيديو واحد':'🎥 '+ms.length+' فيديوهات';}
-else{ce.textContent=ms.length===1?'✍️ كتابة واحدة':'✍️ '+ms.length+' كتابات';}
+else if(currentFilter==='text'){ce.textContent=ms.length===1?'✍️ كتابة واحدة':'✍️ '+ms.length+' كتابات';}
+else{ce.textContent=ms.length===1?'❤️ لقطة واحدة في المفضلة':'❤️ '+ms.length+' لقطات في المفضلة';}
 const groups={};
 ms.forEach(m=>{const k=getDateStr(m.date);if(!groups[k])groups[k]=[];groups[k].push(m);});
 const keys=Object.keys(groups).sort().reverse();
@@ -441,6 +456,11 @@ const b=document.createElement('div');
 b.className='bottom-bar';
 b.innerHTML='<div class="date">'+timeStr+'</div>'+(m.caption?'<div class="caption">'+m.caption+'</div>':'');
 d.appendChild(b);
+const heart=document.createElement('button');
+heart.className='heart'+(m.favorite?' active':'');
+heart.textContent=m.favorite?'❤️':'🤍';
+heart.onclick=async(e)=>{e.stopPropagation();m.favorite=!m.favorite;await updateMoment(m);renderMoments();};
+d.appendChild(heart);
 const del=document.createElement('button');
 del.className='del';
 del.textContent='×';
@@ -471,9 +491,13 @@ dd.className='modal-date';
 dd.textContent='📅 '+ds;
 c.appendChild(dd);
 document.getElementById('modalCaption').value=m.caption||'';
+const hb=document.getElementById('modalHeart');
+hb.textContent=m.favorite?'❤️':'🤍';
+hb.className='modal-heart'+(m.favorite?' active':'');
+hb.onclick=async()=>{const mm=await getMoment(currentMomentId);if(!mm)return;mm.favorite=!mm.favorite;await updateMoment(mm);hb.textContent=mm.favorite?'❤️':'🤍';hb.className='modal-heart'+(mm.favorite?' active':'');};
 mod.classList.remove('hidden');
 }
-document.getElementById('modalClose').onclick=()=>{document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;};
+document.getElementById('modalClose').onclick=()=>{document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();};
 document.getElementById('modalSave').onclick=async()=>{if(!currentMomentId)return;const m=await getMoment(currentMomentId);if(!m)return;m.caption=document.getElementById('modalCaption').value.trim();await updateMoment(m);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();};
 document.getElementById('modalDelete').onclick=async()=>{if(!currentMomentId)return;if(confirm('هل تريد حذف هذه اللقطة؟')){await deleteMoment(currentMomentId);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();updateCounter();updateStreak();}};
 document.getElementById('questionCard').onclick=()=>{document.getElementById('questionSheet').classList.remove('hidden');};
@@ -503,7 +527,7 @@ document.getElementById('chooseText').onclick=()=>document.getElementById('textS
 document.getElementById('textClose').onclick=()=>document.getElementById('textScreen').classList.add('hidden');
 document.getElementById('saveTextBtn').onclick=()=>{const t=document.getElementById('textInput').value.trim();if(!t){alert('اكتب شيئاً أولاً');return;}pendingBlob=new Blob([t],{type:'text/plain'});pendingType='text';document.getElementById('textScreen').classList.add('hidden');showPreview();document.getElementById('saveScreen').classList.remove('hidden');};
 function showPreview(){const p=document.getElementById('preview');p.innerHTML='';if(pendingType==='photo'){const i=document.createElement('img');i.className='preview';i.src=URL.createObjectURL(pendingBlob);p.appendChild(i);}else if(pendingType==='video'){const v=document.createElement('video');v.src=URL.createObjectURL(pendingBlob);v.controls=true;v.playsInline=true;p.appendChild(v);}else if(pendingType==='text'){pendingBlob.text().then(t=>{const d=document.createElement('div');d.style.cssText='background:'+selectedColor+';padding:50px 20px;border-radius:16px;max-width:320px;margin:16px auto;font-size:1.3rem;line-height:1.8;text-align:center;color:#fff;';d.textContent=t;p.appendChild(d);});}}
-document.getElementById('saveBtn').onclick=async()=>{if(!pendingBlob)return;const c=document.getElementById('captionInput').value.trim();try{await saveMoment({date:new Date().toISOString(),blob:pendingBlob,type:pendingType,caption:c,color:selectedColor});document.getElementById('captionInput').value='';document.getElementById('preview').innerHTML='';pendingBlob=null;pendingType=null;document.getElementById('saveScreen').classList.add('hidden');updateCounter();updateStreak();}catch(e){alert('خطأ: '+e.message);}};
+document.getElementById('saveBtn').onclick=async()=>{if(!pendingBlob)return;const c=document.getElementById('captionInput').value.trim();try{await saveMoment({date:new Date().toISOString(),blob:pendingBlob,type:pendingType,caption:c,color:selectedColor,favorite:false});document.getElementById('captionInput').value='';document.getElementById('preview').innerHTML='';pendingBlob=null;pendingType=null;document.getElementById('saveScreen').classList.add('hidden');updateCounter();updateStreak();}catch(e){alert('خطأ: '+e.message);}};
 document.getElementById('saveClose').onclick=()=>{document.getElementById('captionInput').value='';document.getElementById('preview').innerHTML='';pendingBlob=null;pendingType=null;document.getElementById('saveScreen').classList.add('hidden');};
 function buildColorGrid(){const g=document.getElementById('colorGrid');g.innerHTML='';Object.keys(COLOR_NAMES).forEach(c=>{const d=document.createElement('div');d.className='color-option'+(currentTheme.color===c?' active':'');const m=currentTheme.mode==='auto'?'dark':currentTheme.mode;d.style.background=THEMES[m][c].bg;d.style.color=THEMES[m][c].text;d.style.border='2px solid '+THEMES[m][c].border;d.innerHTML='<span class="emoji">🎨</span>'+COLOR_NAMES[c];d.onclick=()=>{currentTheme.color=c;applyTheme();buildColorGrid();};g.appendChild(d);});}
 document.getElementById('modeDark').onclick=()=>{currentTheme.mode='dark';applyTheme();updateModeButtons();buildColorGrid();};
