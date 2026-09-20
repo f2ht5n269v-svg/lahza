@@ -195,7 +195,6 @@ input[type="time"]{text-align:center;font-size:1.1rem;cursor:pointer;}
 <span class="settings-sub">وقت التذكير</span>
 <input type="time" id="reminderTime" value="20:00" style="max-width:120px;margin:0;padding:8px 10px;font-size:.95rem;">
 </div>
-<button class="btn small" id="testReminder" style="margin-top:8px;">تجربة التذكير</button>
 </div>
 </div>
 <div class="settings-section">
@@ -301,6 +300,7 @@ input[type="time"]{text-align:center;font-size:1.1rem;cursor:pointer;}
 <script>
 const DB_NAME='lahza-db',DB_VERSION=1,STORE_NAME='moments';
 let db=null,stream=null,pendingBlob=null,pendingType=null,selectedColor='#0a0a0a',currentFacing='environment',currentMomentId=null,videoFacing='environment',currentFilter='all';
+let reminderTimer=null;
 const QUESTIONS=["ما أجمل ما حدث اليوم؟","ما الذي أضحكك اليوم؟","من الشخص الذي أسعدك لقاؤه اليوم؟","ما اللحظة التي تود الاحتفاظ بها؟","ما الشيء الذي شعرت فيه بالراحة؟","ما الطعام الذي استمتعت به اليوم؟","ما المكان الذي زرته اليوم؟","ما الشيء الذي رأيته وأحببته؟","ما العمل الفني الذي تابعته اليوم؟","ما الشيء الذي اشتريته اليوم؟","كيف كان مزاجك اليوم؟","لو وصفت يومك بكلمة واحدة، فماذا تقول؟","ما اللون الذي يعبر عن يومك؟","ما الشعور الذي غلب على يومك؟","ما الذي تشكر نفسك عليه؟","ما الإنجاز الصغير لهذا اليوم؟","ما الأمر الذي كنت تخشاه فواجهته؟","ما الذي تفتخر به اليوم؟","ما الذي تنوي فعله غداً؟","ما أجمل خبر سمعته اليوم؟"];
 const COLORS=['#0a0a0a','#1e293b','#7c2d12','#14532d','#581c87','#831843'];
 const THEMES={dark:{blue:{bg:'#0a1929',text:'#fff',dim:'#8899aa',faint:'#667788',border:'#2a4a6e',card:'#142a44',primary:'#4ade80',primaryText:'#000'},purple:{bg:'#1a0a29',text:'#fff',dim:'#9988aa',faint:'#776688',border:'#4a2a6e',card:'#2a1444',primary:'#c084fc',primaryText:'#000'},green:{bg:'#0a2919',text:'#fff',dim:'#88aa99',faint:'#668877',border:'#2a6e4a',card:'#14442a',primary:'#4ade80',primaryText:'#000'},red:{bg:'#290a0a',text:'#fff',dim:'#aa8888',faint:'#886666',border:'#6e2a2a',card:'#441414',primary:'#f87171',primaryText:'#000'},orange:{bg:'#291a0a',text:'#fff',dim:'#aa9988',faint:'#887766',border:'#6e4a2a',card:'#442a14',primary:'#fb923c',primaryText:'#000'},yellow:{bg:'#29290a',text:'#fff',dim:'#aaaa88',faint:'#888866',border:'#6e6e2a',card:'#444414',primary:'#facc15',primaryText:'#000'}},light:{blue:{bg:'#e3f2fd',text:'#0a1929',dim:'#5a7a9a',faint:'#8899aa',border:'#90b8d8',card:'#ffffff',primary:'#1976d2',primaryText:'#fff'},purple:{bg:'#f3e5f5',text:'#2a0a3a',dim:'#7a5a8a',faint:'#a888b8',border:'#c090d0',card:'#ffffff',primary:'#7b1fa2',primaryText:'#fff'},green:{bg:'#e8f5e9',text:'#0a2919',dim:'#5a7a5a',faint:'#88a888',border:'#90c090',card:'#ffffff',primary:'#388e3c',primaryText:'#fff'},red:{bg:'#ffebee',text:'#290a0a',dim:'#8a5a5a',faint:'#b88888',border:'#e09090',card:'#ffffff',primary:'#d32f2f',primaryText:'#fff'},orange:{bg:'#fff3e0',text:'#2a1a0a',dim:'#8a6a4a',faint:'#b89878',border:'#e0b890',card:'#ffffff',primary:'#f57c00',primaryText:'#fff'},yellow:{bg:'#fffde7',text:'#2a2a0a',dim:'#8a8a4a',faint:'#b8b878',border:'#e0e090',card:'#ffffff',primary:'#f9a825',primaryText:'#fff'}}};
@@ -322,7 +322,17 @@ function getDateStr(date){const d=new Date(date);return d.getFullYear()+'-'+Stri
 function getDayLabel(dateStr){const today=getDateStr(new Date());const yest=new Date();yest.setDate(yest.getDate()-1);const yestStr=getDateStr(yest);if(dateStr===today)return'اليوم';if(dateStr===yestStr)return'أمس';const d=new Date(dateStr+'T12:00:00');return DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()]+' '+d.getFullYear();}
 async function updateStreak(){try{const ms=await getAllMoments();if(ms.length===0){document.getElementById('streakText').textContent='0 يوم';document.getElementById('streakSub').textContent='ابدأ بتوثيق يومك';document.getElementById('streakCard').classList.remove('active');return;}const days=new Set(ms.map(m=>getDateStr(m.date)));const today=getDateStr(new Date());let streak=0;let check=new Date();if(!days.has(today)){check.setDate(check.getDate()-1);}while(days.has(getDateStr(check))){streak++;check.setDate(check.getDate()-1);}const hasToday=days.has(today);document.getElementById('streakText').textContent=streak+(streak===1?' يوم':' أيام');if(hasToday){document.getElementById('streakSub').textContent='وثّقت اليوم ✓';document.getElementById('streakCard').classList.add('active');}else{document.getElementById('streakSub').textContent='لا تنسَ توثيق يومك';document.getElementById('streakCard').classList.remove('active');}}catch(e){}}
 async function checkReminder(){try{const enabled=localStorage.getItem('lahza-reminder')==='true';if(!enabled){document.getElementById('reminderBanner').classList.add('hidden');return;}const ms=await getAllMoments();const today=getDateStr(new Date());const hasToday=ms.some(m=>getDateStr(m.date)===today);const dismissed=localStorage.getItem('lahza-reminder-dismissed')===today;if(hasToday||dismissed){document.getElementById('reminderBanner').classList.add('hidden');return;}document.getElementById('reminderBanner').classList.remove('hidden');}catch(e){}}
-async function scheduleNotification(){if(!('Notification' in window))return;if(Notification.permission!=='granted')return;const enabled=localStorage.getItem('lahza-reminder')==='true';if(!enabled)return;const ms=await getAllMoments();const today=getDateStr(new Date());const hasToday=ms.some(m=>getDateStr(m.date)===today);if(hasToday)return;const t=localStorage.getItem('lahza-reminder-time')||'20:00';const[h,m]=t.split(':').map(Number);const now=new Date();const target=new Date();target.setHours(h,m,0,0);const diff=target-now;if(diff>0&&diff<86400000){setTimeout(()=>{try{new Notification('لحظة',{body:'لم توثّق اليوم بعد! سجّل لحظتك 📸'});}catch(e){}},diff);}}
+function scheduleReminderCheck(){
+if(reminderTimer){clearInterval(reminderTimer);}
+reminderTimer=setInterval(()=>{
+const enabled=localStorage.getItem('lahza-reminder')==='true';
+if(!enabled)return;
+const t=localStorage.getItem('lahza-reminder-time')||'20:00';
+const[h,m]=t.split(':').map(Number);
+const now=new Date();
+if(now.getHours()===h&&now.getMinutes()===m){checkReminder();}
+},30000);
+}
 async function openStats(){try{const ms=await getAllMoments();const total=ms.length;const daysSet=new Set(ms.map(m=>getDateStr(m.date)));const daysCount=daysSet.size;let best=0;if(ms.length>0){const sortedDays=Array.from(daysSet).sort();let cur=1;best=1;for(let i=1;i<sortedDays.length;i++){const prev=new Date(sortedDays[i-1]+'T12:00:00');const curr=new Date(sortedDays[i]+'T12:00:00');const diff=Math.round((curr-prev)/86400000);if(diff===1){cur++;if(cur>best)best=cur;}else{cur=1;}}}const now=new Date();const monthStart=new Date(now.getFullYear(),now.getMonth(),1);const monthCount=ms.filter(m=>new Date(m.date)>=monthStart).length;const dayOfWeek=now.getDay();const weekStart=new Date(now);weekStart.setDate(now.getDate()-dayOfWeek);weekStart.setHours(0,0,0,0);const weekCount=ms.filter(m=>new Date(m.date)>=weekStart).length;let lastStr='-';if(ms.length>0){const last=ms.map(m=>new Date(m.date)).sort((a,b)=>b-a)[0];const diff=Math.floor((new Date()-last)/86400000);if(diff===0)lastStr='اليوم';else if(diff===1)lastStr='أمس';else if(diff<7)lastStr='منذ '+diff+' أيام';else if(diff<30)lastStr='منذ '+Math.floor(diff/7)+' أسابيع';else lastStr='منذ '+Math.floor(diff/30)+' شهر';}const photos=ms.filter(m=>m.type==='photo').length;const videos=ms.filter(m=>m.type==='video').length;const texts=ms.filter(m=>m.type==='text').length;const favs=ms.filter(m=>m.favorite).length;document.getElementById('statTotal').textContent=total;document.getElementById('statDays').textContent=daysCount;document.getElementById('statBest').textContent=best;document.getElementById('statMonth').textContent=monthCount;document.getElementById('statWeek').textContent=weekCount;document.getElementById('statLast').textContent=lastStr;document.getElementById('statPhotos').textContent=photos;document.getElementById('statVideos').textContent=videos;document.getElementById('statTexts').textContent=texts;document.getElementById('statFavs').textContent=favs;document.getElementById('statsModal').classList.remove('hidden');}catch(e){alert('خطأ: '+e.message);}}
 const tabBtnRecord=document.getElementById('tabBtnRecord'),tabBtnMoments=document.getElementById('tabBtnMoments'),tabBtnSettings=document.getElementById('tabBtnSettings'),tabRecord=document.getElementById('tabRecord'),tabMoments=document.getElementById('tabMoments'),tabSettings=document.getElementById('tabSettings');
 function switchTab(t){[tabBtnRecord,tabBtnMoments,tabBtnSettings].forEach(b=>b.classList.remove('active'));[tabRecord,tabMoments,tabSettings].forEach(c=>c.classList.add('hidden'));if(t==='record'){tabBtnRecord.classList.add('active');tabRecord.classList.remove('hidden');}else if(t==='moments'){tabBtnMoments.classList.add('active');tabMoments.classList.remove('hidden');renderMoments();}else{tabBtnSettings.classList.add('active');tabSettings.classList.remove('hidden');}}
@@ -382,16 +392,12 @@ document.getElementById('reminderTime').value=localStorage.getItem('lahza-remind
 }
 document.getElementById('reminderToggle').onclick=async()=>{
 const enabled=localStorage.getItem('lahza-reminder')==='true';
-if(!enabled){
-if('Notification' in window&&Notification.permission==='default'){try{await Notification.requestPermission();}catch(e){}}
-localStorage.setItem('lahza-reminder','true');
-}else{localStorage.setItem('lahza-reminder','false');}
+if(!enabled){localStorage.setItem('lahza-reminder','true');}
+else{localStorage.setItem('lahza-reminder','false');}
 loadReminderSettings();
 checkReminder();
-scheduleNotification();
 };
-document.getElementById('reminderTime').onchange=(e)=>{localStorage.setItem('lahza-reminder-time',e.target.value);scheduleNotification();};
-document.getElementById('testReminder').onclick=()=>{if('Notification' in window&&Notification.permission==='granted'){new Notification('لحظة',{body:'لم توثّق اليوم بعد! سجّل لحظتك 📸'});}else{alert('يرجى السماح بالإشعارات أولاً');}};
+document.getElementById('reminderTime').onchange=(e)=>{localStorage.setItem('lahza-reminder-time',e.target.value);};
 document.getElementById('reminderClose').onclick=()=>{localStorage.setItem('lahza-reminder-dismissed',getDateStr(new Date()));document.getElementById('reminderBanner').classList.add('hidden');};
 document.getElementById('reminderBtn').onclick=()=>{document.getElementById('reminderBanner').classList.add('hidden');switchTab('record');};
 showToday();
@@ -399,7 +405,8 @@ loadTheme();
 updateModeButtons();
 buildColorGrid();
 loadReminderSettings();
-openDB().then(()=>{updateCounter();updateStreak();checkReminder();scheduleNotification();}).catch(e=>{document.getElementById('status').textContent='❌ خطأ: '+e.message;});
+scheduleReminderCheck();
+openDB().then(()=>{updateCounter();updateStreak();checkReminder();}).catch(e=>{document.getElementById('status').textContent='❌ خطأ: '+e.message;});
 </script>
 </body>
 </html>
