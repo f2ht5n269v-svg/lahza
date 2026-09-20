@@ -117,7 +117,12 @@ input[type="time"]{text-align:center;font-size:1.1rem;cursor:pointer;}
 #modalHeart:active{transform:scale(.9);}
 .settings-section{background:var(--card);border-radius:16px;padding:20px;margin-bottom:16px;border:1.5px solid var(--border);}
 .settings-title{color:var(--text);font-size:1.1rem;font-weight:500;margin-bottom:16px;display:block;}
-.settings-sub{color:var(--text-dim);font-size:.8rem;margin-bottom:10px;display:block;}
+.settings-sub{color:var(--text-dim);font-size:.8rem;}
+.toggle-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;}
+.toggle-switch{position:relative;width:52px;height:30px;background:var(--border);border-radius:30px;cursor:pointer;transition:background .3s;flex-shrink:0;}
+.toggle-switch.on{background:var(--btn-primary-bg);}
+.toggle-switch::after{content:'';position:absolute;top:3px;left:3px;width:24px;height:24px;background:#fff;border-radius:50%;transition:transform .3s;}
+.toggle-switch.on::after{transform:translateX(22px);}
 .mode-row{display:flex;gap:10px;margin-bottom:20px;}
 .mode-btn{flex:1;padding:14px;border:1.5px solid var(--border);border-radius:12px;background:var(--card);color:var(--text);font-size:.9rem;text-align:center;transition:all .2s;}
 .mode-btn.active{background:var(--btn-primary-bg);color:var(--btn-primary-text);border-color:var(--btn-primary-bg);}
@@ -125,11 +130,6 @@ input[type="time"]{text-align:center;font-size:1.1rem;cursor:pointer;}
 .color-option{padding:14px;border:2px solid transparent;border-radius:12px;text-align:center;font-size:.85rem;cursor:pointer;transition:all .2s;color:#fff;font-weight:500;}
 .color-option.active{border-color:var(--btn-primary-bg);transform:scale(1.05);}
 .color-option .emoji{display:block;font-size:1.5rem;margin-bottom:4px;}
-.toggle-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;}
-.toggle-switch{position:relative;width:52px;height:30px;background:var(--border);border-radius:30px;cursor:pointer;transition:background .3s;}
-.toggle-switch.on{background:var(--btn-primary-bg);}
-.toggle-switch::after{content:'';position:absolute;top:3px;left:3px;width:24px;height:24px;background:#fff;border-radius:50%;transition:transform .3s;}
-.toggle-switch.on::after{transform:translateX(22px);}
 .sheet-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.55);z-index:400;display:flex;align-items:flex-end;justify-content:center;animation:fadeIn .2s ease;}
 .sheet{width:100%;max-width:500px;background:var(--card);border-radius:24px 24px 0 0;padding:16px 16px 32px;animation:slideUpSheet .3s ease;border-top:1.5px solid var(--border);}
 @keyframes slideUpSheet{from{transform:translateY(100%);}to{transform:translateY(0);}}
@@ -187,16 +187,15 @@ input[type="time"]{text-align:center;font-size:1.1rem;cursor:pointer;}
 <div class="settings-section">
 <span class="settings-title">🔔 التذكير اليومي</span>
 <div class="toggle-row">
-<span class="settings-sub" style="margin:0;">تفعيل التذكير</span>
+<span class="settings-sub">تفعيل التذكير</span>
 <div class="toggle-switch" id="reminderToggle"></div>
 </div>
-<div id="reminderTimeSection" class="hidden">
+<div id="reminderTimeSection" class="hidden" style="margin-top:12px;">
 <div class="toggle-row">
-<span class="settings-sub" style="margin:0;">وقت التذكير</span>
-<input type="time" id="reminderTime" value="20:00" style="max-width:120px;margin:0;">
+<span class="settings-sub">وقت التذكير</span>
+<input type="time" id="reminderTime" value="20:00" style="max-width:120px;margin:0;padding:8px 10px;font-size:.95rem;">
 </div>
-<button class="btn small" id="testReminder" style="margin-top:12px;">تجربة التذكير</button>
-</div>
+<button class="btn small" id="testReminder" style="margin-top:8px;">تجربة التذكير</button>
 </div>
 </div>
 <div class="settings-section">
@@ -271,41 +270,13 @@ input[type="time"]{text-align:center;font-size:1.1rem;cursor:pointer;}
 <div class="stats-content">
 <div class="stats-title">📊 إحصائياتي</div>
 <div class="stats-grid">
-<div class="stat-card">
-<span class="stat-icon">📸</span>
-<span class="stat-num" id="statTotal">0</span>
-<span class="stat-label">لقطة محفوظة</span>
-</div>
-<div class="stat-card">
-<span class="stat-icon">📅</span>
-<span class="stat-num" id="statDays">0</span>
-<span class="stat-label">يوم موثّق</span>
-</div>
-<div class="stat-card">
-<span class="stat-icon">🔥</span>
-<span class="stat-num" id="statBest">0</span>
-<span class="stat-label">أطول سلسلة</span>
-</div>
-<div class="stat-card">
-<span class="stat-icon">📆</span>
-<span class="stat-num" id="statMonth">0</span>
-<span class="stat-label">هذا الشهر</span>
-</div>
-<div class="stat-card">
-<span class="stat-icon">🗓️</span>
-<span class="stat-num" id="statWeek">0</span>
-<span class="stat-label">هذا الأسبوع</span>
-</div>
-<div class="stat-card">
-<span class="stat-icon">⏰</span>
-<span class="stat-num" id="statLast">-</span>
-<span class="stat-label">آخر لقطة</span>
-</div>
-<div class="stat-card">
-<span class="stat-icon">❤️</span>
-<span class="stat-num" id="statFavs">0</span>
-<span class="stat-label">المفضلة</span>
-</div>
+<div class="stat-card"><span class="stat-icon">📸</span><span class="stat-num" id="statTotal">0</span><span class="stat-label">لقطة محفوظة</span></div>
+<div class="stat-card"><span class="stat-icon">📅</span><span class="stat-num" id="statDays">0</span><span class="stat-label">يوم موثّق</span></div>
+<div class="stat-card"><span class="stat-icon">🔥</span><span class="stat-num" id="statBest">0</span><span class="stat-label">أطول سلسلة</span></div>
+<div class="stat-card"><span class="stat-icon">📆</span><span class="stat-num" id="statMonth">0</span><span class="stat-label">هذا الشهر</span></div>
+<div class="stat-card"><span class="stat-icon">🗓️</span><span class="stat-num" id="statWeek">0</span><span class="stat-label">هذا الأسبوع</span></div>
+<div class="stat-card"><span class="stat-icon">⏰</span><span class="stat-num" id="statLast">-</span><span class="stat-label">آخر لقطة</span></div>
+<div class="stat-card"><span class="stat-icon">❤️</span><span class="stat-num" id="statFavs">0</span><span class="stat-label">المفضلة</span></div>
 </div>
 <div class="stats-types">
 <span class="stats-types-title">📊 توزيع اللقطات</span>
@@ -350,37 +321,8 @@ function showToday(){const d=new Date();document.getElementById('todayDate').tex
 function getDateStr(date){const d=new Date(date);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function getDayLabel(dateStr){const today=getDateStr(new Date());const yest=new Date();yest.setDate(yest.getDate()-1);const yestStr=getDateStr(yest);if(dateStr===today)return'اليوم';if(dateStr===yestStr)return'أمس';const d=new Date(dateStr+'T12:00:00');return DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()]+' '+d.getFullYear();}
 async function updateStreak(){try{const ms=await getAllMoments();if(ms.length===0){document.getElementById('streakText').textContent='0 يوم';document.getElementById('streakSub').textContent='ابدأ بتوثيق يومك';document.getElementById('streakCard').classList.remove('active');return;}const days=new Set(ms.map(m=>getDateStr(m.date)));const today=getDateStr(new Date());let streak=0;let check=new Date();if(!days.has(today)){check.setDate(check.getDate()-1);}while(days.has(getDateStr(check))){streak++;check.setDate(check.getDate()-1);}const hasToday=days.has(today);document.getElementById('streakText').textContent=streak+(streak===1?' يوم':' أيام');if(hasToday){document.getElementById('streakSub').textContent='وثّقت اليوم ✓';document.getElementById('streakCard').classList.add('active');}else{document.getElementById('streakSub').textContent='لا تنسَ توثيق يومك';document.getElementById('streakCard').classList.remove('active');}}catch(e){}}
-async function checkReminder(){
-try{
-const enabled=localStorage.getItem('lahza-reminder')==='true';
-if(!enabled){document.getElementById('reminderBanner').classList.add('hidden');return;}
-const ms=await getAllMoments();
-const today=getDateStr(new Date());
-const hasToday=ms.some(m=>getDateStr(m.date)===today);
-const dismissed=localStorage.getItem('lahza-reminder-dismissed')===today;
-if(hasToday||dismissed){document.getElementById('reminderBanner').classList.add('hidden');return;}
-document.getElementById('reminderBanner').classList.remove('hidden');
-}catch(e){}
-}
-async function scheduleNotification(){
-if(!('Notification' in window))return;
-if(Notification.permission!=='granted')return;
-const enabled=localStorage.getItem('lahza-reminder')==='true';
-if(!enabled)return;
-const ms=await getAllMoments();
-const today=getDateStr(new Date());
-const hasToday=ms.some(m=>getDateStr(m.date)===today);
-if(hasToday)return;
-const t=localStorage.getItem('lahza-reminder-time')||'20:00';
-const[h,m]=t.split(':').map(Number);
-const now=new Date();
-const target=new Date();
-target.setHours(h,m,0,0);
-const diff=target-now;
-if(diff>0&&diff<86400000){
-setTimeout(()=>{try{new Notification('لحظة',{body:'لم توثّق اليوم بعد! سجّل لحظتك 📸',icon:'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📸</text></svg>'});}catch(e){}},diff);
-}
-}
+async function checkReminder(){try{const enabled=localStorage.getItem('lahza-reminder')==='true';if(!enabled){document.getElementById('reminderBanner').classList.add('hidden');return;}const ms=await getAllMoments();const today=getDateStr(new Date());const hasToday=ms.some(m=>getDateStr(m.date)===today);const dismissed=localStorage.getItem('lahza-reminder-dismissed')===today;if(hasToday||dismissed){document.getElementById('reminderBanner').classList.add('hidden');return;}document.getElementById('reminderBanner').classList.remove('hidden');}catch(e){}}
+async function scheduleNotification(){if(!('Notification' in window))return;if(Notification.permission!=='granted')return;const enabled=localStorage.getItem('lahza-reminder')==='true';if(!enabled)return;const ms=await getAllMoments();const today=getDateStr(new Date());const hasToday=ms.some(m=>getDateStr(m.date)===today);if(hasToday)return;const t=localStorage.getItem('lahza-reminder-time')||'20:00';const[h,m]=t.split(':').map(Number);const now=new Date();const target=new Date();target.setHours(h,m,0,0);const diff=target-now;if(diff>0&&diff<86400000){setTimeout(()=>{try{new Notification('لحظة',{body:'لم توثّق اليوم بعد! سجّل لحظتك 📸'});}catch(e){}},diff);}}
 async function openStats(){try{const ms=await getAllMoments();const total=ms.length;const daysSet=new Set(ms.map(m=>getDateStr(m.date)));const daysCount=daysSet.size;let best=0;if(ms.length>0){const sortedDays=Array.from(daysSet).sort();let cur=1;best=1;for(let i=1;i<sortedDays.length;i++){const prev=new Date(sortedDays[i-1]+'T12:00:00');const curr=new Date(sortedDays[i]+'T12:00:00');const diff=Math.round((curr-prev)/86400000);if(diff===1){cur++;if(cur>best)best=cur;}else{cur=1;}}}const now=new Date();const monthStart=new Date(now.getFullYear(),now.getMonth(),1);const monthCount=ms.filter(m=>new Date(m.date)>=monthStart).length;const dayOfWeek=now.getDay();const weekStart=new Date(now);weekStart.setDate(now.getDate()-dayOfWeek);weekStart.setHours(0,0,0,0);const weekCount=ms.filter(m=>new Date(m.date)>=weekStart).length;let lastStr='-';if(ms.length>0){const last=ms.map(m=>new Date(m.date)).sort((a,b)=>b-a)[0];const diff=Math.floor((new Date()-last)/86400000);if(diff===0)lastStr='اليوم';else if(diff===1)lastStr='أمس';else if(diff<7)lastStr='منذ '+diff+' أيام';else if(diff<30)lastStr='منذ '+Math.floor(diff/7)+' أسابيع';else lastStr='منذ '+Math.floor(diff/30)+' شهر';}const photos=ms.filter(m=>m.type==='photo').length;const videos=ms.filter(m=>m.type==='video').length;const texts=ms.filter(m=>m.type==='text').length;const favs=ms.filter(m=>m.favorite).length;document.getElementById('statTotal').textContent=total;document.getElementById('statDays').textContent=daysCount;document.getElementById('statBest').textContent=best;document.getElementById('statMonth').textContent=monthCount;document.getElementById('statWeek').textContent=weekCount;document.getElementById('statLast').textContent=lastStr;document.getElementById('statPhotos').textContent=photos;document.getElementById('statVideos').textContent=videos;document.getElementById('statTexts').textContent=texts;document.getElementById('statFavs').textContent=favs;document.getElementById('statsModal').classList.remove('hidden');}catch(e){alert('خطأ: '+e.message);}}
 const tabBtnRecord=document.getElementById('tabBtnRecord'),tabBtnMoments=document.getElementById('tabBtnMoments'),tabBtnSettings=document.getElementById('tabBtnSettings'),tabRecord=document.getElementById('tabRecord'),tabMoments=document.getElementById('tabMoments'),tabSettings=document.getElementById('tabSettings');
 function switchTab(t){[tabBtnRecord,tabBtnMoments,tabBtnSettings].forEach(b=>b.classList.remove('active'));[tabRecord,tabMoments,tabSettings].forEach(c=>c.classList.add('hidden'));if(t==='record'){tabBtnRecord.classList.add('active');tabRecord.classList.remove('hidden');}else if(t==='moments'){tabBtnMoments.classList.add('active');tabMoments.classList.remove('hidden');renderMoments();}else{tabBtnSettings.classList.add('active');tabSettings.classList.remove('hidden');}}
@@ -433,10 +375,10 @@ document.getElementById('applyTime').onclick=()=>{currentTheme.mode='auto';apply
 document.getElementById('applySeason').onclick=()=>{const m=new Date().getMonth()+1;let c='blue';if(m>=3&&m<=5)c='green';else if(m>=6&&m<=8)c='yellow';else if(m>=9&&m<=11)c='orange';else c='blue';currentTheme.color=c;applyTheme();buildColorGrid();alert('تم تفعيل الوضع الموسمي');};
 function loadReminderSettings(){
 const enabled=localStorage.getItem('lahza-reminder')==='true';
-document.getElementById('reminderToggle').classList.toggle('on',enabled);
-document.getElementById('reminderTimeSection').classList.toggle('hidden',!enabled);
-const t=localStorage.getItem('lahza-reminder-time')||'20:00';
-document.getElementById('reminderTime').value=t;
+const toggle=document.getElementById('reminderToggle');
+const section=document.getElementById('reminderTimeSection');
+if(enabled){toggle.classList.add('on');section.classList.remove('hidden');}else{toggle.classList.remove('on');section.classList.add('hidden');}
+document.getElementById('reminderTime').value=localStorage.getItem('lahza-reminder-time')||'20:00';
 }
 document.getElementById('reminderToggle').onclick=async()=>{
 const enabled=localStorage.getItem('lahza-reminder')==='true';
