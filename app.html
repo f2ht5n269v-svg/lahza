@@ -48,7 +48,7 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 .hidden{display:none !important;}
 .counter{text-align:center;color:var(--text-faint);font-size:.85rem;margin-top:20px;}
 .empty{text-align:center;color:var(--text-faint);margin-top:80px;font-size:1rem;line-height:2;}
-.day-group{background:var(--card);border:1.5px solid var(--border);border-radius:16px;margin-bottom:12px;overflow:hidden;transition:background .5s,border-color .5s;}
+.day-group{background:var(--card);border:1.5px solid var(--border);border-radius:16px;margin-bottom:12px;overflow:hidden;}
 .day-header{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
 .day-header:active{opacity:.7;}
 .day-info{display:flex;flex-direction:column;gap:2px;}
@@ -80,11 +80,11 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 .stats-content{width:100%;max-width:400px;margin:0 auto;}
 .stats-title{color:#fff;font-size:1.5rem;font-weight:300;text-align:center;margin-bottom:24px;letter-spacing:1px;}
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
-.stat-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:18px;text-align:center;backdrop-filter:blur(10px);}
+.stat-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:18px;text-align:center;}
 .stat-icon{font-size:1.8rem;display:block;margin-bottom:6px;}
 .stat-num{color:#fff;font-size:1.8rem;font-weight:300;display:block;margin-bottom:2px;}
 .stat-label{color:#ccc;font-size:.78rem;}
-.stats-types{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:16px 20px;backdrop-filter:blur(10px);}
+.stats-types{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:16px 20px;}
 .stats-types-title{color:#fff;font-size:1rem;margin-bottom:12px;display:block;}
 .type-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1);}
 .type-row:last-child{border-bottom:none;}
@@ -100,9 +100,9 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 #momentModal textarea{max-width:100%;background:#1a1a1a;border-color:#444;color:#fff;}
 #momentModal .modal-actions{display:flex;gap:10px;margin-top:16px;}
 #momentModal .modal-actions .btn{max-width:none;flex:1;margin:0;}
-#momentModal .modal-heart{margin:16px auto 0;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);color:#fff;font-size:1.6rem;display:flex;align-items:center;justify-content:center;transition:all .2s;cursor:pointer;}
-#momentModal .modal-heart.active{background:rgba(239,68,68,.9);border-color:rgba(239,68,68,1);transform:scale(1.1);}
-#momentModal .modal-heart:active{transform:scale(.9);}
+#modalHeart{margin:16px auto 0;width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);color:#fff;font-size:1.8rem;display:flex;align-items:center;justify-content:center;transition:all .2s;cursor:pointer;}
+#modalHeart.active{background:rgba(239,68,68,.9);border-color:rgba(239,68,68,1);transform:scale(1.1);}
+#modalHeart:active{transform:scale(.9);}
 .settings-section{background:var(--card);border-radius:16px;padding:20px;margin-bottom:16px;border:1.5px solid var(--border);}
 .settings-title{color:var(--text);font-size:1.1rem;font-weight:500;margin-bottom:16px;display:block;}
 .settings-sub{color:var(--text-dim);font-size:.8rem;margin-bottom:10px;display:block;}
@@ -214,7 +214,7 @@ textarea:focus,input:focus{outline:none;border-color:var(--btn-primary-bg);}
 <button class="close-modal" id="modalClose">×</button>
 <div class="modal-content" id="modalContent"></div>
 <div class="modal-content">
-<button class="modal-heart" id="modalHeart">🤍</button>
+<button id="modalHeart">🤍</button>
 <label class="modal-label">📝 التعليق:</label>
 <textarea id="modalCaption" rows="3" placeholder="أضف جملة..."></textarea>
 <div class="modal-actions">
@@ -289,10 +289,7 @@ const DB_NAME='lahza-db',DB_VERSION=1,STORE_NAME='moments';
 let db=null,stream=null,pendingBlob=null,pendingType=null,selectedColor='#0a0a0a',currentFacing='environment',currentMomentId=null,videoFacing='environment',currentFilter='all';
 const QUESTIONS=["ما أجمل ما حدث اليوم؟","ما الذي أضحكك اليوم؟","من الشخص الذي أسعدك لقاؤه اليوم؟","ما اللحظة التي تود الاحتفاظ بها؟","ما الشيء الذي شعرت فيه بالراحة؟","ما الطعام الذي استمتعت به اليوم؟","ما المكان الذي زرته اليوم؟","ما الشيء الذي رأيته وأحببته؟","ما العمل الفني الذي تابعته اليوم؟","ما الشيء الذي اشتريته اليوم؟","كيف كان مزاجك اليوم؟","لو وصفت يومك بكلمة واحدة، فماذا تقول؟","ما اللون الذي يعبر عن يومك؟","ما الشعور الذي غلب على يومك؟","ما الذي تشكر نفسك عليه؟","ما الإنجاز الصغير لهذا اليوم؟","ما الأمر الذي كنت تخشاه فواجهته؟","ما الذي تفتخر به اليوم؟","ما الذي تنوي فعله غداً؟","ما أجمل خبر سمعته اليوم؟"];
 const COLORS=['#0a0a0a','#1e293b','#7c2d12','#14532d','#581c87','#831843'];
-const THEMES={
-dark:{blue:{bg:'#0a1929',text:'#fff',dim:'#8899aa',faint:'#667788',border:'#2a4a6e',card:'#142a44',primary:'#4ade80',primaryText:'#000'},purple:{bg:'#1a0a29',text:'#fff',dim:'#9988aa',faint:'#776688',border:'#4a2a6e',card:'#2a1444',primary:'#c084fc',primaryText:'#000'},green:{bg:'#0a2919',text:'#fff',dim:'#88aa99',faint:'#668877',border:'#2a6e4a',card:'#14442a',primary:'#4ade80',primaryText:'#000'},red:{bg:'#290a0a',text:'#fff',dim:'#aa8888',faint:'#886666',border:'#6e2a2a',card:'#441414',primary:'#f87171',primaryText:'#000'},orange:{bg:'#291a0a',text:'#fff',dim:'#aa9988',faint:'#887766',border:'#6e4a2a',card:'#442a14',primary:'#fb923c',primaryText:'#000'},yellow:{bg:'#29290a',text:'#fff',dim:'#aaaa88',faint:'#888866',border:'#6e6e2a',card:'#444414',primary:'#facc15',primaryText:'#000'}},
-light:{blue:{bg:'#e3f2fd',text:'#0a1929',dim:'#5a7a9a',faint:'#8899aa',border:'#90b8d8',card:'#ffffff',primary:'#1976d2',primaryText:'#fff'},purple:{bg:'#f3e5f5',text:'#2a0a3a',dim:'#7a5a8a',faint:'#a888b8',border:'#c090d0',card:'#ffffff',primary:'#7b1fa2',primaryText:'#fff'},green:{bg:'#e8f5e9',text:'#0a2919',dim:'#5a7a5a',faint:'#88a888',border:'#90c090',card:'#ffffff',primary:'#388e3c',primaryText:'#fff'},red:{bg:'#ffebee',text:'#290a0a',dim:'#8a5a5a',faint:'#b88888',border:'#e09090',card:'#ffffff',primary:'#d32f2f',primaryText:'#fff'},orange:{bg:'#fff3e0',text:'#2a1a0a',dim:'#8a6a4a',faint:'#b89878',border:'#e0b890',card:'#ffffff',primary:'#f57c00',primaryText:'#fff'},yellow:{bg:'#fffde7',text:'#2a2a0a',dim:'#8a8a4a',faint:'#b8b878',border:'#e0e090',card:'#ffffff',primary:'#f9a825',primaryText:'#fff'}}
-};
+const THEMES={dark:{blue:{bg:'#0a1929',text:'#fff',dim:'#8899aa',faint:'#667788',border:'#2a4a6e',card:'#142a44',primary:'#4ade80',primaryText:'#000'},purple:{bg:'#1a0a29',text:'#fff',dim:'#9988aa',faint:'#776688',border:'#4a2a6e',card:'#2a1444',primary:'#c084fc',primaryText:'#000'},green:{bg:'#0a2919',text:'#fff',dim:'#88aa99',faint:'#668877',border:'#2a6e4a',card:'#14442a',primary:'#4ade80',primaryText:'#000'},red:{bg:'#290a0a',text:'#fff',dim:'#aa8888',faint:'#886666',border:'#6e2a2a',card:'#441414',primary:'#f87171',primaryText:'#000'},orange:{bg:'#291a0a',text:'#fff',dim:'#aa9988',faint:'#887766',border:'#6e4a2a',card:'#442a14',primary:'#fb923c',primaryText:'#000'},yellow:{bg:'#29290a',text:'#fff',dim:'#aaaa88',faint:'#888866',border:'#6e6e2a',card:'#444414',primary:'#facc15',primaryText:'#000'}},light:{blue:{bg:'#e3f2fd',text:'#0a1929',dim:'#5a7a9a',faint:'#8899aa',border:'#90b8d8',card:'#ffffff',primary:'#1976d2',primaryText:'#fff'},purple:{bg:'#f3e5f5',text:'#2a0a3a',dim:'#7a5a8a',faint:'#a888b8',border:'#c090d0',card:'#ffffff',primary:'#7b1fa2',primaryText:'#fff'},green:{bg:'#e8f5e9',text:'#0a2919',dim:'#5a7a5a',faint:'#88a888',border:'#90c090',card:'#ffffff',primary:'#388e3c',primaryText:'#fff'},red:{bg:'#ffebee',text:'#290a0a',dim:'#8a5a5a',faint:'#b88888',border:'#e09090',card:'#ffffff',primary:'#d32f2f',primaryText:'#fff'},orange:{bg:'#fff3e0',text:'#2a1a0a',dim:'#8a6a4a',faint:'#b89878',border:'#e0b890',card:'#ffffff',primary:'#f57c00',primaryText:'#fff'},yellow:{bg:'#fffde7',text:'#2a2a0a',dim:'#8a8a4a',faint:'#b8b878',border:'#e0e090',card:'#ffffff',primary:'#f9a825',primaryText:'#fff'}}};
 const COLOR_NAMES={blue:'أزرق',purple:'بنفسجي',green:'أخضر',red:'أحمر',orange:'برتقالي',yellow:'أصفر'};
 let currentTheme={mode:'dark',color:'blue'};
 const DAYS_AR=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
@@ -308,198 +305,22 @@ function deleteMoment(id){return new Promise((res,rej)=>{const t=db.transaction(
 function countMoments(){return new Promise((res,rej)=>{const t=db.transaction(STORE_NAME,'readonly');const r=t.objectStore(STORE_NAME).count();r.onsuccess=()=>res(r.result);r.onerror=e=>rej(e.target.error);});}
 function showToday(){const d=new Date();document.getElementById('todayDate').textContent=DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()]+' '+d.getFullYear();const doy=Math.floor((d-new Date(d.getFullYear(),0,0))/86400000);document.getElementById('dailyQuestion').textContent=QUESTIONS[doy%QUESTIONS.length];}
 function getDateStr(date){const d=new Date(date);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
-function getDayLabel(dateStr){
-const today=getDateStr(new Date());
-const yest=new Date();yest.setDate(yest.getDate()-1);
-const yestStr=getDateStr(yest);
-if(dateStr===today)return 'اليوم';
-if(dateStr===yestStr)return 'أمس';
-const d=new Date(dateStr+'T12:00:00');
-return DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()]+' '+d.getFullYear();
-}
+function getDayLabel(dateStr){const today=getDateStr(new Date());const yest=new Date();yest.setDate(yest.getDate()-1);const yestStr=getDateStr(yest);if(dateStr===today)return'اليوم';if(dateStr===yestStr)return'أمس';const d=new Date(dateStr+'T12:00:00');return DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()]+' '+d.getFullYear();}
 async function updateStreak(){try{const ms=await getAllMoments();if(ms.length===0){document.getElementById('streakText').textContent='0 يوم';document.getElementById('streakSub').textContent='ابدأ بتوثيق يومك';document.getElementById('streakCard').classList.remove('active');return;}const days=new Set(ms.map(m=>getDateStr(m.date)));const today=getDateStr(new Date());let streak=0;let check=new Date();if(!days.has(today)){check.setDate(check.getDate()-1);}while(days.has(getDateStr(check))){streak++;check.setDate(check.getDate()-1);}const hasToday=days.has(today);document.getElementById('streakText').textContent=streak+(streak===1?' يوم':' أيام');if(hasToday){document.getElementById('streakSub').textContent='وثّقت اليوم ✓';document.getElementById('streakCard').classList.add('active');}else{document.getElementById('streakSub').textContent='لا تنسَ توثيق يومك';document.getElementById('streakCard').classList.remove('active');}}catch(e){}}
-async function openStats(){
-try{
-const ms=await getAllMoments();
-const total=ms.length;
-const daysSet=new Set(ms.map(m=>getDateStr(m.date)));
-const daysCount=daysSet.size;
-let best=0;
-if(ms.length>0){
-const sortedDays=Array.from(daysSet).sort();
-let cur=1;
-best=1;
-for(let i=1;i<sortedDays.length;i++){
-const prev=new Date(sortedDays[i-1]+'T12:00:00');
-const curr=new Date(sortedDays[i]+'T12:00:00');
-const diff=Math.round((curr-prev)/86400000);
-if(diff===1){cur++;if(cur>best)best=cur;}
-else{cur=1;}
-}
-}
-const now=new Date();
-const monthStart=new Date(now.getFullYear(),now.getMonth(),1);
-const monthCount=ms.filter(m=>new Date(m.date)>=monthStart).length;
-const dayOfWeek=now.getDay();
-const weekStart=new Date(now);
-weekStart.setDate(now.getDate()-dayOfWeek);
-weekStart.setHours(0,0,0,0);
-const weekCount=ms.filter(m=>new Date(m.date)>=weekStart).length;
-let lastStr='-';
-if(ms.length>0){
-const last=ms.map(m=>new Date(m.date)).sort((a,b)=>b-a)[0];
-const now2=new Date();
-const diff=Math.floor((now2-last)/86400000);
-if(diff===0)lastStr='اليوم';
-else if(diff===1)lastStr='أمس';
-else if(diff<7)lastStr='منذ '+diff+' أيام';
-else if(diff<30)lastStr='منذ '+Math.floor(diff/7)+' أسابيع';
-else lastStr='منذ '+Math.floor(diff/30)+' شهر';
-}
-const photos=ms.filter(m=>m.type==='photo').length;
-const videos=ms.filter(m=>m.type==='video').length;
-const texts=ms.filter(m=>m.type==='text').length;
-const favs=ms.filter(m=>m.favorite).length;
-document.getElementById('statTotal').textContent=total;
-document.getElementById('statDays').textContent=daysCount;
-document.getElementById('statBest').textContent=best;
-document.getElementById('statMonth').textContent=monthCount;
-document.getElementById('statWeek').textContent=weekCount;
-document.getElementById('statLast').textContent=lastStr;
-document.getElementById('statPhotos').textContent=photos;
-document.getElementById('statVideos').textContent=videos;
-document.getElementById('statTexts').textContent=texts;
-document.getElementById('statFavs').textContent=favs;
-document.getElementById('statsModal').classList.remove('hidden');
-}catch(e){alert('خطأ: '+e.message);}
-}
-document.getElementById('statsClose').onclick=()=>{document.getElementById('statsModal').classList.add('hidden');};
+async function openStats(){try{const ms=await getAllMoments();const total=ms.length;const daysSet=new Set(ms.map(m=>getDateStr(m.date)));const daysCount=daysSet.size;let best=0;if(ms.length>0){const sortedDays=Array.from(daysSet).sort();let cur=1;best=1;for(let i=1;i<sortedDays.length;i++){const prev=new Date(sortedDays[i-1]+'T12:00:00');const curr=new Date(sortedDays[i]+'T12:00:00');const diff=Math.round((curr-prev)/86400000);if(diff===1){cur++;if(cur>best)best=cur;}else{cur=1;}}}const now=new Date();const monthStart=new Date(now.getFullYear(),now.getMonth(),1);const monthCount=ms.filter(m=>new Date(m.date)>=monthStart).length;const dayOfWeek=now.getDay();const weekStart=new Date(now);weekStart.setDate(now.getDate()-dayOfWeek);weekStart.setHours(0,0,0,0);const weekCount=ms.filter(m=>new Date(m.date)>=weekStart).length;let lastStr='-';if(ms.length>0){const last=ms.map(m=>new Date(m.date)).sort((a,b)=>b-a)[0];const diff=Math.floor((new Date()-last)/86400000);if(diff===0)lastStr='اليوم';else if(diff===1)lastStr='أمس';else if(diff<7)lastStr='منذ '+diff+' أيام';else if(diff<30)lastStr='منذ '+Math.floor(diff/7)+' أسابيع';else lastStr='منذ '+Math.floor(diff/30)+' شهر';}const photos=ms.filter(m=>m.type==='photo').length;const videos=ms.filter(m=>m.type==='video').length;const texts=ms.filter(m=>m.type==='text').length;const favs=ms.filter(m=>m.favorite).length;document.getElementById('statTotal').textContent=total;document.getElementById('statDays').textContent=daysCount;document.getElementById('statBest').textContent=best;document.getElementById('statMonth').textContent=monthCount;document.getElementById('statWeek').textContent=weekCount;document.getElementById('statLast').textContent=lastStr;document.getElementById('statPhotos').textContent=photos;document.getElementById('statVideos').textContent=videos;document.getElementById('statTexts').textContent=texts;document.getElementById('statFavs').textContent=favs;document.getElementById('statsModal').classList.remove('hidden');}catch(e){alert('خطأ: '+e.message);}}
 const tabBtnRecord=document.getElementById('tabBtnRecord'),tabBtnMoments=document.getElementById('tabBtnMoments'),tabBtnSettings=document.getElementById('tabBtnSettings'),tabRecord=document.getElementById('tabRecord'),tabMoments=document.getElementById('tabMoments'),tabSettings=document.getElementById('tabSettings');
 function switchTab(t){[tabBtnRecord,tabBtnMoments,tabBtnSettings].forEach(b=>b.classList.remove('active'));[tabRecord,tabMoments,tabSettings].forEach(c=>c.classList.add('hidden'));if(t==='record'){tabBtnRecord.classList.add('active');tabRecord.classList.remove('hidden');}else if(t==='moments'){tabBtnMoments.classList.add('active');tabMoments.classList.remove('hidden');renderMoments();}else{tabBtnSettings.classList.add('active');tabSettings.classList.remove('hidden');}}
 tabBtnRecord.onclick=()=>switchTab('record');
 tabBtnMoments.onclick=()=>switchTab('moments');
 tabBtnSettings.onclick=()=>switchTab('settings');
-document.querySelectorAll('.filter-btn').forEach(b=>{
-b.onclick=()=>{
-document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
-b.classList.add('active');
-currentFilter=b.getAttribute('data-filter');
-renderMoments();
-};
-});
+document.querySelectorAll('.filter-btn').forEach(b=>{b.onclick=()=>{document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentFilter=b.getAttribute('data-filter');renderMoments();};});
 function updateCounter(){countMoments().then(n=>{const c=document.getElementById('counter');if(n===0)c.textContent='لا توجد لقطات بعد';else if(n===1)c.textContent='📸 لقطة واحدة محفوظة';else c.textContent='📸 '+n+' لقطات محفوظة';});}
-async function renderMoments(){
-const tl=document.getElementById('timeline'),em=document.getElementById('empty'),ce=document.getElementById('countMoments');
-try{
-let ms=await getAllMoments();
-if(currentFilter==='favorite'){ms=ms.filter(m=>m.favorite);}
-else if(currentFilter!=='all'){ms=ms.filter(m=>m.type===currentFilter);}
-if(ms.length===0){
-ce.textContent='';
-if(currentFilter==='all')em.innerHTML='لا توجد لقطات بعد<br>ارجع إلى تبويب التسجيل ووثّق أول لحظة 📸';
-else if(currentFilter==='photo')em.innerHTML='لا توجد صور بعد';
-else if(currentFilter==='video')em.innerHTML='لا توجد فيديوهات بعد';
-else if(currentFilter==='text')em.innerHTML='لا توجد كتابات بعد';
-else em.innerHTML='لا توجد لقطات في المفضلة بعد<br>اضغط ❤️ على لقطة لإضافتها هنا';
-em.classList.remove('hidden');
-tl.innerHTML='';
-return;
-}
-em.classList.add('hidden');
-if(currentFilter==='all'){ce.textContent=ms.length===1?'📸 لقطة واحدة محفوظة':'📸 '+ms.length+' لقطات';}
-else if(currentFilter==='photo'){ce.textContent=ms.length===1?'📷 صورة واحدة':'📷 '+ms.length+' صور';}
-else if(currentFilter==='video'){ce.textContent=ms.length===1?'🎥 فيديو واحد':'🎥 '+ms.length+' فيديوهات';}
-else if(currentFilter==='text'){ce.textContent=ms.length===1?'✍️ كتابة واحدة':'✍️ '+ms.length+' كتابات';}
-else{ce.textContent=ms.length===1?'❤️ لقطة واحدة في المفضلة':'❤️ '+ms.length+' لقطات في المفضلة';}
-const groups={};
-ms.forEach(m=>{const k=getDateStr(m.date);if(!groups[k])groups[k]=[];groups[k].push(m);});
-const keys=Object.keys(groups).sort().reverse();
-const todayKey=getDateStr(new Date());
-tl.innerHTML='';
-for(const k of keys){
-const list=groups[k];
-const grp=document.createElement('div');
-grp.className='day-group'+(k===todayKey?' open':'');
-const header=document.createElement('div');
-header.className='day-header';
-const info=document.createElement('div');
-info.className='day-info';
-const title=document.createElement('div');
-title.className='day-title';
-title.textContent=getDayLabel(k);
-const cnt=document.createElement('div');
-cnt.className='day-count';
-cnt.textContent=(list.length===1?'عنصر واحد':list.length+' عناصر');
-info.appendChild(title);
-info.appendChild(cnt);
-const arrow=document.createElement('div');
-arrow.className='day-arrow';
-arrow.textContent='▶';
-header.appendChild(info);
-header.appendChild(arrow);
-header.onclick=()=>{grp.classList.toggle('open');};
-grp.appendChild(header);
-const body=document.createElement('div');
-body.className='day-body';
-const grid=document.createElement('div');
-grid.className='day-grid';
-list.sort((a,b)=>new Date(b.date)-new Date(a.date));
-for(const m of list){
-const d=document.createElement('div');
-d.className='moment';
-if(m.type==='photo'){const i=document.createElement('img');i.src=URL.createObjectURL(m.blob);d.appendChild(i);}
-else if(m.type==='video'){const v=document.createElement('video');v.src=URL.createObjectURL(m.blob);v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=true;d.appendChild(v);}
-else if(m.type==='text'){const t=document.createElement('div');t.className='text-content';t.style.background=m.color||'#0a0a0a';t.textContent=await m.blob.text();d.appendChild(t);}
-const dt=new Date(m.date);
-const timeStr=dt.getHours()+':'+String(dt.getMinutes()).padStart(2,'0');
-const b=document.createElement('div');
-b.className='bottom-bar';
-b.innerHTML='<div class="date">'+timeStr+'</div>'+(m.caption?'<div class="caption">'+m.caption+'</div>':'');
-d.appendChild(b);
-const heart=document.createElement('button');
-heart.className='heart'+(m.favorite?' active':'');
-heart.textContent=m.favorite?'❤️':'🤍';
-heart.onclick=async(e)=>{e.stopPropagation();m.favorite=!m.favorite;await updateMoment(m);renderMoments();};
-d.appendChild(heart);
-const del=document.createElement('button');
-del.className='del';
-del.textContent='×';
-del.onclick=async(e)=>{e.stopPropagation();if(confirm('هل تريد حذف هذه اللقطة؟')){await deleteMoment(m.id);renderMoments();updateCounter();updateStreak();}};
-d.appendChild(del);
-d.onclick=()=>openMomentModal(m.id);
-grid.appendChild(d);
-}
-body.appendChild(grid);
-grp.appendChild(body);
-tl.appendChild(grp);
-}
-}catch(err){ce.textContent='❌ خطأ: '+err.message;}
-}
-async function openMomentModal(id){
-const m=await getMoment(id);
-if(!m)return;
-currentMomentId=id;
-const mod=document.getElementById('momentModal'),c=document.getElementById('modalContent');
-c.innerHTML='';
-if(m.type==='photo'){const i=document.createElement('img');i.src=URL.createObjectURL(m.blob);c.appendChild(i);}
-else if(m.type==='video'){const v=document.createElement('video');v.src=URL.createObjectURL(m.blob);v.controls=true;v.playsInline=true;c.appendChild(v);}
-else if(m.type==='text'){const t=document.createElement('div');t.className='modal-text';t.style.background=m.color||'#0a0a0a';t.textContent=await m.blob.text();c.appendChild(t);}
-const dt=new Date(m.date);
-const ds=dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear()+' - '+dt.getHours()+':'+String(dt.getMinutes()).padStart(2,'0');
-const dd=document.createElement('div');
-dd.className='modal-date';
-dd.textContent='📅 '+ds;
-c.appendChild(dd);
-document.getElementById('modalCaption').value=m.caption||'';
-const hb=document.getElementById('modalHeart');
-hb.textContent=m.favorite?'❤️':'🤍';
-hb.className='modal-heart'+(m.favorite?' active':'');
-hb.onclick=async()=>{const mm=await getMoment(currentMomentId);if(!mm)return;mm.favorite=!mm.favorite;await updateMoment(mm);hb.textContent=mm.favorite?'❤️':'🤍';hb.className='modal-heart'+(mm.favorite?' active':'');};
-mod.classList.remove('hidden');
-}
+async function renderMoments(){const tl=document.getElementById('timeline'),em=document.getElementById('empty'),ce=document.getElementById('countMoments');try{let ms=await getAllMoments();if(currentFilter==='favorite'){ms=ms.filter(m=>m.favorite);}else if(currentFilter!=='all'){ms=ms.filter(m=>m.type===currentFilter);}if(ms.length===0){ce.textContent='';if(currentFilter==='all')em.innerHTML='لا توجد لقطات بعد<br>ارجع إلى تبويب التسجيل ووثّق أول لحظة 📸';else if(currentFilter==='photo')em.innerHTML='لا توجد صور بعد';else if(currentFilter==='video')em.innerHTML='لا توجد فيديوهات بعد';else if(currentFilter==='text')em.innerHTML='لا توجد كتابات بعد';else em.innerHTML='لا توجد لقطات في المفضلة بعد<br>اضغط ❤️ على لقطة لإضافتها هنا';em.classList.remove('hidden');tl.innerHTML='';return;}em.classList.add('hidden');if(currentFilter==='all'){ce.textContent=ms.length===1?'📸 لقطة واحدة محفوظة':'📸 '+ms.length+' لقطات';}else if(currentFilter==='photo'){ce.textContent=ms.length===1?'📷 صورة واحدة':'📷 '+ms.length+' صور';}else if(currentFilter==='video'){ce.textContent=ms.length===1?'🎥 فيديو واحد':'🎥 '+ms.length+' فيديوهات';}else if(currentFilter==='text'){ce.textContent=ms.length===1?'✍️ كتابة واحدة':'✍️ '+ms.length+' كتابات';}else{ce.textContent=ms.length===1?'❤️ لقطة واحدة في المفضلة':'❤️ '+ms.length+' لقطات في المفضلة';}const groups={};ms.forEach(m=>{const k=getDateStr(m.date);if(!groups[k])groups[k]=[];groups[k].push(m);});const keys=Object.keys(groups).sort().reverse();const todayKey=getDateStr(new Date());tl.innerHTML='';for(const k of keys){const list=groups[k];const grp=document.createElement('div');grp.className='day-group'+(k===todayKey?' open':'');const header=document.createElement('div');header.className='day-header';const info=document.createElement('div');info.className='day-info';const title=document.createElement('div');title.className='day-title';title.textContent=getDayLabel(k);const cnt=document.createElement('div');cnt.className='day-count';cnt.textContent=(list.length===1?'عنصر واحد':list.length+' عناصر');info.appendChild(title);info.appendChild(cnt);const arrow=document.createElement('div');arrow.className='day-arrow';arrow.textContent='▶';header.appendChild(info);header.appendChild(arrow);header.onclick=()=>{grp.classList.toggle('open');};grp.appendChild(header);const body=document.createElement('div');body.className='day-body';const grid=document.createElement('div');grid.className='day-grid';list.sort((a,b)=>new Date(b.date)-new Date(a.date));for(const m of list){const d=document.createElement('div');d.className='moment';if(m.type==='photo'){const i=document.createElement('img');i.src=URL.createObjectURL(m.blob);d.appendChild(i);}else if(m.type==='video'){const v=document.createElement('video');v.src=URL.createObjectURL(m.blob);v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=true;d.appendChild(v);}else if(m.type==='text'){const t=document.createElement('div');t.className='text-content';t.style.background=m.color||'#0a0a0a';t.textContent=await m.blob.text();d.appendChild(t);}const dt=new Date(m.date);const timeStr=dt.getHours()+':'+String(dt.getMinutes()).padStart(2,'0');const b=document.createElement('div');b.className='bottom-bar';b.innerHTML='<div class="date">'+timeStr+'</div>'+(m.caption?'<div class="caption">'+m.caption+'</div>':'');d.appendChild(b);const heart=document.createElement('button');heart.className='heart'+(m.favorite?' active':'');heart.textContent=m.favorite?'❤️':'🤍';heart.onclick=async(e)=>{e.stopPropagation();const mm=await getMoment(m.id);if(!mm)return;mm.favorite=!mm.favorite;await updateMoment(mm);renderMoments();};d.appendChild(heart);const del=document.createElement('button');del.className='del';del.textContent='×';del.onclick=async(e)=>{e.stopPropagation();if(confirm('هل تريد حذف هذه اللقطة؟')){await deleteMoment(m.id);renderMoments();updateCounter();updateStreak();}};d.appendChild(del);d.onclick=()=>openMomentModal(m.id);grid.appendChild(d);}body.appendChild(grid);grp.appendChild(body);tl.appendChild(grp);}}catch(err){ce.textContent='❌ خطأ: '+err.message;}}
+async function openMomentModal(id){const m=await getMoment(id);if(!m)return;currentMomentId=id;const mod=document.getElementById('momentModal'),c=document.getElementById('modalContent');c.innerHTML='';if(m.type==='photo'){const i=document.createElement('img');i.src=URL.createObjectURL(m.blob);c.appendChild(i);}else if(m.type==='video'){const v=document.createElement('video');v.src=URL.createObjectURL(m.blob);v.controls=true;v.playsInline=true;c.appendChild(v);}else if(m.type==='text'){const t=document.createElement('div');t.className='modal-text';t.style.background=m.color||'#0a0a0a';t.textContent=await m.blob.text();c.appendChild(t);}const dt=new Date(m.date);const ds=dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear()+' - '+dt.getHours()+':'+String(dt.getMinutes()).padStart(2,'0');const dd=document.createElement('div');dd.className='modal-date';dd.textContent='📅 '+ds;c.appendChild(dd);document.getElementById('modalCaption').value=m.caption||'';const hb=document.getElementById('modalHeart');hb.textContent=m.favorite?'❤️':'🤍';hb.className=m.favorite?'active':'';hb.onclick=async()=>{const mm=await getMoment(id);if(!mm)return;mm.favorite=!mm.favorite;await updateMoment(mm);hb.textContent=mm.favorite?'❤️':'🤍';hb.className=mm.favorite?'active':'';};mod.classList.remove('hidden');}
 document.getElementById('modalClose').onclick=()=>{document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();};
 document.getElementById('modalSave').onclick=async()=>{if(!currentMomentId)return;const m=await getMoment(currentMomentId);if(!m)return;m.caption=document.getElementById('modalCaption').value.trim();await updateMoment(m);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();};
 document.getElementById('modalDelete').onclick=async()=>{if(!currentMomentId)return;if(confirm('هل تريد حذف هذه اللقطة؟')){await deleteMoment(currentMomentId);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();updateCounter();updateStreak();}};
+document.getElementById('statsClose').onclick=()=>{document.getElementById('statsModal').classList.add('hidden');};
 document.getElementById('questionCard').onclick=()=>{document.getElementById('questionSheet').classList.remove('hidden');};
 document.getElementById('streakCard').onclick=()=>{openStats();};
 document.getElementById('sheetCancel').onclick=()=>{document.getElementById('questionSheet').classList.add('hidden');};
