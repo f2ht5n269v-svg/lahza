@@ -64,7 +64,7 @@ input[type="time"]{text-align:center;}
 .moment .date{font-size:.65rem;color:#ddd;text-align:right;}
 .moment .caption{font-size:.7rem;color:#fff;margin-top:2px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .moment .del{position:absolute;top:6px;left:6px;background:rgba(239,68,68,.9);border:none;color:#fff;width:26px;height:26px;border-radius:50%;font-size:.9rem;z-index:3;}
-.moment .heart{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.6);border:none;color:#fff;width:30px;height:Grid30px;border-radius:50%;font-size:1rem;z-index:3;}
+.moment .heart{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.6);border:none;color:#fff;width:30px;height:30px;border-radius:50%;font-size:1rem;z-index:3;}
 .moment .heart.active{background:rgba(239,68,68,.9);}
 .calendar-header{display:flex;justify-content:space-between;align-items:center;margin:16px auto;max-width:400px;}
 .calendar-title{font-size:1.15rem;font-weight:500;flex:1;text-align:center;}
@@ -129,7 +129,8 @@ input[type="time"]{text-align:center;}
 .sheet .btn{margin:6px auto;background:var(--bg);}
 .sheet-cancel{margin-top:8px !important;background:transparent !important;color:var(--text-dim) !important;border-color:transparent !important;}
 </style>
-</head><body>
+</head>
+<body>
 <div class="hidden" id="reminderBanner">
 <div class="reminder-inner">
 <span class="reminder-icon">📸</span>
@@ -313,7 +314,8 @@ input[type="time"]{text-align:center;}
 </div>
 </div>
 
-<input type="file" accept="video/*" capture="environment" id="videoInput" style="display:none;"><script>
+<input type="file" accept="video/*" capture="environment" id="videoInput" style="display:none;">
+<script>
 var DB_NAME='lahza-db',DB_VERSION=1,STORE_NAME='moments';
 var db=null,stream=null,pendingBlob=null,pendingType=null,selectedColor='#0a0a0a',currentFacing='environment',currentMomentId=null,videoFacing='environment',currentFilter='all',calMonth=null,calYear=null,selectedDay=null;
 var reminderTimer=null;
@@ -346,7 +348,8 @@ tabBtnRecord.onclick=function(){switchTab('record');};
 tabBtnMoments.onclick=function(){switchTab('moments');};
 tabBtnSettings.onclick=function(){switchTab('settings');};
 document.querySelectorAll('.filter-btn').forEach(function(b){b.onclick=function(){document.querySelectorAll('.filter-btn').forEach(function(x){x.classList.remove('active');});b.classList.add('active');currentFilter=b.getAttribute('data-filter');selectedDay=null;renderMoments();};});
-function updateCounter(){countMoments().then(function(n){var c=document.getElementById('counter');if(n===0)c.textContent='لا توجد لقطات بعد';else if(n===1)c.textContent='📸 لقطة واحدة محفوظة';else c.textContent='📸 '+n+' لقطات محفوظة';});}async function makeMomentCard(m){
+function updateCounter(){countMoments().then(function(n){var c=document.getElementById('counter');if(n===0)c.textContent='لا توجد لقطات بعد';else if(n===1)c.textContent='📸 لقطة واحدة محفوظة';else c.textContent='📸 '+n+' لقطات محفوظة';});}
+async function makeMomentCard(m){
 var d=document.createElement('div');
 d.className='moment';
 if(m.type==='photo'){var i=document.createElement('img');i.src=URL.createObjectURL(m.blob);d.appendChild(i);}
@@ -371,85 +374,136 @@ d.appendChild(del);
 d.onclick=function(){openMomentModal(m.id);};
 return d;
 }
+function getYearLabel(y){return '📅 '+y;}
+function getMonthLabel(m,y){return MONTHS_AR[m]+' '+y;}
+function pluralDays(n){if(n===1)return 'يوم واحد';if(n===2)return 'يومان';if(n<=10)return n+' أيام';return n+' يوم';}
+function pluralMoments(n){if(n===1)return 'لقطة واحدة';if(n===2)return 'لقطتان';if(n<=10)return n+' لقطات';return n+' لقطة';}
+function makeTreeNode(level,title,countText,icon,isOpen){
+  var node=document.createElement('div');
+  node.className='tree-node '+level+(isOpen?' open':'');
+  var header=document.createElement('div');
+  header.className='tree-header';
+  var arrow=document.createElement('div');
+  arrow.className='tree-arrow';
+  arrow.textContent='▶';
+  var ic=document.createElement('div');
+  ic.className='tree-icon';
+  ic.textContent=icon||'';
+  var info=document.createElement('div');
+  info.className='tree-info';
+  var t=document.createElement('div');
+  t.className='tree-title';
+  t.textContent=title;
+  var c=document.createElement('div');
+  c.className='tree-count';
+  c.textContent=countText;
+  info.appendChild(t);info.appendChild(c);
+  header.appendChild(arrow);header.appendChild(ic);header.appendChild(info);
+  var body=document.createElement('div');
+  body.className='tree-body';
+  var children=document.createElement('div');
+  children.className='tree-children';
+  body.appendChild(children);
+  node.appendChild(header);node.appendChild(body);
+  header.onclick=function(){node.classList.toggle('open');};
+  return {node:node,children:children};
+}
 async function renderMoments(){
-var tl=document.getElementById('timeline'),em=document.getElementById('empty'),ce=document.getElementById('countMoments');
-var calView=document.getElementById('calendarView');
-var dayView=document.getElementById('dayView');
-try{
-var ms=await getAllMoments();
-if(currentFilter==='calendar'){
-tl.classList.add('hidden');
-dayView.classList.add('hidden');
-calView.classList.remove('hidden');
-em.classList.add('hidden');
-ce.textContent='📅 اختر يوماً';
-renderCalendar(ms);
-return;
-}
-if(selectedDay){
-tl.classList.add('hidden');
-calView.classList.add('hidden');
-dayView.classList.remove('hidden');
-var dayMoments=ms.filter(function(m){return getDateStr(m.date)===selectedDay;});
-document.getElementById('dayViewTitle').textContent='📅 '+getDayLabel(selectedDay)+' ('+dayMoments.length+(dayMoments.length===1?' لقطة':' لقطات')+')';
-var grid=document.getElementById('dayViewGrid');
-grid.innerHTML='';
-dayMoments.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
-if(dayMoments.length===0){grid.innerHTML='<div class="empty" style="grid-column:1/-1;">لا توجد لقطات في هذا اليوم</div>';}
-else{for(var k=0;k<dayMoments.length;k++){grid.appendChild(await makeMomentCard(dayMoments[k]));}}
-ce.textContent='';
-return;
-}
-tl.classList.remove('hidden');
-calView.classList.add('hidden');
-dayView.classList.add('hidden');
-var filtered=ms;
-if(currentFilter==='favorite'){filtered=ms.filter(function(m){return m.favorite;});}
-else if(currentFilter!=='all'){filtered=ms.filter(function(m){return m.type===currentFilter;});}
-if(filtered.length===0){ce.textContent='';if(currentFilter==='all')em.innerHTML='لا توجد لقطات بعد<br>ارجع إلى تبويب التسجيل ووثّق أول لحظة 📸';else if(currentFilter==='photo')em.innerHTML='لا توجد صور بعد';else if(currentFilter==='video')em.innerHTML='لا توجد فيديوهات بعد';else if(currentFilter==='text')em.innerHTML='لا توجد كتابات بعد';else em.innerHTML='لا توجد لقطات في المفضلة بعد<br>اضغط ❤️ على لقطة لإضافتها هنا';em.classList.remove('hidden');tl.innerHTML='';return;}
-em.classList.add('hidden');
-if(currentFilter==='all'){ce.textContent=filtered.length===1?'📸 لقطة واحدة محفوظة':'📸 '+filtered.length+' لقطات';}
-else if(currentFilter==='photo'){ce.textContent=filtered.length===1?'📷 صورة واحدة':'📷 '+filtered.length+' صور';}
-else if(currentFilter==='video'){ce.textContent=filtered.length===1?'🎥 فيديو واحد':'🎥 '+filtered.length+' فيديوهات';}
-else if(currentFilter==='text'){ce.textContent=filtered.length===1?'✍️ كتابة واحدة':'✍️ '+filtered.length+' كتابات';}
-else{ce.textContent=filtered.length===1?'❤️ لقطة واحدة في المفضلة':'❤️ '+filtered.length+' لقطات في المفضلة';}
-var groups={};
-filtered.forEach(function(m){var k=getDateStr(m.date);if(!groups[k])groups[k]=[];groups[k].push(m);});
-var keys=Object.keys(groups).sort().reverse();
-var todayKey=getDateStr(new Date());
-tl.innerHTML='';
-for(var i=0;i<keys.length;i++){
-var k=keys[i];
-var list=groups[k];
-var grp=document.createElement('div');
-grp.className='day-group'+(k===todayKey?' open':'');
-var header=document.createElement('div');
-header.className='day-header';
-var info=document.createElement('div');
-var title=document.createElement('div');
-title.className='day-title';
-title.textContent=getDayLabel(k);
-var cnt=document.createElement('div');
-cnt.className='day-count';
-cnt.textContent=(list.length===1?'عنصر واحد':list.length+' عناصر');
-info.appendChild(title);info.appendChild(cnt);
-var arrow=document.createElement('div');
-arrow.className='day-arrow';
-arrow.textContent='▶';
-header.appendChild(info);header.appendChild(arrow);
-header.onclick=function(grp){return function(){grp.classList.toggle('open');};}(grp);
-grp.appendChild(header);
-var body=document.createElement('div');
-body.className='day-body';
-var grid2=document.createElement('div');
-grid2.className='day-grid';
-list.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
-for(var j=0;j<list.length;j++){grid2.appendChild(await makeMomentCard(list[j]));}
-body.appendChild(grid2);
-grp.appendChild(body);
-tl.appendChild(grp);
-}
-}catch(err){ce.textContent='❌ خطأ: '+err.message;}
+  var tl=document.getElementById('timeline'),em=document.getElementById('empty'),ce=document.getElementById('countMoments');
+  var calView=document.getElementById('calendarView');
+  var dayView=document.getElementById('dayView');
+  try{
+    var ms=await getAllMoments();
+    if(currentFilter==='calendar'){
+      tl.classList.add('hidden');dayView.classList.add('hidden');
+      calView.classList.remove('hidden');em.classList.add('hidden');
+      ce.textContent='📅 اختر يوماً';renderCalendar(ms);return;
+    }
+    if(selectedDay){
+      tl.classList.add('hidden');calView.classList.add('hidden');
+      dayView.classList.remove('hidden');
+      var dayMoments=ms.filter(function(m){return getDateStr(m.date)===selectedDay;});
+      document.getElementById('dayViewTitle').textContent='📅 '+getDayLabel(selectedDay)+' ('+pluralMoments(dayMoments.length)+')';
+      var grid=document.getElementById('dayViewGrid');
+      grid.innerHTML='';
+      dayMoments.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
+      if(dayMoments.length===0){grid.innerHTML='<div class="empty" style="grid-column:1/-1;">لا توجد لقطات في هذا اليوم</div>';}
+      else{for(var k=0;k<dayMoments.length;k++){grid.appendChild(await makeMomentCard(dayMoments[k]));}}
+      ce.textContent='';return;
+    }
+    tl.classList.remove('hidden');calView.classList.add('hidden');dayView.classList.add('hidden');
+    var filtered=ms;
+    if(currentFilter==='favorite'){filtered=ms.filter(function(m){return m.favorite;});}
+    else if(currentFilter!=='all'){filtered=ms.filter(function(m){return m.type===currentFilter;});}
+    if(filtered.length===0){
+      ce.textContent='';
+      if(currentFilter==='all')em.innerHTML='لا توجد لقطات بعد<br>ارجع إلى تبويب التسجيل ووثّق أول لحظة 📸';
+      else if(currentFilter==='photo')em.innerHTML='لا توجد صور بعد';
+      else if(currentFilter==='video')em.innerHTML='لا توجد فيديوهات بعد';
+      else if(currentFilter==='text')em.innerHTML='لا توجد كتابات بعد';
+      else em.innerHTML='لا توجد لقطات في المفضلة بعد<br>اضغط ❤️ على لقطة لإضافتها هنا';
+      em.classList.remove('hidden');tl.innerHTML='';return;
+    }
+    em.classList.add('hidden');
+    if(currentFilter==='all'){ce.textContent=filtered.length===1?'📸 لقطة واحدة محفوظة':'📸 '+filtered.length+' لقطات';}
+    else if(currentFilter==='photo'){ce.textContent=filtered.length===1?'📷 صورة واحدة':'📷 '+filtered.length+' صور';}
+    else if(currentFilter==='video'){ce.textContent=filtered.length===1?'🎥 فيديو واحد':'🎥 '+filtered.length+' فيديوهات';}
+    else if(currentFilter==='text'){ce.textContent=filtered.length===1?'✍️ كتابة واحدة':'✍️ '+filtered.length+' كتابات';}
+    else{ce.textContent=filtered.length===1?'❤️ لقطة واحدة في المفضلة':'❤️ '+filtered.length+' لقطات في المفضلة';}
+    var years={};
+    filtered.forEach(function(m){
+      var d=new Date(m.date);
+      var y=d.getFullYear();
+      var mo=d.getMonth();
+      var ds=getDateStr(m.date);
+      if(!years[y])years[y]={months:{},total:0};
+      if(!years[y].months[mo])years[y].months[mo]={days:{},total:0};
+      if(!years[y].months[mo].days[ds])years[y].months[mo].days[ds]=[];
+      years[y].months[mo].days[ds].push(m);
+      years[y].months[mo].total++;
+      years[y].total++;
+    });
+    tl.innerHTML='';
+    var nowY=new Date().getFullYear();
+    var nowM=new Date().getMonth();
+    var yearsSorted=Object.keys(years).map(Number).sort(function(a,b){return b-a;});
+    for(var yi=0;yi<yearsSorted.length;yi++){
+      var y=yearsSorted[yi];
+      var yData=years[y];
+      var yDaysCount=Object.keys(yData.months).reduce(function(acc,mo){
+        return acc+Object.keys(yData.months[mo].days).length;
+      },0);
+      var yNode=makeTreeNode('year',getYearLabel(y),
+        pluralDays(yDaysCount)+' · '+pluralMoments(yData.total),'📅',
+        y===nowY);
+      var monthsSorted=Object.keys(yData.months).map(Number).sort(function(a,b){return b-a;});
+      for(var mi=0;mi<monthsSorted.length;mi++){
+        var mo=monthsSorted[mi];
+        var mData=yData.months[mo];
+        var mDaysCount=Object.keys(mData.days).length;
+        var mNode=makeTreeNode('month',getMonthLabel(mo,y),
+          pluralDays(mDaysCount)+' · '+pluralMoments(mData.total),'📁',
+          (y===nowY && mo===nowM));
+        var daysSorted=Object.keys(mData.days).sort().reverse();
+        for(var di=0;di<daysSorted.length;di++){
+          var ds=daysSorted[di];
+          var list=mData.days[ds];
+          var dNode=makeTreeNode('day',getDayLabel(ds),
+            pluralMoments(list.length),'','');
+          var grid2=document.createElement('div');
+          grid2.className='day-grid';
+          list.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
+          for(var j=0;j<list.length;j++){
+            grid2.appendChild(await makeMomentCard(list[j]));
+          }
+          dNode.children.appendChild(grid2);
+          mNode.children.appendChild(dNode.node);
+        }
+        yNode.children.appendChild(mNode.node);
+      }
+      tl.appendChild(yNode.node);
+    }
+  }catch(err){ce.textContent='❌ خطأ: '+err.message;}
 }
 function renderCalendar(allMoments){
 if(calMonth===null){var n=new Date();calMonth=n.getMonth();calYear=n.getFullYear();}
