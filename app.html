@@ -115,10 +115,9 @@ input[type="time"]{text-align:center;}
 .tree-node.open{border-color:var(--primary);}
 .tree-header{padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
 .tree-arrow{color:var(--text-dim);font-size:.85rem;transition:transform .3s;flex-shrink:0;}
-.tree-node.open>.tree-header>.tree-arrow{transform:rotate(90degpx);}
-.tree;}
--icon{font-size:1.1.trem;flex-shrink:0;}
-.treeree-info{flex:1;display:flex-node;flex-direction:column;gap:2px;min-width:0;}
+.tree-node.open>.tree-header>.tree-arrow{transform:rotate(90deg);}
+.tree-icon{font-size:1.1rem;flex-shrink:0;}
+.tree-info{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0;}
 .tree-title{font-size:.95rem;font-weight:500;}
 .tree-count{color:var(--text-dim);font-size:.75rem;}
 .tree-body{max-height:0;overflow:hidden;transition:max-height .4s ease;}
@@ -126,17 +125,19 @@ input[type="time"]{text-align:center;}
 .tree-children{padding:0 8px 8px;}
 .tree-node.year>.tree-header{background:linear-gradient(90deg,rgba(74,222,128,.12),transparent);}
 .tree-node.year .tree-title{font-size:1.05rem;font-weight:600;}
-.tree-node.month>.tree-header{padding-right:22.month .tree-title{font-size:.92rem;}
+.tree-node.month>.tree-header{padding-right:22px;}
+.tree-node.month .tree-title{font-size:.92rem;}
 .tree-node.day .tree-header{padding:10px 14px;}
 .tree-node.day .tree-title{font-size:.85rem;color:var(--text-dim);}
-.tree-node.day .day-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 6px 10px;}
-.tree-node.day .moment{border-radius:8px;}
-.tree-node.day .moment .del{width:18px;height:18px;font-size:.65rem;top:3px;left:3px;line-height:1;}
-.tree-node.day .moment .heart{width:20px;height:20px;font-size:.75rem;top:3px;right:3px;line-height:1;}
-.tree-node.day .moment .bottom-bar{padding:4px;}
-.tree-node.day .moment .date{font-size:.5rem;}
-.tree-node.day .moment .caption{font-size:.55rem;}
-.tree-node.day .moment .text-content{padding:8px;font-size:.7rem;line-height:1.4;}
+/* شبكة اللقطات - 3 بكل صف */
+.day-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 6px 10px;}
+.day-grid .moment{border-radius:8px;}
+.day-grid .moment .del{width:18px;height:18px;font-size:.65rem;top:3px;left:3px;line-height:1;}
+.day-grid .moment .heart{width:20px;height:20px;font-size:.75rem;top:3px;right:3px;line-height:1;}
+.day-grid .moment .bottom-bar{padding:4px;}
+.day-grid .moment .date{font-size:.5rem;}
+.day-grid .moment .caption{font-size:.55rem;}
+.day-grid .moment .text-content{padding:8px;font-size:.7rem;line-height:1.4;}
 </style>
 </head>
 <body>
@@ -388,7 +389,7 @@ function getYearLabel(y){return '📅 '+y;}
 function getMonthLabel(m,y){return MONTHS_AR[m]+' '+y;}
 function pluralDays(n){if(n===1)return 'يوم واحد';if(n===2)return 'يومان';if(n<=10)return n+' أيام';return n+' يوم';}
 function pluralMoments(n){if(n===1)return 'لقطة واحدة';if(n===2)return 'لقطتان';if(n<=10)return n+' لقطات';return n+' لقطة';}
-function makeTreeNode(level,title,countText,icon,key,parentKey){
+function makeTreeNode(level,title,countText,icon,key){
   var node=document.createElement('div');
   node.className='tree-node '+level;
   if(key&&savedTreeState[level+'s']&&savedTreeState[level+'s'][key])node.classList.add('open');
