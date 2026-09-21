@@ -128,6 +128,34 @@ input[type="time"]{text-align:center;}
 .sheet-title{text-align:center;color:var(--text-dim);font-size:.85rem;margin-bottom:14px;}
 .sheet .btn{margin:6px auto;background:var(--bg);}
 .sheet-cancel{margin-top:8px !important;background:transparent !important;color:var(--text-dim) !important;border-color:transparent !important;}
+/* ===== شجرة سنين/أشهر/أيام ===== */
+.tree-node{background:var(--card);border:1.5px solid var(--border);border-radius:14px;margin-bottom:8px;overflow:hidden;transition:border-color .2s;}
+.tree-node.open{border-color:var(--primary);}
+.tree-header{padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
+.tree-arrow{color:var(--text-dim);font-size:.85rem;transition:transform .3s;flex-shrink:0;}
+.tree-node.open>.tree-header>.tree-arrow{transform:rotate(90deg);}
+.tree-icon{font-size:1.1rem;flex-shrink:0;}
+.tree-info{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0;}
+.tree-title{font-size:.95rem;font-weight:500;}
+.tree-count{color:var(--text-dim);font-size:.75rem;}
+.tree-body{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+.tree-node.open>.tree-body{max-height:20000px;}
+.tree-children{padding:0 8px 8px;}
+.tree-node.year>.tree-header{background:linear-gradient(90deg,rgba(74,222,128,.12),transparent);}
+.tree-node.year .tree-title{font-size:1.05rem;font-weight:600;}
+.tree-node.month>.tree-header{padding-right:22px;}
+.tree-node.month .tree-title{font-size:.92rem;}
+.tree-node.day .tree-header{padding:10px 14px;}
+.tree-node.day .tree-title{font-size:.85rem;color:var(--text-dim);}
+/* شبكة اللقطات 3 بكل صف */
+.tree-node.day .day-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 6px 10px;}
+.tree-node.day .moment{border-radius:8px;}
+.tree-node.day .moment .del{width:18px;height:18px;font-size:.65rem;top:3px;left:3px;line-height:1;}
+.tree-node.day .moment .heart{width:20px;height:20px;font-size:.75rem;top:3px;right:3px;line-height:1;}
+.tree-node.day .moment .bottom-bar{padding:4px;}
+.tree-node.day .moment .date{font-size:.5rem;}
+.tree-node.day .moment .caption{font-size:.55rem;}
+.tree-node.day .moment .text-content{padding:8px;font-size:.7rem;line-height:1.4;}
 </style>
 </head>
 <body>
@@ -337,7 +365,7 @@ function deleteMoment(id){return new Promise(function(res,rej){var t=db.transact
 function countMoments(){return new Promise(function(res,rej){var t=db.transaction(STORE_NAME,'readonly');var r=t.objectStore(STORE_NAME).count();r.onsuccess=function(){res(r.result);};r.onerror=function(e){rej(e.target.error);};});}
 function showToday(){var d=new Date();document.getElementById('todayDate').textContent=DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()]+' '+d.getFullYear();var doy=Math.floor((d-new Date(d.getFullYear(),0,0))/86400000);document.getElementById('dailyQuestion').textContent=QUESTIONS[doy%QUESTIONS.length];}
 function getDateStr(date){var d=new Date(date);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
-function getDayLabel(dateStr){var today=getDateStr(new Date());var yest=new Date();yest.setDate(yest.getDate()-1);var yestStr=getDateStr(yest);if(dateStr===today)return'اليوم';if(dateStr===yestStr)return'أمس';var d=new Date(dateStr+'T12:00:00');return DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()]+' '+d.getFullYear();}
+function getDayLabel(dateStr){var today=getDateStr(new Date());var yest=new Date();yest.setDate(yest.getDate()-1);var yestStr=getDateStr(yest);if(dateStr===today)return'اليوم';if(dateStr===yestStr)return'أمس';var d=new Date(dateStr+'T12:00:00');return DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()];}
 async function updateStreak(){try{var ms=await getAllMoments();if(ms.length===0){document.getElementById('streakText').textContent='0 يوم';document.getElementById('streakSub').textContent='ابدأ بتوثيق يومك';document.getElementById('streakCard').classList.remove('active');return;}var days=new Set(ms.map(function(m){return getDateStr(m.date);}));var today=getDateStr(new Date());var streak=0;var check=new Date();if(!days.has(today)){check.setDate(check.getDate()-1);}while(days.has(getDateStr(check))){streak++;check.setDate(check.getDate()-1);}var hasToday=days.has(today);document.getElementById('streakText').textContent=streak+(streak===1?' يوم':' أيام');if(hasToday){document.getElementById('streakSub').textContent='وثّقت اليوم ✓';document.getElementById('streakCard').classList.add('active');}else{document.getElementById('streakSub').textContent='لا تنسَ توثيق يومك';document.getElementById('streakCard').classList.remove('active');}}catch(e){}}
 async function checkReminder(){try{var enabled=localStorage.getItem('lahza-reminder')==='true';if(!enabled){document.getElementById('reminderBanner').classList.add('hidden');return;}var ms=await getAllMoments();var today=getDateStr(new Date());var hasToday=ms.some(function(m){return getDateStr(m.date)===today;});var dismissed=localStorage.getItem('lahza-reminder-dismissed')===today;if(hasToday||dismissed){document.getElementById('reminderBanner').classList.add('hidden');return;}document.getElementById('reminderBanner').classList.remove('hidden');}catch(e){}}
 function scheduleReminderCheck(){if(reminderTimer){clearInterval(reminderTimer);}reminderTimer=setInterval(function(){var enabled=localStorage.getItem('lahza-reminder')==='true';if(!enabled)return;var t=localStorage.getItem('lahza-reminder-time')||'20:00';var parts=t.split(':');var h=Number(parts[0]);var m=Number(parts[1]);var now=new Date();if(now.getHours()===h&&now.getMinutes()===m){checkReminder();}},30000);}
@@ -378,9 +406,9 @@ function getYearLabel(y){return '📅 '+y;}
 function getMonthLabel(m,y){return MONTHS_AR[m]+' '+y;}
 function pluralDays(n){if(n===1)return 'يوم واحد';if(n===2)return 'يومان';if(n<=10)return n+' أيام';return n+' يوم';}
 function pluralMoments(n){if(n===1)return 'لقطة واحدة';if(n===2)return 'لقطتان';if(n<=10)return n+' لقطات';return n+' لقطة';}
-function makeTreeNode(level,title,countText,icon,isOpen){
+function makeTreeNode(level,title,countText,icon){
   var node=document.createElement('div');
-  node.className='tree-node '+level+(isOpen?' open':'');
+  node.className='tree-node '+level;
   var header=document.createElement('div');
   header.className='tree-header';
   var arrow=document.createElement('div');
@@ -464,8 +492,6 @@ async function renderMoments(){
       years[y].total++;
     });
     tl.innerHTML='';
-    var nowY=new Date().getFullYear();
-    var nowM=new Date().getMonth();
     var yearsSorted=Object.keys(years).map(Number).sort(function(a,b){return b-a;});
     for(var yi=0;yi<yearsSorted.length;yi++){
       var y=yearsSorted[yi];
@@ -474,22 +500,20 @@ async function renderMoments(){
         return acc+Object.keys(yData.months[mo].days).length;
       },0);
       var yNode=makeTreeNode('year',getYearLabel(y),
-        pluralDays(yDaysCount)+' · '+pluralMoments(yData.total),'📅',
-        y===nowY);
+        pluralDays(yDaysCount)+' · '+pluralMoments(yData.total),'📅');
       var monthsSorted=Object.keys(yData.months).map(Number).sort(function(a,b){return b-a;});
       for(var mi=0;mi<monthsSorted.length;mi++){
         var mo=monthsSorted[mi];
         var mData=yData.months[mo];
         var mDaysCount=Object.keys(mData.days).length;
         var mNode=makeTreeNode('month',getMonthLabel(mo,y),
-          pluralDays(mDaysCount)+' · '+pluralMoments(mData.total),'📁',
-          (y===nowY && mo===nowM));
+          pluralDays(mDaysCount)+' · '+pluralMoments(mData.total),'📁');
         var daysSorted=Object.keys(mData.days).sort().reverse();
         for(var di=0;di<daysSorted.length;di++){
           var ds=daysSorted[di];
           var list=mData.days[ds];
           var dNode=makeTreeNode('day',getDayLabel(ds),
-            pluralMoments(list.length),'','');
+            pluralMoments(list.length),'');
           var grid2=document.createElement('div');
           grid2.className='day-grid';
           list.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
