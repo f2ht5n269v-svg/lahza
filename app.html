@@ -208,16 +208,6 @@ input[type="time"]{text-align:center;font-size:1.1rem;cursor:pointer;}
 <span class="settings-sub">اللون</span>
 <div class="color-grid" id="colorGrid"></div>
 </div>
-<div class="settings-section">
-<span class="settings-title">🌅 حسب الوقت</span>
-<span class="settings-sub">يتغير تلقائياً حسب ساعة اليوم</span>
-<button class="btn small" id="applyTime">تفعيل الوضع الزمني</button>
-</div>
-<div class="settings-section">
-<span class="settings-title">🍂 حسب الموسم</span>
-<span class="settings-sub">يتغير تلقائياً حسب الفصل</span>
-<button class="btn small" id="applySeason">تفعيل الوضع الموسمي</button>
-</div>
 </div>
 <div class="tabs">
 <button class="tab active" id="tabBtnRecord"><span class="icon">📝</span><span>سجّل</span></button>
@@ -322,17 +312,7 @@ function getDateStr(date){const d=new Date(date);return d.getFullYear()+'-'+Stri
 function getDayLabel(dateStr){const today=getDateStr(new Date());const yest=new Date();yest.setDate(yest.getDate()-1);const yestStr=getDateStr(yest);if(dateStr===today)return'اليوم';if(dateStr===yestStr)return'أمس';const d=new Date(dateStr+'T12:00:00');return DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()]+' '+d.getFullYear();}
 async function updateStreak(){try{const ms=await getAllMoments();if(ms.length===0){document.getElementById('streakText').textContent='0 يوم';document.getElementById('streakSub').textContent='ابدأ بتوثيق يومك';document.getElementById('streakCard').classList.remove('active');return;}const days=new Set(ms.map(m=>getDateStr(m.date)));const today=getDateStr(new Date());let streak=0;let check=new Date();if(!days.has(today)){check.setDate(check.getDate()-1);}while(days.has(getDateStr(check))){streak++;check.setDate(check.getDate()-1);}const hasToday=days.has(today);document.getElementById('streakText').textContent=streak+(streak===1?' يوم':' أيام');if(hasToday){document.getElementById('streakSub').textContent='وثّقت اليوم ✓';document.getElementById('streakCard').classList.add('active');}else{document.getElementById('streakSub').textContent='لا تنسَ توثيق يومك';document.getElementById('streakCard').classList.remove('active');}}catch(e){}}
 async function checkReminder(){try{const enabled=localStorage.getItem('lahza-reminder')==='true';if(!enabled){document.getElementById('reminderBanner').classList.add('hidden');return;}const ms=await getAllMoments();const today=getDateStr(new Date());const hasToday=ms.some(m=>getDateStr(m.date)===today);const dismissed=localStorage.getItem('lahza-reminder-dismissed')===today;if(hasToday||dismissed){document.getElementById('reminderBanner').classList.add('hidden');return;}document.getElementById('reminderBanner').classList.remove('hidden');}catch(e){}}
-function scheduleReminderCheck(){
-if(reminderTimer){clearInterval(reminderTimer);}
-reminderTimer=setInterval(()=>{
-const enabled=localStorage.getItem('lahza-reminder')==='true';
-if(!enabled)return;
-const t=localStorage.getItem('lahza-reminder-time')||'20:00';
-const[h,m]=t.split(':').map(Number);
-const now=new Date();
-if(now.getHours()===h&&now.getMinutes()===m){checkReminder();}
-},30000);
-}
+function scheduleReminderCheck(){if(reminderTimer){clearInterval(reminderTimer);}reminderTimer=setInterval(()=>{const enabled=localStorage.getItem('lahza-reminder')==='true';if(!enabled)return;const t=localStorage.getItem('lahza-reminder-time')||'20:00';const[h,m]=t.split(':').map(Number);const now=new Date();if(now.getHours()===h&&now.getMinutes()===m){checkReminder();}},30000);}
 async function openStats(){try{const ms=await getAllMoments();const total=ms.length;const daysSet=new Set(ms.map(m=>getDateStr(m.date)));const daysCount=daysSet.size;let best=0;if(ms.length>0){const sortedDays=Array.from(daysSet).sort();let cur=1;best=1;for(let i=1;i<sortedDays.length;i++){const prev=new Date(sortedDays[i-1]+'T12:00:00');const curr=new Date(sortedDays[i]+'T12:00:00');const diff=Math.round((curr-prev)/86400000);if(diff===1){cur++;if(cur>best)best=cur;}else{cur=1;}}}const now=new Date();const monthStart=new Date(now.getFullYear(),now.getMonth(),1);const monthCount=ms.filter(m=>new Date(m.date)>=monthStart).length;const dayOfWeek=now.getDay();const weekStart=new Date(now);weekStart.setDate(now.getDate()-dayOfWeek);weekStart.setHours(0,0,0,0);const weekCount=ms.filter(m=>new Date(m.date)>=weekStart).length;let lastStr='-';if(ms.length>0){const last=ms.map(m=>new Date(m.date)).sort((a,b)=>b-a)[0];const diff=Math.floor((new Date()-last)/86400000);if(diff===0)lastStr='اليوم';else if(diff===1)lastStr='أمس';else if(diff<7)lastStr='منذ '+diff+' أيام';else if(diff<30)lastStr='منذ '+Math.floor(diff/7)+' أسابيع';else lastStr='منذ '+Math.floor(diff/30)+' شهر';}const photos=ms.filter(m=>m.type==='photo').length;const videos=ms.filter(m=>m.type==='video').length;const texts=ms.filter(m=>m.type==='text').length;const favs=ms.filter(m=>m.favorite).length;document.getElementById('statTotal').textContent=total;document.getElementById('statDays').textContent=daysCount;document.getElementById('statBest').textContent=best;document.getElementById('statMonth').textContent=monthCount;document.getElementById('statWeek').textContent=weekCount;document.getElementById('statLast').textContent=lastStr;document.getElementById('statPhotos').textContent=photos;document.getElementById('statVideos').textContent=videos;document.getElementById('statTexts').textContent=texts;document.getElementById('statFavs').textContent=favs;document.getElementById('statsModal').classList.remove('hidden');}catch(e){alert('خطأ: '+e.message);}}
 const tabBtnRecord=document.getElementById('tabBtnRecord'),tabBtnMoments=document.getElementById('tabBtnMoments'),tabBtnSettings=document.getElementById('tabBtnSettings'),tabRecord=document.getElementById('tabRecord'),tabMoments=document.getElementById('tabMoments'),tabSettings=document.getElementById('tabSettings');
 function switchTab(t){[tabBtnRecord,tabBtnMoments,tabBtnSettings].forEach(b=>b.classList.remove('active'));[tabRecord,tabMoments,tabSettings].forEach(c=>c.classList.add('hidden'));if(t==='record'){tabBtnRecord.classList.add('active');tabRecord.classList.remove('hidden');}else if(t==='moments'){tabBtnMoments.classList.add('active');tabMoments.classList.remove('hidden');renderMoments();}else{tabBtnSettings.classList.add('active');tabSettings.classList.remove('hidden');}}
@@ -351,9 +331,9 @@ document.getElementById('questionCard').onclick=()=>{document.getElementById('qu
 document.getElementById('streakCard').onclick=()=>{openStats();};
 document.getElementById('sheetCancel').onclick=()=>{document.getElementById('questionSheet').classList.add('hidden');};
 document.getElementById('sheetOverlay').onclick=(e)=>{if(e.target.id==='sheetOverlay')document.getElementById('questionSheet').classList.add('hidden');};
-document.getElementById('sheetPhoto').onclick=async()=>{document.getElementById('questionSheet').classList.add('hidden');document.getElementById('photoScreen').classList.remove('hidden');await openCamera(document.getElementById('photoVideo'));};
-document.getElementById('sheetVideo').onclick=()=>{document.getElementById('questionSheet').classList.add('hidden');document.getElementById('videoScreen').classList.remove('hidden');updateCamLabel();};
-document.getElementById('sheetText').onclick=()=>{document.getElementById('questionSheet').classList.add('hidden');document.getElementById('textScreen').classList.remove('hidden');};
+document.getElementById('sheetquestionPhoto').onclick=async()=>{document.getElementById('questionSheet').classList.add('hiddenSheet');document.getElementById('photoScreen').classList.remove('hidden');').await openCamera(document.getElementById('photoVideo'));};
+documentclass.getElementById('sheetVideo').onclick=()=>List{document.getElementById('questionSheet').classList.add('hidden');document.getElementById('videoScreen').classList.remove('hidden');updateCamLabel();};
+document.getElementById('sheetText').onclick=()=>{document.getElementById('.add('hidden');document.getElementById('textScreen').classList.remove('hidden');};
 async function openCamera(v){try{if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:currentFacing},audio:false});v.srcObject=stream;v.muted=true;}catch(e){document.getElementById('status').textContent='❌ خطأ: '+e.message;}}
 function closeCamera(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}}
 async function toggleCamera(v){currentFacing=(currentFacing==='environment')?'user':'environment';await openCamera(v);}
@@ -381,22 +361,8 @@ document.getElementById('modeDark').onclick=()=>{currentTheme.mode='dark';applyT
 document.getElementById('modeLight').onclick=()=>{currentTheme.mode='light';applyTheme();updateModeButtons();buildColorGrid();};
 document.getElementById('modeAuto').onclick=()=>{currentTheme.mode='auto';applyTheme();updateModeButtons();buildColorGrid();};
 function updateModeButtons(){document.getElementById('modeDark').classList.toggle('active',currentTheme.mode==='dark');document.getElementById('modeLight').classList.toggle('active',currentTheme.mode==='light');document.getElementById('modeAuto').classList.toggle('active',currentTheme.mode==='auto');}
-document.getElementById('applyTime').onclick=()=>{currentTheme.mode='auto';applyTheme();updateModeButtons();buildColorGrid();alert('تم تفعيل الوضع الزمني');};
-document.getElementById('applySeason').onclick=()=>{const m=new Date().getMonth()+1;let c='blue';if(m>=3&&m<=5)c='green';else if(m>=6&&m<=8)c='yellow';else if(m>=9&&m<=11)c='orange';else c='blue';currentTheme.color=c;applyTheme();buildColorGrid();alert('تم تفعيل الوضع الموسمي');};
-function loadReminderSettings(){
-const enabled=localStorage.getItem('lahza-reminder')==='true';
-const toggle=document.getElementById('reminderToggle');
-const section=document.getElementById('reminderTimeSection');
-if(enabled){toggle.classList.add('on');section.classList.remove('hidden');}else{toggle.classList.remove('on');section.classList.add('hidden');}
-document.getElementById('reminderTime').value=localStorage.getItem('lahza-reminder-time')||'20:00';
-}
-document.getElementById('reminderToggle').onclick=async()=>{
-const enabled=localStorage.getItem('lahza-reminder')==='true';
-if(!enabled){localStorage.setItem('lahza-reminder','true');}
-else{localStorage.setItem('lahza-reminder','false');}
-loadReminderSettings();
-checkReminder();
-};
+function loadReminderSettings(){const enabled=localStorage.getItem('lahza-reminder')==='true';const toggle=document.getElementById('reminderToggle');const section=document.getElementById('reminderTimeSection');if(enabled){toggle.classList.add('on');section.classList.remove('hidden');}else{toggle.classList.remove('on');section.classList.add('hidden');}document.getElementById('reminderTime').value=localStorage.getItem('lahza-reminder-time')||'20:00';}
+document.getElementById('reminderToggle').onclick=async()=>{const enabled=localStorage.getItem('lahza-reminder')==='true';if(!enabled){localStorage.setItem('lahza-reminder','true');}else{localStorage.setItem('lahza-reminder','false');}loadReminderSettings();checkReminder();};
 document.getElementById('reminderTime').onchange=(e)=>{localStorage.setItem('lahza-reminder-time',e.target.value);};
 document.getElementById('reminderClose').onclick=()=>{localStorage.setItem('lahza-reminder-dismissed',getDateStr(new Date()));document.getElementById('reminderBanner').classList.add('hidden');};
 document.getElementById('reminderBtn').onclick=()=>{document.getElementById('reminderBanner').classList.add('hidden');switchTab('record');};
