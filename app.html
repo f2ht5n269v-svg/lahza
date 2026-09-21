@@ -48,24 +48,6 @@ textarea,input[type="time"]{width:100%;max-width:320px;background:var(--card);bo
 input[type="time"]{text-align:center;}
 #status{margin-top:14px;color:#4ade80;font-size:.9rem;min-height:20px;text-align:center;}
 .empty{text-align:center;color:var(--text-faint);margin-top:80px;font-size:1rem;line-height:2;}
-.day-group{background:var(--card);border:1.5px solid var(--border);border-radius:16px;margin-bottom:12px;overflow:hidden;}
-.day-header{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
-.day-title{font-size:.95rem;font-weight:500;}
-.day-count{color:var(--text-dim);font-size:.78rem;}
-.day-arrow{color:var(--text-dim);font-size:1rem;transition:transform .3s;}
-.day-group.open .day-arrow{transform:rotate(90deg);}
-.day-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
-.day-group.open .day-body{max-height:2000px;}
-.day-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px 14px;}
-.moment{background:var(--bg);border-radius:12px;overflow:hidden;position:relative;aspect-ratio:9/16;cursor:pointer;}
-.moment img,.moment video{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;}
-.moment .text-content{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;font-size:1rem;line-height:1.6;color:#fff;position:absolute;top:0;left:0;}
-.moment .bottom-bar{position:absolute;bottom:0;left:0;right:0;z-index:2;background:linear-gradient(to top,rgba(0,0,0,.85),transparent);padding:8px;}
-.moment .date{font-size:.65rem;color:#ddd;text-align:right;}
-.moment .caption{font-size:.7rem;color:#fff;margin-top:2px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.moment .del{position:absolute;top:6px;left:6px;background:rgba(239,68,68,.9);border:none;color:#fff;width:26px;height:26px;border-radius:50%;font-size:.9rem;z-index:3;}
-.moment .heart{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.6);border:none;color:#fff;width:30px;height:30px;border-radius:50%;font-size:1rem;z-index:3;}
-.moment .heart.active{background:rgba(239,68,68,.9);}
 .calendar-header{display:flex;justify-content:space-between;align-items:center;margin:16px auto;max-width:400px;}
 .calendar-title{font-size:1.15rem;font-weight:500;flex:1;text-align:center;}
 .calendar-nav{background:var(--card);border:1.5px solid var(--border);color:var(--text);width:40px;height:40px;border-radius:50%;font-size:1.2rem;}
@@ -80,7 +62,7 @@ input[type="time"]{text-align:center;}
 .day-view-header{text-align:center;margin:16px auto;max-width:400px;}
 .day-view-title{font-size:1.05rem;font-weight:500;margin-bottom:12px;}
 .day-view-back{background:var(--card);border:1.5px solid var(--border);color:var(--text);padding:10px 20px;border-radius:100px;font-size:.85rem;}
-#dayView{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+#dayView{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px;}
 .screen-full{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:200;overflow-y:auto;padding:20px 16px 90px;}
 .screen-full .close{position:absolute;top:14px;right:14px;font-size:1.6rem;color:var(--text-dim);width:40px;height:40px;}
 #momentModal,#statsModal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.95);z-index:300;overflow-y:auto;padding:50px 20px 40px;}
@@ -133,9 +115,10 @@ input[type="time"]{text-align:center;}
 .tree-node.open{border-color:var(--primary);}
 .tree-header{padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
 .tree-arrow{color:var(--text-dim);font-size:.85rem;transition:transform .3s;flex-shrink:0;}
-.tree-node.open>.tree-header>.tree-arrow{transform:rotate(90deg);}
-.tree-icon{font-size:1.1rem;flex-shrink:0;}
-.tree-info{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0;}
+.tree-node.open>.tree-header>.tree-arrow{transform:rotate(90degpx);}
+.tree;}
+-icon{font-size:1.1.trem;flex-shrink:0;}
+.treeree-info{flex:1;display:flex-node;flex-direction:column;gap:2px;min-width:0;}
 .tree-title{font-size:.95rem;font-weight:500;}
 .tree-count{color:var(--text-dim);font-size:.75rem;}
 .tree-body{max-height:0;overflow:hidden;transition:max-height .4s ease;}
@@ -143,11 +126,9 @@ input[type="time"]{text-align:center;}
 .tree-children{padding:0 8px 8px;}
 .tree-node.year>.tree-header{background:linear-gradient(90deg,rgba(74,222,128,.12),transparent);}
 .tree-node.year .tree-title{font-size:1.05rem;font-weight:600;}
-.tree-node.month>.tree-header{padding-right:22px;}
-.tree-node.month .tree-title{font-size:.92rem;}
+.tree-node.month>.tree-header{padding-right:22.month .tree-title{font-size:.92rem;}
 .tree-node.day .tree-header{padding:10px 14px;}
 .tree-node.day .tree-title{font-size:.85rem;color:var(--text-dim);}
-/* شبكة اللقطات 3 بكل صف */
 .tree-node.day .day-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 6px 10px;}
 .tree-node.day .moment{border-radius:8px;}
 .tree-node.day .moment .del{width:18px;height:18px;font-size:.65rem;top:3px;left:3px;line-height:1;}
@@ -347,6 +328,7 @@ input[type="time"]{text-align:center;}
 var DB_NAME='lahza-db',DB_VERSION=1,STORE_NAME='moments';
 var db=null,stream=null,pendingBlob=null,pendingType=null,selectedColor='#0a0a0a',currentFacing='environment',currentMomentId=null,videoFacing='environment',currentFilter='all',calMonth=null,calYear=null,selectedDay=null;
 var reminderTimer=null;
+var savedTreeState={years:{},months:{},days:{}};
 var QUESTIONS=["ما أجمل ما حدث اليوم؟","ما الذي أضحكك اليوم؟","من الشخص الذي أسعدك لقاؤه اليوم؟","ما اللحظة التي تود الاحتفاظ بها؟","ما الشيء الذي شعرت فيه بالراحة؟","ما الطعام الذي استمتعت به اليوم؟","ما المكان الذي زرته اليوم؟","ما الشيء الذي رأيته وأحببته؟","ما العمل الفني الذي تابعته اليوم؟","ما الشيء الذي اشتريته اليوم؟","كيف كان مزاجك اليوم؟","لو وصفت يومك بكلمة واحدة، فماذا تقول؟","ما اللون الذي يعبر عن يومك؟","ما الشعور الذي غلب على يومك؟","ما الذي تشكر نفسك عليه؟","ما الإنجاز الصغير لهذا اليوم؟","ما الأمر الذي كنت تخشاه فواجهته؟","ما الذي تفتخر به اليوم؟","ما الذي تنوي فعله غداً؟","ما أجمل خبر سمعته اليوم؟"];
 var COLORS=['#0a0a0a','#1e293b','#7c2d12','#14532d','#581c87','#831843'];
 var THEMES={dark:{blue:{bg:'#0a1929',text:'#fff',dim:'#8899aa',faint:'#667788',border:'#2a4a6e',card:'#142a44',primary:'#4ade80',primaryText:'#000'},purple:{bg:'#1a0a29',text:'#fff',dim:'#9988aa',faint:'#776688',border:'#4a2a6e',card:'#2a1444',primary:'#c084fc',primaryText:'#000'},green:{bg:'#0a2919',text:'#fff',dim:'#88aa99',faint:'#668877',border:'#2a6e4a',card:'#14442a',primary:'#4ade80',primaryText:'#000'},red:{bg:'#290a0a',text:'#fff',dim:'#aa8888',faint:'#886666',border:'#6e2a2a',card:'#441414',primary:'#f87171',primaryText:'#000'},orange:{bg:'#291a0a',text:'#fff',dim:'#aa9988',faint:'#887766',border:'#6e4a2a',card:'#442a14',primary:'#fb923c',primaryText:'#000'},yellow:{bg:'#29290a',text:'#fff',dim:'#aaaa88',faint:'#888866',border:'#6e6e2a',card:'#444414',primary:'#facc15',primaryText:'#000'}},light:{blue:{bg:'#e3f2fd',text:'#0a1929',dim:'#5a7a9a',faint:'#8899aa',border:'#90b8d8',card:'#ffffff',primary:'#1976d2',primaryText:'#fff'},purple:{bg:'#f3e5f5',text:'#2a0a3a',dim:'#7a5a8a',faint:'#a888b8',border:'#c090d0',card:'#ffffff',primary:'#7b1fa2',primaryText:'#fff'},green:{bg:'#e8f5e9',text:'#0a2919',dim:'#5a7a5a',faint:'#88a888',border:'#90c090',card:'#ffffff',primary:'#388e3c',primaryText:'#fff'},red:{bg:'#ffebee',text:'#290a0a',dim:'#8a5a5a',faint:'#b88888',border:'#e09090',card:'#ffffff',primary:'#d32f2f',primaryText:'#fff'},orange:{bg:'#fff3e0',text:'#2a1a0a',dim:'#8a6a4a',faint:'#b89878',border:'#e0b890',card:'#ffffff',primary:'#f57c00',primaryText:'#fff'},yellow:{bg:'#fffde7',text:'#2a2a0a',dim:'#8a8a4a',faint:'#b8b878',border:'#e0e090',card:'#ffffff',primary:'#f9a825',primaryText:'#fff'}}};
@@ -375,7 +357,7 @@ function switchTab(t){[tabBtnRecord,tabBtnMoments,tabBtnSettings].forEach(functi
 tabBtnRecord.onclick=function(){switchTab('record');};
 tabBtnMoments.onclick=function(){switchTab('moments');};
 tabBtnSettings.onclick=function(){switchTab('settings');};
-document.querySelectorAll('.filter-btn').forEach(function(b){b.onclick=function(){document.querySelectorAll('.filter-btn').forEach(function(x){x.classList.remove('active');});b.classList.add('active');currentFilter=b.getAttribute('data-filter');selectedDay=null;renderMoments();};});
+document.querySelectorAll('.filter-btn').forEach(function(b){b.onclick=function(){document.querySelectorAll('.filter-btn').forEach(function(x){x.classList.remove('active');});b.classList.add('active');currentFilter=b.getAttribute('data-filter');selectedDay=null;savedTreeState={years:{},months:{},days:{}};renderMoments();};});
 function updateCounter(){countMoments().then(function(n){var c=document.getElementById('counter');if(n===0)c.textContent='لا توجد لقطات بعد';else if(n===1)c.textContent='📸 لقطة واحدة محفوظة';else c.textContent='📸 '+n+' لقطات محفوظة';});}
 async function makeMomentCard(m){
 var d=document.createElement('div');
@@ -406,9 +388,10 @@ function getYearLabel(y){return '📅 '+y;}
 function getMonthLabel(m,y){return MONTHS_AR[m]+' '+y;}
 function pluralDays(n){if(n===1)return 'يوم واحد';if(n===2)return 'يومان';if(n<=10)return n+' أيام';return n+' يوم';}
 function pluralMoments(n){if(n===1)return 'لقطة واحدة';if(n===2)return 'لقطتان';if(n<=10)return n+' لقطات';return n+' لقطة';}
-function makeTreeNode(level,title,countText,icon){
+function makeTreeNode(level,title,countText,icon,key,parentKey){
   var node=document.createElement('div');
   node.className='tree-node '+level;
+  if(key&&savedTreeState[level+'s']&&savedTreeState[level+'s'][key])node.classList.add('open');
   var header=document.createElement('div');
   header.className='tree-header';
   var arrow=document.createElement('div');
@@ -433,7 +416,15 @@ function makeTreeNode(level,title,countText,icon){
   children.className='tree-children';
   body.appendChild(children);
   node.appendChild(header);node.appendChild(body);
-  header.onclick=function(){node.classList.toggle('open');};
+  header.onclick=function(){
+    node.classList.toggle('open');
+    if(key){
+      var store=level+'s';
+      if(!savedTreeState[store])savedTreeState[store]={};
+      if(node.classList.contains('open'))savedTreeState[store][key]=true;
+      else delete savedTreeState[store][key];
+    }
+  };
   return {node:node,children:children};
 }
 async function renderMoments(){
@@ -500,20 +491,20 @@ async function renderMoments(){
         return acc+Object.keys(yData.months[mo].days).length;
       },0);
       var yNode=makeTreeNode('year',getYearLabel(y),
-        pluralDays(yDaysCount)+' · '+pluralMoments(yData.total),'📅');
+        pluralDays(yDaysCount)+' · '+pluralMoments(yData.total),'📅','y'+y);
       var monthsSorted=Object.keys(yData.months).map(Number).sort(function(a,b){return b-a;});
       for(var mi=0;mi<monthsSorted.length;mi++){
         var mo=monthsSorted[mi];
         var mData=yData.months[mo];
         var mDaysCount=Object.keys(mData.days).length;
         var mNode=makeTreeNode('month',getMonthLabel(mo,y),
-          pluralDays(mDaysCount)+' · '+pluralMoments(mData.total),'📁');
+          pluralDays(mDaysCount)+' · '+pluralMoments(mData.total),'📁','m'+y+'-'+mo);
         var daysSorted=Object.keys(mData.days).sort().reverse();
         for(var di=0;di<daysSorted.length;di++){
           var ds=daysSorted[di];
           var list=mData.days[ds];
           var dNode=makeTreeNode('day',getDayLabel(ds),
-            pluralMoments(list.length),'');
+            pluralMoments(list.length),'','d'+ds);
           var grid2=document.createElement('div');
           grid2.className='day-grid';
           list.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
