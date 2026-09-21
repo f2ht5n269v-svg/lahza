@@ -331,9 +331,9 @@ document.getElementById('questionCard').onclick=()=>{document.getElementById('qu
 document.getElementById('streakCard').onclick=()=>{openStats();};
 document.getElementById('sheetCancel').onclick=()=>{document.getElementById('questionSheet').classList.add('hidden');};
 document.getElementById('sheetOverlay').onclick=(e)=>{if(e.target.id==='sheetOverlay')document.getElementById('questionSheet').classList.add('hidden');};
-document.getElementById('sheetquestionPhoto').onclick=async()=>{document.getElementById('questionSheet').classList.add('hiddenSheet');document.getElementById('photoScreen').classList.remove('hidden');').await openCamera(document.getElementById('photoVideo'));};
-documentclass.getElementById('sheetVideo').onclick=()=>List{document.getElementById('questionSheet').classList.add('hidden');document.getElementById('videoScreen').classList.remove('hidden');updateCamLabel();};
-document.getElementById('sheetText').onclick=()=>{document.getElementById('.add('hidden');document.getElementById('textScreen').classList.remove('hidden');};
+document.getElementById('sheetPhoto').onclick=async()=>{document.getElementById('questionSheet').classList.add('hidden');document.getElementById('photoScreen').classList.remove('hidden');await openCamera(document.getElementById('photoVideo'));};
+document.getElementById('sheetVideo').onclick=()=>{document.getElementById('questionSheet').classList.add('hidden');document.getElementById('videoScreen').classList.remove('hidden');updateCamLabel();};
+document.getElementById('sheetText').onclick=()=>{document.getElementById('questionSheet').classList.add('hidden');document.getElementById('textScreen').classList.remove('hidden');};
 async function openCamera(v){try{if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:currentFacing},audio:false});v.srcObject=stream;v.muted=true;}catch(e){document.getElementById('status').textContent='❌ خطأ: '+e.message;}}
 function closeCamera(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}}
 async function toggleCamera(v){currentFacing=(currentFacing==='environment')?'user':'environment';await openCamera(v);}
