@@ -215,16 +215,6 @@ input[type="time"]{text-align:center;}
 <div class="content hidden" id="tabSettings">
 <h1>إعدادات</h1>
 <div class="settings-section">
-  <h1>إعدادات</h1>
-
-<div class="settings-section">           ← جديد (الخصوصية)
-<a href="privacy.html" style="...">
-<span>🔒 سياسة الخصوصية</span>
-<span style="...">›</span>
-</a>
-</div>
-
-<div class="settings-section">           ← موجود (التذكير)
 <span class="settings-title">🔔 التذكير اليومي</span>
 <div class="toggle-row">
 <span class="settings-sub">تفعيل التذكير</span>
@@ -247,6 +237,12 @@ input[type="time"]{text-align:center;}
 </div>
 <span class="settings-sub">اللون</span>
 <div class="color-grid" id="colorGrid"></div>
+</div>
+<div class="settings-section">
+<a href="privacy.html" style="display:flex;justify-content:space-between;align-items:center;color:var(--text);text-decoration:none;font-size:1rem;">
+<span>🔒 سياسة الخصوصية</span>
+<span style="color:var(--text-dim);">›</span>
+</a>
 </div>
 </div>
 
@@ -359,6 +355,7 @@ function countMoments(){return new Promise(function(res,rej){var t=db.transactio
 function showToday(){var d=new Date();document.getElementById('todayDate').textContent=DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()]+' '+d.getFullYear();var doy=Math.floor((d-new Date(d.getFullYear(),0,0))/86400000);document.getElementById('dailyQuestion').textContent=QUESTIONS[doy%QUESTIONS.length];}
 function getDateStr(date){var d=new Date(date);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 function getDayLabel(dateStr){var today=getDateStr(new Date());var yest=new Date();yest.setDate(yest.getDate()-1);var yestStr=getDateStr(yest);if(dateStr===today)return'اليوم';if(dateStr===yestStr)return'أمس';var d=new Date(dateStr+'T12:00:00');return DAYS_AR[d.getDay()]+'، '+d.getDate()+' '+MONTHS_AR[d.getMonth()];}
+function showStatus(msg,color){var s=document.getElementById('status');s.textContent=msg;s.style.color=color||'#4ade80';clearTimeout(s._t);s._t=setTimeout(function(){s.textContent='';},4000);}
 async function updateStreak(){try{var ms=await getAllMoments();if(ms.length===0){document.getElementById('streakText').textContent='0 يوم';document.getElementById('streakSub').textContent='ابدأ بتوثيق يومك';document.getElementById('streakCard').classList.remove('active');return;}var days=new Set(ms.map(function(m){return getDateStr(m.date);}));var today=getDateStr(new Date());var streak=0;var check=new Date();if(!days.has(today)){check.setDate(check.getDate()-1);}while(days.has(getDateStr(check))){streak++;check.setDate(check.getDate()-1);}var hasToday=days.has(today);document.getElementById('streakText').textContent=streak+(streak===1?' يوم':' أيام');if(hasToday){document.getElementById('streakSub').textContent='وثّقت اليوم ✓';document.getElementById('streakCard').classList.add('active');}else{document.getElementById('streakSub').textContent='لا تنسَ توثيق يومك';document.getElementById('streakCard').classList.remove('active');}}catch(e){}}
 async function checkReminder(){try{var enabled=localStorage.getItem('lahza-reminder')==='true';if(!enabled){document.getElementById('reminderBanner').classList.add('hidden');return;}var ms=await getAllMoments();var today=getDateStr(new Date());var hasToday=ms.some(function(m){return getDateStr(m.date)===today;});var dismissed=localStorage.getItem('lahza-reminder-dismissed')===today;if(hasToday||dismissed){document.getElementById('reminderBanner').classList.add('hidden');return;}document.getElementById('reminderBanner').classList.remove('hidden');}catch(e){}}
 function scheduleReminderCheck(){if(reminderTimer){clearInterval(reminderTimer);}reminderTimer=setInterval(function(){var enabled=localStorage.getItem('lahza-reminder')==='true';if(!enabled)return;var t=localStorage.getItem('lahza-reminder-time')||'20:00';var parts=t.split(':');var h=Number(parts[0]);var m=Number(parts[1]);var now=new Date();if(now.getHours()===h&&now.getMinutes()===m){checkReminder();}},30000);}
@@ -444,7 +441,7 @@ async function renderMoments(){
   var dayView=document.getElementById('dayView');
   try{
     var ms=await getAllMoments();
-    if(currentFilter==='calendar'){
+    if(currentFilter==='calendar' && !selectedDay){
       tl.classList.add('hidden');dayView.classList.add('hidden');
       calView.classList.remove('hidden');em.classList.add('hidden');
       ce.textContent='📅 اختر يوماً';renderCalendar(ms);return;
@@ -574,7 +571,7 @@ document.getElementById('sheetOverlay').onclick=function(e){if(e.target.id==='sh
 document.getElementById('sheetPhoto').onclick=async function(){document.getElementById('questionSheet').classList.add('hidden');document.getElementById('photoScreen').classList.remove('hidden');await openCamera(document.getElementById('photoVideo'));};
 document.getElementById('sheetVideo').onclick=function(){document.getElementById('questionSheet').classList.add('hidden');document.getElementById('videoScreen').classList.remove('hidden');updateCamLabel();};
 document.getElementById('sheetText').onclick=function(){document.getElementById('questionSheet').classList.add('hidden');document.getElementById('textScreen').classList.remove('hidden');};
-async function openCamera(v){try{if(stream){stream.getTracks().forEach(function(t){t.stop();});stream=null;}stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:currentFacing},audio:false});v.srcObject=stream;v.muted=true;}catch(e){document.getElementById('status').textContent='❌ خطأ: '+e.message;}}
+async function openCamera(v){try{if(stream){stream.getTracks().forEach(function(t){t.stop();});stream=null;}stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:currentFacing},audio:false});v.srcObject=stream;v.muted=true;}catch(e){var msg='📷 تعذّر فتح الكاميرا';if(e.name==='NotAllowedError')msg='🔒 لم يتم إعطاء إذن الكاميرا';else if(e.name==='NotFoundError')msg='📷 لا توجد كاميرا';else if(e.name==='NotReadableError')msg='📷 الكاميرا مشغولة بتطبيق آخر';showStatus(msg,'#f87171');}}
 function closeCamera(){if(stream){stream.getTracks().forEach(function(t){t.stop();});stream=null;}}
 async function toggleCamera(v){currentFacing=(currentFacing==='environment')?'user':'environment';await openCamera(v);}
 document.getElementById('choosePhoto').onclick=async function(){document.getElementById('photoScreen').classList.remove('hidden');await openCamera(document.getElementById('photoVideo'));};
@@ -605,7 +602,7 @@ function loadReminderSettings(){var enabled=localStorage.getItem('lahza-reminder
 document.getElementById('reminderToggle').onclick=function(){var enabled=localStorage.getItem('lahza-reminder')==='true';if(!enabled){localStorage.setItem('lahza-reminder','true');}else{localStorage.setItem('lahza-reminder','false');}loadReminderSettings();checkReminder();};
 document.getElementById('reminderTime').onchange=function(e){localStorage.setItem('lahza-reminder-time',e.target.value);};
 document.getElementById('reminderClose').onclick=function(){localStorage.setItem('lahza-reminder-dismissed',getDateStr(new Date()));document.getElementById('reminderBanner').classList.add('hidden');};
-document.getElementById('reminderBtn').onclick=function(){document.getElementById('reminderBanner').classList.add('hidden');switchTab('record');};
+document.getElementById('reminderBtn'). أولonclick=function(){document.getElementById('reminderBanner').classList.add('hidden');switchTab('record');};
 showToday();
 loadTheme();
 updateModeButtons();
