@@ -638,6 +638,79 @@ updateModeButtons();
 buildColorGrid();
 loadReminderSettings();
 scheduleReminderCheck();
+  /* ===== دوال التصدير والاستيراد ===== */
+async function exportBackup(){
+  var btn=document.getElementById('exportBtn');
+  var originalText=btn.textContent;
+  btn.textContent='⏳ جاري التحضير...';
+  btn.disabled=true;
+  try{
+    var ms=await getAllMoments();
+    if(ms.length===0){showStatus('لا توجد لقطات للتصدير','#f87171');btn.textContent=originalText;btn.disabled=false;return;}
+    var zip=new JSZip();
+    var meta=[];
+    for(var i=0;i<ms.length;i++){
+      var m=ms[i];
+      var ext='bin';
+      if(m.type==='photo')ext='jpg';
+      else if(m.type==='video')ext='mp4';
+      else if(m.type==='text')ext='txt';
+      var fname=m.id+'.'+ext;
+      zip.file('moments/'+fname,m.blob);
+      meta.push({id:m.id,date:m.date,type:m.type,caption:m.caption||'',color:m.color||'',favorite:m.favorite||false,file:fname});
+    }
+    zip.file('data.json',JSON.stringify({version:'1.0',date:new Date().toISOString(),count:ms.length,moments:meta},null,2));
+    var blob=await zip.generateAsync({type:'blob'});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a');
+    var today=getDateStr(new Date());
+    a.href=url;
+    a.download='lahza-backup-'+today+'.zip';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(url);},1000);
+    showStatus('✅ تم التصدير ('+ms.length+' لقطة)','#4ade80');
+  }catch(e){showStatus('❌ خطأ: '+e.message,'#f87171');}
+  btn.textContent=originalText;
+  btn.disabled=false;
+}
+async function importBackup(file){
+  var btn=document.getElementById('importBtn');
+  var originalText=btn.textContent;
+  btn.textContent='⏳ جاري الاستيراد...';
+  btn.disabled=true;
+  try{
+    var zip=await JSZip.loadAsync(file);
+    var dataFile=zip.file('data.json');
+    if(!dataFile)throw new Error('ملف غير صالح');
+    var data=JSON.parse(await dataFile.async('string'));
+    if(!data.moments||!Array.isArray(data.moments))throw new Error('بنية ملف غير صحيحة');
+    var existing=await getAllMoments();
+    var existingIds=new Set(existing.map(function(m){return m.date+'|'+m.type+'|'+(m.caption||'');}));
+    var added=0;
+    for(var i=0;i<data.moments.length;i++){
+      var meta=data.moments[i];
+      var key=meta.date+'|'+meta.type+'|'+(meta.caption||'');
+      if(existingIds.has(key))continue;
+      var file=zip.file('moments/'+meta.file);
+      if(!file)continue;
+      var blob=await file.async('blob');
+      await saveMoment({date:meta.date,blob:blob,type:meta.type,caption:meta.caption||'',color:meta.color||'#0a0a0a',favorite:meta.favorite||false});
+      added++;
+    }
+    showStatus('✅ تم استيراد '+added+' لقطة','#4ade80');
+    updateCounter();
+    updateStreak();
+    renderMoments();
+  }catch(e){showStatus('❌ خطأ: '+e.message,'#f87171');}
+  btn.textContent=originalText;
+  btn.disabled=false;
+}
+document.getElementById('exportBtn').onclick=exportBackup;
+document.getElementById('importBtn').onclick=function(){document.getElementById('importInput').click();};
+document.getElementById('importInput').onchange=function(e){var f=e.target.files[0];if(f)importBackup(f);e.target.value='';};
+
 openDB().then(function(){updateCounter();updateStreak();checkReminder();}).catch(function(e){document.getElementById('status').textContent='❌ خطأ: '+e.message;});
 </script>
 </body>
