@@ -254,7 +254,7 @@ input[type="time"]{text-align:center;}
 </div>
 
 
-  <div class="settings-section">
+<div class="settings-section">
 <span class="settings-title">💾 البيانات</span>
 <button class="btn primary" id="exportBtn" style="margin:8px auto;">📤 تصدير نسخة احتياطية</button>
 <button class="btn" id="importBtn" style="margin:8px auto;">📥 استيراد نسخة احتياطية</button>
@@ -275,7 +275,11 @@ input[type="time"]{text-align:center;}
 <button class="btn primary" id="snapBtn">📸 التقط</button>
 <button class="btn small" id="switchPhotoCam">🔄 تبديل الكاميرا</button>
 </div>
-
+<div class="tabs">
+<button class="tab active" id="tabBtnRecord"><span class="icon">📝</span><span>سجّل</span></button>
+<button class="tab" id="tabBtnMoments"><span class="icon">📸</span><span>لقطاتي</span></button>
+<button class="tab" id="tabBtnSettings"><span class="icon">⚙️</span><span>إعدادات</span></button>
+</div>
 <div class="screen-full hidden" id="videoScreen">
 <button class="close" id="videoClose">×</button>
 <h1>🎥 فيديو</h1>
