@@ -263,12 +263,6 @@ input[type="time"]{text-align:center;}
 </div>
 
 
-
-
-<button class="tab" id="tabBtnMoments"><span class="icon">📸</span><span>لقطاتي</span></button>
-<button class="tab" id="tabBtnSettings"><span class="icon">⚙️</span><span>إعدادات</span></button>
-</div>
-
 <div class="screen-full hidden" id="photoScreen">
 <button class="close" id="photoClose">×</button>
 <video id="photoVideo" autoplay playsinline muted></video>
@@ -624,7 +618,7 @@ function loadReminderSettings(){var enabled=localStorage.getItem('lahza-reminder
 document.getElementById('reminderToggle').onclick=function(){var enabled=localStorage.getItem('lahza-reminder')==='true';if(!enabled){localStorage.setItem('lahza-reminder','true');}else{localStorage.setItem('lahza-reminder','false');}loadReminderSettings();checkReminder();};
 document.getElementById('reminderTime').onchange=function(e){localStorage.setItem('lahza-reminder-time',e.target.value);};
 document.getElementById('reminderClose').onclick=function(){localStorage.setItem('lahza-reminder-dismissed',getDateStr(new Date()));document.getElementById('reminderBanner').classList.add('hidden');};
-document.getElementById('reminderBtn'). أولonclick=function(){document.getElementById('reminderBanner').classList.add('hidden');switchTab('record');};
+document.getElementById('reminderBtn').onclick=function(){document.getElementById('reminderBanner').classList.add('hidden');switchTab('record');};
 showToday();
 loadTheme();
 updateModeButtons();
