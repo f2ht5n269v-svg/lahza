@@ -190,6 +190,11 @@ input[type="time"]{text-align:center;}
 .tab:active .icon{transform:scale(.9);transition:transform .15s;}
 
 /* ===== على الشاشات الصغيرة ===== */
+.modal-actions-fixed{position:fixed;bottom:30px;left:0;right:0;display:flex;justify-content:space-between;padding:0 40px;z-index:320;pointer-events:none;}
+.modal-actions-fixed button{pointer-events:auto;}
+.modal-heart,.modal-del{width:60px;height:60px;border-radius:50%;font-size:1.8rem;background:rgba(0,0,0,.6);color:#fff;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;}
+.modal-heart.active{background:rgba(239,68,68,.9);}
+.modal-del{background:rgba(239,68,68,.9);}
 @media (max-width:380px){
 .day-grid{gap:4px;padding:0 4px 8px;}
 .moment .del,.moment .heart{width:20px;height:20px;font-size:.65rem;}
@@ -390,14 +395,9 @@ input[type="time"]{text-align:center;}
 <div class="hidden" id="momentModal">
 <button class="close-modal" id="modalClose">×</button>
 <div class="modal-content" id="modalContent"></div>
-<div class="modal-content">
-<button id="modalHeart">🤍</button>
-<label class="modal-label">📝 التعليق:</label>
-<textarea id="modalCaption" rows="3" placeholder="أضف جملة..."></textarea>
-<div class="modal-actions">
-<button class="btn primary" id="modalSave">💾 حفظ</button>
-<button class="btn danger" id="modalDelete">🗑️ حذف</button>
-</div>
+<div class="modal-actions-fixed">
+<button id="modalHeart" class="modal-heart">🤍</button>
+<button id="modalDelete" class="modal-del">🗑️</button>
 </div>
 </div>
 
@@ -572,7 +572,7 @@ async function renderMoments(){
     var filtered=ms;
     if(currentFilter==='favorite'){filtered=ms.filter(function(m){return m.favorite;});}
     else if(currentFilter==='answers'){filtered=ms.filter(function(m){return m.type==='answer';});}
-    else if(currentFilter!=='all'){filtered=ms.filter(function(m){return m.type===currentFilter;});}
+    else if(currentFilter!=='all'&&currentFilter!=='calendar'){filtered=ms.filter(function(m){return m.type===currentFilter;});}
     /* فلترة يوم محدد (من التقويم) */
     if(selectedDay){filtered=filtered.filter(function(m){return getDateStr(m.date)===selectedDay;});}
     /* إذا فاضي */
@@ -692,14 +692,12 @@ async function openMomentModal(id){
   var dt=new Date(m.date);
   var ds=dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear()+' - '+dt.getHours()+':'+String(dt.getMinutes()).padStart(2,'0');
   var dd=document.createElement('div');dd.className='modal-date';dd.textContent='📅 '+ds;c.appendChild(dd);
-  document.getElementById('modalCaption').value=m.caption||'';
   var hb=document.getElementById('modalHeart');
   hb.textContent=m.favorite?'❤️':'🤍';hb.className=m.favorite?'active':'';
   hb.onclick=async function(){var mm=await getMoment(id);if(!mm)return;mm.favorite=!mm.favorite;await updateMoment(mm);hb.textContent=mm.favorite?'❤️':'🤍';hb.className=mm.favorite?'active':'';};
   mod.classList.remove('hidden');
 }
 document.getElementById('modalClose').onclick=function(){document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();};
-document.getElementById('modalSave').onclick=async function(){if(!currentMomentId)return;var m=await getMoment(currentMomentId);if(!m)return;m.caption=document.getElementById('modalCaption').value.trim();await updateMoment(m);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();};
 document.getElementById('modalDelete').onclick=async function(){if(!currentMomentId)return;if(confirm('هل تريد حذف هذه اللقطة؟')){await deleteMoment(currentMomentId);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();updateCounter();updateStreak();}};
 
 /* ===== الإحصائيات ===== */
