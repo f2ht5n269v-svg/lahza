@@ -653,13 +653,12 @@ async function renderTree(){
 };}(mo);
 if(mCount===0){
   mCard.style.opacity='0.5';
-}
-
-  }else{
-    monthsSection.classList.add('hidden');
-  }
-  
-  // بناء التقويم (إذا شهر مختار)
+ }
+ monthsGrid.appendChild(mCard);
+ }
+}else{
+monthsSection.classList.add('hidden');  
+}  // بناء التقويم (إذا شهر مختار)
   if(selectedYear&&selectedMonth!==null){
     calendarSection.classList.remove('hidden');
     renderNewCalendar(filtered,selectedYear,selectedMonth);
