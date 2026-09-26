@@ -61,7 +61,7 @@ input[type="time"]{text-align:center;}
 /* ===== السنوات (عرض أفقي) ===== */
 .years-row{display:flex;gap:10px;overflow-x:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;padding:8px 4px 16px;margin:0 auto;max-width:100%;}
 .years-row::-webkit-scrollbar{display:none;}
-.year-card{flex:0 0 calc((100% - 30px) / 4);min-width:70px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:14px 8px;text-align:center;cursor:pointer;transition:all .2s;}
+.year-card{flex:0 0 calc((100% - 30px) / 4);min-width:70px;background:#7c3aed;border:1.5px solid #7c3aed;border-radius:12px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .2s;color:#fff;}
 .year-card:hover,.year-card.active{border-color:var(--primary);}
 .year-card.active{background:var(--primary);color:var(--primary-text);}
 .year-num{font-size:1rem;font-weight:600;display:block;margin-bottom:4px;}
@@ -71,7 +71,7 @@ input[type="time"]{text-align:center;}
 /* ===== الأشهر (4 أعمدة × 3 صفوف) ===== */
 .months-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:8px auto 20px;max-width:500px;padding:0 4px;}
 .months-grid{grid-template-columns:repeat(6,1fr) !important;gap:6px !important;}
-.month-card{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;transition:all .2s;}
+.month-card{background:background:#16a34a;border:1.5px solid #16a34a;border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;transition:all .2s;color:#fff;}
 .month-card:hover,.month-card.active{border-color:var(--primary);}
 .month-card.active{background:var(--primary);color:var(--primary-text);}
 .month-name{font-size:.78rem;font-weight:500;display:block;margin-bottom:3px;}
