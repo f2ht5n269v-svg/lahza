@@ -61,7 +61,7 @@ input[type="time"]{text-align:center;}
 /* ===== السنوات (عرض أفقي) ===== */
 .years-row{display:flex;gap:10px;overflow-x:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;padding:8px 4px 16px;margin:0 auto;max-width:100%;}
 .years-row::-webkit-scrollbar{display:none;}
-.year-card{flex:0 0 calc((100% - 30px) / 4);min-width:70px;background:#7c3aed;border:1.5px solid #7c3aed;border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;transition:all .2s;color:#fff;}
+.year-card{flex:0 0 calc((100% - 30px) / 5);min-width:70px;background:#7c3aed;border:1.5px solid #7c3aed;border-radius:100px;padding:6px 3px;text-align:center;cursor:pointer;transition:all .2s;color:#fff;}
 .year-card:hover,.year-card.active{border-color:var(--primary);}
 .year-card.active{background:var(--primary);color:var(--primary-text);}
 .year-num{font-size:1rem;font-weight:600;display:block;margin-bottom:4px;}
@@ -71,7 +71,7 @@ input[type="time"]{text-align:center;}
 /* ===== الأشهر (6 أعمدة × 2 صفوف) ===== */
 .months-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:8px auto 20px;max-width:500px;padding:0 4px;}
 .months-grid{grid-template-columns:repeat(6,1fr) !important;gap:6px !important;}
-.month-card{background:#16a34a;border:1.5px solid #16a34a;border-radius:12px;padding:6px 3px;text-align:center;cursor:pointer;transition:all .2s;color:#000;}
+.month-card{background:#16a34a;border:1.5px solid #15803d;border-radius:12px;padding:6px 3px;text-align:center;cursor:pointer;transition:all .2s;color:#000;}
 .month-card:hover,.month-card.active{border-color:var(--primary);}
 .month-card.active{background:#059669;color:#fff;}
 .month-name{font-size:.78rem;font-weight:500;display:block;margin-bottom:3px;}
@@ -131,7 +131,7 @@ input[type="time"]{text-align:center;}
 .type-val{font-size:.9rem;font-weight:500;}
 .modal-content{width:100%;max-width:100%;margin:0 auto;}
 #momentModal img,#momentModal video{width:100%;max-width:100%;border-radius:16px;background:#000;display:block;margin-bottom:16px;}
-#momentModal .modal-text{width:100%;padding:50px 20px;border-radius:16px;font-size:1.3rem;line-height:1.8;text-align:center;margin-bottom:16px;}
+#momentModal .modal-text{width:100%;padding:20px;border-radius:16px;font-size:1.3rem;line-height:1.8;text-align:center;margin-bottom:16px;}
 #momentModal .modal-date{color:#ccc;font-size:.9rem;text-align:center;margin-bottom:20px;}
 
 /* ===== الإعدادات ===== */
