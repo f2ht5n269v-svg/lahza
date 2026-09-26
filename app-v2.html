@@ -69,8 +69,9 @@ input[type="time"]{text-align:center;}
 .year-card.active .year-count{color:var(--primary-text);opacity:.8;}
 
 /* ===== الأشهر (4 أعمدة × 3 صفوف) ===== */
-.months-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px auto 20px;max-width:500px;padding:0 4px;}
-.month-card{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:10px 4px;text-align:center;cursor:pointer;transition:all .2s;}
+.months-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:8px auto 20px;max-width:500px;padding:0 4px;}
+.months-grid{grid-template-columns:repeat(6,1fr) !important;gap:6px !important;}
+.month-card{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:8px 4px;text-align:center;cursor:pointer;transition:all .2s;}
 .month-card:hover,.month-card.active{border-color:var(--primary);}
 .month-card.active{background:var(--primary);color:var(--primary-text);}
 .month-name{font-size:.78rem;font-weight:500;display:block;margin-bottom:3px;}
