@@ -56,40 +56,44 @@ textarea,input[type="time"]{width:100%;max-width:320px;background:var(--card);bo
 input[type="time"]{text-align:center;}
 #status{margin-top:14px;font-size:.9rem;min-height:20px;text-align:center;transition:opacity .3s;}
 .empty{text-align:center;color:var(--text-faint);margin-top:80px;font-size:1rem;line-height:2;}
-.calendar-header{display:flex;justify-content:space-between;align-items:center;margin:16px auto;max-width:400px;}
-.calendar-title{font-size:1.15rem;font-weight:500;flex:1;text-align:center;}
-.calendar-nav{background:var(--card);border:1.5px solid var(--border);color:var(--text);width:40px;height:40px;border-radius:50%;font-size:1.2rem;}
-.calendar-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:0 auto 8px;max-width:400px;}
-.calendar-weekday{text-align:center;color:var(--text-faint);font-size:.72rem;padding:6px 0;}
-.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:0 auto;max-width:400px;}
-.calendar-day{aspect-ratio:1;border-radius:10px;background:var(--card);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.85rem;position:relative;cursor:pointer;}
+.hint{text-align:center;color:var(--text-dim);font-size:.9rem;margin-top:60px;line-height:2;}
+
+/* ===== السنوات (عرض أفقي) ===== */
+.years-row{display:flex;gap:10px;overflow-x:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;padding:8px 4px 16px;margin:0 auto;max-width:100%;}
+.years-row::-webkit-scrollbar{display:none;}
+.year-card{flex:0 0 calc((100% - 30px) / 4);min-width:70px;background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:14px 8px;text-align:center;cursor:pointer;transition:all .2s;}
+.year-card:hover,.year-card.active{border-color:var(--primary);}
+.year-card.active{background:var(--primary);color:var(--primary-text);}
+.year-num{font-size:1rem;font-weight:600;display:block;margin-bottom:4px;}
+.year-count{font-size:.72rem;color:var(--text-dim);}
+.year-card.active .year-count{color:var(--primary-text);opacity:.8;}
+
+/* ===== الأشهر (4 أعمدة × 3 صفوف) ===== */
+.months-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px auto 20px;max-width:500px;padding:0 4px;}
+.month-card{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:10px 4px;text-align:center;cursor:pointer;transition:all .2s;}
+.month-card:hover,.month-card.active{border-color:var(--primary);}
+.month-card.active{background:var(--primary);color:var(--primary-text);}
+.month-name{font-size:.78rem;font-weight:500;display:block;margin-bottom:3px;}
+.month-count{font-size:.65rem;color:var(--text-dim);}
+.month-card.active .month-count{color:var(--primary-text);opacity:.8;}
+
+/* ===== التقويم (7 أعمدة) ===== */
+.calendar-header{display:flex;justify-content:space-between;align-items:center;margin:16px auto;max-width:400px;padding:0 12px;}
+.calendar-title{font-size:1.1rem;font-weight:500;flex:1;text-align:center;}
+.calendar-nav{background:var(--card);border:1.5px solid var(--border);color:var(--text);width:36px;height:36px;border-radius:50%;font-size:1rem;}
+.calendar-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:0 auto 6px;max-width:400px;padding:0 8px;}
+.calendar-weekday{text-align:center;color:var(--text-faint);font-size:.68rem;padding:4px 0;}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:0 auto;max-width:400px;padding:0 8px;}
+.calendar-day{aspect-ratio:1;border-radius:10px;background:var(--card);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.82rem;position:relative;cursor:pointer;}
 .calendar-day.other-month{opacity:.3;}
 .calendar-day.today{border-color:var(--primary);font-weight:600;}
 .calendar-day.has-moments{background:rgba(74,222,128,.18);}
-.calendar-dot{position:absolute;bottom:5px;width:5px;height:5px;border-radius:50%;background:var(--primary);}
-.calendar-day.selected{border-color:var(--primary);background:var(--primary);color:var(--primary-text);font-weight:600;}/* ===== الشجرة ===== */
-.tree-node{background:var(--card);border:1.5px solid var(--border);border-radius:14px;margin-bottom:8px;overflow:hidden;transition:border-color .2s;}
-.tree-node.open{border-color:var(--primary);}
-.tree-header{padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
-.tree-arrow{color:var(--text-dim);font-size:.85rem;transition:transform .3s;flex-shrink:0;}
-.tree-node.open>.tree-header>.tree-arrow{transform:rotate(90deg);}
-.tree-icon{font-size:1.1rem;flex-shrink:0;}
-.tree-info{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0;}
-.tree-title{font-size:.95rem;font-weight:500;}
-.tree-count{color:var(--text-dim);font-size:.75rem;}
-.tree-body{max-height:0;overflow:hidden;transition:max-height .4s ease;}
-.tree-node.open>.tree-body{max-height:20000px;}
-.tree-children{padding:0 8px 8px;}
-.tree-node.year>.tree-header{background:linear-gradient(90deg,rgba(74,222,128,.12),transparent);}
-.tree-node.year .tree-title{font-size:1.05rem;font-weight:600;}
-.tree-node.month>.tree-header{padding-right:22px;}
-.tree-node.month .tree-title{font-size:.92rem;}
-.tree-node.day .tree-header{padding:10px 14px;}
-.tree-node.day .tree-title{font-size:.85rem;color:var(--text-dim);}
+.calendar-dot{position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--primary);}
+.calendar-day.selected{border-color:var(--primary);background:var(--primary);color:var(--primary-text);font-weight:600;}
 
 /* ===== شبكة اللقطات - 3 بكل صف ===== */
-.day-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 6px 10px;}
-.moment{position:relative;aspect-ratio:1/1;border-radius:10px;overflow:hidden;cursor:pointer;background:#000;}
+.day-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:8px 6px 10px;}
+.moment{position:relative;aspect-ratio:1/1;border-radius:10px;overflow:hidden;cursor:pointer;background:#000;animation:fadeInUp .3s ease both;}
 .moment img,.moment video{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;}
 .moment .text-content{width:100%;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;font-size:.7rem;line-height:1.5;color:#fff;position:absolute;top:0;left:0;overflow:hidden;}
 .moment .bottom-bar{position:absolute;bottom:0;left:0;right:0;z-index:2;background:linear-gradient(to top,rgba(0,0,0,.85),transparent);padding:4px;}
@@ -104,9 +108,14 @@ input[type="time"]{text-align:center;}
 .screen-full .close{position:fixed;top:14px;right:14px;font-size:1.6rem;color:var(--text);width:44px;height:44px;z-index:210;background:rgba(0,0,0,.6);border-radius:50%;display:flex;align-items:center;justify-content:center;}
 
 /* ===== المودالات ===== */
-#momentModal,#statsModal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.95);z-index:300;overflow-y:auto;padding:60px 20px 40px;}
+#momentModal,#statsModal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.95);z-index:300;overflow-y:auto;padding:60px 20px 120px;}
 #momentModal{display:flex;flex-direction:column;align-items:center;}
 .close-modal{position:fixed;top:14px;right:14px;font-size:2rem;color:#fff;width:44px;height:44px;z-index:310;background:rgba(0,0,0,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.modal-actions-fixed{position:fixed;bottom:30px;left:0;right:0;display:flex;justify-content:space-between;padding:0 40px;z-index:320;pointer-events:none;}
+.modal-actions-fixed button{pointer-events:auto;}
+.modal-heart,.modal-del{width:60px;height:60px;border-radius:50%;font-size:1.8rem;background:rgba(0,0,0,.6);color:#fff;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;}
+.modal-heart.active{background:rgba(239,68,68,.9);}
+.modal-del{background:rgba(239,68,68,.9);}
 .stats-content{width:100%;max-width:400px;margin:0 auto;text-align:center;}
 .stats-title{font-size:1.5rem;font-weight:300;text-align:center;margin-bottom:24px;}
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
@@ -123,12 +132,8 @@ input[type="time"]{text-align:center;}
 #momentModal img,#momentModal video{width:100%;border-radius:16px;background:#000;display:block;margin-bottom:16px;}
 #momentModal .modal-text{width:100%;padding:50px 20px;border-radius:16px;font-size:1.3rem;line-height:1.8;text-align:center;margin-bottom:16px;}
 #momentModal .modal-date{color:#ccc;font-size:.9rem;text-align:center;margin-bottom:20px;}
-#momentModal .modal-label{color:#ccc;font-size:.85rem;margin-bottom:6px;display:block;text-align:right;}
-#momentModal textarea{max-width:100%;background:#1a1a1a;color:#fff;}
-#momentModal .modal-actions{display:flex;gap:10px;margin-top:16px;}
-#momentModal .modal-actions .btn{max-width:none;flex:1;margin:0;}
-#modalHeart{margin:16px auto 0;width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.1);color:#fff;font-size:1.8rem;}
-#modalHeart.active{background:rgba(239,68,68,.9);}/* ===== الإعدادات ===== */
+
+/* ===== الإعدادات ===== */
 .settings-section{background:var(--card);border-radius:16px;padding:20px;margin-bottom:16px;border:1.5px solid var(--border);}
 .settings-title{font-size:1.1rem;font-weight:500;margin-bottom:16px;display:block;}
 .settings-sub{color:var(--text-dim);font-size:.8rem;}
@@ -151,13 +156,9 @@ input[type="time"]{text-align:center;}
 .sheet-title{text-align:center;color:var(--text-dim);font-size:.85rem;margin-bottom:14px;}
 .sheet .btn{margin:6px auto;background:var(--bg);}
 .sheet-cancel{margin-top:8px !important;background:transparent !important;color:var(--text-dim) !important;border-color:transparent !important;}
-
-/* ===== ورقة اختيار القسم ===== */
 .section-item{background:var(--bg);border:1.5px solid var(--border);border-radius:14px;padding:16px;margin:8px auto;max-width:400px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:1rem;color:var(--text);}
 .section-item:hover{border-color:var(--primary);}
 .section-item .count{color:var(--text-dim);font-size:.8rem;}
-
-/* ===== ورقة الأسئلة ===== */
 .question-list{max-height:60vh;overflow-y:auto;padding:0 8px;}
 .question-item{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:14px;margin:8px 0;cursor:pointer;font-size:.95rem;line-height:1.6;color:var(--text);text-align:right;}
 .question-item:hover{border-color:var(--primary);}
@@ -168,10 +169,23 @@ input[type="time"]{text-align:center;}
 .answer-question{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:20px;margin:0 auto 20px;max-width:500px;text-align:center;font-size:1rem;line-height:1.7;color:var(--text);}
 .answer-textarea{width:100%;max-width:500px;min-height:200px;background:var(--card);border:1.5px solid var(--border);border-radius:16px;color:var(--text);padding:16px;font-size:1rem;line-height:1.8;font-family:inherit;display:block;margin:0 auto 20px;resize:vertical;}
 
-/* ===== خلفيات الكتابة ===== */
+/* ===== خلفيات الكتابة - الورق ===== */
 .paper-white{background:#faf8f3;color:#1a1a1a;font-family:'Sacramento',cursive;font-size:1.5rem;}
 .paper-cream{background:#f5f0e8;color:#2a1810;font-family:'Cairo',sans-serif;font-size:1rem;}
 .paper-classic{background:#e8dcc8;color:#3a2820;font-family:'Sacramento',cursive;font-size:1.5rem;}
+.paper-night{background:#1a1a2e;color:#f0e8d0;font-family:'Cairo',sans-serif;font-size:1rem;}
+
+/* ===== خلفيات الكتابة - الصور ===== */
+.paper-image{
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  color:#fff;
+  font-family:'Cairo',sans-serif;
+  font-size:1.1rem;
+  text-shadow:0 2px 8px rgba(0,0,0,.8), 0 0 20px rgba(0,0,0,.6);
+  font-weight:500;
+}
 
 /* ===== شاشة الفتح ===== */
 #splash{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .6s ease;pointer-events:none;}
@@ -182,22 +196,17 @@ input[type="time"]{text-align:center;}
 /* ===== حركات ناعمة ===== */
 @keyframes fadeInUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-@keyframes pulse{0%{transform:scale(1);}50%{transform:scale(.95);}100%{transform:scale(1);}}
 .fade-in{animation:fadeIn .4s ease both;}
 .fade-in-up{animation:fadeInUp .5s ease both;}
-.moment{animation:fadeInUp .3s ease both;}
 .btn:active{transform:scale(.97);}
 .tab:active .icon{transform:scale(.9);transition:transform .15s;}
 
 /* ===== على الشاشات الصغيرة ===== */
-.modal-actions-fixed{position:fixed;bottom:30px;left:0;right:0;display:flex;justify-content:space-between;padding:0 40px;z-index:320;pointer-events:none;}
-.modal-actions-fixed button{pointer-events:auto;}
-.modal-heart,.modal-del{width:60px;height:60px;border-radius:50%;font-size:1.8rem;background:rgba(0,0,0,.6);color:#fff;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;}
-.modal-heart.active{background:rgba(239,68,68,.9);}
-.modal-del{background:rgba(239,68,68,.9);}
 @media (max-width:380px){
 .day-grid{gap:4px;padding:0 4px 8px;}
 .moment .del,.moment .heart{width:20px;height:20px;font-size:.65rem;}
+.months-grid{gap:6px;}
+.month-name{font-size:.7rem;}
 }
 </style>
 </head><body>
@@ -246,7 +255,6 @@ input[type="time"]{text-align:center;}
 <!-- تبويب: لقطاتي -->
 <div class="content hidden" id="tabMoments">
 <h1>لقطاتي</h1>
-<div class="counter" id="countMoments"></div>
 <div class="filter-row" id="filterRow">
 <button class="filter-btn active" data-filter="all">الكل</button>
 <button class="filter-btn" data-filter="photo">📷 صور</button>
@@ -254,27 +262,48 @@ input[type="time"]{text-align:center;}
 <button class="filter-btn" data-filter="text">✍️ كتابة</button>
 <button class="filter-btn" data-filter="answers">💭 أجوبة</button>
 <button class="filter-btn" data-filter="favorite">❤️ المفضلة</button>
-<button class="filter-btn" data-filter="calendar">📅 تقويم</button>
 </div>
-<div id="timeline"></div>
-<div id="calendarView" class="hidden">
-<div class="calendar-header">
-<button class="calendar-nav" id="calPrev">›</button>
-<div class="calendar-title" id="calTitle">...</div>
-<button class="calendar-nav" id="calNext">‹</button>
+
+<!-- التلميح (يظهر لما ما في فلتر مختار) -->
+<div class="hint" id="hint">
+👇 اضغط على فلتر<br>لعرض لقطاتك
 </div>
-<div class="calendar-weekdays">
-<div class="calendar-weekday">أحد</div>
-<div class="calendar-weekday">اثنين</div>
-<div class="calendar-weekday">ثلاثاء</div>
-<div class="calendar-weekday">أربعاء</div>
-<div class="calendar-weekday">خميس</div>
-<div class="calendar-weekday">جمعة</div>
-<div class="calendar-weekday">سبت</div>
+
+<!-- الشجرة الجديدة (مخفية افتراضياً) -->
+<div class="hidden" id="treeView">
+  <!-- السنوات -->
+  <div class="years-row" id="yearsRow"></div>
+  
+  <!-- الأشهر (تظهر لما تختاري سنة) -->
+  <div class="hidden" id="monthsSection">
+    <div class="months-grid" id="monthsGrid"></div>
+  </div>
+  
+  <!-- التقويم (يظهر لما تختاري شهر) -->
+  <div class="hidden" id="calendarSection">
+    <div class="calendar-header">
+      <button class="calendar-nav" id="calPrev">›</button>
+      <div class="calendar-title" id="calTitle">...</div>
+      <button class="calendar-nav" id="calNext">‹</button>
+    </div>
+    <div class="calendar-weekdays">
+      <div class="calendar-weekday">أحد</div>
+      <div class="calendar-weekday">اثنين</div>
+      <div class="calendar-weekday">ثلاثاء</div>
+      <div class="calendar-weekday">أربعاء</div>
+      <div class="calendar-weekday">خميس</div>
+      <div class="calendar-weekday">جمعة</div>
+      <div class="calendar-weekday">سبت</div>
+    </div>
+    <div class="calendar-grid" id="calendarGrid"></div>
+  </div>
+  
+  <!-- اللقطات (تظهر لما تختاري يوم) -->
+  <div class="hidden" id="momentsSection">
+    <div id="momentsGrid"></div>
+  </div>
 </div>
-<div class="calendar-grid" id="calendarGrid"></div>
-</div>
-<div class="empty hidden" id="empty">لا توجد لقطات بعد<br>ارجع إلى تبويب التسجيل ووثّق أول لحظة 📸</div>
+
 </div>
 
 <!-- تبويب: إعدادات -->
@@ -432,6 +461,7 @@ var db=null,stream=null,pendingBlob=null,pendingType=null,selectedColor='#0a0a0a
 var reminderTimer=null;
 var savedTreeState={years:{},months:{},days:{}};
 var currentSection=null,currentQuestion=null;
+var selectedYear=null,selectedMonth=null;
 
 /* ===== بنك الأسئلة - 100 سؤال ===== */
 var QUESTIONS_BANK={
@@ -448,13 +478,33 @@ var SECTION_ICONS={"تأمل":"📖","مشاعر":"💭","إنجاز":"🎯","أ
 
 /* ===== الألوان والثيمات ===== */
 var COLORS=['#0a0a0a','#1e293b','#7c2d12','#14532d','#581c87','#831843'];
-var PAPER_BACKGROUNDS={
-'paper-white':{name:'ورقة بيضاء',emoji:'📄',bg:'#faf8f3',text:'#1a1a1a',font:"'Sacramento', cursive"},
-'paper-cream':{name:'ورقة كريمية',emoji:'📜',bg:'#f5f0e8',text:'#2a1810',font:"'Cairo', sans-serif"},
-'paper-classic':{name:'ورقة كلاسيكية',emoji:'📔',bg:'#e8dcc8',text:'#3a2820',font:"'Sacramento', cursive"},
-'paper-night':{name:'ورقة ليلية',emoji:'✨',bg:'#1a1a2e',text:'#f0e8d0',font:"'Cairo', sans-serif"}
+
+/* ===== خلفيات الكتابة ===== */
+var WRITING_BACKGROUNDS={
+/* الورق */
+'paper-white':{name:'ورقة بيضاء',emoji:'📄',bg:'#faf8f3',text:'#1a1a1a',font:"'Sacramento', cursive",type:'color'},
+'paper-cream':{name:'ورقة كريمية',emoji:'📜',bg:'#f5f0e8',text:'#2a1810',font:"'Cairo', sans-serif",type:'color'},
+'paper-classic':{name:'ورقة كلاسيكية',emoji:'📔',bg:'#e8dcc8',text:'#3a2820',font:"'Sacramento', cursive",type:'color'},
+'paper-night':{name:'ورقة ليلية',emoji:'✨',bg:'#1a1a2e',text:'#f0e8d0',font:"'Cairo', sans-serif",type:'color'},
+/* الألوان */
+'solid-black':{name:'أسود',emoji:'⚫',bg:'#0a0a0a',text:'#fff',font:"'Cairo', sans-serif",type:'color'},
+'solid-purple':{name:'بنفسجي',emoji:'🟣',bg:'#581c87',text:'#fff',font:"'Cairo', sans-serif",type:'color'},
+'solid-green':{name:'أخضر',emoji:'🟢',bg:'#14532d',text:'#fff',font:"'Cairo', sans-serif",type:'color'},
+/* صور Canva */
+'img-rose-sunset':{name:'وردة وغروب',emoji:'🌹',url:'noise%2010.png',type:'image',text:'#fff'},
+'img-flowers-sky':{name:'حقل ورود',emoji:'🌸',url:'noise%2013.png',type:'image',text:'#fff'},
+'img-autumn':{name:'شجر خريفي',emoji:'🍂',url:'noise%2014.png',type:'image',text:'#fff'},
+'img-white-rose':{name:'ورد أبيض',emoji:'🤍',url:'noise%2015.png',type:'image',text:'#fff'},
+'img-shine':{name:'لمعان',emoji:'✨',url:'noise%202.jpg',type:'image',text:'#fff'},
+'img-plane-wing':{name:'جناح طائرة',emoji:'✈️',url:'noise%203.png',type:'image',text:'#fff'},
+'img-tea':{name:'شاي',emoji:'🍵',url:'noise%204.png',type:'image',text:'#fff'},
+'img-coffee':{name:'قهوة',emoji:'☕',url:'noise%205.png',type:'image',text:'#fff'},
+'img-beach':{name:'شاطئ',emoji:'🏖️',url:'noise%206.png',type:'image',text:'#fff'},
+'img-road':{name:'طريق',emoji:'🛤️',url:'noise%207.png',type:'image',text:'#fff'},
+'img-swan':{name:'بجع',emoji:'🦢',url:'noise%208.png',type:'image',text:'#fff'},
+'img-sunset-sea':{name:'غروب البحر',emoji:'🌅',url:'Namnl%C3%B6s%20design%203.png',type:'image',text:'#fff'},
+'img-book':{name:'كتاب',emoji:'📖',url:'Namnl%C3%B6s%20design.png',type:'image',text:'#fff'}
 };
-var THEMES={dark:{blue:{bg:'#0a1929',text:'#fff',dim:'#8899aa',faint:'#667788',border:'#2a4a6e',card:'#142a44',primary:'#4ade80',primaryText:'#000'},purple:{bg:'#1a0a29',text:'#fff',dim:'#9988aa',faint:'#776688',border:'#4a2a6e',card:'#2a1444',primary:'#c084fc',primaryText:'#000'},green:{bg:'#0a2919',text:'#fff',dim:'#88aa99',faint:'#668877',border:'#2a6e4a',card:'#14442a',primary:'#4ade80',primaryText:'#000'},red:{bg:'#290a0a',text:'#fff',dim:'#aa8888',faint:'#886666',border:'#6e2a2a',card:'#441414',primary:'#f87171',primaryText:'#000'},orange:{bg:'#291a0a',text:'#fff',dim:'#aa9988',faint:'#887766',border:'#6e4a2a',card:'#442a14',primary:'#fb923c',primaryText:'#000'},yellow:{bg:'#29290a',text:'#fff',dim:'#aaaa88',faint:'#888866',border:'#6e6e2a',card:'#444414',primary:'#facc15',primaryText:'#000'}},light:{blue:{bg:'#e3f2fd',text:'#0a1929',dim:'#5a7a9a',faint:'#8899aa',border:'#90b8d8',card:'#ffffff',primary:'#1976d2',primaryText:'#fff'},purple:{bg:'#f3e5f5',text:'#2a0a3a',dim:'#7a5a8a',faint:'#a888b8',border:'#c090d0',card:'#ffffff',primary:'#7b1fa2',primaryText:'#fff'},green:{bg:'#e8f5e9',text:'#0a2919',dim:'#5a7a5a',faint:'#88a888',border:'#90c090',card:'#ffffff',primary:'#388e3c',primaryText:'#fff'},red:{bg:'#ffebee',text:'#290a0a',dim:'#8a5a5a',faint:'#b88888',border:'#e09090',card:'#ffffff',primary:'#d32f2f',primaryText:'#fff'},orange:{bg:'#fff3e0',text:'#2a1a0a',dim:'#8a6a4a',faint:'#b89878',border:'#e0b890',card:'#ffffff',primary:'#f57c00',primaryText:'#fff'},yellow:{bg:'#fffde7',text:'#2a2a0a',dim:'#8a8a4a',faint:'#b8b878',border:'#e0e090',card:'#ffffff',primary:'#f9a825',primaryText:'#fff'}}};
 var COLOR_NAMES={blue:'أزرق',purple:'بنفسجي',green:'أخضر',red:'أحمر',orange:'برتقالي',yellow:'أصفر'};
 var currentTheme={mode:'dark',color:'blue'};
 var DAYS_AR=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
@@ -490,11 +540,19 @@ async function checkReminder(){try{var enabled=localStorage.getItem('lahza-remin
 function scheduleReminderCheck(){if(reminderTimer){clearInterval(reminderTimer);}reminderTimer=setInterval(function(){var enabled=localStorage.getItem('lahza-reminder')==='true';if(!enabled)return;var t=localStorage.getItem('lahza-reminder-time')||'20:00';var parts=t.split(':');var h=Number(parts[0]);var m=Number(parts[1]);var now=new Date();if(now.getHours()===h&&now.getMinutes()===m){checkReminder();}},30000);}
 function updateCounter(){countMoments().then(function(n){var c=document.getElementById('counter');if(n===0)c.textContent='لا توجد لقطات بعد';else if(n===1)c.textContent='📸 لقطة واحدة محفوظة';else c.textContent='📸 '+n+' لقطات محفوظة';});}/* ===== التبويبات ===== */
 var tabBtnRecord=document.getElementById('tabBtnRecord'),tabBtnMoments=document.getElementById('tabBtnMoments'),tabBtnSettings=document.getElementById('tabBtnSettings'),tabRecord=document.getElementById('tabRecord'),tabMoments=document.getElementById('tabMoments'),tabSettings=document.getElementById('tabSettings');
-function switchTab(t){[tabBtnRecord,tabBtnMoments,tabBtnSettings].forEach(function(b){b.classList.remove('active');});[tabRecord,tabMoments,tabSettings].forEach(function(c){c.classList.add('hidden');});if(t==='record'){tabBtnRecord.classList.add('active');tabRecord.classList.remove('hidden');}else if(t==='moments'){tabBtnMoments.classList.add('active');tabMoments.classList.remove('hidden');renderMoments();}else{tabBtnSettings.classList.add('active');tabSettings.classList.remove('hidden');}}
+function switchTab(t){[tabBtnRecord,tabBtnMoments,tabBtnSettings].forEach(function(b){b.classList.remove('active');});[tabRecord,tabMoments,tabSettings].forEach(function(c){c.classList.add('hidden');});if(t==='record'){tabBtnRecord.classList.add('active');tabRecord.classList.remove('hidden');}else if(t==='moments'){tabBtnMoments.classList.add('active');tabMoments.classList.remove('hidden');}else{tabBtnSettings.classList.add('active');tabSettings.classList.remove('hidden');}}
 tabBtnRecord.onclick=function(){switchTab('record');};
 tabBtnMoments.onclick=function(){switchTab('moments');};
 tabBtnSettings.onclick=function(){switchTab('settings');};
-document.querySelectorAll('.filter-btn').forEach(function(b){b.onclick=function(){document.querySelectorAll('.filter-btn').forEach(function(x){x.classList.remove('active');});b.classList.add('active');currentFilter=b.getAttribute('data-filter');selectedDay=null;savedTreeState={years:{},months:{},days:{}};renderMoments();};});
+
+/* ===== الفلاتر ===== */
+document.querySelectorAll('.filter-btn').forEach(function(b){b.onclick=function(){
+  document.querySelectorAll('.filter-btn').forEach(function(x){x.classList.remove('active');});
+  b.classList.add('active');
+  currentFilter=b.getAttribute('data-filter');
+  selectedYear=null;selectedMonth=null;selectedDay=null;
+  renderTree();
+};});
 
 /* ===== بطاقة اللقطة ===== */
 async function makeMomentCard(m){
@@ -502,167 +560,143 @@ var d=document.createElement('div');
 d.className='moment';
 if(m.type==='photo'){var i=document.createElement('img');i.src=URL.createObjectURL(m.blob);d.appendChild(i);}
 else if(m.type==='video'){var v=document.createElement('video');v.src=URL.createObjectURL(m.blob);v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=true;d.appendChild(v);}
-else if(m.type==='text'){var t=document.createElement('div');t.className='text-content';if(m.color&&m.color.indexOf('paper-')===0){var p=PAPER_BACKGROUNDS[m.color];if(p){t.style.background=p.bg;t.style.color=p.text;t.style.fontFamily=p.font;}}else{t.style.background=m.color||'#0a0a0a';}t.textContent=await m.blob.text();d.appendChild(t);}
+else if(m.type==='text'){var t=document.createElement('div');t.className='text-content';var b=WRITING_BACKGROUNDS[m.color];if(b&&b.type==='color'){t.style.background=b.bg;t.style.color=b.text;t.style.fontFamily=b.font;}else if(b&&b.type==='image'){t.style.backgroundImage='url('+b.url+')';t.style.backgroundSize='cover';t.style.backgroundPosition='center';t.style.color=b.text||'#fff';t.style.textShadow='0 2px 8px rgba(0,0,0,.8), 0 0 20px rgba(0,0,0,.6)';t.style.fontWeight='500';}else{t.style.background=m.color||'#0a0a0a';}t.textContent=await m.blob.text();d.appendChild(t);}
 else if(m.type==='answer'){var t2=document.createElement('div');t2.className='text-content';t2.style.background='#1e293b';t2.style.color='#fff';t2.style.fontSize='.65rem';t2.textContent='💭 '+m.caption;d.appendChild(t2);}
 var dt=new Date(m.date);
 var timeStr=dt.getHours()+':'+String(dt.getMinutes()).padStart(2,'0');
-var b=document.createElement('div');
-b.className='bottom-bar';
-var dateTxt=document.createElement('div');dateTxt.className='date';dateTxt.textContent=timeStr;b.appendChild(dateTxt);
-if(m.caption&&m.type!=='answer'){var cap=document.createElement('div');cap.className='caption';cap.textContent=m.caption;b.appendChild(cap);}
-d.appendChild(b);
+var bb=document.createElement('div');
+bb.className='bottom-bar';
+var dateTxt=document.createElement('div');dateTxt.className='date';dateTxt.textContent=timeStr;bb.appendChild(dateTxt);
+if(m.caption&&m.type!=='answer'){var cap=document.createElement('div');cap.className='caption';cap.textContent=m.caption;bb.appendChild(cap);}
+d.appendChild(bb);
 var heart=document.createElement('button');
 heart.className='heart'+(m.favorite?' active':'');
 heart.textContent=m.favorite?'❤️':'🤍';
-heart.onclick=async function(e){e.stopPropagation();var mm=await getMoment(m.id);if(!mm)return;mm.favorite=!mm.favorite;await updateMoment(mm);renderMoments();};
+heart.onclick=async function(e){e.stopPropagation();var mm=await getMoment(m.id);if(!mm)return;mm.favorite=!mm.favorite;await updateMoment(mm);renderTree();};
 d.appendChild(heart);
 var del=document.createElement('button');
 del.className='del';
 del.textContent='×';
-del.onclick=async function(e){e.stopPropagation();if(confirm('هل تريد حذف هذه اللقطة؟')){await deleteMoment(m.id);renderMoments();updateCounter();updateStreak();}};
+del.onclick=async function(e){e.stopPropagation();if(confirm('هل تريد حذف هذه اللقطة؟')){await deleteMoment(m.id);renderTree();updateCounter();updateStreak();}};
 d.appendChild(del);
 d.onclick=function(){openMomentModal(m.id);};
 return d;
 }
 
-/* ===== الشجرة ===== */
-function makeTreeNode(level,title,countText,icon,key){
-  var node=document.createElement('div');
-  node.className='tree-node '+level;
-  if(key&&savedTreeState[level+'s']&&savedTreeState[level+'s'][key])node.classList.add('open');
-  var header=document.createElement('div');
-  header.className='tree-header';
-  var arrow=document.createElement('div');arrow.className='tree-arrow';arrow.textContent='▶';
-  var ic=document.createElement('div');ic.className='tree-icon';ic.textContent=icon||'';
-  var info=document.createElement('div');info.className='tree-info';
-  var t=document.createElement('div');t.className='tree-title';t.textContent=title;
-  var c=document.createElement('div');c.className='tree-count';c.textContent=countText;
-  info.appendChild(t);info.appendChild(c);
-  header.appendChild(arrow);header.appendChild(ic);header.appendChild(info);
-  var body=document.createElement('div');body.className='tree-body';
-  var children=document.createElement('div');children.className='tree-children';
-  body.appendChild(children);
-  node.appendChild(header);node.appendChild(body);
-  header.onclick=function(){
-    node.classList.toggle('open');
-    if(key){
-      var store=level+'s';
-      if(!savedTreeState[store])savedTreeState[store]={};
-      if(node.classList.contains('open'))savedTreeState[store][key]=true;
-      else delete savedTreeState[store][key];
-    }
-  };
-  return {node:node,children:children};
-}
-
-/* ===== عرض اللقطات ===== */
-async function renderMoments(){
-  var tl=document.getElementById('timeline'),em=document.getElementById('empty'),ce=document.getElementById('countMoments');
-  var calView=document.getElementById('calendarView');
-  try{
-    var ms=await getAllMoments();
-    /* فلتر التقويم */
-    if(currentFilter==='calendar' && !selectedDay){
-      tl.classList.add('hidden');
-      calView.classList.remove('hidden');em.classList.add('hidden');
-      ce.textContent='📅 اختر يوماً';renderCalendar(ms);return;
-    }
-    tl.classList.remove('hidden');calView.classList.add('hidden');
-    /* الفلترة */
-    var filtered=ms;
-    if(currentFilter==='favorite'){filtered=ms.filter(function(m){return m.favorite;});}
-    else if(currentFilter==='answers'){filtered=ms.filter(function(m){return m.type==='answer';});}
-    else if(currentFilter!=='all'&&currentFilter!=='calendar'){filtered=ms.filter(function(m){return m.type===currentFilter;});}
-    /* فلترة يوم محدد (من التقويم) */
-    if(selectedDay){filtered=filtered.filter(function(m){return getDateStr(m.date)===selectedDay;});}
-    /* إذا فاضي */
-    if(filtered.length===0){
-      ce.textContent='';
-      if(currentFilter==='all'&&!selectedDay)em.innerHTML='لا توجد لقطات بعد<br>ارجع إلى تبويب التسجيل ووثّق أول لحظة 📸';
-      else if(currentFilter==='photo')em.innerHTML='لا توجد صور بعد';
-      else if(currentFilter==='video')em.innerHTML='لا توجد فيديوهات بعد';
-      else if(currentFilter==='text')em.innerHTML='لا توجد كتابات بعد';
-      else if(currentFilter==='answers')em.innerHTML='لا توجد أجوبة بعد<br>اضغط على السؤال في الرئيسية لتبدأ';
-      else if(currentFilter==='favorite')em.innerHTML='لا توجد لقطات في المفضلة بعد<br>اضغط ❤️ على لقطة لإضافتها';
-      else if(selectedDay)em.innerHTML='لا توجد لقطات في هذا اليوم';
-      em.classList.remove('hidden');tl.innerHTML='';return;
-    }
-    em.classList.add('hidden');
-    /* عدّاد */
-    if(currentFilter==='all'){ce.textContent=filtered.length===1?'📸 لقطة واحدة':'📸 '+filtered.length+' لقطات';}
-    else if(currentFilter==='photo'){ce.textContent='📷 '+filtered.length+' صورة';}
-    else if(currentFilter==='video'){ce.textContent='🎥 '+filtered.length+' فيديو';}
-    else if(currentFilter==='text'){ce.textContent='✍️ '+filtered.length+' كتابة';}
-    else if(currentFilter==='answers'){ce.textContent='💭 '+filtered.length+' جواب';}
-    else if(currentFilter==='favorite'){ce.textContent='❤️ '+filtered.length+' مفضلة';}
-    /* إذا في يوم محدد - عرض شبكة مباشرة */
-    if(selectedDay){
-      ce.textContent='📅 '+getDayLabel(selectedDay)+' ('+pluralMoments(filtered.length)+')';
-      var dayGrid=document.createElement('div');dayGrid.className='day-grid';
-      filtered.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
-      var cards=await Promise.all(filtered.map(function(mm){return makeMomentCard(mm);}));
-      cards.forEach(function(c){dayGrid.appendChild(c);});
-      tl.innerHTML='';tl.appendChild(dayGrid);return;
-    }
-    /* التجميع: سنة -> شهر -> يوم */
-    var years={};
-    filtered.forEach(function(m){
-      var d=new Date(m.date);var y=d.getFullYear();var mo=d.getMonth();var ds=getDateStr(m.date);
-      if(!years[y])years[y]={months:{},total:0};
-      if(!years[y].months[mo])years[y].months[mo]={days:{},total:0};
-      if(!years[y].months[mo].days[ds])years[y].months[mo].days[ds]=[];
-      years[y].months[mo].days[ds].push(m);
-      years[y].months[mo].total++;
-      years[y].total++;
-    });
-    tl.innerHTML='';
-    var yearsSorted=Object.keys(years).map(Number).sort(function(a,b){return b-a;});
-    for(var yi=0;yi<yearsSorted.length;yi++){
-      var y=yearsSorted[yi];
-      var yData=years[y];
-      var yDaysCount=Object.keys(yData.months).reduce(function(acc,mo){return acc+Object.keys(yData.months[mo].days).length;},0);
-      var yNode=makeTreeNode('year','📅 '+y,pluralDays(yDaysCount)+' · '+pluralMoments(yData.total),'','y'+y);
-      var monthsSorted=Object.keys(yData.months).map(Number).sort(function(a,b){return b-a;});
-      for(var mi=0;mi<monthsSorted.length;mi++){
-        var mo=monthsSorted[mi];
-        var mData=yData.months[mo];
-        var mDaysCount=Object.keys(mData.days).length;
-        var mNode=makeTreeNode('month',MONTHS_AR[mo]+' '+y,pluralDays(mDaysCount)+' · '+pluralMoments(mData.total),'📁','m'+y+'-'+mo);
-        var daysSorted=Object.keys(mData.days).sort().reverse();
-        for(var di=0;di<daysSorted.length;di++){
-          var ds=daysSorted[di];
-          var list=mData.days[ds];
-          var dNode=makeTreeNode('day',getDayLabel(ds),pluralMoments(list.length),'','d'+ds);
-          var grid2=document.createElement('div');
-          grid2.className='day-grid';
-          list.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
-          var cards2=await Promise.all(list.map(function(mm){return makeMomentCard(mm);}));
-          cards2.forEach(function(c){grid2.appendChild(c);});
-          dNode.children.appendChild(grid2);
-          mNode.children.appendChild(dNode.node);
-        }
-        yNode.children.appendChild(mNode.node);
+/* ===== الشجرة الجديدة ===== */
+async function renderTree(){
+  var ms=await getAllMoments();
+  var hint=document.getElementById('hint');
+  var treeView=document.getElementById('treeView');
+  var yearsRow=document.getElementById('yearsRow');
+  var monthsSection=document.getElementById('monthsSection');
+  var monthsGrid=document.getElementById('monthsGrid');
+  var calendarSection=document.getElementById('calendarSection');
+  var momentsSection=document.getElementById('momentsSection');
+  var momentsGrid=document.getElementById('momentsGrid');
+  
+  // إذا ما في فلتر مختار (all هو الأول افتراضياً)
+  if(!currentFilter){hint.classList.remove('hidden');treeView.classList.add('hidden');return;}
+  
+  hint.classList.add('hidden');
+  treeView.classList.remove('hidden');
+  
+  // الفلترة
+  var filtered=ms;
+  if(currentFilter==='favorite'){filtered=ms.filter(function(m){return m.favorite;});}
+  else if(currentFilter==='answers'){filtered=ms.filter(function(m){return m.type==='answer';});}
+  else if(currentFilter!=='all'){filtered=ms.filter(function(m){return m.type===currentFilter;});}
+  
+  // بناء السنوات
+  var yearsSet=new Set();
+  filtered.forEach(function(m){yearsSet.add(new Date(m.date).getFullYear());});
+  var yearsSorted=Array.from(yearsSet).sort(function(a,b){return b-a;});
+  
+  yearsRow.innerHTML='';
+  if(yearsSorted.length===0){
+    yearsRow.innerHTML='<div class="empty" style="width:100%;">لا توجد لقطات</div>';
+    monthsSection.classList.add('hidden');
+    calendarSection.classList.add('hidden');
+    momentsSection.classList.add('hidden');
+    return;
+  }
+  
+  yearsSorted.forEach(function(y){
+    var count=filtered.filter(function(m){return new Date(m.date).getFullYear()===y;}).length;
+    var card=document.createElement('div');
+    card.className='year-card'+(selectedYear===y?' active':'');
+    card.innerHTML='<span class="year-num">'+y+'</span><span class="year-count">'+count+' لقطة</span>';
+    card.onclick=function(){
+      selectedYear=y;selectedMonth=null;selectedDay=null;
+      renderTree();
+    };
+    yearsRow.appendChild(card);
+  });
+  
+  // بناء الأشهر (إذا سنة مختارة)
+  if(selectedYear){
+    monthsSection.classList.remove('hidden');
+    monthsGrid.innerHTML='';
+    var monthsWithData=new Set();
+    filtered.filter(function(m){return new Date(m.date).getFullYear()===selectedYear;}).forEach(function(m){monthsWithData.add(new Date(m.date).getMonth());});
+    
+    for(var mo=0;mo<12;mo++){
+      var mCount=filtered.filter(function(m){var d=new Date(m.date);return d.getFullYear()===selectedYear&&d.getMonth()===mo;}).length;
+      var mCard=document.createElement('div');
+      mCard.className='month-card'+(selectedMonth===mo?' active':'')+(mCount===0?' disabled':'');
+      mCard.innerHTML='<span class="month-name">'+MONTHS_AR[mo]+'</span><span class="month-count">'+(mCount>0?mCount+' لقطة':'-')+'</span>';
+      if(mCount>0){
+        mCard.onclick=function(mo){return function(){
+          selectedMonth=mo;selectedDay=null;
+          renderTree();
+        };}(mo);
+      }else{
+        mCard.style.opacity='0.4';
       }
-      tl.appendChild(yNode.node);
+      monthsGrid.appendChild(mCard);
     }
-  }catch(err){ce.textContent='❌ خطأ: '+err.message;}
+  }else{
+    monthsSection.classList.add('hidden');
+  }
+  
+  // بناء التقويم (إذا شهر مختار)
+  if(selectedYear&&selectedMonth!==null){
+    calendarSection.classList.remove('hidden');
+    renderNewCalendar(filtered,selectedYear,selectedMonth);
+  }else{
+    calendarSection.classList.add('hidden');
+  }
+  
+  // بناء اللقطات (إذا يوم مختار)
+  if(selectedDay){
+    momentsSection.classList.remove('hidden');
+    var dayMoments=filtered.filter(function(m){return getDateStr(m.date)===selectedDay;});
+    momentsGrid.innerHTML='';
+    var gridDiv=document.createElement('div');
+    gridDiv.className='day-grid';
+    dayMoments.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
+    var cards=await Promise.all(dayMoments.map(function(mm){return makeMomentCard(mm);}));
+    cards.forEach(function(c){gridDiv.appendChild(c);});
+    momentsGrid.appendChild(gridDiv);
+  }else{
+    momentsSection.classList.add('hidden');
+  }
 }
 
-/* ===== التقويم ===== */
-function renderCalendar(allMoments){
-  if(calMonth===null){var n=new Date();calMonth=n.getMonth();calYear=n.getFullYear();}
-  var monthsDays=new Date(calYear,calMonth+1,0).getDate();
-  var firstDay=new Date(calYear,calMonth,1).getDay();
+/* ===== التقويم الجديد ===== */
+function renderNewCalendar(moments,year,month){
+  var monthsDays=new Date(year,month+1,0).getDate();
+  var firstDay=new Date(year,month,1).getDay();
   var grid=document.getElementById('calendarGrid');
   grid.innerHTML='';
-  document.getElementById('calTitle').textContent=MONTHS_AR[calMonth]+' '+calYear;
-  var daysWithMoments=new Set(allMoments.map(function(m){return getDateStr(m.date);}));
+  document.getElementById('calTitle').textContent=MONTHS_AR[month]+' '+year;
+  var daysWithMoments=new Set(moments.map(function(m){return getDateStr(m.date);}));
   var todayStr=getDateStr(new Date());
   for(var i=0;i<firstDay;i++){var e=document.createElement('div');e.className='calendar-day other-month';grid.appendChild(e);}
   for(var day=1;day<=monthsDays;day++){
     var d=document.createElement('div');
     d.className='calendar-day';
-    var dateStr=calYear+'-'+String(calMonth+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+    var dateStr=year+'-'+String(month+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
     if(dateStr===todayStr)d.classList.add('today');
     if(dateStr===selectedDay)d.classList.add('selected');
     var num=document.createElement('span');
@@ -674,36 +708,52 @@ function renderCalendar(allMoments){
       dot.className='calendar-dot';
       d.appendChild(dot);
     }
-    d.onclick=function(ds){return function(){selectedDay=ds;renderMoments();};}(dateStr);
+    d.onclick=function(ds){return function(){selectedDay=ds;renderTree();};}(dateStr);
     grid.appendChild(d);
   }
 }
-document.getElementById('calPrev').onclick=function(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderMoments();};
-document.getElementById('calNext').onclick=function(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderMoments();};
 
-/* ===== مودال اللقطة ===== */
+/* ===== التنقل في التقويم ===== */
+document.getElementById('calPrev').onclick=function(){
+  if(selectedMonth===null)return;
+  selectedMonth--;
+  if(selectedMonth<0){selectedMonth=11;selectedYear--;}
+  selectedDay=null;
+  renderTree();
+};
+document.getElementById('calNext').onclick=function(){
+  if(selectedMonth===null)return;
+  selectedMonth++;
+  if(selectedMonth>11){selectedMonth=0;selectedYear++;}
+  selectedDay=null;
+  renderTree();
+};
+
+/* ===== المودال ===== */
 async function openMomentModal(id){
   var m=await getMoment(id);if(!m)return;currentMomentId=id;
   var mod=document.getElementById('momentModal'),c=document.getElementById('modalContent');c.innerHTML='';
   if(m.type==='photo'){var i=document.createElement('img');i.src=URL.createObjectURL(m.blob);c.appendChild(i);}
   else if(m.type==='video'){var v=document.createElement('video');v.src=URL.createObjectURL(m.blob);v.controls=true;v.playsInline=true;c.appendChild(v);}
-  else if(m.type==='text'){var t=document.createElement('div');t.className='modal-text';if(m.color&&m.color.indexOf('paper-')===0){var p=PAPER_BACKGROUNDS[m.color];if(p){t.style.background=p.bg;t.style.color=p.text;t.style.fontFamily=p.font;}}else{t.style.background=m.color||'#0a0a0a';}t.textContent=await m.blob.text();c.appendChild(t);}
+  else if(m.type==='text'){var t=document.createElement('div');t.className='modal-text';var b=WRITING_BACKGROUNDS[m.color];if(b&&b.type==='color'){t.style.background=b.bg;t.style.color=b.text;t.style.fontFamily=b.font;}else if(b&&b.type==='image'){t.style.backgroundImage='url('+b.url+')';t.style.backgroundSize='cover';t.style.backgroundPosition='center';t.style.color=b.text||'#fff';t.style.textShadow='0 2px 8px rgba(0,0,0,.8), 0 0 20px rgba(0,0,0,.6)';t.style.fontWeight='500';}else{t.style.background=m.color||'#0a0a0a';}t.textContent=await m.blob.text();c.appendChild(t);}
   else if(m.type==='answer'){var t2=document.createElement('div');t2.className='modal-text';t2.style.background='#1e293b';t2.style.color='#fff';t2.textContent='💭 '+(await m.blob.text());c.appendChild(t2);}
   var dt=new Date(m.date);
   var ds=dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear()+' - '+dt.getHours()+':'+String(dt.getMinutes()).padStart(2,'0');
   var dd=document.createElement('div');dd.className='modal-date';dd.textContent='📅 '+ds;c.appendChild(dd);
   var hb=document.getElementById('modalHeart');
-  hb.textContent=m.favorite?'❤️':'🤍';hb.className=m.favorite?'active':'';
-  hb.onclick=async function(){var mm=await getMoment(id);if(!mm)return;mm.favorite=!mm.favorite;await updateMoment(mm);hb.textContent=mm.favorite?'❤️':'🤍';hb.className=mm.favorite?'active':'';};
+  hb.textContent=m.favorite?'❤️':'🤍';hb.className='modal-heart'+(m.favorite?' active':'');
+  hb.onclick=async function(){var mm=await getMoment(id);if(!mm)return;mm.favorite=!mm.favorite;await updateMoment(mm);hb.textContent=mm.favorite?'❤️':'🤍';hb.className='modal-heart'+(mm.favorite?' active':'');};
   mod.classList.remove('hidden');
 }
-document.getElementById('modalClose').onclick=function(){document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();};
-document.getElementById('modalDelete').onclick=async function(){if(!currentMomentId)return;if(confirm('هل تريد حذف هذه اللقطة؟')){await deleteMoment(currentMomentId);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderMoments();updateCounter();updateStreak();}};
+document.getElementById('modalClose').onclick=function(){document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderTree();};
+document.getElementById('modalDelete').onclick=async function(){if(!currentMomentId)return;if(confirm('هل تريد حذف هذه اللقطة؟')){await deleteMoment(currentMomentId);document.getElementById('momentModal').classList.add('hidden');currentMomentId=null;renderTree();updateCounter();updateStreak();}};
 
 /* ===== الإحصائيات ===== */
 async function openStats(){try{var ms=await getAllMoments();var total=ms.length;var daysSet=new Set(ms.map(function(m){return getDateStr(m.date);}));var daysCount=daysSet.size;var best=0;if(ms.length>0){var sortedDays=Array.from(daysSet).sort();var cur=1;best=1;for(var i=1;i<sortedDays.length;i++){var prev=new Date(sortedDays[i-1]+'T12:00:00');var curr=new Date(sortedDays[i]+'T12:00:00');var diff=Math.round((curr-prev)/86400000);if(diff===1){cur++;if(cur>best)best=cur;}else{cur=1;}}}var now=new Date();var monthStart=new Date(now.getFullYear(),now.getMonth(),1);var monthCount=ms.filter(function(m){return new Date(m.date)>=monthStart;}).length;var dayOfWeek=now.getDay();var weekStart=new Date(now);weekStart.setDate(now.getDate()-dayOfWeek);weekStart.setHours(0,0,0,0);var weekCount=ms.filter(function(m){return new Date(m.date)>=weekStart;}).length;var photos=ms.filter(function(m){return m.type==='photo';}).length;var videos=ms.filter(function(m){return m.type==='video';}).length;var texts=ms.filter(function(m){return m.type==='text';}).length;var answers=ms.filter(function(m){return m.type==='answer';}).length;var favs=ms.filter(function(m){return m.favorite;}).length;document.getElementById('statTotal').textContent=total;document.getElementById('statDays').textContent=daysCount;document.getElementById('statBest').textContent=best;document.getElementById('statMonth').textContent=monthCount;document.getElementById('statWeek').textContent=weekCount;document.getElementById('statPhotos').textContent=photos;document.getElementById('statVideos').textContent=videos;document.getElementById('statTexts').textContent=texts;document.getElementById('statAnswers').textContent=answers;document.getElementById('statFavs').textContent=favs;document.getElementById('statsModal').classList.remove('hidden');}catch(e){alert('خطأ: '+e.message);}}
 document.getElementById('statsClose').onclick=function(){document.getElementById('statsModal').classList.add('hidden');};
-document.getElementById('streakCard').onclick=function(){openStats();};/* ===== ورقة اختيار السؤال ===== */
+document.getElementById('streakCard').onclick=function(){openStats();};
+
+/* ===== الأسئلة ===== */
 document.getElementById('questionCard').onclick=function(){
   var list=document.getElementById('sectionList');
   list.innerHTML='';
@@ -742,7 +792,6 @@ function openQuestionList(sec){
 document.getElementById('questionListCancel').onclick=function(){document.getElementById('questionListSheet').classList.add('hidden');};
 document.getElementById('questionListOverlay').onclick=function(e){if(e.target.id==='questionListOverlay')document.getElementById('questionListSheet').classList.add('hidden');};
 
-/* ===== شاشة الإجابة ===== */
 function openAnswerScreen(sec,q){
   currentSection=sec;currentQuestion=q;
   document.getElementById('answerQuestion').textContent=q;
@@ -754,15 +803,12 @@ document.getElementById('answerSaveBtn').onclick=async function(){
   var txt=document.getElementById('answerInput').value.trim();
   if(!txt){showStatus('اكتب جوابك أولاً','#f87171');return;}
   try{
-    var title=currentSection+' — '+currentQuestion;
     await saveMoment({date:new Date().toISOString(),blob:new Blob([txt],{type:'text/plain'}),type:'answer',caption:currentQuestion,color:'answer',favorite:false,section:currentSection});
     document.getElementById('answerScreen').classList.add('hidden');
     showStatus('✅ تم حفظ الجواب','#4ade80');
     updateCounter();updateStreak();
   }catch(e){showStatus('❌ خطأ: '+e.message,'#f87171');}
-};
-
-/* ===== الكاميرا ===== */
+};/* ===== الكاميرا ===== */
 async function openCamera(v){try{if(stream){stream.getTracks().forEach(function(t){t.stop();});stream=null;}stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:currentFacing},audio:false});v.srcObject=stream;v.muted=true;}catch(e){var msg='📷 تعذّر فتح الكاميرا';if(e.name==='NotAllowedError')msg='🔒 لم يتم إعطاء إذن الكاميرا';else if(e.name==='NotFoundError')msg='📷 لا توجد كاميرا';else if(e.name==='NotReadableError')msg='📷 الكاميرا مشغولة بتطبيق آخر';showStatus(msg,'#f87171');}}
 function closeCamera(){if(stream){stream.getTracks().forEach(function(t){t.stop();});stream=null;}}
 async function toggleCamera(v){currentFacing=(currentFacing==='environment')?'user':'environment';await openCamera(v);}
@@ -784,29 +830,29 @@ videoInput.onchange=function(e){var f=e.target.files[0];if(!f)return;pendingBlob
 var cp=document.getElementById('colorPicker');
 function buildColorPicker(){
   cp.innerHTML='';
- cp.style.cssText='display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:340px;margin:16px auto;';
-  /* الألوان السادة */
-  COLORS.forEach(function(c){
-    var d=document.createElement('div');
-    d.className='color-dot'+(c===selectedColor?' active':'');
-    d.style.cssText='width:44px;height:44px;border-radius:50%;background:'+c+';cursor:pointer;border:3px solid '+(c===selectedColor?'var(--primary)':'transparent')+';margin:auto;';
-    d.onclick=function(){selectedColor=c;buildColorPicker();};
-    cp.appendChild(d);
-  });
-  /* خلفيات الورق */
-  Object.keys(PAPER_BACKGROUNDS).forEach(function(k){
-    var p=PAPER_BACKGROUNDS[k];
+  cp.style.cssText='display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:360px;margin:16px auto;';
+  Object.keys(WRITING_BACKGROUNDS).forEach(function(k){
+    var b=WRITING_BACKGROUNDS[k];
     var d=document.createElement('div');
     d.className='color-dot'+(k===selectedColor?' active':'');
-    d.style.cssText='width:44px;height:44px;border-radius:50%;background:'+p.bg+';cursor:pointer;border:3px solid '+(k===selectedColor?'var(--primary)':'transparent')+';display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin:auto;';
-    d.textContent=p.emoji;
-    d.title=p.name;
+    if(b.type==='color'){
+      d.style.cssText='width:48px;height:48px;border-radius:50%;background:'+b.bg+';cursor:pointer;border:3px solid '+(k===selectedColor?'var(--primary)':'transparent')+';display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin:auto;';
+    }else{
+      d.style.cssText='width:48px;height:48px;border-radius:50%;background-image:url('+b.url+');background-size:cover;background-position:center;cursor:pointer;border:3px solid '+(k===selectedColor?'var(--primary)':'transparent')+';margin:auto;';
+    }
+    d.textContent=b.type==='color'?b.emoji:'';
+    d.title=b.name;
     d.onclick=function(){selectedColor=k;buildColorPicker();};
     cp.appendChild(d);
   });
 }
 buildColorPicker();
-document.getElementById('chooseText').onclick=function(){buildColorPicker();document.getElementById('textScreen').classList.remove('hidden');};
+document.getElementById('chooseText').onclick=function(){
+  document.getElementById('textInput').value='';
+  selectedColor='#0a0a0a';
+  buildColorPicker();
+  document.getElementById('textScreen').classList.remove('hidden');
+};
 document.getElementById('textClose').onclick=function(){document.getElementById('textScreen').classList.add('hidden');};
 document.getElementById('saveTextBtn').onclick=function(){var t=document.getElementById('textInput').value.trim();if(!t){alert('اكتب شيئاً أولاً');return;}pendingBlob=new Blob([t],{type:'text/plain'});pendingType='text';document.getElementById('textScreen').classList.add('hidden');showPreview();document.getElementById('saveScreen').classList.remove('hidden');};
 
@@ -815,7 +861,7 @@ function showPreview(){
   var p=document.getElementById('preview');p.innerHTML='';
   if(pendingType==='photo'){var i=document.createElement('img');i.className='preview';i.src=URL.createObjectURL(pendingBlob);p.appendChild(i);}
   else if(pendingType==='video'){var v=document.createElement('video');v.src=URL.createObjectURL(pendingBlob);v.controls=true;v.playsInline=true;p.appendChild(v);}
-  else if(pendingType==='text'){pendingBlob.text().then(function(t){var d=document.createElement('div');if(selectedColor&&selectedColor.indexOf('paper-')===0){var pp=PAPER_BACKGROUNDS[selectedColor];if(pp){d.style.cssText='background:'+pp.bg+';color:'+pp.text+';font-family:'+pp.font+';padding:50px 20px;border-radius:16px;max-width:320px;margin:16px auto;font-size:1.3rem;line-height:1.8;text-align:center;';d.textContent=t;p.appendChild(d);return;}}d.style.cssText='background:'+selectedColor+';padding:50px 20px;border-radius:16px;max-width:320px;margin:16px auto;font-size:1.3rem;line-height:1.8;text-align:center;color:#fff;';d.textContent=t;p.appendChild(d);});}
+  else if(pendingType==='text'){pendingBlob.text().then(function(t){var d=document.createElement('div');var b=WRITING_BACKGROUNDS[selectedColor];if(b&&b.type==='color'){d.style.cssText='background:'+b.bg+';color:'+b.text+';font-family:'+b.font+';padding:50px 20px;border-radius:16px;max-width:320px;margin:16px auto;font-size:1.3rem;line-height:1.8;text-align:center;';}else if(b&&b.type==='image'){d.style.cssText='background-image:url('+b.url+');background-size:cover;background-position:center;color:#fff;padding:50px 20px;border-radius:16px;max-width:320px;margin:16px auto;font-size:1.3rem;line-height:1.8;text-align:center;text-shadow:0 2px 8px rgba(0,0,0,.8), 0 0 20px rgba(0,0,0,.6);font-weight:500;';}else{d.style.cssText='background:'+selectedColor+';padding:50px 20px;border-radius:16px;max-width:320px;margin:16px auto;font-size:1.3rem;line-height:1.8;text-align:center;color:#fff;';}d.textContent=t;p.appendChild(d);});}
 }
 
 /* ===== حفظ اللقطة ===== */
@@ -838,7 +884,7 @@ document.getElementById('reminderBtn').onclick=function(){document.getElementByI
 
 /* ===== التصدير والاستيراد ===== */
 async function exportBackup(){var btn=document.getElementById('exportBtn');var originalText=btn.textContent;btn.textContent='⏳ جاري التحضير...';btn.disabled=true;try{var ms=await getAllMoments();if(ms.length===0){showStatus('لا توجد لقطات للتصدير','#f87171');btn.textContent=originalText;btn.disabled=false;return;}var zip=new JSZip();var meta=[];for(var i=0;i<ms.length;i++){var m=ms[i];var ext='bin';if(m.type==='photo')ext='jpg';else if(m.type==='video')ext='mp4';else if(m.type==='text')ext='txt';else if(m.type==='answer')ext='txt';var fname=m.id+'.'+ext;zip.file('moments/'+fname,m.blob);meta.push({id:m.id,date:m.date,type:m.type,caption:m.caption||'',color:m.color||'',favorite:m.favorite||false,section:m.section||'',file:fname});}zip.file('data.json',JSON.stringify({version:'1.0',date:new Date().toISOString(),count:ms.length,moments:meta},null,2));var blob=await zip.generateAsync({type:'blob'});var url=URL.createObjectURL(blob);var a=document.createElement('a');var today=getDateStr(new Date());a.href=url;a.download='lahza-backup-'+today+'.zip';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},1000);showStatus('✅ تم التصدير ('+ms.length+' لقطة)','#4ade80');}catch(e){showStatus('❌ خطأ: '+e.message,'#f87171');}btn.textContent=originalText;btn.disabled=false;}
-async function importBackup(file){var btn=document.getElementById('importBtn');var originalText=btn.textContent;btn.textContent='⏳ جاري الاستيراد...';btn.disabled=true;try{var zip=await JSZip.loadAsync(file);var dataFile=zip.file('data.json');if(!dataFile)throw new Error('ملف غير صالح');var data=JSON.parse(await dataFile.async('string'));if(!data.moments||!Array.isArray(data.moments))throw new Error('بنية ملف غير صحيحة');var existing=await getAllMoments();var existingKeys=new Set(existing.map(function(m){return m.date+'|'+m.type+'|'+(m.caption||'');}));var added=0;for(var i=0;i<data.moments.length;i++){var meta=data.moments[i];var key=meta.date+'|'+meta.type+'|'+(meta.caption||'');if(existingKeys.has(key))continue;var f=zip.file('moments/'+meta.file);if(!f)continue;var blob=await f.async('blob');await saveMoment({date:meta.date,blob:blob,type:meta.type,caption:meta.caption||'',color:meta.color||'#0a0a0a',favorite:meta.favorite||false,section:meta.section||''});added++;}showStatus('✅ تم استيراد '+added+' لقطة','#4ade80');updateCounter();updateStreak();renderMoments();}catch(e){showStatus('❌ خطأ: '+e.message,'#f87171');}btn.textContent=originalText;btn.disabled=false;}
+async function importBackup(file){var btn=document.getElementById('importBtn');var originalText=btn.textContent;btn.textContent='⏳ جاري الاستيراد...';btn.disabled=true;try{var zip=await JSZip.loadAsync(file);var dataFile=zip.file('data.json');if(!dataFile)throw new Error('ملف غير صالح');var data=JSON.parse(await dataFile.async('string'));if(!data.moments||!Array.isArray(data.moments))throw new Error('بنية ملف غير صحيحة');var existing=await getAllMoments();var existingKeys=new Set(existing.map(function(m){return m.date+'|'+m.type+'|'+(m.caption||'');}));var added=0;for(var i=0;i<data.moments.length;i++){var meta=data.moments[i];var key=meta.date+'|'+meta.type+'|'+(meta.caption||'');if(existingKeys.has(key))continue;var f=zip.file('moments/'+meta.file);if(!f)continue;var blob=await f.async('blob');await saveMoment({date:meta.date,blob:blob,type:meta.type,caption:meta.caption||'',color:meta.color||'#0a0a0a',favorite:meta.favorite||false,section:meta.section||''});added++;}showStatus('✅ تم استيراد '+added+' لقطة','#4ade80');updateCounter();updateStreak();renderTree();}catch(e){showStatus('❌ خطأ: '+e.message,'#f87171');}btn.textContent=originalText;btn.disabled=false;}
 document.getElementById('exportBtn').onclick=exportBackup;
 document.getElementById('importBtn').onclick=function(){document.getElementById('importInput').click();};
 document.getElementById('importInput').onchange=function(e){var f=e.target.files[0];if(f)importBackup(f);e.target.value='';};
@@ -850,7 +896,7 @@ updateModeButtons();
 buildColorGrid();
 loadReminderSettings();
 scheduleReminderCheck();
-openDB().then(function(){updateCounter();updateStreak();checkReminder();}).catch(function(e){document.getElementById('status').textContent='❌ خطأ: '+e.message;});
+openDB().then(function(){updateCounter();updateStreak();checkReminder();renderTree();}).catch(function(e){document.getElementById('status').textContent='❌ خطأ: '+e.message;});
 
 /* ===== إخفاء شاشة الفتح ===== */
 setTimeout(function(){var sp=document.getElementById('splash');if(sp){sp.classList.add('hide');setTimeout(function(){sp.style.display='none';},700);}},1200);
