@@ -3188,6 +3188,16 @@ async function openStats(){
     var now=new Date();
     var monthStart=new Date(now.getFullYear(),now.getMonth(),1);
     var monthCount=ms.filter(function(m){return new Date(m.date)>=monthStart;}).length;
+    document.getElementById('statTotal').textContent=total;
+    document.getElementById('statDays').textContent=daysCount;
+    document.getElementById('statBest').textContent=best;
+    document.getElementById('statMonth').textContent=monthCount;
+    document.getElementById('statsModal').classList.remove('hidden');
+  }catch(e){}
+}
+    var now=new Date();
+    var monthStart=new Date(now.getFullYear(),now.getMonth(),1);
+    var monthCount=ms.filter(function(m){return new Date(m.date)>=monthStart;}).length;
     
     document.getElementById('statTotal').textContent=total;
     document.getElementById('statDays').textContent=daysCount;
