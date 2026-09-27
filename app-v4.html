@@ -1,0 +1,3273 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>لحظة</title>
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+/* ============================================ */
+/* Design System - نظام التصميم */
+/* ============================================ */
+:root{
+  /* الألوان الأساسية */
+  --bg:#0a0a0a;
+  --bg-soft:#0f0f0f;
+  --card:#141414;
+  --card-hover:#1a1a1a;
+  --border:rgba(255,255,255,.08);
+  --border-strong:rgba(255,255,255,.15);
+  
+  /* النصوص */
+  --text:#ffffff;
+  --text-2:#cccccc;
+  --text-3:#888888;
+  --text-4:#666666;
+  
+  /* الألوان المميزة */
+  --primary:#4ade80;
+  --primary-dark:#15803d;
+  --primary-light:#86efac;
+  --purple:#7c3aed;
+  --purple-dark:#5b21b6;
+  --blue:#3b82f6;
+  --red:#ef4444;
+  --orange:#fb923c;
+  
+  /* الأحجام */
+  --radius-sm:8px;
+  --radius-md:12px;
+  --radius-lg:16px;
+  --radius-xl:24px;
+  --radius-full:999px;
+  
+  /* المسافات */
+  --space-xs:4px;
+  --space-sm:8px;
+  --space-md:16px;
+  --space-lg:24px;
+  --space-xl:32px;
+  
+  /* الحركات */
+  --t-fast:0.15s;
+  --t-mid:0.25s;
+  --t-slow:0.4s;
+  
+  /* الظلال */
+  --shadow-sm:0 2px 8px rgba(0,0,0,.3);
+  --shadow-md:0 4px 16px rgba(0,0,0,.4);
+  --shadow-lg:0 8px 32px rgba(0,0,0,.5);
+  --shadow-primary:0 4px 16px rgba(74,222,128,.25);
+}
+
+/* ============================================ */
+/* Base - الأساسيات */
+/* ============================================ */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Cairo',-apple-system,system-ui,sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  display:flex;
+  flex-direction:column;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1{font-size:2rem;font-weight:600;letter-spacing:-.02em;line-height:1.2;}
+h2{font-size:1.5rem;font-weight:500;letter-spacing:-.01em;}
+h3{font-size:1.15rem;font-weight:500;}
+p{font-size:1rem;line-height:1.7;}
+
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input,textarea{font-family:inherit;}
+textarea{resize:none;}
+
+.hidden{display:none !important;}
+
+/* ============================================ */
+/* Content - منطقة المحتوى */
+/* ============================================ */
+.content{
+  flex:1;
+  overflow-y:auto;
+  padding:var(--space-lg) var(--space-md) 100px;
+  -webkit-overflow-scrolling:touch;
+  animation:fadeIn var(--t-slow) ease;
+}
+
+/* ============================================ */
+/* Tabs - الشريط السفلي */
+/* ============================================ */
+.tabs{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:rgba(10,10,10,.92);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  display:flex;
+  padding-bottom:env(safe-area-inset-bottom);
+  z-index:100;
+}
+.tab{
+  flex:1;
+  padding:12px 0 10px;
+  font-size:.7rem;
+  color:var(--text-4);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  position:relative;
+  transition:color var(--t-fast);
+}
+.tab .icon{
+  font-size:1.3rem;
+  transition:transform var(--t-fast);
+}
+.tab.active{color:var(--primary);}
+.tab.active .icon{transform:scale(1.1);}
+.tab::after{
+  content:'';
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%) scaleX(0);
+  width:30px;
+  height:2px;
+  background:var(--primary);
+  border-radius:0 0 2px 2px;
+  transition:transform var(--t-mid);
+}
+.tab.active::after{transform:translateX(-50%) scaleX(1);}
+
+/* ============================================ */
+/* Splash - شاشة الفتح */
+/* ============================================ */
+#splash{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at center, #0f1f15 0%, #0a0a0a 70%);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  transition:opacity .6s ease;
+  pointer-events:none;
+}
+#splash.hide{opacity:0;}
+.splash-logo{
+  font-family:'Great Vibes',cursive;
+  font-size:5rem;
+  color:var(--primary);
+  margin-bottom:8px;
+  animation:pulse 2s ease-in-out infinite;
+  text-shadow:0 0 40px rgba(74,222,128,.4);
+}
+.splash-sub{
+  color:var(--text-3);
+  font-size:.9rem;
+  letter-spacing:.3em;
+  margin-top:8px;
+  animation:fadeIn 1s ease .3s both;
+}
+
+/* ============================================ */
+/* Animations - الحركات */
+/* ============================================ */
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+@keyframes fadeInUp{
+  from{opacity:0;transform:translateY(12px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.05);}
+}
+@keyframes slideUp{
+  from{transform:translateY(100%);}
+  to{transform:translateY(0);}
+}
+@keyframes shimmer{
+  0%{background-position:-200% 0;}
+  100%{background-position:200% 0;}
+}
+.fade-in-up{animation:fadeInUp .5s ease both;}/* ============================================ */
+/* الرئيسية - Home Screen */
+/* ============================================ */
+.home-greeting{
+  font-size:1.1rem;
+  font-weight:300;
+  color:var(--text-2);
+  margin-bottom:4px;
+  animation:fadeInUp .5s ease both;
+}
+.home-date{
+  font-size:.9rem;
+  color:var(--text-3);
+  margin-bottom:var(--space-xl);
+  animation:fadeInUp .5s ease .05s both;
+}
+
+.home-quote{
+  position:relative;
+  padding:var(--space-xl) var(--space-md);
+  margin:var(--space-xl) 0;
+  text-align:center;
+  animation:fadeInUp .5s ease .1s both;
+}
+.home-quote::before,
+.home-quote::after{
+  content:'"';
+  font-family:'Great Vibes',cursive;
+  font-size:4rem;
+  color:var(--primary);
+  opacity:.3;
+  position:absolute;
+  line-height:1;
+}
+.home-quote::before{top:0;right:0;}
+.home-quote::after{bottom:-20px;left:0;transform:rotate(180deg);}
+.home-quote-text{
+  font-size:1.4rem;
+  line-height:1.6;
+  font-weight:400;
+  color:var(--primary-light);
+}
+
+.home-actions{
+  margin:var(--space-xl) 0;
+  animation:fadeInUp .5s ease .15s both;
+}
+.home-action{
+  display:flex;
+  align-items:center;
+  gap:var(--space-md);
+  padding:var(--space-md) 0;
+  border-bottom:1px solid var(--border);
+  font-size:1.05rem;
+  color:var(--text);
+  transition:all var(--t-fast);
+  width:100%;
+  text-align:right;
+}
+.home-action:last-child{border-bottom:none;}
+.home-action:hover{
+  padding-right:8px;
+  color:var(--primary);
+}
+.home-action .icon{
+  font-size:1.3rem;
+  width:32px;
+  text-align:center;
+}
+.home-action .arrow{
+  margin-right:auto;
+  color:var(--text-4);
+  font-size:.8rem;
+  transition:transform var(--t-fast);
+}
+.home-action:hover .arrow{transform:translateX(-4px);color:var(--primary);}
+
+.home-stats{
+  margin-top:var(--space-xl);
+  display:flex;
+  gap:var(--space-lg);
+  justify-content:center;
+  font-size:.85rem;
+  color:var(--text-3);
+  animation:fadeInUp .5s ease .2s both;
+}
+.home-stat{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.home-stat .num{
+  color:var(--text);
+  font-weight:600;
+  font-size:1rem;
+}
+
+/* خط فاصل */
+.divider{
+  height:1px;
+  background:var(--border);
+  margin:var(--space-lg) 0;
+}
+
+/* ============================================ */
+/* لقطاتي - Moments */
+/* ============================================ */
+.page-title{
+  font-size:1.8rem;
+  font-weight:600;
+  letter-spacing:-.02em;
+  margin-bottom:var(--space-lg);
+  text-align:center;
+}
+
+.filters{
+  display:flex;
+  gap:var(--space-sm);
+  margin-bottom:var(--space-lg);
+  overflow-x:auto;
+  padding-bottom:var(--space-sm);
+  scrollbar-width:none;
+}
+.filters::-webkit-scrollbar{display:none;}
+.filter-chip{
+  padding:8px 16px;
+  border-radius:var(--radius-full);
+  background:transparent;
+  border:1.5px solid var(--border);
+  color:var(--text-3);
+  font-size:.85rem;
+  white-space:nowrap;
+  transition:all var(--t-fast);
+  flex-shrink:0;
+}
+.filter-chip:hover{border-color:var(--border-strong);color:var(--text-2);}
+.filter-chip.active{
+  background:var(--primary);
+  border-color:var(--primary);
+  color:#000;
+  font-weight:500;
+}
+
+.hint{
+  text-align:center;
+  color:var(--text-3);
+  font-size:.95rem;
+  margin-top:80px;
+  line-height:2;
+  animation:fadeIn 1s ease both;
+}
+
+.empty-state{
+  text-align:center;
+  color:var(--text-3);
+  margin-top:80px;
+  line-height:2;
+  animation:fadeIn 1s ease both;
+}
+.empty-state .empty-icon{
+  font-size:3rem;
+  display:block;
+  margin-bottom:var(--space-md);
+  opacity:.5;
+}
+
+/* ============================================ */
+/* السنوات - Years Row */
+/* ============================================ */
+.years-row{
+  display:flex;
+  gap:var(--space-sm);
+  overflow-x:auto;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+  padding:var(--space-sm) 0 var(--space-lg);
+  scrollbar-width:none;
+}
+.years-row::-webkit-scrollbar{display:none;}
+.year-chip{
+  flex:0 0 auto;
+  padding:8px 20px;
+  border-radius:var(--radius-full);
+  background:transparent;
+  border:1.5px solid var(--purple);
+  color:var(--purple);
+  font-size:.95rem;
+  font-weight:500;
+  white-space:nowrap;
+  transition:all var(--t-fast);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.year-chip:hover{background:rgba(124,58,237,.1);}
+.year-chip.active{
+  background:var(--purple);
+  color:#fff;
+}
+.year-chip .count{
+  font-size:.75rem;
+  opacity:.7;
+  font-weight:400;
+}
+.year-chip.active .count{opacity:.9;}
+
+/* ============================================ */
+/* الأشهر - Months Grid */
+/* ============================================ */
+.months-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:6px;
+  margin:var(--space-sm) 0 var(--space-lg);
+}
+.month-chip{
+  padding:8px 4px;
+  border-radius:var(--radius-sm);
+  background:transparent;
+  border:1.5px solid var(--primary-dark);
+  color:var(--primary-dark);
+  font-size:.78rem;
+  text-align:center;
+  transition:all var(--t-fast);
+  cursor:pointer;
+}
+.month-chip:hover{background:rgba(21,128,61,.15);}
+.month-chip.active{
+  background:var(--primary-dark);
+  color:#fff;
+  border-color:var(--primary-dark);
+}
+.month-chip .count{
+  display:block;
+  font-size:.65rem;
+  margin-top:2px;
+  opacity:.7;
+}/* ============================================ */
+/* التقويم - Calendar */
+/* ============================================ */
+.calendar-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:var(--space-md) 0;
+}
+.calendar-title{
+  font-size:1.05rem;
+  font-weight:500;
+  text-align:center;
+  flex:1;
+}
+.calendar-nav{
+  width:36px;
+  height:36px;
+  border-radius:var(--radius-full);
+  background:transparent;
+  border:1.5px solid var(--border);
+  color:var(--text-2);
+  font-size:1rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all var(--t-fast);
+}
+.calendar-nav:hover{border-color:var(--primary);color:var(--primary);}
+
+.calendar-weekdays{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:4px;
+  margin-bottom:var(--space-sm);
+}
+.calendar-weekday{
+  text-align:center;
+  color:var(--text-4);
+  font-size:.65rem;
+  padding:6px 0;
+}
+
+.calendar-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:4px;
+}
+.calendar-day{
+  aspect-ratio:1;
+  border-radius:var(--radius-sm);
+  background:transparent;
+  border:1.5px solid transparent;
+  color:var(--text-2);
+  font-size:.85rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  cursor:pointer;
+  transition:all var(--t-fast);
+}
+.calendar-day:hover{border-color:var(--border-strong);}
+.calendar-day.other-month{opacity:.25;pointer-events:none;}
+.calendar-day.today{
+  border-color:var(--primary);
+  color:var(--primary);
+  font-weight:600;
+}
+.calendar-day.has-moments{
+  background:rgba(74,222,128,.1);
+  color:var(--text);
+}
+.calendar-day.has-moments::after{
+  content:'';
+  position:absolute;
+  bottom:3px;
+  left:50%;
+  transform:translateX(-50%);
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background:var(--primary);
+}
+.calendar-day.selected{
+  background:var(--primary);
+  color:#000;
+  border-color:var(--primary);
+  font-weight:600;
+}
+.calendar-day.selected::after{background:#000;}
+
+/* ============================================ */
+/* المجلة الذكية - Smart Magazine */
+/* ============================================ */
+.day-section{
+  margin-bottom:var(--space-xl);
+  animation:fadeInUp .4s ease both;
+}
+.day-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:var(--space-md);
+  padding-bottom:var(--space-sm);
+  border-bottom:1px solid var(--border);
+}
+.day-title{
+  font-size:1.05rem;
+  font-weight:500;
+  color:var(--text);
+}
+.day-count{
+  font-size:.8rem;
+  color:var(--text-3);
+}
+
+/* Hero - اللقطة الأولى كبيرة */
+.moment-hero{
+  width:100%;
+  aspect-ratio:16/10;
+  border-radius:var(--radius-md);
+  overflow:hidden;
+  position:relative;
+  background:var(--card);
+  margin-bottom:6px;
+  cursor:pointer;
+  transition:transform var(--t-fast);
+  animation:fadeInUp .4s ease both;
+}
+.moment-hero:active{transform:scale(.98);}
+.moment-hero img,
+.moment-hero video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.moment-hero .text-content{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:var(--space-lg);
+  text-align:center;
+  font-size:1.05rem;
+  line-height:1.7;
+  font-weight:500;
+}
+
+/* Grid - المصغرات */
+.moments-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
+}
+.moment-small{
+  aspect-ratio:1;
+  border-radius:var(--radius-sm);
+  overflow:hidden;
+  position:relative;
+  background:var(--card);
+  cursor:pointer;
+  transition:transform var(--t-fast);
+  animation:fadeInUp .4s ease both;
+}
+.moment-small:active{transform:scale(.95);}
+.moment-small img,
+.moment-small video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.moment-small .text-content{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px;
+  text-align:center;
+  font-size:.7rem;
+  line-height:1.4;
+  overflow:hidden;
+}
+
+/* Overlay */
+.moment-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.8) 0%, transparent 50%);
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:var(--space-sm);
+  pointer-events:none;
+}
+.moment-hero .moment-overlay{padding:var(--space-md);}
+.moment-time{
+  color:#fff;
+  font-size:.7rem;
+  font-weight:500;
+}
+.moment-hero .moment-time{font-size:.85rem;}
+.moment-caption{
+  color:#fff;
+  font-size:.65rem;
+  margin-top:2px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.moment-hero .moment-caption{font-size:.85rem;}
+
+/* زر عرض الكل */
+.show-all{
+  display:block;
+  width:100%;
+  padding:var(--space-md);
+  margin-top:var(--space-sm);
+  background:transparent;
+  border:1.5px dashed var(--border);
+  border-radius:var(--radius-md);
+  color:var(--text-3);
+  font-size:.85rem;
+  text-align:center;
+  transition:all var(--t-fast);
+}
+.show-all:hover{border-color:var(--primary);color:var(--primary);border-style:solid;}/* ============================================ */
+/* الإعدادات - Settings */
+/* ============================================ */
+.settings-group{
+  margin-bottom:var(--space-lg);
+}
+.settings-group-title{
+  font-size:.75rem;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  color:var(--text-4);
+  padding:0 var(--space-sm);
+  margin-bottom:var(--space-sm);
+}
+.settings-list{
+  background:var(--card);
+  border-radius:var(--radius-md);
+  border:1px solid var(--border);
+  overflow:hidden;
+}
+.settings-item{
+  display:flex;
+  align-items:center;
+  gap:var(--space-md);
+  padding:var(--space-md);
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+  transition:background var(--t-fast);
+  width:100%;
+  text-align:right;
+}
+.settings-item:last-child{border-bottom:none;}
+.settings-item:hover{background:var(--card-hover);}
+.settings-item .icon{
+  font-size:1.2rem;
+  width:24px;
+  text-align:center;
+}
+.settings-item .info{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.settings-item .label{
+  font-size:1rem;
+  color:var(--text);
+}
+.settings-item .value{
+  font-size:.8rem;
+  color:var(--text-3);
+}
+.settings-item .arrow{
+  color:var(--text-4);
+  font-size:.8rem;
+}
+
+/* قائمة اللغة */
+.language-list{
+  display:flex;
+  flex-direction:column;
+}
+.language-option{
+  display:flex;
+  align-items:center;
+  gap:var(--space-md);
+  padding:var(--space-md);
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+  transition:background var(--t-fast);
+  width:100%;
+  text-align:right;
+}
+.language-option:last-child{border-bottom:none;}
+.language-option:hover{background:var(--card-hover);}
+.language-option.active{color:var(--primary);}
+.language-option .check{
+  margin-right:auto;
+  color:var(--primary);
+  opacity:0;
+  font-size:1.1rem;
+}
+.language-option.active .check{opacity:1;}
+
+/* ============================================ */
+/* الشاشات الكاملة - Screens */
+/* ============================================ */
+.screen{
+  position:fixed;
+  inset:0;
+  background:var(--bg);
+  z-index:200;
+  overflow-y:auto;
+  padding:var(--space-lg) var(--space-md) 100px;
+  animation:fadeIn var(--t-mid) ease;
+}
+.screen .close{
+  position:fixed;
+  top:var(--space-md);
+  right:var(--space-md);
+  width:44px;
+  height:44px;
+  border-radius:var(--radius-full);
+  background:rgba(0,0,0,.5);
+  backdrop-filter:blur(10px);
+  color:var(--text);
+  font-size:1.5rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:210;
+  transition:background var(--t-fast);
+}
+.screen .close:hover{background:rgba(255,255,255,.1);}
+
+.screen-title{
+  font-size:1.8rem;
+  font-weight:300;
+  text-align:center;
+  margin-bottom:var(--space-xl);
+}
+.screen-subtitle{
+  text-align:center;
+  color:var(--text-3);
+  font-size:.9rem;
+  margin-bottom:var(--space-lg);
+}
+
+/* ============================================ */
+/* الأزرار - Buttons */
+/* ============================================ */
+.btn{
+  display:block;
+  width:100%;
+  max-width:320px;
+  margin:var(--space-sm) auto;
+  padding:16px;
+  border:1.5px solid var(--border);
+  border-radius:var(--radius-full);
+  color:var(--text);
+  font-size:1rem;
+  background:transparent;
+  font-family:inherit;
+  transition:all var(--t-fast);
+}
+.btn:hover{
+  border-color:var(--border-strong);
+  background:rgba(255,255,255,.03);
+}
+.btn:active{transform:scale(.97);}
+.btn.primary{
+  background:var(--primary);
+  color:#000;
+  border-color:var(--primary);
+  font-weight:500;
+  box-shadow:var(--shadow-primary);
+}
+.btn.primary:hover{
+  background:var(--primary-light);
+  box-shadow:0 6px 20px rgba(74,222,128,.35);
+}
+.btn.danger{
+  border-color:var(--red);
+  color:var(--red);
+}
+.btn.danger:hover{background:rgba(239,68,68,.1);}
+.btn.small{
+  padding:12px;
+  font-size:.9rem;
+  max-width:200px;
+}
+
+/* ============================================ */
+/* المودال - Modal */
+/* ============================================ */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.98);
+  z-index:300;
+  overflow-y:auto;
+  padding:60px var(--space-md) 120px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  animation:fadeIn var(--t-mid) ease;
+}
+.modal-close{
+  position:fixed;
+  top:var(--space-md);
+  right:var(--space-md);
+  width:44px;
+  height:44px;
+  border-radius:var(--radius-full);
+  background:rgba(255,255,255,.1);
+  color:#fff;
+  font-size:1.5rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:310;
+  transition:all var(--t-fast);
+}
+.modal-close:hover{background:rgba(255,255,255,.2);}
+
+.modal-content{
+  width:100%;
+  max-width:500px;
+  margin:0 auto;
+}
+.modal-content img,
+.modal-content video{
+  width:100%;
+  border-radius:var(--radius-md);
+  display:block;
+  margin-bottom:var(--space-md);
+  background:#000;
+}
+.modal-content .modal-text{
+  width:100%;
+  padding:var(--space-lg);
+  border-radius:var(--radius-md);
+  font-size:1.15rem;
+  line-height:1.8;
+  text-align:center;
+  margin-bottom:var(--space-md);
+  word-wrap:break-word;
+}
+.modal-content .modal-date{
+  text-align:center;
+  color:var(--text-3);
+  font-size:.85rem;
+  margin-bottom:var(--space-md);
+}
+
+/* الإجراءات السفلية */
+.modal-actions{
+  position:fixed;
+  bottom:30px;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-between;
+  padding:0 40px;
+  z-index:320;
+  pointer-events:none;
+}
+.modal-actions button{pointer-events:auto;}
+.action-heart,
+.action-delete{
+  width:60px;
+  height:60px;
+  border-radius:var(--radius-full);
+  background:rgba(255,255,255,.1);
+  backdrop-filter:blur(10px);
+  color:#fff;
+  font-size:1.5rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:none;
+  cursor:pointer;
+  transition:all var(--t-fast);
+}
+.action-heart:hover{background:rgba(255,255,255,.2);}
+.action-heart.active{background:rgba(239,68,68,.9);}
+.action-delete{background:rgba(239,68,68,.8);}
+.action-delete:hover{background:rgba(239,68,68,1);transform:scale(1.05);}/* ============================================ */
+/* الكتابة - Text Screen */
+/* ============================================ */
+.text-screen{
+  position:fixed;
+  inset:0;
+  background:var(--bg);
+  z-index:200;
+  overflow-y:auto;
+  padding:60px var(--space-md) 100px;
+  display:flex;
+  flex-direction:column;
+  animation:fadeIn var(--t-mid) ease;
+}
+.text-input{
+  width:100%;
+  max-width:500px;
+  margin:0 auto;
+  flex:1;
+  min-height:200px;
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius-md);
+  color:var(--text);
+  padding:var(--space-md);
+  font-size:1.05rem;
+  line-height:1.8;
+  font-family:inherit;
+  resize:none;
+  margin-bottom:var(--space-md);
+}
+.text-input:focus{
+  outline:none;
+  border-color:var(--primary);
+}
+
+/* خيارات الخلفية */
+.background-section{
+  max-width:500px;
+  margin:0 auto var(--space-md);
+  width:100%;
+}
+.background-title{
+  font-size:.85rem;
+  color:var(--text-3);
+  margin-bottom:var(--space-sm);
+  display:block;
+}
+.background-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:var(--space-sm);
+}
+.bg-option{
+  aspect-ratio:1;
+  border-radius:var(--radius-full);
+  border:2px solid transparent;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.1rem;
+  transition:all var(--t-fast);
+  overflow:hidden;
+}
+.bg-option img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.bg-option.active{
+  border-color:var(--primary);
+  transform:scale(1.05);
+}
+.bg-option.upload{
+  background:var(--card);
+  border:1.5px dashed var(--border);
+  color:var(--text-3);
+}
+.bg-option.upload:hover{
+  border-color:var(--primary);
+  color:var(--primary);
+}
+.bg-option.remove{
+  background:var(--card);
+  border:1.5px solid var(--border);
+  color:var(--text-3);
+  font-size:1.3rem;
+}
+
+/* ============================================ */
+/* المعاينة - Preview */
+/* ============================================ */
+.preview{
+  width:100%;
+  max-width:500px;
+  margin:0 auto;
+  padding:var(--space-xl) var(--space-lg);
+  border-radius:var(--radius-md);
+  font-size:1.1rem;
+  line-height:1.8;
+  text-align:center;
+  color:#fff;
+  min-height:180px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  word-wrap:break-word;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  position:relative;
+}
+.preview::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  border-radius:var(--radius-md);
+  z-index:-1;
+}
+.preview.has-transparent-bg::before{
+  background:rgba(0,0,0,.6);
+}
+
+/* ============================================ */
+/* الأسئلة - Questions */
+/* ============================================ */
+.sheet{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:400;
+  display:flex;
+  align-items:flex-end;
+  animation:fadeIn var(--t-mid) ease;
+}
+.sheet-content{
+  width:100%;
+  background:var(--card);
+  border-radius:var(--radius-xl) var(--radius-xl) 0 0;
+  padding:var(--space-md) var(--space-md) 32px;
+  max-height:85vh;
+  overflow-y:auto;
+  animation:slideUp var(--t-mid) ease;
+}
+.sheet-handle{
+  width:40px;
+  height:4px;
+  background:var(--border-strong);
+  border-radius:var(--radius-full);
+  margin:0 auto var(--space-md);
+}
+.sheet-title{
+  text-align:center;
+  color:var(--text-3);
+  font-size:.85rem;
+  margin-bottom:var(--space-md);
+}
+
+.section-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--space-md);
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+  transition:background var(--t-fast);
+  width:100%;
+  text-align:right;
+}
+.section-item:last-child{border-bottom:none;}
+.section-item:hover{background:var(--card-hover);}
+.section-item .left{
+  display:flex;
+  align-items:center;
+  gap:var(--space-sm);
+}
+.section-item .section-icon{font-size:1.2rem;}
+.section-item .section-name{font-size:1rem;color:var(--text);}
+.section-item .count{font-size:.8rem;color:var(--text-3);}
+
+.question-item{
+  padding:var(--space-md);
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+  font-size:.95rem;
+  line-height:1.7;
+  color:var(--text);
+  transition:background var(--t-fast);
+  text-align:right;
+}
+.question-item:last-child{border-bottom:none;}
+.question-item:hover{background:var(--card-hover);}
+.question-item:active{background:var(--bg-soft);}
+
+/* شاشة الإجابة */
+.answer-screen{
+  position:fixed;
+  inset:0;
+  background:var(--bg);
+  z-index:250;
+  overflow-y:auto;
+  padding:60px var(--space-md) 100px;
+  animation:fadeIn var(--t-mid) ease;
+}
+.answer-question{
+  max-width:500px;
+  margin:0 auto var(--space-lg);
+  padding:var(--space-lg);
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius-md);
+  font-size:1.05rem;
+  line-height:1.7;
+  text-align:center;
+}
+.answer-input{
+  width:100%;
+  max-width:500px;
+  margin:0 auto var(--space-lg);
+  min-height:200px;
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius-md);
+  color:var(--text);
+  padding:var(--space-md);
+  font-size:1rem;
+  line-height:1.8;
+  font-family:inherit;
+  display:block;
+  resize:vertical;
+}
+.answer-input:focus{outline:none;border-color:var(--primary);}
+
+/* ============================================ */
+/* الإحصائيات - Stats */
+/* ============================================ */
+.stats-title{
+  font-size:1.6rem;
+  font-weight:300;
+  text-align:center;
+  margin-bottom:var(--space-xl);
+}
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:var(--space-md);
+  max-width:500px;
+  margin:0 auto var(--space-lg);
+}
+.stat-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-md);
+  padding:var(--space-md);
+  text-align:center;
+}
+.stat-icon{font-size:1.6rem;display:block;margin-bottom:var(--space-xs);}
+.stat-num{font-size:1.6rem;font-weight:300;display:block;color:var(--primary);}
+.stat-label{color:var(--text-3);font-size:.78rem;}
+
+/* ============================================ */
+/* Empty / Hint */
+/* ============================================ */
+#status{
+  margin-top:var(--space-md);
+  font-size:.9rem;
+  min-height:20px;
+  text-align:center;
+  transition:opacity var(--t-mid);
+}
+
+.counter{
+  text-align:center;
+  color:var(--text-3);
+  font-size:.85rem;
+  margin-top:var(--space-md);
+}
+
+/* ============================================ */
+/* Media Queries */
+/* ============================================ */
+@media (max-width:380px){
+  h1{font-size:1.6rem;}
+  .splash-logo{font-size:4rem;}
+  .months-grid{grid-template-columns:repeat(4,1fr);}
+  .home-quote-text{font-size:1.2rem;}
+}
+</style>
+</head><body>
+
+<!-- شاشة الفتح -->
+<div id="splash">
+<div class="splash-logo">Lahza</div>
+<div class="splash-sub">لحظة</div>
+</div>
+
+<!-- تبويب: الرئيسية -->
+<div class="content" id="tabHome">
+<div class="home-greeting" id="greeting">صباح الخير</div>
+<div class="home-date" id="todayDate">...</div>
+
+<div class="home-quote" id="questionCard">
+<div class="home-quote-text" id="dailyQuestion">...</div>
+</div>
+
+<div class="home-actions">
+<button class="home-action" id="actionPhoto">
+<span class="icon">📷</span>
+<span>صورة</span>
+<span class="arrow">›</span>
+</button>
+<button class="home-action" id="actionVideo">
+<span class="icon">🎥</span>
+<span>فيديو</span>
+<span class="arrow">›</span>
+</button>
+<button class="home-action" id="actionText">
+<span class="icon">✍️</span>
+<span>كتابة</span>
+<span class="arrow">›</span>
+</button>
+<button class="home-action" id="actionOldDate">
+<span class="icon">📅</span>
+<span>إضافة بتاريخ قديم</span>
+<span class="arrow">›</span>
+</button>
+</div>
+
+<div class="home-stats">
+<div class="home-stat">
+<span>🔥</span>
+<span class="num" id="streakText">0</span>
+<span>يوم</span>
+</div>
+<div class="home-stat">
+<span>📸</span>
+<span class="num" id="counterText">0</span>
+<span>لقطة</span>
+</div>
+</div>
+
+<div id="status"></div>
+</div>
+
+<!-- تبويب: لقطاتي -->
+<div class="content hidden" id="tabMoments">
+<h1 class="page-title">لقطاتي</h1>
+
+<div class="filters" id="filterRow">
+<button class="filter-chip active" data-filter="all">الكل</button>
+<button class="filter-chip" data-filter="photo">📷 صور</button>
+<button class="filter-chip" data-filter="video">🎥 فيديو</button>
+<button class="filter-chip" data-filter="text">✍️ كتابة</button>
+<button class="filter-chip" data-filter="answer">💭 أجوبة</button>
+<button class="filter-chip" data-filter="favorite">❤️ المفضلة</button>
+</div>
+
+<div class="hint" id="hint">👇 اضغط على فلتر لعرض لقطاتك</div>
+
+<div class="hidden" id="treeView">
+  <div class="years-row" id="yearsRow"></div>
+  <div class="hidden" id="monthsSection">
+    <div class="months-grid" id="monthsGrid"></div>
+  </div>
+  <div class="hidden" id="calendarSection">
+    <div class="calendar-header">
+      <button class="calendar-nav" id="calPrev">›</button>
+      <div class="calendar-title" id="calTitle">...</div>
+      <button class="calendar-nav" id="calNext">‹</button>
+    </div>
+    <div class="calendar-weekdays">
+      <div class="calendar-weekday">أحد</div>
+      <div class="calendar-weekday">اثنين</div>
+      <div class="calendar-weekday">ثلاثاء</div>
+      <div class="calendar-weekday">أربعاء</div>
+      <div class="calendar-weekday">خميس</div>
+      <div class="calendar-weekday">جمعة</div>
+      <div class="calendar-weekday">سبت</div>
+    </div>
+    <div class="calendar-grid" id="calendarGrid"></div>
+  </div>
+  <div class="hidden" id="momentsSection">
+    <div id="momentsGrid"></div>
+  </div>
+</div>
+
+<div class="empty-state hidden" id="empty">
+<span class="empty-icon">📸</span>
+لا توجد لقطات بعد<br>
+ارجع إلى الرئيسية ووثّق أول لحظة
+</div>
+</div>
+
+<!-- تبويب: الإعدادات -->
+<div class="content hidden" id="tabSettings">
+<h1 class="page-title">إعدادات</h1>
+
+<!-- مجموعة: عام -->
+<div class="settings-group">
+<div class="settings-group-title">عام</div>
+<div class="settings-list">
+<button class="settings-item" id="btnReminder">
+<span class="icon">🔔</span>
+<div class="info">
+<span class="label">التذكير اليومي</span>
+<span class="value" id="reminderStatus">معطّل</span>
+</div>
+<span class="arrow">›</span>
+</button>
+
+<button class="settings-item" id="btnTheme">
+<span class="icon">🎨</span>
+<div class="info">
+<span class="label">المظهر</span>
+<span class="value" id="themeStatus">غامق — أزرق</span>
+</div>
+<span class="arrow">›</span>
+</button>
+
+<button class="settings-item" id="btnLanguage">
+<span class="icon">🌐</span>
+<div class="info">
+<span class="label">اللغة</span>
+<span class="value" id="languageStatus">العربية</span>
+</div>
+<span class="arrow">›</span>
+</button>
+</div>
+</div>
+
+<!-- مجموعة: البيانات -->
+<div class="settings-group">
+<div class="settings-group-title">البيانات</div>
+<div class="settings-list">
+<button class="settings-item" id="btnExport">
+<span class="icon">📤</span>
+<div class="info">
+<span class="label">تصدير نسخة احتياطية</span>
+</div>
+<span class="arrow">›</span>
+</button>
+
+<button class="settings-item" id="btnImport">
+<span class="icon">📥</span>
+<div class="info">
+<span class="label">استيراد نسخة احتياطية</span>
+</div>
+<span class="arrow">›</span>
+</button>
+<input type="file" id="importInput" accept=".zip" style="display:none;">
+
+<button class="settings-item" id="btnDeleteAll">
+<span class="icon">🗑️</span>
+<div class="info">
+<span class="label">حذف كل اللقطات</span>
+</div>
+<span class="arrow">›</span>
+</button>
+</div>
+</div>
+
+<!-- مجموعة: عن التطبيق -->
+<div class="settings-group">
+<div class="settings-group-title">عن التطبيق</div>
+<div class="settings-list">
+<a href="privacy.html" class="settings-item" style="text-decoration:none;color:inherit;">
+<span class="icon">📜</span>
+<div class="info">
+<span class="label">سياسة الخصوصية</span>
+</div>
+<span class="arrow">›</span>
+</a>
+
+<button class="settings-item" id="btnRate">
+<span class="icon">⭐</span>
+<div class="info">
+<span class="label">قيّم التطبيق</span>
+</div>
+<span class="arrow">›</span>
+</button>
+
+<button class="settings-item" id="btnContact">
+<span class="icon">📧</span>
+<div class="info">
+<span class="label">تواصل معنا</span>
+</div>
+<span class="arrow">›</span>
+</button>
+
+<div class="settings-item" style="cursor:default;">
+<span class="icon">ℹ️</span>
+<div class="info">
+<span class="label">الإصدار</span>
+<span class="value">1.0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- التبويبات السفلية -->
+<div class="tabs">
+<button class="tab active" id="tabBtnHome">
+<span class="icon">🏠</span>
+<span>الرئيسية</span>
+</button>
+<button class="tab" id="tabBtnMoments">
+<span class="icon">📸</span>
+<span>لقطاتي</span>
+</button>
+<button class="tab" id="tabBtnSettings">
+<span class="icon">⚙️</span>
+<span>إعدادات</span>
+</button>
+</div>
+
+<!-- شاشة الكاميرا -->
+<div class="screen hidden" id="photoScreen">
+<button class="close" id="photoClose">×</button>
+<h2 class="screen-title">📷 صورة</h2>
+<video id="photoVideo" autoplay playsinline muted style="width:100%;border-radius:16px;margin-bottom:16px;"></video>
+<button class="btn primary" id="snapBtn">📸 التقط</button>
+<button class="btn small" id="switchPhotoCam">🔄 تبديل</button>
+</div>
+
+<!-- شاشة الفيديو -->
+<div class="screen hidden" id="videoScreen">
+<button class="close" id="videoClose">×</button>
+<h2 class="screen-title">🎥 فيديو</h2>
+<p class="screen-subtitle">سجّل مقطعاً من الكاميرا</p>
+<button class="btn primary" id="startVideoRec">🎥 ابدأ التسجيل</button>
+<button class="btn small" id="switchVideoCam">🔄 تبديل الكاميرا</button>
+</div>
+
+<!-- شاشة الكتابة -->
+<div class="screen hidden" id="textScreen">
+<button class="close" id="textClose">×</button>
+<h2 class="screen-title">اكتب لحظتك</h2>
+<textarea class="text-input" id="textInput" placeholder="ماذا حدث اليوم؟"></textarea>
+
+<div class="background-section">
+<span class="background-title">الخلفية</span>
+<div class="background-grid" id="bgGrid">
+<button class="bg-option remove active" data-bg="none" title="بدون خلفية">⭕</button>
+<button class="bg-option upload" id="uploadBg" title="اختر صورة من جهازك">+</button>
+</div>
+<input type="file" id="bgInput" accept="image/*" style="display:none;">
+</div>
+
+<button class="btn primary" id="saveTextBtn">التالي</button>
+</div>
+
+<!-- شاشة الحفظ -->
+<div class="screen hidden" id="saveScreen">
+<button class="close" id="saveClose">×</button>
+<h2 class="screen-title">حفظ اللقطة</h2>
+<div id="previewWrap"></div>
+<textarea class="text-input" id="captionInput" placeholder="أضف جملة (اختياري)..." style="min-height:80px;margin-top:16px;"></textarea>
+<button class="btn primary" id="saveBtn">💾 احفظ</button>
+</div>
+
+<!-- ورقة اختيار القسم -->
+<div class="sheet hidden" id="questionSheet">
+<div class="sheet-content">
+<div class="sheet-handle"></div>
+<div class="sheet-title">اختر القسم</div>
+<div id="sectionList"></div>
+<button class="btn small" id="sheetCancel" style="margin-top:16px;">إلغاء</button>
+</div>
+</div>
+
+<!-- ورقة قائمة الأسئلة -->
+<div class="sheet hidden" id="questionListSheet">
+<div class="sheet-content">
+<div class="sheet-handle"></div>
+<div class="sheet-title" id="questionListTitle">الأسئلة</div>
+<div id="questionList"></div>
+<button class="btn small" id="questionListCancel" style="margin-top:16px;">إلغاء</button>
+</div>
+</div>
+
+<!-- شاشة الإجابة -->
+<div class="answer-screen hidden" id="answerScreen">
+<button class="close" id="answerClose">×</button>
+<h2 class="screen-title">جوابك</h2>
+<div class="answer-question" id="answerQuestion">...</div>
+<textarea class="answer-input" id="answerInput" placeholder="اكتب جوابك..."></textarea>
+<button class="btn primary" id="answerSaveBtn">💾 احفظ الجواب</button>
+</div>
+
+<!-- مودال اللقطة -->
+<div class="modal hidden" id="momentModal">
+<button class="modal-close" id="modalClose">×</button>
+<div class="modal-content" id="modalContent"></div>
+<div class="modal-actions">
+<button class="action-delete" id="modalDelete">🗑️</button>
+<button class="action-heart" id="modalHeart">🤍</button>
+</div>
+</div>
+
+<!-- مودال الإحصائيات -->
+<div class="modal hidden" id="statsModal">
+<button class="modal-close" id="statsClose">×</button>
+<div class="modal-content">
+<h2 class="stats-title">📊 إحصائياتي</h2>
+<div class="stats-grid">
+<div class="stat-card"><span class="stat-icon">📸</span><span class="stat-num" id="statTotal">0</span><span class="stat-label">لقطة</span></div>
+<div class="stat-card"><span class="stat-icon">📅</span><span class="stat-num" id="statDays">0</span><span class="stat-label">يوم موثّق</span></div>
+<div class="stat-card"><span class="stat-icon">🔥</span><span class="stat-num" id="statBest">0</span><span class="stat-label">أطول سلسلة</span></div>
+<div class="stat-card"><span class="stat-icon">📆</span><span class="stat-num" id="statMonth">0</span><span class="stat-label">هذا الشهر</span></div>
+</div>
+</div>
+</div>
+
+<!-- مودال المظهر -->
+<div class="modal hidden" id="themeModal">
+<button class="modal-close" id="themeClose">×</button>
+<div class="modal-content">
+<h2 class="stats-title">🎨 المظهر</h2>
+<p class="screen-subtitle">اختر الوضع</p>
+<button class="btn" data-mode="dark">🌙 غامق</button>
+<button class="btn" data-mode="light">☀️ فاتح</button>
+<button class="btn" data-mode="auto">🕐 تلقائي</button>
+<p class="screen-subtitle" style="margin-top:24px;">اختر اللون</p>
+<div class="stats-grid">
+<button class="btn small" data-color="blue" style="background:#1976d2;color:#fff;border:none;">أزرق</button>
+<button class="btn small" data-color="purple" style="background:#7b1fa2;color:#fff;border:none;">بنفسجي</button>
+<button class="btn small" data-color="green" style="background:#388e3c;color:#fff;border:none;">أخضر</button>
+<button class="btn small" data-color="red" style="background:#d32f2f;color:#fff;border:none;">أحمر</button>
+<button class="btn small" data-color="orange" style="background:#f57c00;color:#fff;border:none;">برتقالي</button>
+<button class="btn small" data-color="yellow" style="background:#f9a825;color:#fff;border:none;">أصفر</button>
+</div>
+</div>
+</div>
+
+<!-- مودال التذكير -->
+<div class="modal hidden" id="reminderModal">
+<button class="modal-close" id="reminderClose2">×</button>
+<div class="modal-content">
+<h2 class="stats-title">🔔 التذكير</h2>
+<button class="btn" id="reminderToggleBtn">تفعيل التذكير</button>
+<div style="margin-top:16px;text-align:center;">
+<span style="color:var(--text-3);font-size:.85rem;">وقت التذكير</span>
+<input type="time" id="reminderTime" value="20:00" style="display:block;margin:8px auto;padding:12px;background:var(--card);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-family:inherit;font-size:1rem;">
+</div>
+</div>
+</div>
+
+<!-- مودال اللغة -->
+<div class="modal hidden" id="languageModal">
+<button class="modal-close" id="languageClose">×</button>
+<div class="modal-content">
+<h2 class="stats-title">🌐 اللغة</h2>
+<div class="settings-list">
+<button class="language-option active" data-lang="ar">
+<span style="font-size:1.2rem;">🇸🇦</span>
+<span>العربية</span>
+<span class="check">✓</span>
+</button>
+<button class="language-option" data-lang="en">
+<span style="font-size:1.2rem;">🇬🇧</span>
+<span>English</span>
+<span class="check">✓</span>
+</button>
+<button class="language-option" data-lang="sv">
+<span style="font-size:1.2rem;">🇸🇪</span>
+<span>Svenska</span>
+<span class="check">✓</span>
+</button>
+</div>
+</div>
+</div>
+
+<input type="file" accept="video/*" capture="environment" id="videoInput" style="display:none;"><script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+/* ============================================ */
+/* المتغيرات الأساسية */
+/* ============================================ */
+var DB_NAME='lahza-db',DB_VERSION=1,STORE_NAME='moments';
+var db=null;
+var stream=null;
+var pendingBlob=null;
+var pendingType=null;
+var pendingBg=null;
+var currentFacing='environment';
+var currentMomentId=null;
+var videoFacing='environment';
+var currentFilter='all';
+var selectedYear=null;
+var selectedMonth=null;
+var selectedDay=null;
+var currentSection=null;
+var currentQuestion=null;
+var currentLang='ar';
+var currentTheme={mode:'dark',color:'green'};
+var isRecordingVideo=false;
+
+/* ============================================ */
+/* الترجمة - Translations */
+/* ============================================ */
+var TRANSLATIONS={
+ar:{
+  app_name:'لحظة',
+  morning:'صباح الخير',
+  evening:'مساء الخير',
+  photo:'صورة',
+  video:'فيديو',
+  text:'كتابة',
+  add_old:'إضافة بتاريخ قديم',
+  streak:'يوم متواصلة',
+  moments_count:'لقطة',
+  my_moments:'لقطاتي',
+  settings:'إعدادات',
+  all:'الكل',
+  photos:'صور',
+  videos:'فيديو',
+  texts:'كتابة',
+  answers:'أجوبة',
+  favorites:'المفضلة',
+  hint_filter:'اضغط على فلتر لعرض لقطاتك',
+  empty_title:'لا توجد لقطات بعد',
+  empty_sub:'ارجع إلى الرئيسية ووثّق أول لحظة',
+  general:'عام',
+  reminder:'التذكير اليومي',
+  enabled:'مفعّل',
+  disabled:'معطّل',
+  theme:'المظهر',
+  dark:'غامق',
+  light:'فاتح',
+  auto:'تلقائي',
+  language:'اللغة',
+  data:'البيانات',
+  export:'تصدير نسخة احتياطية',
+  import:'استيراد نسخة احتياطية',
+  delete_all:'حذف كل اللقطات',
+  about:'عن التطبيق',
+  privacy:'سياسة الخصوصية',
+  rate:'قيّم التطبيق',
+  contact:'تواصل معنا',
+  version:'الإصدار',
+  today:'اليوم',
+  yesterday:'أمس',
+  home:'الرئيسية',
+  question:'سؤال اليوم',
+  choose_section:'اختر القسم',
+  choose_answer:'كيف تريد الإجابة؟',
+  your_answer:'جوابك',
+  write_answer:'اكتب جوابك...',
+  save:'حفظ',
+  cancel:'إلغاء',
+  next:'التالي',
+  camera:'الكاميرا',
+  back:'الخلفية',
+  front:'الأمامية',
+  start_record:'ابدأ التسجيل',
+  write_moment:'اكتب لحظتك',
+  caption_placeholder:'أضف جملة (اختياري)...',
+  save_moment:'احفظ اللقطة',
+  save_text:'التالي',
+  choose_bg:'الخلفية',
+  remove_bg:'بدون خلفية',
+  upload_bg:'اختر صورة من جهازك',
+  stats:'إحصائياتي',
+  total:'لقطة',
+  days_recorded:'يوم موثّق',
+  best_streak:'أطول سلسلة',
+  this_month:'هذا الشهر',
+  export_success:'✅ تم التصدير',
+  import_success:'✅ تم استيراد',
+  error:'❌ خطأ',
+  delete_confirm:'هل تريد حذف هذه اللقطة؟',
+  delete_all_confirm:'هل أنت متأكد؟ لا يمكن التراجع!',
+  no_data:'لا توجد لقطات',
+  no_photos:'لا توجد صور',
+  no_videos:'لا توجد فيديوهات',
+  no_texts:'لا توجد كتابات',
+  no_answers:'لا توجد أجوبة',
+  no_favorites:'لا توجد لقطات في المفضلة',
+  no_day_data:'لا توجد لقطات في هذا اليوم',
+  camera_error:'تعذّر فتح الكاميرا',
+  camera_permission:'لم يتم إعطاء إذن الكاميرا',
+  camera_not_found:'لا توجد كاميرا',
+  camera_busy:'الكاميرا مشغولة',
+  not_now:'ليس الآن',
+  contact_msg:'تواصل معنا على lahzalsqta@gmail.com',
+  rate_msg:'شكراً لدعمك!',
+  write_first:'اكتب شيئاً أولاً',
+  old_date:'إضافة بتاريخ قديم',
+  pick_date:'اختر التاريخ'
+},
+en:{
+  app_name:'Lahza',
+  morning:'Good morning',
+  evening:'Good evening',
+  photo:'Photo',
+  video:'Video',
+  text:'Text',
+  add_old:'Add with old date',
+  streak:'days streak',
+  moments_count:'moments',
+  my_moments:'My Moments',
+  settings:'Settings',
+  all:'All',
+  photos:'Photos',
+  videos:'Videos',
+  texts:'Texts',
+  answers:'Answers',
+  favorites:'Favorites',
+  hint_filter:'Tap a filter to view',
+  empty_title:'No moments yet',
+  empty_sub:'Go to home and capture your first',
+  general:'General',
+  reminder:'Daily Reminder',
+  enabled:'Enabled',
+  disabled:'Disabled',
+  theme:'Appearance',
+  dark:'Dark',
+  light:'Light',
+  auto:'Auto',
+  language:'Language',
+  data:'Data',
+  export:'Export backup',
+  import:'Import backup',
+  delete_all:'Delete all moments',
+  about:'About',
+  privacy:'Privacy Policy',
+  rate:'Rate the app',
+  contact:'Contact us',
+  version:'Version',
+  today:'Today',
+  yesterday:'Yesterday',
+  home:'Home',
+  question:"Today's question",
+  choose_section:'Choose a section',
+  choose_answer:'How do you want to answer?',
+  your_answer:'Your answer',
+  write_answer:'Write your answer...',
+  save:'Save',
+  cancel:'Cancel',
+  next:'Next',
+  camera:'Camera',
+  back:'Back',
+  front:'Front',
+  start_record:'Start recording',
+  write_moment:'Write your moment',
+  caption_placeholder:'Add a caption (optional)...',
+  save_moment:'Save moment',
+  save_text:'Next',
+  choose_bg:'Background',
+  remove_bg:'No background',
+  upload_bg:'Choose image from device',
+  stats:'My Stats',
+  total:'Moments',
+  days_recorded:'Days recorded',
+  best_streak:'Best streak',
+  this_month:'This month',
+  export_success:'✅ Exported',
+  import_success:'✅ Imported',
+  error:'❌ Error',
+  delete_confirm:'Delete this moment?',
+  delete_all_confirm:'Are you sure? Cannot undo!',
+  no_data:'No moments',
+  no_photos:'No photos',
+  no_videos:'No videos',
+  no_texts:'No texts',
+  no_answers:'No answers',
+  no_favorites:'No favorites',
+  no_day_data:'No moments on this day',
+  camera_error:'Cannot open camera',
+  camera_permission:'Camera permission denied',
+  camera_not_found:'No camera found',
+  camera_busy:'Camera busy',
+  not_now:'Not now',
+  contact_msg:'Contact us at lahzalsqta@gmail.com',
+  rate_msg:'Thanks for your support!',
+  write_first:'Write something first',
+  old_date:'Add with old date',
+  pick_date:'Pick a date'
+},
+sv:{
+  app_name:'Lahza',
+  morning:'God morgon',
+  evening:'God kväll',
+  photo:'Foto',
+  video:'Video',
+  text:'Text',
+  add_old:'Lägg till med gammalt datum',
+  streak:'dagar i rad',
+  moments_count:'ögonblick',
+  my_moments:'Mina ögonblick',
+  settings:'Inställningar',
+  all:'Alla',
+  photos:'Foton',
+  videos:'Videor',
+  texts:'Texter',
+  answers:'Svar',
+  favorites:'Favoriter',
+  hint_filter:'Tryck på ett filter',
+  empty_title:'Inga ögonblick än',
+  empty_sub:'Gå till hem och skapa ditt första',
+  general:'Allmänt',
+  reminder:'Daglig påminnelse',
+  enabled:'Aktiverad',
+  disabled:'Inaktiverad',
+  theme:'Utseende',
+  dark:'Mörkt',
+  light:'Ljust',
+  auto:'Auto',
+  language:'Språk',
+  data:'Data',
+  export:'Exportera backup',
+  import:'Importera backup',
+  delete_all:'Radera alla ögonblick',
+  about:'Om',
+  privacy:'Integritetspolicy',
+  rate:'Betygsätt appen',
+  contact:'Kontakta oss',
+  version:'Version',
+  today:'Idag',
+  yesterday:'Igår',
+  home:'Hem',
+  question:'Dagens fråga',
+  choose_section:'Välj en sektion',
+  choose_answer:'Hur vill du svara?',
+  your_answer:'Ditt svar',
+  write_answer:'Skriv ditt svar...',
+  save:'Spara',
+  cancel:'Avbryt',
+  next:'Nästa',
+  camera:'Kamera',
+  back:'Bak',
+  front:'Fram',
+  start_record:'Börja spela in',
+  write_moment:'Skriv ditt ögonblick',
+  caption_placeholder:'Lägg till bildtext...',
+  save_moment:'Spara ögonblick',
+  save_text:'Nästa',
+  choose_bg:'Bakgrund',
+  remove_bg:'Ingen bakgrund',
+  upload_bg:'Välj bild från enheten',
+  stats:'Min statistik',
+  total:'Ögonblick',
+  days_recorded:'Dagar',
+  best_streak:'Bästa svit',
+  this_month:'Denna månad',
+  export_success:'✅ Exporterad',
+  import_success:'✅ Importerad',
+  error:'❌ Fel',
+  delete_confirm:'Radera detta ögonblick?',
+  delete_all_confirm:'Är du säker? Går inte att ångra!',
+  no_data:'Inga ögonblick',
+  no_photos:'Inga foton',
+  no_videos:'Inga videor',
+  no_texts:'Inga texter',
+  no_answers:'Inga svar',
+  no_favorites:'Inga favoriter',
+  no_day_data:'Inga ögonblick denna dag',
+  camera_error:'Kan inte öppna kameran',
+  camera_permission:'Kamera behörighet nekad',
+  camera_not_found:'Ingen kamera hittad',
+  camera_busy:'Kameran upptagen',
+  not_now:'Inte nu',
+  contact_msg:'Kontakta oss på lahzalsqta@gmail.com',
+  rate_msg:'Tack för ditt stöd!',
+  write_first:'Skriv något först',
+  old_date:'Lägg till med gammalt datum',
+  pick_date:'Välj datum'
+}
+};
+
+function t(key){
+  var lang=TRANSLATIONS[currentLang]||TRANSLATIONS.ar;
+  return lang[key]||TRANSLATIONS.ar[key]||key;
+}
+
+/* ============================================ */
+/* بنك الأسئلة - 100 سؤال */
+/* ============================================ */
+var QUESTIONS_BANK={
+'ar':{
+'تأمل':['ما أكثر لحظة شعرت فيها بالراحة اليوم؟','ما الشيء الذي فاجأك اليوم؟','ما اللحظة التي تمنيت لو تدوم أطول؟','ما الذي أخذ من طاقتك اليوم؟','ما الذي جدّد طاقتك اليوم؟','ما اللحظة التي شعرت فيها بالامتنان؟','ما الذي كنت تتطلع إليه اليوم؟','ما الذي كان أصعب مما توقعت؟','ما الذي كان أسهل مما توقعت؟','ما اللحظة التي ابتسمت فيها من قلبك؟','ما الذي جعلك تتوقف وتفكر اليوم؟','ما الشيء الذي تعلمته عن نفسك اليوم؟','ما اللحظة التي شعرت فيها بالسلام؟','ما الذي غيّر مزاجك اليوم؟','لو تعيد اليوم، ما الذي ستغيّره؟','ما الذي احتاج منك صبراً اليوم؟','ما الشيء الذي تجاهلته اليوم ولماذا؟','ما القرار الصغير الذي اتخذته اليوم؟','ما الذي جعل يومك مختلفاً عن الأمس؟','ما الشيء الذي كنت تحتاج سماعه اليوم؟'],
+'مشاعر':['ما الشعور الذي سيطر عليك اليوم؟','ما الذي أضحكك اليوم؟','ما الذي أزعجك اليوم؟','متى شعرت بالفخر اليوم؟','ما الذي ذكّرك بالماضي اليوم؟','كيف كان مزاجك من 1 إلى 10؟','ما الذي أشعرك بالأمان؟','متى شعرت بالحب اليوم؟','ما الذي أشعرك بالرضا؟','ما الذي احتاج منك قوة اليوم؟','متى شعرت بالقوة اليوم؟','ما الموقف الذي أضعفك اليوم؟','ما الذي أدهشك اليوم؟','متى شعرت بالإلهام اليوم؟','ما الشعور الذي تريد أن تشعر به غداً؟'],
+'إنجاز':['ما الشيء الذي فعلته اليوم ولو كان صغيراً؟','ما الخطوة التي قرّبتك من هدفك؟','ما الشيء الذي كنت متردداً في فعله وفعلته؟','ما الذي تغلّبت عليه اليوم؟','ما الشيء الذي فعلته أفضل من الأمس؟','ما القرار الذي اتخذته اليوم؟','ما الشيء الذي ساعدت به أحداً اليوم؟','ما الشيء الذي فعلته وأفتخر فيه؟','ما الشيء الذي أنهيته اليوم؟','ما الذي جعلك تشعر أنك تقدّمت خطوة؟'],
+'أفكار':['ما الفكرة التي راودتك اليوم؟','ما الشيء الذي شغل تفكيرك؟','ما السؤال الذي حيّرك اليوم؟','ما الذي فتح عقلك على شيء جديد؟','ما الفكرة التي تريد تطويرها؟','ما الذي غيّر نظرتك؟','ما الذي جعلك تعيد التفكير في شيء؟','ما الفكرة التي تريد تنفيذها؟','ما الذي أثار فضولك اليوم؟','ما الشيء الذي فهمته أخيراً؟'],
+'علاقات':['من الشخص الذي أسعدك حضوره اليوم؟','من الشخص الذي فكرت فيه اليوم؟','ما الكلمة الجميلة التي سمعتها؟','من الشخص الذي تريد أن تشكره؟','ما اللحظة التي جمعتك بأحبابك؟','من الشخص الذي ساعدته اليوم؟','من الشخص الذي ساعدك اليوم؟','ما الشيء الذي فعلته لأجل شخص تحبه؟','من الشخص الذي تشتاق إليه؟','ما الكلمة التي قلتها وأثّرت في أحد؟'],
+'نمو':['ما الشيء الذي تعلمته اليوم؟','ما العادة التي بدأت تبنيها؟','ما الشيء الذي تحسّنت فيه؟','ما الخطأ الذي استفدت منه؟','ما الذي جعلك أقوى اليوم؟','ما الشيء الذي تريد تطويره في نفسك؟','ما الذي بدأت تلاحظه في نفسك؟','ما التغيير الذي تريد إحداثه؟','ما الشيء الذي أصبح أسهل عليك؟','ما الخطوة الصغيرة التي قمت بها لنفسك؟'],
+'امتنان':['ما ثلاثة أشياء أنت ممتن لها اليوم؟','ما النعمة التي أحياناً تنساها؟','من الشخص الذي أنت ممتن لوجوده؟','ما التفصيل الصغير الذي أسعدك؟','ما الشيء الذي أنت ممتن له في نفسك؟','ما الشيء الذي أنت ممتن له في يومك؟','ما النعمة التي لاحظتها اليوم؟','على ما أنت ممتن في صحتك؟','ما الشيء الذي أنت ممتن له في حياتك؟','ما الذي يجعلك تشعر بالامتنان كل يوم؟'],
+'لحظة':['صف يومك بثلاث كلمات.','لو كان يومك لوناً، ما هو؟','لو كان يومك أغنية، ما اسمها؟','ما اللحظة التي تريد تذكرها بعد سنة؟','لو صوّرت يومك بصورة واحدة، ما هي؟','اختصر يومك بجملة واحدة.','ما الذي كنت تريد قوله ولم تقله؟','لو أرسلت رسالة لنفسك في المستقبل، ما تقول؟','ما الشيء الذي كنت تحتاج قوله اليوم؟','لو كان يومك طعاماً، ما هو؟','ما اللحظة التي تريد الاحتفاظ بها؟','لو كتبت عنواناً ليومك، ما هو؟','ما الشيء الذي تريد نسيانه من اليوم؟','لو كان يومك فصلاً، ما هو؟','ما اللحظة التي تستحق أن تُروى؟']
+}
+};
+
+var SECTION_ICONS={'تأمل':'📖','مشاعر':'💭','إنجاز':'🎯','أفكار':'💡','علاقات':'❤️','نمو':'🌱','امتنان':'🌟','لحظة':'✨'};
+
+/* ============================================ */
+/* الألوان والثيمات */
+/* ============================================ */
+var THEMES={
+dark:{
+green:{bg:'#0a0a0a',card:'#141414',text:'#ffffff',text2:'#cccccc',text3:'#888888',border:'rgba(255,255,255,.08)',primary:'#4ade80'},
+blue:{bg:'#0a0a0a',card:'#141414',text:'#ffffff',text2:'#cccccc',text3:'#888888',border:'rgba(255,255,255,.08)',primary:'#3b82f6'},
+purple:{bg:'#0a0a0a',card:'#141414',text:'#ffffff',text2:'#cccccc',text3:'#888888',border:'rgba(255,255,255,.08)',primary:'#a855f7'},
+red:{bg:'#0a0a0a',card:'#141414',text:'#ffffff',text2:'#cccccc',text3:'#888888',border:'rgba(255,255,255,.08)',primary:'#ef4444'},
+orange:{bg:'#0a0a0a',card:'#141414',text:'#ffffff',text2:'#cccccc',text3:'#888888',border:'rgba(255,255,255,.08)',primary:'#fb923c'},
+yellow:{bg:'#0a0a0a',card:'#141414',text:'#ffffff',text2:'#cccccc',text3:'#888888',border:'rgba(255,255,255,.08)',primary:'#facc15'}
+},
+light:{
+green:{bg:'#f5f5f5',card:'#ffffff',text:'#0a0a0a',text2:'#333333',text3:'#666666',border:'rgba(0,0,0,.08)',primary:'#16a34a'},
+blue:{bg:'#f5f5f5',card:'#ffffff',text:'#0a0a0a',text2:'#333333',text3:'#666666',border:'rgba(0,0,0,.08)',primary:'#2563eb'},
+purple:{bg:'#f5f5f5',card:'#ffffff',text:'#0a0a0a',text2:'#333333',text3:'#666666',border:'rgba(0,0,0,.08)',primary:'#9333ea'},
+red:{bg:'#f5f5f5',card:'#ffffff',text:'#0a0a0a',text2:'#333333',text3:'#666666',border:'rgba(0,0,0,.08)',primary:'#dc2626'},
+orange:{bg:'#f5f5f5',card:'#ffffff',text:'#0a0a0a',text2:'#333333',text3:'#666666',border:'rgba(0,0,0,.08)',primary:'#ea580c'},
+yellow:{bg:'#f5f5f5',card:'#ffffff',text:'#0a0a0a',text2:'#333333',text3:'#666666',border:'rgba(0,0,0,.08)',primary:'#ca8a04'}
+}
+};
+
+var COLOR_NAMES={green:'أخضر',blue:'أزرق',purple:'بنفسجي',red:'أحمر',orange:'برتقالي',yellow:'أصفر'};
+
+var DAYS_AR=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+var DAYS_EN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var DAYS_SV=['söndag','måndag','tisdag','onsdag','torsdag','fredag','lördag'];
+
+var MONTHS_AR=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+var MONTHS_EN=['January','February','May','June','July','August','September','October','November','December'];
+var MONTHS_SV=['januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december'];
+
+function getDaysArray(){
+  if(currentLang==='ar')return DAYS_AR;
+  if(currentLang==='sv')return DAYS_SV;
+  return DAYS_EN;
+}
+function getMonthsArray(){
+  if(currentLang==='ar')return MONTHS_AR;
+  if(currentLang==='sv')return MONTHS_SV;
+  return MONTHS_EN;
+}/* ============================================ */
+/* IndexedDB - قاعدة البيانات */
+/* ============================================ */
+function openDB(){
+  return new Promise(function(res,rej){
+    var r=indexedDB.open(DB_NAME,DB_VERSION);
+    r.onupgradeneeded=function(e){
+      var d=e.target.result;
+      if(!d.objectStoreNames.contains(STORE_NAME)){
+        d.createObjectStore(STORE_NAME,{keyPath:'id',autoIncrement:true});
+      }
+    };
+    r.onsuccess=function(e){db=e.target.result;res(db);};
+    r.onerror=function(e){rej(e.target.error);};
+  });
+}
+function saveMoment(m){
+  return new Promise(function(res,rej){
+    var t=db.transaction(STORE_NAME,'readwrite');
+    var r=t.objectStore(STORE_NAME).add(m);
+    r.onsuccess=function(){res(r.result);};
+    r.onerror=function(e){rej(e.target.error);};
+  });
+}
+function updateMoment(m){
+  return new Promise(function(res,rej){
+    var t=db.transaction(STORE_NAME,'readwrite');
+    var r=t.objectStore(STORE_NAME).put(m);
+    r.onsuccess=function(){res(r.result);};
+    r.onerror=function(e){rej(e.target.error);};
+  });
+}
+function getMoment(id){
+  return new Promise(function(res,rej){
+    var t=db.transaction(STORE_NAME,'readonly');
+    var r=t.objectStore(STORE_NAME).get(id);
+    r.onsuccess=function(){res(r.result);};
+    r.onerror=function(e){rej(e.target.error);};
+  });
+}
+function getAllMoments(){
+  return new Promise(function(res,rej){
+    var t=db.transaction(STORE_NAME,'readonly');
+    var r=t.objectStore(STORE_NAME).getAll();
+    r.onsuccess=function(){res(r.result);};
+    r.onerror=function(e){rej(e.target.error);};
+  });
+}
+function deleteMoment(id){
+  return new Promise(function(res,rej){
+    var t=db.transaction(STORE_NAME,'readwrite');
+    var r=t.objectStore(STORE_NAME).delete(id);
+    r.onsuccess=function(){res();};
+    r.onerror=function(e){rej(e.target.error);};
+  });
+}
+function countMoments(){
+  return new Promise(function(res,rej){
+    var t=db.transaction(STORE_NAME,'readonly');
+    var r=t.objectStore(STORE_NAME).count();
+    r.onsuccess=function(){res(r.result);};
+    r.onerror=function(e){rej(e.target.error);};
+  });
+}
+
+/* ============================================ */
+/* دوال التاريخ */
+/* ============================================ */
+function getDateStr(date){
+  var d=new Date(date);
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function getDayLabel(dateStr){
+  var today=getDateStr(new Date());
+  var yest=new Date();yest.setDate(yest.getDate()-1);
+  var yestStr=getDateStr(yest);
+  if(dateStr===today)return t('today');
+  if(dateStr===yestStr)return t('yesterday');
+  var d=new Date(dateStr+'T12:00:00');
+  var days=getDaysArray();
+  var months=getMonthsArray();
+  return days[d.getDay()]+'، '+d.getDate()+' '+months[d.getMonth()];
+}
+function formatDate(date){
+  var d=new Date(date);
+  var days=getDaysArray();
+  var months=getMonthsArray();
+  return days[d.getDay()]+'، '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();
+}
+
+/* ============================================ */
+/* الرسائل - Status */
+/* ============================================ */
+function showStatus(msg,color){
+  var s=document.getElementById('status');
+  if(!s)return;
+  s.textContent=msg;
+  s.style.color=color||'var(--primary)';
+  clearTimeout(s._t);
+  s._t=setTimeout(function(){s.textContent='';},4000);
+}
+
+/* ============================================ */
+/* Plural */
+/* ============================================ */
+function pluralMoments(n){
+  if(currentLang==='ar'){
+    if(n===1)return 'لقطة واحدة';
+    if(n===2)return 'لقطتان';
+    if(n<=10)return n+' لقطات';
+    return n+' لقطة';
+  }
+  if(currentLang==='sv'){
+    if(n===1)return '1 ögonblick';
+    return n+' ögonblick';
+  }
+  if(n===1)return '1 moment';
+  return n+' moments';
+}
+function pluralDays(n){
+  if(currentLang==='ar'){
+    if(n===1)return 'يوم واحد';
+    if(n===2)return 'يومان';
+    if(n<=10)return n+' أيام';
+    return n+' يوم';
+  }
+  if(currentLang==='sv'){
+    if(n===1)return '1 dag';
+    return n+' dagar';
+  }
+  if(n===1)return '1 day';
+  return n+' days';
+}
+
+/* ============================================ */
+/* Theme - تطبيق الثيم */
+/* ============================================ */
+function applyTheme(){
+  var mode=currentTheme.mode;
+  if(mode==='auto'){
+    var h=new Date().getHours();
+    mode=(h>=6&&h<18)?'light':'dark';
+  }
+  var theme=THEMES[mode][currentTheme.color];
+  var root=document.documentElement.style;
+  root.setProperty('--bg',theme.bg);
+  root.setProperty('--card',theme.card);
+  root.setProperty('--text',theme.text);
+  root.setProperty('--text-2',theme.text2);
+  root.setProperty('--text-3',theme.text3);
+  root.setProperty('--text-4',theme.text3);
+  root.setProperty('--border',theme.border);
+  root.setProperty('--border-strong',theme.border);
+  root.setProperty('--primary',theme.primary);
+  localStorage.setItem('lahza-theme',JSON.stringify(currentTheme));
+}
+function loadTheme(){
+  try{
+    var s=localStorage.getItem('lahza-theme');
+    if(s)currentTheme=JSON.parse(s);
+  }catch(e){}
+  if(!currentTheme.color)currentTheme.color='green';
+  if(!currentTheme.mode)currentTheme.mode='dark';
+  applyTheme();
+}
+
+/* ============================================ */
+/* Language - تطبيق اللغة */
+/* ============================================ */
+function applyLanguage(){
+  var dir=currentLang==='ar'?'rtl':'ltr';
+  document.documentElement.dir=dir;
+  document.documentElement.lang=currentLang;
+  localStorage.setItem('lahza-lang',currentLang);
+}
+function loadLanguage(){
+  var lang=localStorage.getItem('lahza-lang')||'ar';
+  if(!TRANSLATIONS[lang])lang='ar';
+  currentLang=lang;
+  applyLanguage();
+}
+
+/* ============================================ */
+/* Greeting - التحية حسب الوقت */
+/* ============================================ */
+function getGreeting(){
+  var h=new Date().getHours();
+  if(h>=6&&h<18)return t('morning');
+  return t('evening');
+}
+function updateGreeting(){
+  var g=document.getElementById('greeting');
+  if(g)g.textContent=getGreeting();
+}
+
+/* ============================================ */
+/* السؤال اليومي */
+/* ============================================ */
+function getTodayQuestion(){
+  var bank=QUESTIONS_BANK['ar'];
+  var all=[];
+  Object.keys(bank).forEach(function(k){
+    bank[k].forEach(function(q){
+      all.push({section:k,question:q});
+    });
+  });
+  var d=new Date();
+  var doy=Math.floor((d-new Date(d.getFullYear(),0,0))/86400000);
+  return all[doy%all.length];
+}
+function showToday(){
+  var el=document.getElementById('todayDate');
+  if(el)el.textContent=formatDate(new Date());
+  updateGreeting();
+  var q=getTodayQuestion();
+  var qEl=document.getElementById('dailyQuestion');
+  if(qEl)qEl.textContent=q.question;
+}
+
+/* ============================================ */
+/* Counter - العدّادات */
+/* ============================================ */
+function updateCounter(){
+  countMoments().then(function(n){
+    var el=document.getElementById('counterText');
+    if(el)el.textContent=n;
+  });
+}
+
+/* ============================================ */
+/* Streak - السلسلة */
+/* ============================================ */
+async function updateStreak(){
+  try{
+    var ms=await getAllMoments();
+    var el=document.getElementById('streakText');
+    if(!el)return;
+    if(ms.length===0){el.textContent='0';return;}
+    var days=new Set(ms.map(function(m){return getDateStr(m.date);}));
+    var today=getDateStr(new Date());
+    var streak=0;
+    var check=new Date();
+    if(!days.has(today)){check.setDate(check.getDate()-1);}
+    while(days.has(getDateStr(check))){streak++;check.setDate(check.getDate()-1);}
+    el.textContent=streak;
+  }catch(e){}
+}/* ============================================ */
+/* التبويبات - Tabs */
+/* ============================================ */
+function switchTab(name){
+  ['Home','Moments','Settings'].forEach(function(n){
+    var btn=document.getElementById('tabBtn'+n);
+    var tab=document.getElementById('tab'+n);
+    if(btn)btn.classList.remove('active');
+    if(tab)tab.classList.add('hidden');
+  });
+  var btn=document.getElementById('tabBtn'+name);
+  var tab=document.getElementById('tab'+name);
+  if(btn)btn.classList.add('active');
+  if(tab)tab.classList.remove('hidden');
+  if(name==='Moments')renderTree();
+}
+document.getElementById('tabBtnHome').onclick=function(){switchTab('Home');};
+document.getElementById('tabBtnMoments').onclick=function(){switchTab('Moments');};
+document.getElementById('tabBtnSettings').onclick=function(){switchTab('Settings');};
+
+/* ============================================ */
+/* الفلاتر */
+/* ============================================ */
+document.querySelectorAll('.filter-chip').forEach(function(b){
+  b.onclick=function(){
+    document.querySelectorAll('.filter-chip').forEach(function(x){x.classList.remove('active');});
+    b.classList.add('active');
+    currentFilter=b.getAttribute('data-filter');
+    selectedYear=null;selectedMonth=null;selectedDay=null;
+    renderTree();
+  };
+});
+
+/* ============================================ */
+/* الكاميرا - Camera */
+/* ============================================ */
+async function openCamera(v){
+  try{
+    if(stream){stream.getTracks().forEach(function(t){t.stop();});stream=null;}
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:currentFacing},audio:false});
+    v.srcObject=stream;
+    v.muted=true;
+  }catch(e){
+    var msg=t('camera_error');
+    if(e.name==='NotAllowedError')msg=t('camera_permission');
+    else if(e.name==='NotFoundError')msg=t('camera_not_found');
+    else if(e.name==='NotReadableError')msg=t('camera_busy');
+    showStatus(msg,'#ef4444');
+  }
+}
+function closeCamera(){
+  if(stream){stream.getTracks().forEach(function(t){t.stop();});stream=null;}
+}
+async function toggleCamera(v){
+  currentFacing=(currentFacing==='environment')?'user':'environment';
+  await openCamera(v);
+}
+
+/* الصورة */
+document.getElementById('actionPhoto').onclick=async function(){
+  document.getElementById('photoScreen').classList.remove('hidden');
+  await openCamera(document.getElementById('photoVideo'));
+};
+document.getElementById('photoClose').onclick=function(){
+  closeCamera();
+  document.getElementById('photoScreen').classList.add('hidden');
+};
+document.getElementById('switchPhotoCam').onclick=function(){
+  toggleCamera(document.getElementById('photoVideo'));
+};
+document.getElementById('snapBtn').onclick=function(){
+  var v=document.getElementById('photoVideo');
+  var cv=document.createElement('canvas');
+  cv.width=v.videoWidth;
+  cv.height=v.videoHeight;
+  cv.getContext('2d').drawImage(v,0,0);
+  cv.toBlob(function(b){
+    pendingBlob=b;
+    pendingType='photo';
+    pendingBg=null;
+    closeCamera();
+    document.getElementById('photoScreen').classList.add('hidden');
+    showPreview();
+    document.getElementById('saveScreen').classList.remove('hidden');
+  },'image/jpeg',.85);
+};
+
+/* الفيديو */
+var videoInput=document.getElementById('videoInput');
+document.getElementById('actionVideo').onclick=function(){
+  document.getElementById('videoScreen').classList.remove('hidden');
+};
+document.getElementById('videoClose').onclick=function(){
+  document.getElementById('videoScreen').classList.add('hidden');
+};
+document.getElementById('switchVideoCam').onclick=function(){
+  videoFacing=(videoFacing==='environment')?'user':'environment';
+  videoInput.setAttribute('capture',videoFacing);
+};
+document.getElementById('startVideoRec').onclick=function(){
+  videoInput.value='';
+  videoInput.click();
+};
+videoInput.onchange=function(e){
+  var f=e.target.files[0];
+  if(!f)return;
+  pendingBlob=f;
+  pendingType='video';
+  pendingBg=null;
+  document.getElementById('videoScreen').classList.add('hidden');
+  showPreview();
+  document.getElementById('saveScreen').classList.remove('hidden');
+};
+
+/* ============================================ */
+/* الكتابة - Text */
+/* ============================================ */
+document.getElementById('actionText').onclick=function(){
+  document.getElementById('textInput').value='';
+  pendingBg=null;
+  updateBgGrid();
+  document.getElementById('textScreen').classList.remove('hidden');
+};
+document.getElementById('textClose').onclick=function(){
+  document.getElementById('textScreen').classList.add('hidden');
+};
+
+/* اختيار خلفية من الجهاز */
+document.getElementById('uploadBg').onclick=function(){
+  document.getElementById('bgInput').click();
+};
+document.getElementById('bgInput').onchange=function(e){
+  var f=e.target.files[0];
+  if(!f)return;
+  pendingBg=f;
+  updateBgGrid();
+};
+function updateBgGrid(){
+  var grid=document.getElementById('bgGrid');
+  var uploadBtn=document.getElementById('uploadBg');
+  // احذف كل الصور القديمة
+  Array.from(grid.querySelectorAll('.bg-option.dynamic')).forEach(function(el){el.remove();});
+  if(pendingBg){
+    var url=URL.createObjectURL(pendingBg);
+    var btn=document.createElement('button');
+    btn.className='bg-option dynamic active';
+    btn.innerHTML='<img src="'+url+'">';
+    btn.onclick=function(){
+      document.querySelectorAll('.bg-option').forEach(function(x){x.classList.remove('active');});
+      btn.classList.add('active');
+    };
+    grid.insertBefore(btn,uploadBtn);
+  }
+  // تأكد إن "بدون خلفية" نشط إذا ما في صورة
+  if(!pendingBg){
+    var noneBtn=grid.querySelector('[data-bg="none"]');
+    if(noneBtn){document.querySelectorAll('.bg-option').forEach(function(x){x.classList.remove('active');});noneBtn.classList.add('active');}
+  }
+}
+document.querySelectorAll('.bg-option').forEach(function(b){
+  b.onclick=function(e){
+    if(b.classList.contains('upload'))return;
+    document.querySelectorAll('.bg-option').forEach(function(x){x.classList.remove('active');});
+    b.classList.add('active');
+    var val=b.getAttribute('data-bg');
+    if(val==='none')pendingBg=null;
+  };
+});
+
+/* التالي بعد الكتابة */
+document.getElementById('saveTextBtn').onclick=function(){
+  var txt=document.getElementById('textInput').value.trim();
+  if(!txt){showStatus(t('write_first'),'#ef4444');return;}
+  pendingBlob=new Blob([txt],{type:'text/plain'});
+  pendingType='text';
+  document.getElementById('textScreen').classList.add('hidden');
+  showPreview();
+  document.getElementById('saveScreen').classList.remove('hidden');
+};
+
+/* ============================================ */
+/* المعاينة - Preview */
+/* ============================================ */
+function showPreview(){
+  var wrap=document.getElementById('previewWrap');
+  wrap.innerHTML='';
+  if(pendingType==='photo'){
+    var i=document.createElement('img');
+    i.src=URL.createObjectURL(pendingBlob);
+    i.style.cssText='width:100%;border-radius:12px;display:block;';
+    wrap.appendChild(i);
+  }else if(pendingType==='video'){
+    var v=document.createElement('video');
+    v.src=URL.createObjectURL(pendingBlob);
+    v.controls=true;
+    v.playsInline=true;
+    v.style.cssText='width:100%;border-radius:12px;display:block;';
+    wrap.appendChild(v);
+  }else if(pendingType==='text'){
+    pendingBlob.text().then(function(txt){
+      var div=document.createElement('div');
+      div.className='preview';
+      div.textContent=txt;
+      if(pendingBg){
+        var url=URL.createObjectURL(pendingBg);
+        div.style.backgroundImage='url('+url+')';
+        div.style.backgroundSize='cover';
+        div.style.backgroundPosition='center';
+      }else{
+        div.style.background='rgba(0,0,0,.7)';
+        div.style.backdropFilter='blur(10px)';
+      }
+      wrap.appendChild(div);
+    });
+  }
+}
+
+/* ============================================ */
+/* الحفظ - Save */
+/* ============================================ */
+document.getElementById('saveBtn').onclick=async function(){
+  if(!pendingBlob)return;
+  var c=document.getElementById('captionInput').value.trim();
+  try{
+    var momentData={
+      date:new Date().toISOString(),
+      blob:pendingBlob,
+      type:pendingType,
+      caption:c,
+      favorite:false
+    };
+    // إذا في خلفية، نخزنها كـ blob منفصل
+    if(pendingBg){
+      momentData.background=await new Promise(function(res){
+        var r=new FileReader();
+        r.onload=function(){res(r.result);};
+        r.readAsDataURL(pendingBg);
+      });
+    }
+    await saveMoment(momentData);
+    document.getElementById('captionInput').value='';
+    document.getElementById('previewWrap').innerHTML='';
+    pendingBlob=null;
+    pendingType=null;
+    pendingBg=null;
+    document.getElementById('saveScreen').classList.add('hidden');
+    updateCounter();
+    updateStreak();
+  }catch(e){
+    showStatus(t('error')+': '+e.message,'#ef4444');
+  }
+};
+document.getElementById('saveClose').onclick=function(){
+  document.getElementById('captionInput').value='';
+  document.getElementById('previewWrap').innerHTML='';
+  pendingBlob=null;
+  pendingType=null;
+  pendingBg=null;
+  closeCamera();
+  document.getElementById('saveScreen').classList.add('hidden');
+};
+
+/* ============================================ */
+/* إضافة بتاريخ قديم */
+/* ============================================ */
+document.getElementById('actionOldDate').onclick=function(){
+  var d=prompt(t('pick_date')+':\nYYYY-MM-DD (مثال: 2024-05-15)');
+  if(!d)return;
+  var parts=d.split('-');
+  if(parts.length!==3)return;
+  var y=parseInt(parts[0]);
+  var mo=parseInt(parts[1])-1;
+  var dy=parseInt(parts[2]);
+  if(isNaN(y)||isNaN(mo)||isNaN(dy))return;
+  var date=new Date(y,mo,dy,12,0,0);
+  document.getElementById('actionPhoto').onclick=async function(){
+    window._oldDate=date;
+    document.getElementById('photoScreen').classList.remove('hidden');
+    await openCamera(document.getElementById('photoVideo'));
+  };
+  showStatus('✅ اختر نوع اللقطة', '#4ade80');
+  document.getElementById('questionSheet').classList.remove('hidden');
+  var list=document.getElementById('sectionList');
+  list.innerHTML='';
+  var options=[
+    {id:'sheetPhoto2',label:'📷 '+t('photo'),action:'photo'},
+    {id:'sheetVideo2',label:'🎥 '+t('video'),action:'video'},
+    {id:'sheetText2',label:'✍️ '+t('text'),action:'text'}
+  ];
+  options.forEach(function(op){
+    var item=document.createElement('div');
+    item.className='section-item';
+    item.innerHTML='<div class="left"><span>'+op.label+'</span></div>';
+    item.onclick=function(){
+      document.getElementById('questionSheet').classList.add('hidden');
+      if(op.action==='photo'){
+        document.getElementById('photoScreen').classList.remove('hidden');
+        openCamera(document.getElementById('photoVideo'));
+      }else if(op.action==='video'){
+        document.getElementById('videoScreen').classList.remove('hidden');
+      }else{
+        document.getElementById('textScreen').classList.remove('hidden');
+        updateBgGrid();
+      }
+      window._pendingOldDate=date;
+    };
+    list.appendChild(item);
+  });
+};/* ============================================ */
+/* بطاقة اللقطة - Moment Card */
+/* ============================================ */
+async function makeCard(m,size){
+  var d=document.createElement('div');
+  d.className=size==='hero'?'moment-hero':'moment-small';
+  
+  if(m.type==='photo'){
+    var i=document.createElement('img');
+    i.src=URL.createObjectURL(m.blob);
+    d.appendChild(i);
+  }else if(m.type==='video'){
+    var v=document.createElement('video');
+    v.src=URL.createObjectURL(m.blob);
+    v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=true;
+    d.appendChild(v);
+  }else if(m.type==='text'){
+    var tDiv=document.createElement('div');
+    tDiv.className='text-content';
+    tDiv.style.background='rgba(0,0,0,.7)';
+    tDiv.style.backdropFilter='blur(10px)';
+    tDiv.textContent=await m.blob.text();
+    d.appendChild(tDiv);
+  }else if(m.type==='answer'){
+    var tDiv2=document.createElement('div');
+    tDiv2.className='text-content';
+    tDiv2.style.background='rgba(30,41,59,.9)';
+    tDiv2.style.fontSize=size==='hero'?'.95rem':'.65rem';
+    tDiv2.textContent='💭 '+(m.caption||'');
+    d.appendChild(tDiv2);
+  }
+  
+  // overlay
+  var dt=new Date(m.date);
+  var timeStr=dt.getHours()+':'+String(dt.getMinutes()).padStart(2,'0');
+  var ov=document.createElement('div');
+  ov.className='moment-overlay';
+  var tEl=document.createElement('div');
+  tEl.className='moment-time';
+  tEl.textContent=timeStr;
+  ov.appendChild(tEl);
+  if(m.caption&&m.type!=='answer'){
+    var cEl=document.createElement('div');
+    cEl.className='moment-caption';
+    cEl.textContent=m.caption;
+    ov.appendChild(cEl);
+  }
+  d.appendChild(ov);
+  
+  // أزرار صغيرة فوق
+  if(size==='hero'){
+    var del=document.createElement('button');
+    del.className='action-delete';
+    del.style.cssText='position:absolute;top:8px;left:8px;width:32px;height:32px;font-size:.85rem;z-index:3;';
+    del.textContent='×';
+    del.onclick=async function(e){
+      e.stopPropagation();
+      if(confirm(t('delete_confirm'))){
+        await deleteMoment(m.id);
+        renderTree();
+        updateCounter();
+        updateStreak();
+      }
+    };
+    d.appendChild(del);
+    
+    var hb=document.createElement('button');
+    hb.className='action-heart'+(m.favorite?' active':'');
+    hb.style.cssText='position:absolute;top:8px;right:8px;width:32px;height:32px;font-size:.85rem;z-index:3;';
+    hb.textContent=m.favorite?'❤️':'🤍';
+    hb.onclick=async function(e){
+      e.stopPropagation();
+      var mm=await getMoment(m.id);
+      if(!mm)return;
+      mm.favorite=!mm.favorite;
+      await updateMoment(mm);
+      renderTree();
+    };
+    d.appendChild(hb);
+  }
+  
+  d.onclick=function(){openMomentModal(m.id);};
+  return d;
+}
+
+/* ============================================ */
+/* الشجرة - Tree View */
+/* ============================================ */
+async function renderTree(){
+  var ms=await getAllMoments();
+  var hint=document.getElementById('hint');
+  var treeView=document.getElementById('treeView');
+  var yearsRow=document.getElementById('yearsRow');
+  var monthsSection=document.getElementById('monthsSection');
+  var monthsGrid=document.getElementById('monthsGrid');
+  var calendarSection=document.getElementById('calendarSection');
+  var momentsSection=document.getElementById('momentsSection');
+  var momentsGrid=document.getElementById('momentsGrid');
+  var empty=document.getElementById('empty');
+  
+  hint.classList.add('hidden');
+  treeView.classList.remove('hidden');
+  empty.classList.add('hidden');
+  
+  // الفلترة
+  var filtered=ms;
+  if(currentFilter==='favorite'){filtered=ms.filter(function(m){return m.favorite;});}
+  else if(currentFilter==='answer'){filtered=ms.filter(function(m){return m.type==='answer';});}
+  else if(currentFilter!=='all'&&currentFilter!=='calendar'){filtered=ms.filter(function(m){return m.type===currentFilter;});}
+  
+  // بناء السنوات
+  var yearsSet=new Set();
+  filtered.forEach(function(m){yearsSet.add(new Date(m.date).getFullYear());});
+  var yearsSorted=Array.from(yearsSet).sort(function(a,b){return b-a;});
+  
+  yearsRow.innerHTML='';
+  if(yearsSorted.length===0){
+    treeView.classList.add('hidden');
+    empty.classList.remove('hidden');
+    return;
+  }
+  
+  yearsSorted.forEach(function(y){
+    var count=filtered.filter(function(m){return new Date(m.date).getFullYear()===y;}).length;
+    var chip=document.createElement('button');
+    chip.className='year-chip'+(selectedYear===y?' active':'');
+    chip.innerHTML='<span>'+y+'</span><span class="count">'+count+'</span>';
+    chip.onclick=function(){
+      selectedYear=y;selectedMonth=null;selectedDay=null;
+      renderTree();
+    };
+    yearsRow.appendChild(chip);
+  });
+  
+  // الأشهر
+  if(selectedYear){
+    monthsSection.classList.remove('hidden');
+    monthsGrid.innerHTML='';
+    var months=getMonthsArray();
+    for(var mo=0;mo<12;mo++){
+      var mCount=filtered.filter(function(m){
+        var d=new Date(m.date);
+        return d.getFullYear()===selectedYear&&d.getMonth()===mo;
+      }).length;
+      var chip=document.createElement('button');
+     chip.className='month-chip'+(selectedMonth===mo?' active':'');
+chip.innerHTML=months[mo]+'<span class="count">'+mCount+'</span>';
+      (function(mo){
+        chip.onclick=function(){
+          selectedMonth=mo;selectedDay=null;
+          renderTree();
+        };
+      })(mo);
+      monthsGrid.appendChild(chip);
+    }
+  }else{
+    monthsSection.classList.add('hidden');
+  }
+  
+  // التقويم
+  if(selectedYear!==null&&selectedMonth!==null){
+    calendarSection.classList.remove('hidden');
+    renderCalendar(filtered,selectedYear,selectedMonth);
+  }else{
+    calendarSection.classList.add('hidden');
+  }
+  
+  // اللقطات (المجلة)
+  if(selectedDay){
+    momentsSection.classList.remove('hidden');
+    var dayMoments=filtered.filter(function(m){return getDateStr(m.date)===selectedDay;});
+    momentsGrid.innerHTML='';
+    
+    if(dayMoments.length===0){
+      momentsGrid.innerHTML='<div class="empty-state"><span class="empty-icon">📸</span>'+t('no_day_data')+'</div>';
+    }else{
+      // ترتيب من الأقدم للأحدث
+      dayMoments.sort(function(a,b){return new Date(a.date)-new Date(b.date);});
+      
+      // 1. Hero (اللقطة الأولى)
+      var hero=await makeCard(dayMoments[0],'hero');
+      momentsGrid.appendChild(hero);
+      
+      // 2. الباقي في شبكة 3×3
+      if(dayMoments.length>1){
+        var grid=document.createElement('div');
+        grid.className='moments-grid';
+        grid.style.marginTop='6px';
+        var rest=dayMoments.slice(1);
+        var toShow=rest.length>9?rest.slice(0,9):rest;
+        for(var i=0;i<toShow.length;i++){
+          var card=await makeCard(toShow[i],'small');
+          grid.appendChild(card);
+        }
+        momentsGrid.appendChild(grid);
+        
+        // زر عرض الكل إذا أكثر من 10
+        if(rest.length>9){
+          var showAll=document.createElement('button');
+          showAll.className='show-all';
+          showAll.textContent='عرض كل اللقطات ('+dayMoments.length+')';
+          showAll.onclick=function(){
+            grid.innerHTML='';
+            (async function(){
+              for(var j=0;j<rest.length;j++){
+                var c=await makeCard(rest[j],'small');
+                grid.appendChild(c);
+              }
+            })();
+            showAll.remove();
+          };
+          momentsGrid.appendChild(showAll);
+        }
+      }
+    }
+  }else{
+    momentsSection.classList.add('hidden');
+  }
+}
+
+/* ============================================ */
+/* التقويم */
+/* ============================================ */
+function renderCalendar(moments,year,month){
+  var monthsDays=new Date(year,month+1,0).getDate();
+  var firstDay=new Date(year,month,1).getDay();
+  var grid=document.getElementById('calendarGrid');
+  var months=getMonthsArray();
+  grid.innerHTML='';
+  document.getElementById('calTitle').textContent=months[month]+' '+year;
+  var daysWithMoments=new Set(moments.map(function(m){return getDateStr(m.date);}));
+  var todayStr=getDateStr(new Date());
+  
+  for(var i=0;i<firstDay;i++){
+    var e=document.createElement('div');
+    e.className='calendar-day other-month';
+    grid.appendChild(e);
+  }
+  for(var day=1;day<=monthsDays;day++){
+    var d=document.createElement('div');
+    d.className='calendar-day';
+    var dateStr=year+'-'+String(month+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+    if(dateStr===todayStr)d.classList.add('today');
+    if(dateStr===selectedDay)d.classList.add('selected');
+    if(daysWithMoments.has(dateStr))d.classList.add('has-moments');
+    d.textContent=day;
+    (function(ds){
+      d.onclick=function(){
+        selectedDay=ds;
+        renderTree();
+      };
+    })(dateStr);
+    grid.appendChild(d);
+  }
+}
+document.getElementById('calPrev').onclick=function(){
+  if(selectedMonth===null)return;
+  selectedMonth--;
+  if(selectedMonth<0){selectedMonth=11;selectedYear--;}
+  selectedDay=null;
+  renderTree();
+};
+document.getElementById('calNext').onclick=function(){
+  if(selectedMonth===null)return;
+  selectedMonth++;
+  if(selectedMonth>11){selectedMonth=0;selectedYear++;}
+  selectedDay=null;
+  renderTree();
+};
+
+/* ============================================ */
+/* المودال - Moment Modal */
+/* ============================================ */
+async function openMomentModal(id){
+  var m=await getMoment(id);
+  if(!m)return;
+  currentMomentId=id;
+  var mod=document.getElementById('momentModal');
+  var c=document.getElementById('modalContent');
+  c.innerHTML='';
+  
+  if(m.type==='photo'){
+    var i=document.createElement('img');
+    i.src=URL.createObjectURL(m.blob);
+    c.appendChild(i);
+  }else if(m.type==='video'){
+    var v=document.createElement('video');
+    v.src=URL.createObjectURL(m.blob);
+    v.controls=true;
+    v.playsInline=true;
+    c.appendChild(v);
+  }else if(m.type==='text'){
+    var tDiv=document.createElement('div');
+    tDiv.className='modal-text';
+    tDiv.textContent=await m.blob.text();
+    if(m.background){
+      tDiv.style.backgroundImage='url('+m.background+')';
+      tDiv.style.backgroundSize='cover';
+      tDiv.style.backgroundPosition='center';
+    }else{
+      tDiv.style.background='rgba(0,0,0,.7)';
+    }
+    tDiv.style.color='#fff';
+    c.appendChild(tDiv);
+  }else if(m.type==='answer'){
+    var tDiv2=document.createElement('div');
+    tDiv2.className='modal-text';
+    tDiv2.style.background='rgba(30,41,59,.9)';
+    tDiv2.style.color='#fff';
+    tDiv2.style.textAlign='right';
+    var q=document.createElement('div');
+    q.style.color='var(--primary)';
+    q.style.fontSize='.9rem';
+    q.style.marginBottom='12px';
+    q.textContent='❓ '+(m.caption||'');
+    var a=document.createElement('div');
+    a.style.fontSize='1.05rem';
+    a.style.lineHeight='1.8';
+    a.textContent=await m.blob.text();
+    tDiv2.appendChild(q);
+    tDiv2.appendChild(a);
+    c.appendChild(tDiv2);
+  }
+  
+  var dt=new Date(m.date);
+  var dd=document.createElement('div');
+  dd.className='modal-date';
+  dd.textContent='📅 '+formatDate(dt)+' — '+dt.getHours()+':'+String(dt.getMinutes()).padStart(2,'0');
+  c.appendChild(dd);
+  
+  var hb=document.getElementById('modalHeart');
+  hb.textContent=m.favorite?'❤️':'🤍';
+  hb.className='action-heart'+(m.favorite?' active':'');
+  hb.onclick=async function(){
+    var mm=await getMoment(id);
+    if(!mm)return;
+    mm.favorite=!mm.favorite;
+    await updateMoment(mm);
+    hb.textContent=mm.favorite?'❤️':'🤍';
+    hb.className='action-heart'+(mm.favorite?' active':'');
+  };
+  
+  mod.classList.remove('hidden');
+}
+document.getElementById('modalClose').onclick=function(){
+  document.getElementById('momentModal').classList.add('hidden');
+  currentMomentId=null;
+  renderTree();
+};
+document.getElementById('modalDelete').onclick=async function(){
+  if(!currentMomentId)return;
+  if(confirm(t('delete_confirm'))){
+    await deleteMoment(currentMomentId);
+    document.getElementById('momentModal').classList.add('hidden');
+    currentMomentId=null;
+    renderTree();
+    updateCounter();
+    updateStreak();
+  }
+};/* ============================================ */
+/* الإعدادات - Settings */
+/* ============================================ */
+// التذكير
+function loadReminderSettings(){
+  var enabled=localStorage.getItem('lahza-reminder')==='true';
+  var el=document.getElementById('reminderStatus');
+  if(el)el.textContent=enabled?t('enabled'):t('disabled');
+  document.getElementById('reminderTime').value=localStorage.getItem('lahza-reminder-time')||'20:00';
+  var btn=document.getElementById('reminderToggleBtn');
+  if(btn)btn.textContent=enabled?t('enabled'):t('enabled');
+}
+document.getElementById('btnReminder').onclick=function(){
+  document.getElementById('reminderModal').classList.remove('hidden');
+  loadReminderSettings();
+};
+document.getElementById('reminderClose2').onclick=function(){
+  document.getElementById('reminderModal').classList.add('hidden');
+};
+document.getElementById('reminderToggleBtn').onclick=function(){
+  var enabled=localStorage.getItem('lahza-reminder')==='true';
+  localStorage.setItem('lahza-reminder',enabled?'false':'true');
+  loadReminderSettings();
+};
+document.getElementById('reminderTime').onchange=function(e){
+  localStorage.setItem('lahza-reminder-time',e.target.value);
+};
+
+// المظهر
+function updateThemeStatus(){
+  var el=document.getElementById('themeStatus');
+  if(!el)return;
+  var mode=currentTheme.mode;
+  var modeLabel=mode==='dark'?t('dark'):mode==='light'?t('light'):t('auto');
+  el.textContent=modeLabel+' — '+COLOR_NAMES[currentTheme.color];
+}
+document.getElementById('btnTheme').onclick=function(){
+  document.getElementById('themeModal').classList.remove('hidden');
+  updateThemeStatus();
+};
+document.getElementById('themeClose').onclick=function(){
+  document.getElementById('themeModal').classList.add('hidden');
+};
+document.querySelectorAll('#themeModal [data-mode]').forEach(function(b){
+  b.onclick=function(){
+    currentTheme.mode=b.getAttribute('data-mode');
+    applyTheme();
+    updateThemeStatus();
+  };
+});
+document.querySelectorAll('#themeModal [data-color]').forEach(function(b){
+  b.onclick=function(){
+    currentTheme.color=b.getAttribute('data-color');
+    applyTheme();
+    updateThemeStatus();
+  };
+});
+
+// اللغة
+function updateLanguageStatus(){
+  var el=document.getElementById('languageStatus');
+  if(!el)return;
+  if(currentLang==='ar')el.textContent='العربية';
+  else if(currentLang==='en')el.textContent='English';
+  else el.textContent='Svenska';
+}
+document.getElementById('btnLanguage').onclick=function(){
+  document.getElementById('languageModal').classList.remove('hidden');
+  document.querySelectorAll('.language-option').forEach(function(b){
+    b.classList.toggle('active',b.getAttribute('data-lang')===currentLang);
+  });
+};
+document.getElementById('languageClose').onclick=function(){
+  document.getElementById('languageModal').classList.add('hidden');
+};
+document.querySelectorAll('.language-option').forEach(function(b){
+  b.onclick=function(){
+    currentLang=b.getAttribute('data-lang');
+    applyLanguage();
+    updateLanguageStatus();
+    showToday();
+    switchTab('Settings');
+    document.getElementById('languageModal').classList.add('hidden');
+  };
+});
+
+/* ============================================ */
+/* التصدير والاستيراد - Export / Import */
+/* ============================================ */
+document.getElementById('btnExport').onclick=async function(){
+  try{
+    var ms=await getAllMoments();
+    if(ms.length===0){showStatus(t('no_data'),'#ef4444');return;}
+    var zip=new JSZip();
+    var meta=[];
+    for(var i=0;i<ms.length;i++){
+      var m=ms[i];
+      var ext='bin';
+      if(m.type==='photo')ext='jpg';
+      else if(m.type==='video')ext='mp4';
+      else if(m.type==='text'||m.type==='answer')ext='txt';
+      var fname=m.id+'.'+ext;
+      zip.file('moments/'+fname,m.blob);
+      meta.push({
+        id:m.id,
+        date:m.date,
+        type:m.type,
+        caption:m.caption||'',
+        favorite:m.favorite||false,
+        background:m.background||null,
+        file:fname
+      });
+    }
+    zip.file('data.json',JSON.stringify({
+      version:'1.0',
+      date:new Date().toISOString(),
+      count:ms.length,
+      moments:meta
+    },null,2));
+    var blob=await zip.generateAsync({type:'blob'});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a');
+    var today=getDateStr(new Date());
+    a.href=url;
+    a.download='lahza-backup-'+today+'.zip';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(url);},1000);
+    showStatus(t('export_success')+' ('+ms.length+')','#4ade80');
+  }catch(e){
+    showStatus(t('error')+': '+e.message,'#ef4444');
+  }
+};
+document.getElementById('btnImport').onclick=function(){
+  document.getElementById('importInput').click();
+};
+document.getElementById('importInput').onchange=async function(e){
+  var f=e.target.files[0];
+  if(!f)return;
+  try{
+    var zip=await JSZip.loadAsync(f);
+    var dataFile=zip.file('data.json');
+    if(!dataFile)throw new Error('Invalid file');
+    var data=JSON.parse(await dataFile.async('string'));
+    if(!data.moments||!Array.isArray(data.moments))throw new Error('Invalid structure');
+    var existing=await getAllMoments();
+    var existingKeys=new Set(existing.map(function(m){return m.date+'|'+m.type+'|'+(m.caption||'');}));
+    var added=0;
+    for(var i=0;i<data.moments.length;i++){
+      var meta=data.moments[i];
+      var key=meta.date+'|'+meta.type+'|'+(meta.caption||'');
+      if(existingKeys.has(key))continue;
+      var file=zip.file('moments/'+meta.file);
+      if(!file)continue;
+      var blob=await file.async('blob');
+      await saveMoment({
+        date:meta.date,
+        blob:blob,
+        type:meta.type,
+        caption:meta.caption||'',
+        favorite:meta.favorite||false,
+        background:meta.background||null
+      });
+      added++;
+    }
+    showStatus(t('import_success')+' ('+added+')','#4ade80');
+    updateCounter();
+    updateStreak();
+    renderTree();
+  }catch(e){
+    showStatus(t('error')+': '+e.message,'#ef4444');
+  }
+  e.target.value='';
+};
+
+// حذف الكل
+document.getElementById('btnDeleteAll').onclick=async function(){
+  if(!confirm(t('delete_all_confirm')))return;
+  try{
+    var ms=await getAllMoments();
+    for(var i=0;i<ms.length;i++){
+      await deleteMoment(ms[i].id);
+    }
+    showStatus('✅', '#4ade80');
+    updateCounter();
+    updateStreak();
+    renderTree();
+  }catch(e){
+    showStatus(t('error'),'#ef4444');
+  }
+};
+
+// تقييم
+document.getElementById('btnRate').onclick=function(){
+  alert(t('rate_msg'));
+};
+// تواصل
+document.getElementById('btnContact').onclick=function(){
+  alert(t('contact_msg'));
+};
+
+/* ============================================ */
+/* الإحصائيات - Stats */
+/* ============================================ */
+async function openStats(){
+  try{
+    var ms=await getAllMoments();
+    var total=ms.length;
+    var daysSet=new Set(ms.map(function(m){return getDateStr(m.date);}));
+    var daysCount=daysSet.size;
+    var best=0;
+    if(ms.length>0){
+      var sortedDays=Array.from(daysSet).sort();
+      var cur=1;best=1;
+      for(var i=1;i<sortedDays.length;i++){
+        var prev=new Date(sortedDays[i-1]+'T12:00:00');
+        var curr=new Date(sortedDays[i]+'T12:00:00');
+        var diff=Math.round((curr-prev)/86400000);
+        if(diff===1){cur++;if(cur>best)best=cur;}
+        else{cur=1;}
+      }
+    }
+    var now=new Date();
+    var monthStart=new Date(now.getFullYear(),now.getMonth(),1);
+    var monthCount=ms.filter(function(m){return new Date(m.date)>=monthStart;}).length;
+    
+    document.getElementById('statTotal').textContent=total;
+    document.getElementById('statDays').textContent=daysCount;
+    document.getElementById('statBest').textContent=best;
+    document.getElementById('statMonth').textContent=monthCount;
+    document.getElementById('statsModal').classList.remove('hidden');
+  }catch(e){}
+}
+document.getElementById('statsClose').onclick=function(){
+  document.getElementById('statsModal').classList.add('hidden');
+};
+document.getElementById('streakCard').onclick=openStats;
+
+/* ============================================ */
+/* الأسئلة والأجوبة */
+/* ============================================ */
+document.getElementById('questionCard').onclick=function(){
+  var list=document.getElementById('sectionList');
+  list.innerHTML='';
+  var bank=QUESTIONS_BANK['ar'];
+  Object.keys(bank).forEach(function(sec){
+    var item=document.createElement('div');
+    item.className='section-item';
+    item.innerHTML='<div class="left"><span class="section-icon">'+SECTION_ICONS[sec]+'</span><span class="section-name">'+sec+'</span></div><span class="count">'+bank[sec].length+'</span>';
+    item.onclick=function(){
+      document.getElementById('questionSheet').classList.add('hidden');
+      openQuestionList(sec);
+    };
+    list.appendChild(item);
+  });
+  document.getElementById('questionSheet').classList.remove('hidden');
+};
+document.getElementById('sheetCancel').onclick=function(){
+  document.getElementById('questionSheet').classList.add('hidden');
+};
+
+function openQuestionList(sec){
+  var bank=QUESTIONS_BANK['ar'];
+  var qs=bank[sec]||[];
+  document.getElementById('questionListTitle').textContent=SECTION_ICONS[sec]+' '+sec;
+  var list=document.getElementById('questionList');
+  list.innerHTML='';
+  qs.forEach(function(q){
+    var item=document.createElement('div');
+    item.className='question-item';
+    item.textContent=q;
+    item.onclick=function(){
+      document.getElementById('questionListSheet').classList.add('hidden');
+      openAnswerScreen(sec,q);
+    };
+    list.appendChild(item);
+  });
+  document.getElementById('questionListSheet').classList.remove('hidden');
+}
+document.getElementById('questionListCancel').onclick=function(){
+  document.getElementById('questionListSheet').classList.add('hidden');
+};
+
+function openAnswerScreen(sec,q){
+  currentSection=sec;
+  currentQuestion=q;
+  document.getElementById('answerQuestion').textContent=q;
+  document.getElementById('answerInput').value='';
+  document.getElementById('answerScreen').classList.remove('hidden');
+}
+document.getElementById('answerClose').onclick=function(){
+  document.getElementById('answerScreen').classList.add('hidden');
+};
+document.getElementById('answerSaveBtn').onclick=async function(){
+  var txt=document.getElementById('answerInput').value.trim();
+  if(!txt){showStatus(t('write_first'),'#ef4444');return;}
+  try{
+    await saveMoment({
+      date:new Date().toISOString(),
+      blob:new Blob([txt],{type:'text/plain'}),
+      type:'answer',
+      caption:currentQuestion,
+      favorite:false,
+      section:currentSection
+    });
+    document.getElementById('answerScreen').classList.add('hidden');
+    showStatus('✅','#4ade80');
+    updateCounter();
+    updateStreak();
+  }catch(e){
+    showStatus(t('error'),'#ef4444');
+  }
+};/* ============================================ */
+/* Reminder Check - فحص التذكير */
+/* ============================================ */
+async function checkReminder(){
+  try{
+    var enabled=localStorage.getItem('lahza-reminder')==='true';
+    if(!enabled)return;
+    var ms=await getAllMoments();
+    var today=getDateStr(new Date());
+    var hasToday=ms.some(function(m){return getDateStr(m.date)===today;});
+    if(hasToday)return;
+    var dismissed=localStorage.getItem('lahza-reminder-dismissed')===today;
+    if(dismissed)return;
+    // إظهار إشعار داخل التطبيق
+    var banner=document.createElement('div');
+    banner.style.cssText='position:fixed;top:0;left:0;right:0;background:var(--card);border-bottom:2px solid var(--primary);padding:12px 16px;z-index:9998;display:flex;align-items:center;gap:12px;';
+    banner.innerHTML='<span style="font-size:1.5rem;">📸</span><div style="flex:1;"><div style="font-weight:500;">'+t('empty_title')+'</div><div style="color:var(--text-3);font-size:.8rem;">'+t('empty_sub')+'</div></div><button style="padding:8px 16px;background:var(--primary);color:#000;border:none;border-radius:100px;font-weight:500;font-family:inherit;cursor:pointer;" id="reminderBtnBanner">'+t('save')+'</button>';
+    document.body.appendChild(banner);
+    document.getElementById('reminderBtnBanner').onclick=function(){
+      banner.remove();
+      switchTab('Home');
+    };
+    setTimeout(function(){banner.remove();},10000);
+  }catch(e){}
+}
+
+/* ============================================ */
+/* إخفاء شاشة الفتح */
+/* ============================================ */
+setTimeout(function(){
+  var sp=document.getElementById('splash');
+  if(sp){
+    sp.classList.add('hide');
+    setTimeout(function(){sp.style.display='none';},700);
+  }
+},1400);
+
+/* ============================================ */
+/* التهيئة - Init */
+/* ============================================ */
+(async function init(){
+  try{
+    loadTheme();
+    loadLanguage();
+    showToday();
+    
+    await openDB();
+    
+    updateCounter();
+    updateStreak();
+    updateThemeStatus();
+    updateLanguageStatus();
+    loadReminderSettings();
+    checkReminder();
+    
+    // فحص التذكير كل دقيقة
+    setInterval(checkReminder,60000);
+    
+    console.log('✅ لحظة — التطبيق جاهز');
+    console.log('📱 الإصدار: 4.0');
+  }catch(e){
+    console.error('❌ خطأ في التهيئة:',e);
+    var s=document.getElementById('status');
+    if(s)s.textContent='❌ خطأ: '+e.message;
+  }
+})();
+
+</script>
+</body>
+</html>
