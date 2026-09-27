@@ -110,28 +110,31 @@ textarea{resize:none;}
   bottom:0;
   left:0;
   right:0;
-  background:rgba(10,10,10,.92);
+  background:rgba(10,10,10,.95);
   backdrop-filter:blur(20px);
   -webkit-backdrop-filter:blur(20px);
   border-top:1px solid var(--border);
   display:flex;
   padding-bottom:env(safe-area-inset-bottom);
   z-index:100;
+  box-shadow:0 -4px 20px rgba(0,0,0,.5);
+}
 }
 .tab{
   flex:1;
-  padding:12px 0 10px;
-  font-size:.7rem;
-  color:var(--text-4);
+  padding:14px 0 12px;
+  font-size:.75rem;
+  font-weight:500;
+  color:var(--text-3);
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:4px;
+  gap:5px;
   position:relative;
   transition:color var(--t-fast);
 }
 .tab .icon{
-  font-size:1.3rem;
+  font-size:1.55rem;
   transition:transform var(--t-fast);
 }
 .tab.active{color:var(--primary);}
@@ -241,11 +244,13 @@ textarea{resize:none;}
 }
 .home-quote::before{top:0;right:0;}
 .home-quote::after{bottom:-20px;left:0;transform:rotate(180deg);}
+
 .home-quote-text{
-  font-size:1.4rem;
-  line-height:1.6;
-  font-weight:400;
+  font-size:1.15rem;
+  line-height:1.7;
+  font-weight:500;
   color:var(--primary-light);
+  padding:0 8px;
 }
 
 .home-actions{
@@ -437,6 +442,18 @@ textarea{resize:none;}
   color:#fff;
   border-color:var(--primary-dark);
 }
+.month-chip.current{
+  background:rgba(74,222,128,.15);
+  border:2px solid var(--primary);
+  color:var(--primary);
+  font-weight:600;
+}
+.month-chip.current.active{
+  background:var(--primary-dark);
+  color:#fff;
+  border-color:var(--primary);
+  box-shadow:0 0 12px rgba(74,222,128,.5);
+}
 .month-chip .count{
   display:block;
   font-size:.65rem;
@@ -595,13 +612,14 @@ textarea{resize:none;}
 
 /* Grid - المصغرات */
 .moments-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:6px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
 }
 .moment-small{
+  width:100%;
   aspect-ratio:1;
-  border-radius:var(--radius-sm);
+  border-radius:var(--radius-md);
   overflow:hidden;
   position:relative;
   background:var(--card);
@@ -609,7 +627,7 @@ textarea{resize:none;}
   transition:transform var(--t-fast);
   animation:fadeInUp .4s ease both;
 }
-.moment-small:active{transform:scale(.95);}
+.moment-small:active{transform:scale(.98);}
 .moment-small img,
 .moment-small video{
   width:100%;
@@ -623,11 +641,12 @@ textarea{resize:none;}
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:8px;
+  padding:20px;
   text-align:center;
-  font-size:.7rem;
-  line-height:1.4;
+  font-size:.95rem;
+  line-height:1.6;
   overflow:hidden;
+}
 }
 
 /* Overlay */
@@ -1485,10 +1504,8 @@ textarea{resize:none;}
 <span class="background-title">الخلفية</span>
 <div class="background-grid" id="bgGrid">
 <button class="bg-option remove active" data-bg="none" title="بدون خلفية">⭕</button>
-<button class="bg-option upload" id="uploadBg" title="اختر صورة من جهازك">+</button>
-</div>
-<input type="file" id="bgInput" accept="image/*" style="display:none;">
-</div>
+<label class="bg-option upload" for="bgInput" title="اختر صورة من جهازك" id="uploadBg">+</label>
+<input type="file" id="bgInput" accept="image/*" style="position:absolute;left:-9999px;opacity:0;">
 
 <button class="btn primary" id="saveTextBtn">التالي</button>
 </div>
@@ -1613,7 +1630,23 @@ textarea{resize:none;}
 </div>
 </div>
 </div>
-
+<!-- مودال التقييم -->
+<div class="modal hidden" id="rateModal">
+<button class="modal-close" id="rateClose">×</button>
+<div class="modal-content">
+<h2 class="stats-title">⭐ قيّم التطبيق</h2>
+<p class="screen-subtitle">كيف تقيّم تجربتك مع لحظة؟</p>
+<div id="rateStars" style="display:flex;justify-content:center;gap:8px;font-size:2.5rem;margin:24px 0;user-select:none;">
+<span data-star="1" style="cursor:pointer;">☆</span>
+<span data-star="2" style="cursor:pointer;">☆</span>
+<span data-star="3" style="cursor:pointer;">☆</span>
+<span data-star="4" style="cursor:pointer;">☆</span>
+<span data-star="5" style="cursor:pointer;">☆</span>
+</div>
+<textarea class="text-input" id="rateFeedback" placeholder="رأيك (اختياري)..." style="min-height:80px;margin-bottom:16px;"></textarea>
+<button class="btn primary" id="rateSubmit">📤 إرسال</button>
+</div>
+</div>
 <input type="file" accept="video/*" capture="environment" id="videoInput" style="display:none;"><script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 /* ============================================ */
@@ -1725,7 +1758,7 @@ ar:{
   camera_not_found:'لا توجد كاميرا',
   camera_busy:'الكاميرا مشغولة',
   not_now:'ليس الآن',
-  contact_msg:'تواصل معنا على lahzalsqta@gmail.com',
+  contact_msg:'تواصل معنا على lahzalaqta@gmail.com',
   rate_msg:'شكراً لدعمك!',
   write_first:'اكتب شيئاً أولاً',
   old_date:'إضافة بتاريخ قديم',
@@ -1814,7 +1847,7 @@ en:{
   camera_not_found:'No camera found',
   camera_busy:'Camera busy',
   not_now:'Not now',
-  contact_msg:'Contact us at lahzalsqta@gmail.com',
+  contact_msg:'Contact us at lahzalaqta@gmail.com',
   rate_msg:'Thanks for your support!',
   write_first:'Write something first',
   old_date:'Add with old date',
@@ -1903,7 +1936,7 @@ sv:{
   camera_not_found:'Ingen kamera hittad',
   camera_busy:'Kameran upptagen',
   not_now:'Inte nu',
-  contact_msg:'Kontakta oss på lahzalsqta@gmail.com',
+  contact_msg:'Kontakta oss på lahzalaqta@gmail.com',
   rate_msg:'Tack för ditt stöd!',
   write_first:'Skriv något först',
   old_date:'Lägg till med gammalt datum',
@@ -2118,17 +2151,25 @@ function applyTheme(){
     var h=new Date().getHours();
     mode=(h>=6&&h<18)?'light':'dark';
   }
+  if(!THEMES[mode])mode='dark';
+  if(!currentTheme.color||!THEMES[mode][currentTheme.color])currentTheme.color='green';
   var theme=THEMES[mode][currentTheme.color];
   var root=document.documentElement.style;
   root.setProperty('--bg',theme.bg);
+  root.setProperty('--bg-soft',theme.bg);
   root.setProperty('--card',theme.card);
+  root.setProperty('--card-hover',theme.card);
   root.setProperty('--text',theme.text);
   root.setProperty('--text-2',theme.text2);
   root.setProperty('--text-3',theme.text3);
   root.setProperty('--text-4',theme.text3);
   root.setProperty('--border',theme.border);
   root.setProperty('--border-strong',theme.border);
-  root.setProperty('--primary',theme.primary);
+ root.setProperty('--primary',theme.primary);
+  root.setProperty('--primary-light',theme.primary);
+  root.setProperty('--primary-dark',theme.primary);
+  document.body.style.background=theme.bg;
+  document.body.style.color=theme.text;
   localStorage.setItem('lahza-theme',JSON.stringify(currentTheme));
 }
 function loadTheme(){
@@ -2349,9 +2390,7 @@ document.getElementById('textClose').onclick=function(){
 };
 
 /* اختيار خلفية من الجهاز */
-document.getElementById('uploadBg').onclick=function(){
-  document.getElementById('bgInput').click();
-};
+// uploadBg ما يحتاج onclick — <label> بيفتح الملف تلقائياً
 document.getElementById('bgInput').onchange=function(e){
   var f=e.target.files[0];
   if(!f)return;
@@ -2446,7 +2485,7 @@ document.getElementById('saveBtn').onclick=async function(){
   var c=document.getElementById('captionInput').value.trim();
   try{
     var momentData={
-      date:new Date().toISOString(),
+      date:window._pendingOldDate?window._pendingOldDate.toISOString():new Date().toISOString(),
       blob:pendingBlob,
       type:pendingType,
       caption:c,
@@ -2466,6 +2505,7 @@ document.getElementById('saveBtn').onclick=async function(){
     pendingBlob=null;
     pendingType=null;
     pendingBg=null;
+    window._pendingOldDate=null;
     document.getElementById('saveScreen').classList.add('hidden');
     updateCounter();
     updateStreak();
@@ -2487,7 +2527,7 @@ document.getElementById('saveClose').onclick=function(){
 /* إضافة بتاريخ قديم */
 /* ============================================ */
 document.getElementById('actionOldDate').onclick=function(){
-  var d=prompt(t('pick_date')+':\nYYYY-MM-DD (مثال: 2024-05-15)');
+  var d=prompt(t('pick_date')+':\nYYYY-MM-DD (مثال: 15-05-2024)');
   if(!d)return;
   var parts=d.split('-');
   if(parts.length!==3)return;
@@ -2496,11 +2536,7 @@ document.getElementById('actionOldDate').onclick=function(){
   var dy=parseInt(parts[2]);
   if(isNaN(y)||isNaN(mo)||isNaN(dy))return;
   var date=new Date(y,mo,dy,12,0,0);
-  document.getElementById('actionPhoto').onclick=async function(){
-    window._oldDate=date;
-    document.getElementById('photoScreen').classList.remove('hidden');
-    await openCamera(document.getElementById('photoVideo'));
-  };
+  window._pendingOldDate=date;
   showStatus('✅ اختر نوع اللقطة', '#4ade80');
   document.getElementById('questionSheet').classList.remove('hidden');
   var list=document.getElementById('sectionList');
@@ -2525,7 +2561,6 @@ document.getElementById('actionOldDate').onclick=function(){
         document.getElementById('textScreen').classList.remove('hidden');
         updateBgGrid();
       }
-      window._pendingOldDate=date;
     };
     list.appendChild(item);
   });
@@ -2666,20 +2701,27 @@ async function renderTree(){
   // الأشهر
   if(selectedYear){
     monthsSection.classList.remove('hidden');
-    monthsGrid.innerHTML='';
+   monthsGrid.innerHTML='';
     var months=getMonthsArray();
+    var nowDate=new Date();
     for(var mo=0;mo<12;mo++){
       var mCount=filtered.filter(function(m){
         var d=new Date(m.date);
         return d.getFullYear()===selectedYear&&d.getMonth()===mo;
       }).length;
       var chip=document.createElement('button');
-     chip.className='month-chip'+(selectedMonth===mo?' active':'');
-chip.innerHTML=months[mo]+'<span class="count">'+mCount+'</span>';
+      var isCurrent=(selectedYear===nowDate.getFullYear()&&mo===nowDate.getMonth())?' current':'';
+      var isActive=(selectedMonth===mo)?' active':'';
+      chip.className='month-chip'+isActive+isCurrent;
+      chip.innerHTML=months[mo]+'<span class="count">'+mCount+'</span>';
       (function(mo){
         chip.onclick=function(){
           selectedMonth=mo;selectedDay=null;
           renderTree();
+        };
+      })(mo);
+      monthsGrid.appendChild(chip);
+    }
         };
       })(mo);
       monthsGrid.appendChild(chip);
@@ -2708,46 +2750,17 @@ chip.innerHTML=months[mo]+'<span class="count">'+mCount+'</span>';
       // ترتيب من الأقدم للأحدث
       dayMoments.sort(function(a,b){return new Date(a.date)-new Date(b.date);});
       
-      // 1. Hero (اللقطة الأولى)
-      var hero=await makeCard(dayMoments[0],'hero');
-      momentsGrid.appendChild(hero);
-      
-      // 2. الباقي في شبكة 3×3
-      if(dayMoments.length>1){
-        var grid=document.createElement('div');
-        grid.className='moments-grid';
-        grid.style.marginTop='6px';
-        var rest=dayMoments.slice(1);
-        var toShow=rest.length>9?rest.slice(0,9):rest;
-        for(var i=0;i<toShow.length;i++){
-          var card=await makeCard(toShow[i],'small');
-          grid.appendChild(card);
-        }
-        momentsGrid.appendChild(grid);
-        
-        // زر عرض الكل إذا أكثر من 10
-        if(rest.length>9){
-          var showAll=document.createElement('button');
-          showAll.className='show-all';
-          showAll.textContent='عرض كل اللقطات ('+dayMoments.length+')';
-          showAll.onclick=function(){
-            grid.innerHTML='';
-            (async function(){
-              for(var j=0;j<rest.length;j++){
-                var c=await makeCard(rest[j],'small');
-                grid.appendChild(c);
-              }
-            })();
-            showAll.remove();
-          };
-          momentsGrid.appendChild(showAll);
-        }
+      // Instagram-style feed - كل اللقطات بنفس الحجم
+      for(var i=0;i<dayMoments.length;i++){
+        var card=await makeCard(dayMoments[i],'small');
+        momentsGrid.appendChild(card);
       }
     }
   }else{
     momentsSection.classList.add('hidden');
   }
 }
+
 
 /* ============================================ */
 /* التقويم */
@@ -2943,6 +2956,7 @@ document.querySelectorAll('#themeModal [data-color]').forEach(function(b){
     currentTheme.color=b.getAttribute('data-color');
     applyTheme();
     updateThemeStatus();
+    showStatus('✅ تم تغيير اللون','#4ade80');
   };
 });
 
@@ -3066,24 +3080,89 @@ document.getElementById('importInput').onchange=async function(e){
 
 // حذف الكل
 document.getElementById('btnDeleteAll').onclick=async function(){
-  if(!confirm(t('delete_all_confirm')))return;
   try{
     var ms=await getAllMoments();
+    if(ms.length===0){showStatus(t('no_data'),'#ef4444');return;}
+    
+    // ١. عرض خيار تصدير
+    var wantExport=confirm('⚠️ عندك '+ms.length+' لقطة\n\nهل تريد تصدير نسخة احتياطية قبل الحذف؟\n\n(موصى به بشدة)');
+    
+    if(wantExport){
+      // صدّر
+      var zip=new JSZip();
+      var meta=[];
+      for(var i=0;i<ms.length;i++){
+        var m=ms[i];
+        var ext='bin';
+        if(m.type==='photo')ext='jpg';
+        else if(m.type==='video')ext='mp4';
+        else if(m.type==='text'||m.type==='answer')ext='txt';
+        var fname=m.id+'.'+ext;
+        zip.file('moments/'+fname,m.blob);
+        meta.push({id:m.id,date:m.date,type:m.type,caption:m.caption||'',favorite:m.favorite||false,background:m.background||null,file:fname});
+      }
+      zip.file('data.json',JSON.stringify({version:'1.0',date:new Date().toISOString(),count:ms.length,moments:meta},null,2));
+      var blob=await zip.generateAsync({type:'blob'});
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement('a');
+      a.href=url;
+      a.download='lahza-backup-'+getDateStr(new Date())+'.zip';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function(){URL.revokeObjectURL(url);},1000);
+      await new Promise(function(r){setTimeout(r,800);});
+    }
+    
+    // ٢. تأكيد مزدوج
+    var answer=prompt('⚠️ تأكيد نهائي\n\nسيتم حذف '+ms.length+' لقطة نهائياً.\n\nاكتب كلمة "حذف" للتأكيد:');
+    if(answer!=='حذف'){showStatus('تم الإلغاء','#fbbf24');return;}
+    
+    // ٣. احذف
     for(var i=0;i<ms.length;i++){
       await deleteMoment(ms[i].id);
     }
-    showStatus('✅', '#4ade80');
+    showStatus('✅ تم حذف '+ms.length+' لقطة','#4ade80');
     updateCounter();
     updateStreak();
     renderTree();
   }catch(e){
-    showStatus(t('error'),'#ef4444');
+    showStatus(t('error')+': '+e.message,'#ef4444');
   }
 };
 
 // تقييم
+var rateSelected=0;
 document.getElementById('btnRate').onclick=function(){
-  alert(t('rate_msg'));
+  document.getElementById('rateModal').classList.remove('hidden');
+  rateSelected=0;
+  document.querySelectorAll('#rateStars span').forEach(function(s){
+    s.textContent='☆';
+    s.style.color='';
+  });
+  document.getElementById('rateFeedback').value='';
+};
+document.getElementById('rateClose').onclick=function(){
+  document.getElementById('rateModal').classList.add('hidden');
+};
+document.querySelectorAll('#rateStars span').forEach(function(s){
+  s.onclick=function(){
+    rateSelected=parseInt(s.getAttribute('data-star'));
+    document.querySelectorAll('#rateStars span').forEach(function(x){
+      var v=parseInt(x.getAttribute('data-star'));
+      x.textContent=v<=rateSelected?'★':'☆';
+      x.style.color=v<=rateSelected?'#fbbf24':'';
+    });
+  };
+});
+document.getElementById('rateSubmit').onclick=function(){
+  if(rateSelected===0){alert('الرجاء اختيار عدد النجوم');return;}
+  var feedback=document.getElementById('rateFeedback').value.trim();
+  var msg='⭐ تقييم: '+rateSelected+'/5';
+  if(feedback)msg+='\n📝 رأي: '+feedback;
+  var mailto='mailto:lahzalaqta@gmail.com?subject=تقييم تطبيق لحظة&body='+encodeURIComponent(msg);
+  window.location.href=mailto;
+  document.getElementById('rateModal').classList.add('hidden');
 };
 // تواصل
 document.getElementById('btnContact').onclick=function(){
@@ -3269,3 +3348,5 @@ setTimeout(function(){
 </script>
 </body>
 </html>
+
+
