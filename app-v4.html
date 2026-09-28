@@ -10,25 +10,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
-/* ============================================ */
-/* Design System - نظام التصميم */
-/* ============================================ */
 :root{
-  /* الألوان الأساسية */
   --bg:#0a0a0a;
   --bg-soft:#0f0f0f;
   --card:#141414;
   --card-hover:#1a1a1a;
   --border:rgba(255,255,255,.08);
   --border-strong:rgba(255,255,255,.15);
-  
-  /* النصوص */
   --text:#ffffff;
   --text-2:#cccccc;
   --text-3:#888888;
   --text-4:#666666;
-  
-  /* الألوان المميزة */
   --primary:#4ade80;
   --primary-dark:#15803d;
   --primary-light:#86efac;
@@ -37,36 +29,24 @@
   --blue:#3b82f6;
   --red:#ef4444;
   --orange:#fb923c;
-  
-  /* الأحجام */
   --radius-sm:8px;
   --radius-md:12px;
   --radius-lg:16px;
   --radius-xl:24px;
   --radius-full:999px;
-  
-  /* المسافات */
   --space-xs:4px;
   --space-sm:8px;
   --space-md:16px;
   --space-lg:24px;
   --space-xl:32px;
-  
-  /* الحركات */
   --t-fast:0.15s;
   --t-mid:0.25s;
   --t-slow:0.4s;
-  
-  /* الظلال */
   --shadow-sm:0 2px 8px rgba(0,0,0,.3);
   --shadow-md:0 4px 16px rgba(0,0,0,.4);
   --shadow-lg:0 8px 32px rgba(0,0,0,.5);
   --shadow-primary:0 4px 16px rgba(74,222,128,.25);
 }
-
-/* ============================================ */
-/* Base - الأساسيات */
-/* ============================================ */
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;overflow:hidden;}
 body{
@@ -79,21 +59,14 @@ body{
   flex-direction:column;
   -webkit-font-smoothing:antialiased;
 }
-
 h1{font-size:2rem;font-weight:600;letter-spacing:-.02em;line-height:1.2;}
 h2{font-size:1.5rem;font-weight:500;letter-spacing:-.01em;}
 h3{font-size:1.15rem;font-weight:500;}
 p{font-size:1rem;line-height:1.7;}
-
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
 input,textarea{font-family:inherit;}
 textarea{resize:none;}
-
 .hidden{display:none !important;}
-
-/* ============================================ */
-/* Content - منطقة المحتوى */
-/* ============================================ */
 .content{
   flex:1;
   overflow-y:auto;
@@ -101,10 +74,6 @@ textarea{resize:none;}
   -webkit-overflow-scrolling:touch;
   animation:fadeIn var(--t-slow) ease;
 }
-
-/* ============================================ */
-/* Tabs - الشريط السفلي */
-/* ============================================ */
 .tabs{
   position:fixed;
   bottom:0;
@@ -118,7 +87,6 @@ textarea{resize:none;}
   padding-bottom:env(safe-area-inset-bottom);
   z-index:100;
   box-shadow:0 -4px 20px rgba(0,0,0,.5);
-}
 }
 .tab{
   flex:1;
@@ -151,12 +119,7 @@ textarea{resize:none;}
   border-radius:0 0 2px 2px;
   transition:transform var(--t-mid);
 }
-.tab.active::after{transform:translateX(-50%) scaleX(1);}
-
-/* ============================================ */
-/* Splash - شاشة الفتح */
-/* ============================================ */
-#splash{
+.tab.active::after{transform:translateX(-50%) scaleX(1);}#splash{
   position:fixed;
   inset:0;
   background:radial-gradient(circle at center, #0f1f15 0%, #0a0a0a 70%);
@@ -184,10 +147,6 @@ textarea{resize:none;}
   margin-top:8px;
   animation:fadeIn 1s ease .3s both;
 }
-
-/* ============================================ */
-/* Animations - الحركات */
-/* ============================================ */
 @keyframes fadeIn{
   from{opacity:0;}
   to{opacity:1;}
@@ -208,9 +167,7 @@ textarea{resize:none;}
   0%{background-position:-200% 0;}
   100%{background-position:200% 0;}
 }
-.fade-in-up{animation:fadeInUp .5s ease both;}/* ============================================ */
-/* الرئيسية - Home Screen */
-/* ============================================ */
+.fade-in-up{animation:fadeInUp .5s ease both;}
 .home-greeting{
   font-size:1.1rem;
   font-weight:300;
@@ -224,7 +181,6 @@ textarea{resize:none;}
   margin-bottom:var(--space-xl);
   animation:fadeInUp .5s ease .05s both;
 }
-
 .home-quote{
   position:relative;
   padding:var(--space-xl) var(--space-md);
@@ -244,7 +200,6 @@ textarea{resize:none;}
 }
 .home-quote::before{top:0;right:0;}
 .home-quote::after{bottom:-20px;left:0;transform:rotate(180deg);}
-
 .home-quote-text{
   font-size:1.15rem;
   line-height:1.7;
@@ -252,7 +207,6 @@ textarea{resize:none;}
   color:var(--primary-light);
   padding:0 8px;
 }
-
 .home-actions{
   margin:var(--space-xl) 0;
   animation:fadeInUp .5s ease .15s both;
@@ -286,7 +240,6 @@ textarea{resize:none;}
   transition:transform var(--t-fast);
 }
 .home-action:hover .arrow{transform:translateX(-4px);color:var(--primary);}
-
 .home-stats{
   margin-top:var(--space-xl);
   display:flex;
@@ -306,26 +259,18 @@ textarea{resize:none;}
   font-weight:600;
   font-size:1rem;
 }
-
-/* خط فاصل */
 .divider{
   height:1px;
   background:var(--border);
   margin:var(--space-lg) 0;
 }
-
-/* ============================================ */
-/* لقطاتي - Moments */
-/* ============================================ */
 .page-title{
   font-size:1.8rem;
   font-weight:600;
   letter-spacing:-.02em;
   margin-bottom:var(--space-lg);
   text-align:center;
-}
-
-.filters{
+}.filters{
   display:flex;
   gap:var(--space-sm);
   margin-bottom:var(--space-lg);
@@ -352,7 +297,6 @@ textarea{resize:none;}
   color:#000;
   font-weight:500;
 }
-
 .hint{
   text-align:center;
   color:var(--text-3);
@@ -361,7 +305,6 @@ textarea{resize:none;}
   line-height:2;
   animation:fadeIn 1s ease both;
 }
-
 .empty-state{
   text-align:center;
   color:var(--text-3);
@@ -375,10 +318,6 @@ textarea{resize:none;}
   margin-bottom:var(--space-md);
   opacity:.5;
 }
-
-/* ============================================ */
-/* السنوات - Years Row */
-/* ============================================ */
 .years-row{
   display:flex;
   gap:var(--space-sm);
@@ -415,10 +354,6 @@ textarea{resize:none;}
   font-weight:400;
 }
 .year-chip.active .count{opacity:.9;}
-
-/* ============================================ */
-/* الأشهر - Months Grid */
-/* ============================================ */
 .months-grid{
   display:grid;
   grid-template-columns:repeat(6,1fr);
@@ -459,9 +394,7 @@ textarea{resize:none;}
   font-size:.65rem;
   margin-top:2px;
   opacity:.7;
-}/* ============================================ */
-/* التقويم - Calendar */
-/* ============================================ */
+}
 .calendar-header{
   display:flex;
   justify-content:space-between;
@@ -488,7 +421,6 @@ textarea{resize:none;}
   transition:all var(--t-fast);
 }
 .calendar-nav:hover{border-color:var(--primary);color:var(--primary);}
-
 .calendar-weekdays{
   display:grid;
   grid-template-columns:repeat(7,1fr);
@@ -501,7 +433,6 @@ textarea{resize:none;}
   font-size:.65rem;
   padding:6px 0;
 }
-
 .calendar-grid{
   display:grid;
   grid-template-columns:repeat(7,1fr);
@@ -549,12 +480,7 @@ textarea{resize:none;}
   border-color:var(--primary);
   font-weight:600;
 }
-.calendar-day.selected::after{background:#000;}
-
-/* ============================================ */
-/* المجلة الذكية - Smart Magazine */
-/* ============================================ */
-.day-section{
+.calendar-day.selected::after{background:#000;}.day-section{
   margin-bottom:var(--space-xl);
   animation:fadeInUp .4s ease both;
 }
@@ -575,8 +501,6 @@ textarea{resize:none;}
   font-size:.8rem;
   color:var(--text-3);
 }
-
-/* Hero - اللقطة الأولى كبيرة */
 .moment-hero{
   width:100%;
   aspect-ratio:16/10;
@@ -584,12 +508,14 @@ textarea{resize:none;}
   overflow:hidden;
   position:relative;
   background:var(--card);
-  margin-bottom:6px;
+  margin-bottom:8px;
   cursor:pointer;
-  transition:transform var(--t-fast);
+  transition:transform var(--t-fast), box-shadow var(--t-fast);
   animation:fadeInUp .4s ease both;
+  box-shadow:0 4px 16px rgba(0,0,0,.3);
 }
 .moment-hero:active{transform:scale(.98);}
+.moment-hero:hover{box-shadow:0 6px 24px rgba(0,0,0,.5);}
 .moment-hero img,
 .moment-hero video{
   width:100%;
@@ -609,8 +535,6 @@ textarea{resize:none;}
   line-height:1.7;
   font-weight:500;
 }
-
-/* Grid - المصغرات */
 .moments-grid{
   display:flex;
   flex-direction:column;
@@ -647,9 +571,6 @@ textarea{resize:none;}
   line-height:1.6;
   overflow:hidden;
 }
-}
-
-/* Overlay */
 .moment-overlay{
   position:absolute;
   inset:0;
@@ -676,8 +597,6 @@ textarea{resize:none;}
   white-space:nowrap;
 }
 .moment-hero .moment-caption{font-size:.85rem;}
-
-/* زر عرض الكل */
 .show-all{
   display:block;
   width:100%;
@@ -691,9 +610,7 @@ textarea{resize:none;}
   text-align:center;
   transition:all var(--t-fast);
 }
-.show-all:hover{border-color:var(--primary);color:var(--primary);border-style:solid;}/* ============================================ */
-/* الإعدادات - Settings */
-/* ============================================ */
+.show-all:hover{border-color:var(--primary);color:var(--primary);border-style:solid;}
 .settings-group{
   margin-bottom:var(--space-lg);
 }
@@ -746,10 +663,7 @@ textarea{resize:none;}
 .settings-item .arrow{
   color:var(--text-4);
   font-size:.8rem;
-}
-
-/* قائمة اللغة */
-.language-list{
+}.language-list{
   display:flex;
   flex-direction:column;
 }
@@ -774,10 +688,6 @@ textarea{resize:none;}
   font-size:1.1rem;
 }
 .language-option.active .check{opacity:1;}
-
-/* ============================================ */
-/* الشاشات الكاملة - Screens */
-/* ============================================ */
 .screen{
   position:fixed;
   inset:0;
@@ -805,7 +715,6 @@ textarea{resize:none;}
   transition:background var(--t-fast);
 }
 .screen .close:hover{background:rgba(255,255,255,.1);}
-
 .screen-title{
   font-size:1.8rem;
   font-weight:300;
@@ -818,10 +727,6 @@ textarea{resize:none;}
   font-size:.9rem;
   margin-bottom:var(--space-lg);
 }
-
-/* ============================================ */
-/* الأزرار - Buttons */
-/* ============================================ */
 .btn{
   display:block;
   width:100%;
@@ -862,10 +767,6 @@ textarea{resize:none;}
   font-size:.9rem;
   max-width:200px;
 }
-
-/* ============================================ */
-/* المودال - Modal */
-/* ============================================ */
 .modal{
   position:fixed;
   inset:0;
@@ -895,7 +796,6 @@ textarea{resize:none;}
   transition:all var(--t-fast);
 }
 .modal-close:hover{background:rgba(255,255,255,.2);}
-
 .modal-content{
   width:100%;
   max-width:500px;
@@ -925,8 +825,6 @@ textarea{resize:none;}
   font-size:.85rem;
   margin-bottom:var(--space-md);
 }
-
-/* الإجراءات السفلية */
 .modal-actions{
   position:fixed;
   bottom:30px;
@@ -958,10 +856,7 @@ textarea{resize:none;}
 .action-heart:hover{background:rgba(255,255,255,.2);}
 .action-heart.active{background:rgba(239,68,68,.9);}
 .action-delete{background:rgba(239,68,68,.8);}
-.action-delete:hover{background:rgba(239,68,68,1);transform:scale(1.05);}/* ============================================ */
-/* الكتابة - Text Screen */
-/* ============================================ */
-.text-screen{
+.action-delete:hover{background:rgba(239,68,68,1);transform:scale(1.05);}.text-screen{
   position:fixed;
   inset:0;
   background:var(--bg);
@@ -993,8 +888,6 @@ textarea{resize:none;}
   outline:none;
   border-color:var(--primary);
 }
-
-/* خيارات الخلفية */
 .background-section{
   max-width:500px;
   margin:0 auto var(--space-md);
@@ -1047,10 +940,6 @@ textarea{resize:none;}
   color:var(--text-3);
   font-size:1.3rem;
 }
-
-/* ============================================ */
-/* المعاينة - Preview */
-/* ============================================ */
 .preview{
   width:100%;
   max-width:500px;
@@ -1082,10 +971,6 @@ textarea{resize:none;}
 .preview.has-transparent-bg::before{
   background:rgba(0,0,0,.6);
 }
-
-/* ============================================ */
-/* الأسئلة - Questions */
-/* ============================================ */
 .sheet{
   position:fixed;
   inset:0;
@@ -1117,7 +1002,6 @@ textarea{resize:none;}
   font-size:.85rem;
   margin-bottom:var(--space-md);
 }
-
 .section-item{
   display:flex;
   align-items:center;
@@ -1139,7 +1023,6 @@ textarea{resize:none;}
 .section-item .section-icon{font-size:1.2rem;}
 .section-item .section-name{font-size:1rem;color:var(--text);}
 .section-item .count{font-size:.8rem;color:var(--text-3);}
-
 .question-item{
   padding:var(--space-md);
   border-bottom:1px solid var(--border);
@@ -1153,8 +1036,6 @@ textarea{resize:none;}
 .question-item:last-child{border-bottom:none;}
 .question-item:hover{background:var(--card-hover);}
 .question-item:active{background:var(--bg-soft);}
-
-/* شاشة الإجابة */
 .answer-screen{
   position:fixed;
   inset:0;
@@ -1192,10 +1073,6 @@ textarea{resize:none;}
   resize:vertical;
 }
 .answer-input:focus{outline:none;border-color:var(--primary);}
-
-/* ============================================ */
-/* الإحصائيات - Stats */
-/* ============================================ */
 .stats-title{
   font-size:1.6rem;
   font-weight:300;
@@ -1218,39 +1095,28 @@ textarea{resize:none;}
 }
 .stat-icon{font-size:1.6rem;display:block;margin-bottom:var(--space-xs);}
 .stat-num{font-size:1.6rem;font-weight:300;display:block;color:var(--primary);}
-.stat-label{color:var(--text-3);font-size:.78rem;}
-
-/* ============================================ */
-/* Empty / Hint */
-/* ============================================ */
+.stat-label{color:var(--remtext-3);font-size:.78rem;}
+;
 #status{
   margin-top:var(--space-md);
-  font-size:.9rem;
-  min-height:20px;
+  font-size:.9  min-height:20px;
   text-align:center;
   transition:opacity var(--t-mid);
 }
-
 .counter{
   text-align:center;
   color:var(--text-3);
   font-size:.85rem;
   margin-top:var(--space-md);
 }
-
-/* ============================================ */
-/* Media Queries */
-/* ============================================ */
 @media (max-width:380px){
   h1{font-size:1.6rem;}
   .splash-logo{font-size:4rem;}
   .months-grid{grid-template-columns:repeat(4,1fr);}
-  .home-quote-text{font-size:1.2rem;}
+  .home-quote-text{font-size:1rem;}
 }
 </style>
-</head><body>
-
-<!-- شاشة الفتح -->
+</head><body><!-- شاشة الفتح -->
 <div id="splash">
 <div class="splash-logo">Lahza</div>
 <div class="splash-sub">لحظة</div>
@@ -1357,7 +1223,6 @@ textarea{resize:none;}
 <div class="content hidden" id="tabSettings">
 <h1 class="page-title">إعدادات</h1>
 
-<!-- مجموعة: عام -->
 <div class="settings-group">
 <div class="settings-group-title">عام</div>
 <div class="settings-list">
@@ -1374,7 +1239,7 @@ textarea{resize:none;}
 <span class="icon">🎨</span>
 <div class="info">
 <span class="label">المظهر</span>
-<span class="value" id="themeStatus">غامق — أزرق</span>
+<span class="value" id="themeStatus">غامق — أخضر</span>
 </div>
 <span class="arrow">›</span>
 </button>
@@ -1390,7 +1255,6 @@ textarea{resize:none;}
 </div>
 </div>
 
-<!-- مجموعة: البيانات -->
 <div class="settings-group">
 <div class="settings-group-title">البيانات</div>
 <div class="settings-list">
@@ -1421,7 +1285,6 @@ textarea{resize:none;}
 </div>
 </div>
 
-<!-- مجموعة: عن التطبيق -->
 <div class="settings-group">
 <div class="settings-group-title">عن التطبيق</div>
 <div class="settings-list">
@@ -1458,9 +1321,7 @@ textarea{resize:none;}
 </div>
 </div>
 </div>
-</div>
-
-<!-- التبويبات السفلية -->
+</div><!-- التبويبات السفلية -->
 <div class="tabs">
 <button class="tab active" id="tabBtnHome">
 <span class="icon">🏠</span>
@@ -1505,7 +1366,9 @@ textarea{resize:none;}
 <div class="background-grid" id="bgGrid">
 <button class="bg-option remove active" data-bg="none" title="بدون خلفية">⭕</button>
 <label class="bg-option upload" for="bgInput" title="اختر صورة من جهازك" id="uploadBg">+</label>
+</div>
 <input type="file" id="bgInput" accept="image/*" style="position:absolute;left:-9999px;opacity:0;">
+</div>
 
 <button class="btn primary" id="saveTextBtn">التالي</button>
 </div>
@@ -1544,8 +1407,8 @@ textarea{resize:none;}
 <button class="close" id="answerClose">×</button>
 <h2 class="screen-title">جوابك</h2>
 <div class="answer-question" id="answerQuestion">...</div>
-<textarea class="answer-input" id="answerInput" placeholder="اكتب جوابك..."></textarea>
-<button class="btn primary" id="answerSaveBtn">💾 احفظ الجواب</button>
+<textarea class="answer-input" id="answerspanInput" placeholder="اك><تب جوابك..."></textarea>
+<buttonspan class="btn class primary" id="answerSaveBtn">💾 اح="فظ الجواب</button>
 </div>
 
 <!-- مودال اللقطة -->
@@ -1565,14 +1428,12 @@ textarea{resize:none;}
 <h2 class="stats-title">📊 إحصائياتي</h2>
 <div class="stats-grid">
 <div class="stat-card"><span class="stat-icon">📸</span><span class="stat-num" id="statTotal">0</span><span class="stat-label">لقطة</span></div>
-<div class="stat-card"><span class="stat-icon">📅</span><span class="stat-num" id="statDays">0</span><span class="stat-label">يوم موثّق</span></div>
+<div class="stat-card"><span class="stat-icon">📅</span><span class="stat-num" id="statDays">0</stat-label">يوم موثّق</span></div>
 <div class="stat-card"><span class="stat-icon">🔥</span><span class="stat-num" id="statBest">0</span><span class="stat-label">أطول سلسلة</span></div>
 <div class="stat-card"><span class="stat-icon">📆</span><span class="stat-num" id="statMonth">0</span><span class="stat-label">هذا الشهر</span></div>
 </div>
 </div>
-</div>
-
-<!-- مودال المظهر -->
+</div><!-- مودال المظهر -->
 <div class="modal hidden" id="themeModal">
 <button class="modal-close" id="themeClose">×</button>
 <div class="modal-content">
@@ -1630,6 +1491,7 @@ textarea{resize:none;}
 </div>
 </div>
 </div>
+
 <!-- مودال التقييم -->
 <div class="modal hidden" id="rateModal">
 <button class="modal-close" id="rateClose">×</button>
@@ -1647,11 +1509,9 @@ textarea{resize:none;}
 <button class="btn primary" id="rateSubmit">📤 إرسال</button>
 </div>
 </div>
+
 <input type="file" accept="video/*" capture="environment" id="videoInput" style="display:none;"><script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
-/* ============================================ */
-/* المتغيرات الأساسية */
-/* ============================================ */
 var DB_NAME='lahza-db',DB_VERSION=1,STORE_NAME='moments';
 var db=null;
 var stream=null;
@@ -1671,9 +1531,6 @@ var currentLang='ar';
 var currentTheme={mode:'dark',color:'green'};
 var isRecordingVideo=false;
 
-/* ============================================ */
-/* الترجمة - Translations */
-/* ============================================ */
 var TRANSLATIONS={
 ar:{
   app_name:'لحظة',
@@ -1763,8 +1620,7 @@ ar:{
   write_first:'اكتب شيئاً أولاً',
   old_date:'إضافة بتاريخ قديم',
   pick_date:'اختر التاريخ'
-},
-en:{
+},en:{
   app_name:'Lahza',
   morning:'Good morning',
   evening:'Good evening',
@@ -1947,12 +1803,7 @@ sv:{
 function t(key){
   var lang=TRANSLATIONS[currentLang]||TRANSLATIONS.ar;
   return lang[key]||TRANSLATIONS.ar[key]||key;
-}
-
-/* ============================================ */
-/* بنك الأسئلة - 100 سؤال */
-/* ============================================ */
-var QUESTIONS_BANK={
+}var QUESTIONS_BANK={
 'ar':{
 'تأمل':['ما أكثر لحظة شعرت فيها بالراحة اليوم؟','ما الشيء الذي فاجأك اليوم؟','ما اللحظة التي تمنيت لو تدوم أطول؟','ما الذي أخذ من طاقتك اليوم؟','ما الذي جدّد طاقتك اليوم؟','ما اللحظة التي شعرت فيها بالامتنان؟','ما الذي كنت تتطلع إليه اليوم؟','ما الذي كان أصعب مما توقعت؟','ما الذي كان أسهل مما توقعت؟','ما اللحظة التي ابتسمت فيها من قلبك؟','ما الذي جعلك تتوقف وتفكر اليوم؟','ما الشيء الذي تعلمته عن نفسك اليوم؟','ما اللحظة التي شعرت فيها بالسلام؟','ما الذي غيّر مزاجك اليوم؟','لو تعيد اليوم، ما الذي ستغيّره؟','ما الذي احتاج منك صبراً اليوم؟','ما الشيء الذي تجاهلته اليوم ولماذا؟','ما القرار الصغير الذي اتخذته اليوم؟','ما الذي جعل يومك مختلفاً عن الأمس؟','ما الشيء الذي كنت تحتاج سماعه اليوم؟'],
 'مشاعر':['ما الشعور الذي سيطر عليك اليوم؟','ما الذي أضحكك اليوم؟','ما الذي أزعجك اليوم؟','متى شعرت بالفخر اليوم؟','ما الذي ذكّرك بالماضي اليوم؟','كيف كان مزاجك من 1 إلى 10؟','ما الذي أشعرك بالأمان؟','متى شعرت بالحب اليوم؟','ما الذي أشعرك بالرضا؟','ما الذي احتاج منك قوة اليوم؟','متى شعرت بالقوة اليوم؟','ما الموقف الذي أضعفك اليوم؟','ما الذي أدهشك اليوم؟','متى شعرت بالإلهام اليوم؟','ما الشعور الذي تريد أن تشعر به غداً؟'],
@@ -1967,9 +1818,6 @@ var QUESTIONS_BANK={
 
 var SECTION_ICONS={'تأمل':'📖','مشاعر':'💭','إنجاز':'🎯','أفكار':'💡','علاقات':'❤️','نمو':'🌱','امتنان':'🌟','لحظة':'✨'};
 
-/* ============================================ */
-/* الألوان والثيمات */
-/* ============================================ */
 var THEMES={
 dark:{
 green:{bg:'#0a0a0a',card:'#141414',text:'#ffffff',text2:'#cccccc',text3:'#888888',border:'rgba(255,255,255,.08)',primary:'#4ade80'},
@@ -1996,7 +1844,7 @@ var DAYS_EN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturd
 var DAYS_SV=['söndag','måndag','tisdag','onsdag','torsdag','fredag','lördag'];
 
 var MONTHS_AR=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-var MONTHS_EN=['January','February','May','June','July','August','September','October','November','December'];
+var MONTHS_EN=['January','February','March','April','May','June','July','August','September','October','November','December'];
 var MONTHS_SV=['januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december'];
 
 function getDaysArray(){
@@ -2008,10 +1856,7 @@ function getMonthsArray(){
   if(currentLang==='ar')return MONTHS_AR;
   if(currentLang==='sv')return MONTHS_SV;
   return MONTHS_EN;
-}/* ============================================ */
-/* IndexedDB - قاعدة البيانات */
-/* ============================================ */
-function openDB(){
+}function openDB(){
   return new Promise(function(res,rej){
     var r=indexedDB.open(DB_NAME,DB_VERSION);
     r.onupgradeneeded=function(e){
@@ -2072,10 +1917,6 @@ function countMoments(){
     r.onerror=function(e){rej(e.target.error);};
   });
 }
-
-/* ============================================ */
-/* دوال التاريخ */
-/* ============================================ */
 function getDateStr(date){
   var d=new Date(date);
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
@@ -2097,10 +1938,6 @@ function formatDate(date){
   var months=getMonthsArray();
   return days[d.getDay()]+'، '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();
 }
-
-/* ============================================ */
-/* الرسائل - Status */
-/* ============================================ */
 function showStatus(msg,color){
   var s=document.getElementById('status');
   if(!s)return;
@@ -2109,10 +1946,6 @@ function showStatus(msg,color){
   clearTimeout(s._t);
   s._t=setTimeout(function(){s.textContent='';},4000);
 }
-
-/* ============================================ */
-/* Plural */
-/* ============================================ */
 function pluralMoments(n){
   if(currentLang==='ar'){
     if(n===1)return 'لقطة واحدة';
@@ -2141,10 +1974,6 @@ function pluralDays(n){
   if(n===1)return '1 day';
   return n+' days';
 }
-
-/* ============================================ */
-/* Theme - تطبيق الثيم */
-/* ============================================ */
 function applyTheme(){
   var mode=currentTheme.mode;
   if(mode==='auto'){
@@ -2165,7 +1994,7 @@ function applyTheme(){
   root.setProperty('--text-4',theme.text3);
   root.setProperty('--border',theme.border);
   root.setProperty('--border-strong',theme.border);
- root.setProperty('--primary',theme.primary);
+  root.setProperty('--primary',theme.primary);
   root.setProperty('--primary-light',theme.primary);
   root.setProperty('--primary-dark',theme.primary);
   document.body.style.background=theme.bg;
@@ -2181,10 +2010,6 @@ function loadTheme(){
   if(!currentTheme.mode)currentTheme.mode='dark';
   applyTheme();
 }
-
-/* ============================================ */
-/* Language - تطبيق اللغة */
-/* ============================================ */
 function applyLanguage(){
   var dir=currentLang==='ar'?'rtl':'ltr';
   document.documentElement.dir=dir;
@@ -2197,10 +2022,6 @@ function loadLanguage(){
   currentLang=lang;
   applyLanguage();
 }
-
-/* ============================================ */
-/* Greeting - التحية حسب الوقت */
-/* ============================================ */
 function getGreeting(){
   var h=new Date().getHours();
   if(h>=6&&h<18)return t('morning');
@@ -2210,10 +2031,6 @@ function updateGreeting(){
   var g=document.getElementById('greeting');
   if(g)g.textContent=getGreeting();
 }
-
-/* ============================================ */
-/* السؤال اليومي */
-/* ============================================ */
 function getTodayQuestion(){
   var bank=QUESTIONS_BANK['ar'];
   var all=[];
@@ -2234,20 +2051,12 @@ function showToday(){
   var qEl=document.getElementById('dailyQuestion');
   if(qEl)qEl.textContent=q.question;
 }
-
-/* ============================================ */
-/* Counter - العدّادات */
-/* ============================================ */
 function updateCounter(){
   countMoments().then(function(n){
     var el=document.getElementById('counterText');
     if(el)el.textContent=n;
   });
 }
-
-/* ============================================ */
-/* Streak - السلسلة */
-/* ============================================ */
 async function updateStreak(){
   try{
     var ms=await getAllMoments();
@@ -2262,13 +2071,10 @@ async function updateStreak(){
     while(days.has(getDateStr(check))){streak++;check.setDate(check.getDate()-1);}
     el.textContent=streak;
   }catch(e){}
-}/* ============================================ */
-/* التبويبات - Tabs */
-/* ============================================ */
-function switchTab(name){
+}function switchTab(name){
   ['Home','Moments','Settings'].forEach(function(n){
     var btn=document.getElementById('tabBtn'+n);
-    var tab=document.getElementById('tab'+n);
+       var tab=document.getElementById('tab'+n);
     if(btn)btn.classList.remove('active');
     if(tab)tab.classList.add('hidden');
   });
@@ -2282,9 +2088,6 @@ document.getElementById('tabBtnHome').onclick=function(){switchTab('Home');};
 document.getElementById('tabBtnMoments').onclick=function(){switchTab('Moments');};
 document.getElementById('tabBtnSettings').onclick=function(){switchTab('Settings');};
 
-/* ============================================ */
-/* الفلاتر */
-/* ============================================ */
 document.querySelectorAll('.filter-chip').forEach(function(b){
   b.onclick=function(){
     document.querySelectorAll('.filter-chip').forEach(function(x){x.classList.remove('active');});
@@ -2295,9 +2098,6 @@ document.querySelectorAll('.filter-chip').forEach(function(b){
   };
 });
 
-/* ============================================ */
-/* الكاميرا - Camera */
-/* ============================================ */
 async function openCamera(v){
   try{
     if(stream){stream.getTracks().forEach(function(t){t.stop();});stream=null;}
@@ -2319,8 +2119,6 @@ async function toggleCamera(v){
   currentFacing=(currentFacing==='environment')?'user':'environment';
   await openCamera(v);
 }
-
-/* الصورة */
 document.getElementById('actionPhoto').onclick=async function(){
   document.getElementById('photoScreen').classList.remove('hidden');
   await openCamera(document.getElementById('photoVideo'));
@@ -2348,8 +2146,6 @@ document.getElementById('snapBtn').onclick=function(){
     document.getElementById('saveScreen').classList.remove('hidden');
   },'image/jpeg',.85);
 };
-
-/* الفيديو */
 var videoInput=document.getElementById('videoInput');
 document.getElementById('actionVideo').onclick=function(){
   document.getElementById('videoScreen').classList.remove('hidden');
@@ -2375,10 +2171,6 @@ videoInput.onchange=function(e){
   showPreview();
   document.getElementById('saveScreen').classList.remove('hidden');
 };
-
-/* ============================================ */
-/* الكتابة - Text */
-/* ============================================ */
 document.getElementById('actionText').onclick=function(){
   document.getElementById('textInput').value='';
   pendingBg=null;
@@ -2388,9 +2180,6 @@ document.getElementById('actionText').onclick=function(){
 document.getElementById('textClose').onclick=function(){
   document.getElementById('textScreen').classList.add('hidden');
 };
-
-/* اختيار خلفية من الجهاز */
-// uploadBg ما يحتاج onclick — <label> بيفتح الملف تلقائياً
 document.getElementById('bgInput').onchange=function(e){
   var f=e.target.files[0];
   if(!f)return;
@@ -2400,11 +2189,10 @@ document.getElementById('bgInput').onchange=function(e){
 function updateBgGrid(){
   var grid=document.getElementById('bgGrid');
   var uploadBtn=document.getElementById('uploadBg');
-  // احذف كل الصور القديمة
   Array.from(grid.querySelectorAll('.bg-option.dynamic')).forEach(function(el){el.remove();});
   if(pendingBg){
     var url=URL.createObjectURL(pendingBg);
-    var btn=document.createElement('button');
+    var btn=document.createElement('label');
     btn.className='bg-option dynamic active';
     btn.innerHTML='<img src="'+url+'">';
     btn.onclick=function(){
@@ -2413,7 +2201,6 @@ function updateBgGrid(){
     };
     grid.insertBefore(btn,uploadBtn);
   }
-  // تأكد إن "بدون خلفية" نشط إذا ما في صورة
   if(!pendingBg){
     var noneBtn=grid.querySelector('[data-bg="none"]');
     if(noneBtn){document.querySelectorAll('.bg-option').forEach(function(x){x.classList.remove('active');});noneBtn.classList.add('active');}
@@ -2428,8 +2215,6 @@ document.querySelectorAll('.bg-option').forEach(function(b){
     if(val==='none')pendingBg=null;
   };
 });
-
-/* التالي بعد الكتابة */
 document.getElementById('saveTextBtn').onclick=function(){
   var txt=document.getElementById('textInput').value.trim();
   if(!txt){showStatus(t('write_first'),'#ef4444');return;}
@@ -2439,10 +2224,6 @@ document.getElementById('saveTextBtn').onclick=function(){
   showPreview();
   document.getElementById('saveScreen').classList.remove('hidden');
 };
-
-/* ============================================ */
-/* المعاينة - Preview */
-/* ============================================ */
 function showPreview(){
   var wrap=document.getElementById('previewWrap');
   wrap.innerHTML='';
@@ -2453,7 +2234,7 @@ function showPreview(){
     wrap.appendChild(i);
   }else if(pendingType==='video'){
     var v=document.createElement('video');
-    v.src=URL.createObjectURL(pendingBlob);
+ v.src=URL.createObjectURL(pendingBlob);
     v.controls=true;
     v.playsInline=true;
     v.style.cssText='width:100%;border-radius:12px;display:block;';
@@ -2475,12 +2256,7 @@ function showPreview(){
       wrap.appendChild(div);
     });
   }
-}
-
-/* ============================================ */
-/* الحفظ - Save */
-/* ============================================ */
-document.getElementById('saveBtn').onclick=async function(){
+}document.getElementById('saveBtn').onclick=async function(){
   if(!pendingBlob)return;
   var c=document.getElementById('captionInput').value.trim();
   try{
@@ -2491,7 +2267,6 @@ document.getElementById('saveBtn').onclick=async function(){
       caption:c,
       favorite:false
     };
-    // إذا في خلفية، نخزنها كـ blob منفصل
     if(pendingBg){
       momentData.background=await new Promise(function(res){
         var r=new FileReader();
@@ -2519,15 +2294,12 @@ document.getElementById('saveClose').onclick=function(){
   pendingBlob=null;
   pendingType=null;
   pendingBg=null;
+  window._pendingOldDate=null;
   closeCamera();
   document.getElementById('saveScreen').classList.add('hidden');
 };
-
-/* ============================================ */
-/* إضافة بتاريخ قديم */
-/* ============================================ */
 document.getElementById('actionOldDate').onclick=function(){
-  var d=prompt(t('pick_date')+':\nYYYY-MM-DD (مثال: 15-05-2024)');
+  var d=prompt(t('pick_date')+':\nYYYY-MM-DD (مثال: \u202A2024-05-15\u202C)');
   if(!d)return;
   var parts=d.split('-');
   if(parts.length!==3)return;
@@ -2564,13 +2336,10 @@ document.getElementById('actionOldDate').onclick=function(){
     };
     list.appendChild(item);
   });
-};/* ============================================ */
-/* بطاقة اللقطة - Moment Card */
-/* ============================================ */
+};
 async function makeCard(m,size){
   var d=document.createElement('div');
   d.className=size==='hero'?'moment-hero':'moment-small';
-  
   if(m.type==='photo'){
     var i=document.createElement('img');
     i.src=URL.createObjectURL(m.blob);
@@ -2595,8 +2364,6 @@ async function makeCard(m,size){
     tDiv2.textContent='💭 '+(m.caption||'');
     d.appendChild(tDiv2);
   }
-  
-  // overlay
   var dt=new Date(m.date);
   var timeStr=dt.getHours()+':'+String(dt.getMinutes()).padStart(2,'0');
   var ov=document.createElement('div');
@@ -2612,8 +2379,6 @@ async function makeCard(m,size){
     ov.appendChild(cEl);
   }
   d.appendChild(ov);
-  
-  // أزرار صغيرة فوق
   if(size==='hero'){
     var del=document.createElement('button');
     del.className='action-delete';
@@ -2629,7 +2394,6 @@ async function makeCard(m,size){
       }
     };
     d.appendChild(del);
-    
     var hb=document.createElement('button');
     hb.className='action-heart'+(m.favorite?' active':'');
     hb.style.cssText='position:absolute;top:8px;right:8px;width:32px;height:32px;font-size:.85rem;z-index:3;';
@@ -2644,15 +2408,9 @@ async function makeCard(m,size){
     };
     d.appendChild(hb);
   }
-  
   d.onclick=function(){openMomentModal(m.id);};
   return d;
-}
-
-/* ============================================ */
-/* الشجرة - Tree View */
-/* ============================================ */
-async function renderTree(){
+}async function renderTree(){
   var ms=await getAllMoments();
   var hint=document.getElementById('hint');
   var treeView=document.getElementById('treeView');
@@ -2663,29 +2421,22 @@ async function renderTree(){
   var momentsSection=document.getElementById('momentsSection');
   var momentsGrid=document.getElementById('momentsGrid');
   var empty=document.getElementById('empty');
-  
   hint.classList.add('hidden');
   treeView.classList.remove('hidden');
   empty.classList.add('hidden');
-  
-  // الفلترة
   var filtered=ms;
   if(currentFilter==='favorite'){filtered=ms.filter(function(m){return m.favorite;});}
   else if(currentFilter==='answer'){filtered=ms.filter(function(m){return m.type==='answer';});}
   else if(currentFilter!=='all'&&currentFilter!=='calendar'){filtered=ms.filter(function(m){return m.type===currentFilter;});}
-  
-  // بناء السنوات
   var yearsSet=new Set();
   filtered.forEach(function(m){yearsSet.add(new Date(m.date).getFullYear());});
   var yearsSorted=Array.from(yearsSet).sort(function(a,b){return b-a;});
-  
   yearsRow.innerHTML='';
   if(yearsSorted.length===0){
     treeView.classList.add('hidden');
     empty.classList.remove('hidden');
     return;
   }
-  
   yearsSorted.forEach(function(y){
     var count=filtered.filter(function(m){return new Date(m.date).getFullYear()===y;}).length;
     var chip=document.createElement('button');
@@ -2697,11 +2448,9 @@ async function renderTree(){
     };
     yearsRow.appendChild(chip);
   });
-  
-  // الأشهر
   if(selectedYear){
     monthsSection.classList.remove('hidden');
-   monthsGrid.innerHTML='';
+    monthsGrid.innerHTML='';
     var months=getMonthsArray();
     var nowDate=new Date();
     for(var mo=0;mo<12;mo++){
@@ -2725,28 +2474,20 @@ async function renderTree(){
   }else{
     monthsSection.classList.add('hidden');
   }
-  
-  // التقويم
   if(selectedYear!==null&&selectedMonth!==null){
     calendarSection.classList.remove('hidden');
     renderCalendar(filtered,selectedYear,selectedMonth);
   }else{
     calendarSection.classList.add('hidden');
   }
-  
-  // اللقطات (المجلة)
   if(selectedDay){
     momentsSection.classList.remove('hidden');
     var dayMoments=filtered.filter(function(m){return getDateStr(m.date)===selectedDay;});
     momentsGrid.innerHTML='';
-    
     if(dayMoments.length===0){
       momentsGrid.innerHTML='<div class="empty-state"><span class="empty-icon">📸</span>'+t('no_day_data')+'</div>';
     }else{
-      // ترتيب من الأقدم للأحدث
       dayMoments.sort(function(a,b){return new Date(a.date)-new Date(b.date);});
-      
-      // Instagram-style feed - كل اللقطات بنفس الحجم
       for(var i=0;i<dayMoments.length;i++){
         var card=await makeCard(dayMoments[i],'small');
         momentsGrid.appendChild(card);
@@ -2755,12 +2496,7 @@ async function renderTree(){
   }else{
     momentsSection.classList.add('hidden');
   }
-
-
-/* ============================================ */
-/* التقويم */
-/* ============================================ */
-function renderCalendar(moments,year,month){
+}function renderCalendar(moments,year,month){
   var monthsDays=new Date(year,month+1,0).getDate();
   var firstDay=new Date(year,month,1).getDay();
   var grid=document.getElementById('calendarGrid');
@@ -2769,7 +2505,6 @@ function renderCalendar(moments,year,month){
   document.getElementById('calTitle').textContent=months[month]+' '+year;
   var daysWithMoments=new Set(moments.map(function(m){return getDateStr(m.date);}));
   var todayStr=getDateStr(new Date());
-  
   for(var i=0;i<firstDay;i++){
     var e=document.createElement('div');
     e.className='calendar-day other-month';
@@ -2806,10 +2541,6 @@ document.getElementById('calNext').onclick=function(){
   selectedDay=null;
   renderTree();
 };
-
-/* ============================================ */
-/* المودال - Moment Modal */
-/* ============================================ */
 async function openMomentModal(id){
   var m=await getMoment(id);
   if(!m)return;
@@ -2817,7 +2548,6 @@ async function openMomentModal(id){
   var mod=document.getElementById('momentModal');
   var c=document.getElementById('modalContent');
   c.innerHTML='';
-  
   if(m.type==='photo'){
     var i=document.createElement('img');
     i.src=URL.createObjectURL(m.blob);
@@ -2860,13 +2590,11 @@ async function openMomentModal(id){
     tDiv2.appendChild(a);
     c.appendChild(tDiv2);
   }
-  
   var dt=new Date(m.date);
   var dd=document.createElement('div');
   dd.className='modal-date';
   dd.textContent='📅 '+formatDate(dt)+' — '+dt.getHours()+':'+String(dt.getMinutes()).padStart(2,'0');
   c.appendChild(dd);
-  
   var hb=document.getElementById('modalHeart');
   hb.textContent=m.favorite?'❤️':'🤍';
   hb.className='action-heart'+(m.favorite?' active':'');
@@ -2878,7 +2606,6 @@ async function openMomentModal(id){
     hb.textContent=mm.favorite?'❤️':'🤍';
     hb.className='action-heart'+(mm.favorite?' active':'');
   };
-  
   mod.classList.remove('hidden');
 }
 document.getElementById('modalClose').onclick=function(){
@@ -2896,17 +2623,13 @@ document.getElementById('modalDelete').onclick=async function(){
     updateCounter();
     updateStreak();
   }
-};/* ============================================ */
-/* الإعدادات - Settings */
-/* ============================================ */
-// التذكير
-function loadReminderSettings(){
+};function loadReminderSettings(){
   var enabled=localStorage.getItem('lahza-reminder')==='true';
   var el=document.getElementById('reminderStatus');
   if(el)el.textContent=enabled?t('enabled'):t('disabled');
   document.getElementById('reminderTime').value=localStorage.getItem('lahza-reminder-time')||'20:00';
   var btn=document.getElementById('reminderToggleBtn');
-  if(btn)btn.textContent=enabled?t('enabled'):t('enabled');
+  if(btn)btn.textContent=enabled?t('disabled'):t('enabled');
 }
 document.getElementById('btnReminder').onclick=function(){
   document.getElementById('reminderModal').classList.remove('hidden');
@@ -2923,8 +2646,6 @@ document.getElementById('reminderToggleBtn').onclick=function(){
 document.getElementById('reminderTime').onchange=function(e){
   localStorage.setItem('lahza-reminder-time',e.target.value);
 };
-
-// المظهر
 function updateThemeStatus(){
   var el=document.getElementById('themeStatus');
   if(!el)return;
@@ -2954,8 +2675,6 @@ document.querySelectorAll('#themeModal [data-color]').forEach(function(b){
     showStatus('✅ تم تغيير اللون','#4ade80');
   };
 });
-
-// اللغة
 function updateLanguageStatus(){
   var el=document.getElementById('languageStatus');
   if(!el)return;
@@ -2982,10 +2701,6 @@ document.querySelectorAll('.language-option').forEach(function(b){
     document.getElementById('languageModal').classList.add('hidden');
   };
 });
-
-/* ============================================ */
-/* التصدير والاستيراد - Export / Import */
-/* ============================================ */
 document.getElementById('btnExport').onclick=async function(){
   try{
     var ms=await getAllMoments();
@@ -3072,18 +2787,12 @@ document.getElementById('importInput').onchange=async function(e){
   }
   e.target.value='';
 };
-
-// حذف الكل
 document.getElementById('btnDeleteAll').onclick=async function(){
   try{
     var ms=await getAllMoments();
     if(ms.length===0){showStatus(t('no_data'),'#ef4444');return;}
-    
-    // ١. عرض خيار تصدير
     var wantExport=confirm('⚠️ عندك '+ms.length+' لقطة\n\nهل تريد تصدير نسخة احتياطية قبل الحذف؟\n\n(موصى به بشدة)');
-    
     if(wantExport){
-      // صدّر
       var zip=new JSZip();
       var meta=[];
       for(var i=0;i<ms.length;i++){
@@ -3108,12 +2817,8 @@ document.getElementById('btnDeleteAll').onclick=async function(){
       setTimeout(function(){URL.revokeObjectURL(url);},1000);
       await new Promise(function(r){setTimeout(r,800);});
     }
-    
-    // ٢. تأكيد مزدوج
     var answer=prompt('⚠️ تأكيد نهائي\n\nسيتم حذف '+ms.length+' لقطة نهائياً.\n\nاكتب كلمة "حذف" للتأكيد:');
     if(answer!=='حذف'){showStatus('تم الإلغاء','#fbbf24');return;}
-    
-    // ٣. احذف
     for(var i=0;i<ms.length;i++){
       await deleteMoment(ms[i].id);
     }
@@ -3125,9 +2830,9 @@ document.getElementById('btnDeleteAll').onclick=async function(){
     showStatus(t('error')+': '+e.message,'#ef4444');
   }
 };
-
-// تقييم
-var rateSelected=0;
+document.getElementById('btnContact').onclick=function(){
+  alert('تواصل معنا على lahzalaqta@gmail.com');
+};var rateSelected=0;
 document.getElementById('btnRate').onclick=function(){
   document.getElementById('rateModal').classList.remove('hidden');
   rateSelected=0;
@@ -3159,14 +2864,7 @@ document.getElementById('rateSubmit').onclick=function(){
   window.location.href=mailto;
   document.getElementById('rateModal').classList.add('hidden');
 };
-// تواصل
-document.getElementById('btnContact').onclick=function(){
-  alert(t('contact_msg'));
-};
 
-/* ============================================ */
-/* الإحصائيات - Stats */
-/* ============================================ */
 async function openStats(){
   try{
     var ms=await getAllMoments();
@@ -3195,13 +2893,10 @@ async function openStats(){
     document.getElementById('statsModal').classList.remove('hidden');
   }catch(e){}
 }
-    
 document.getElementById('statsClose').onclick=function(){
   document.getElementById('statsModal').classList.add('hidden');
 };
-/* ============================================ */
-/* الأسئلة والأجوبة */
-/* ============================================ */
+
 document.getElementById('questionCard').onclick=function(){
   var list=document.getElementById('sectionList');
   list.innerHTML='';
@@ -3221,7 +2916,6 @@ document.getElementById('questionCard').onclick=function(){
 document.getElementById('sheetCancel').onclick=function(){
   document.getElementById('questionSheet').classList.add('hidden');
 };
-
 function openQuestionList(sec){
   var bank=QUESTIONS_BANK['ar'];
   var qs=bank[sec]||[];
@@ -3243,7 +2937,6 @@ function openQuestionList(sec){
 document.getElementById('questionListCancel').onclick=function(){
   document.getElementById('questionListSheet').classList.add('hidden');
 };
-
 function openAnswerScreen(sec,q){
   currentSection=sec;
   currentQuestion=q;
@@ -3273,9 +2966,8 @@ document.getElementById('answerSaveBtn').onclick=async function(){
   }catch(e){
     showStatus(t('error'),'#ef4444');
   }
-};/* ============================================ */
-/* Reminder Check - فحص التذكير */
-/* ============================================ */
+};
+
 async function checkReminder(){
   try{
     var enabled=localStorage.getItem('lahza-reminder')==='true';
@@ -3286,7 +2978,6 @@ async function checkReminder(){
     if(hasToday)return;
     var dismissed=localStorage.getItem('lahza-reminder-dismissed')===today;
     if(dismissed)return;
-    // إظهار إشعار داخل التطبيق
     var banner=document.createElement('div');
     banner.style.cssText='position:fixed;top:0;left:0;right:0;background:var(--card);border-bottom:2px solid var(--primary);padding:12px 16px;z-index:9998;display:flex;align-items:center;gap:12px;';
     banner.innerHTML='<span style="font-size:1.5rem;">📸</span><div style="flex:1;"><div style="font-weight:500;">'+t('empty_title')+'</div><div style="color:var(--text-3);font-size:.8rem;">'+t('empty_sub')+'</div></div><button style="padding:8px 16px;background:var(--primary);color:#000;border:none;border-radius:100px;font-weight:500;font-family:inherit;cursor:pointer;" id="reminderBtnBanner">'+t('save')+'</button>';
@@ -3299,9 +2990,6 @@ async function checkReminder(){
   }catch(e){}
 }
 
-/* ============================================ */
-/* إخفاء شاشة الفتح */
-/* ============================================ */
 setTimeout(function(){
   var sp=document.getElementById('splash');
   if(sp){
@@ -3310,27 +2998,19 @@ setTimeout(function(){
   }
 },1400);
 
-/* ============================================ */
-/* التهيئة - Init */
-/* ============================================ */
 (async function init(){
   try{
     loadTheme();
     loadLanguage();
     showToday();
-    
     await openDB();
-    
     updateCounter();
     updateStreak();
     updateThemeStatus();
     updateLanguageStatus();
     loadReminderSettings();
     checkReminder();
-    
-    // فحص التذكير كل دقيقة
     setInterval(checkReminder,60000);
-    
     console.log('✅ لحظة — التطبيق جاهز');
     console.log('📱 الإصدار: 4.0');
   }catch(e){
@@ -3339,9 +3019,6 @@ setTimeout(function(){
     if(s)s.textContent='❌ خطأ: '+e.message;
   }
 })();
-
 </script>
 </body>
 </html>
-
-
