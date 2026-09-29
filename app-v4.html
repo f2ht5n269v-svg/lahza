@@ -1888,7 +1888,7 @@ a{text-decoration:none;color:inherit;}
           </svg>
         </span>
         <div class="info">
-          <span class="label">حذcurrentف كل اللقطات</span>
+          <span class="label">حذف كل اللقطات</span>
         </div>
         <span class="arrow">›</span>
       </button>
@@ -1928,7 +1928,7 @@ a{text-decoration:none;color:inherit;}
 
       <button class="settings-item" id="btnContact">
         <span class="icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="Color" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
             <polyline points="22,6 12,13 2,6"/>
           </svg>
@@ -2377,135 +2377,65 @@ sv:{
 function t(key){
   var lang=TRANSLATIONS[currentLang]||TRANSLATIONS.ar;
   return lang[key]||TRANSLATIONS.ar[key]||key;
-}<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script>
-/* ============================================
-   المتغيرات الأساسية
+}/* ============================================
+   بنك الأسئلة — 100 سؤال
    ============================================ */
-var DB_NAME='lahza-db',DB_VERSION=1,STORE_NAME='moments';
-var db=null;
-var stream=null;
-var pendingBlob=null;
-var pendingType=null;
-var pendingBg=null;
-var currentFacing='environment';
-var currentMomentId=null;
-var videoFacing='environment';
-var currentFilter='all';
-var selectedYear=null;
-var selectedMonth=null;
-var selectedDay=null;
-var currentSection=null;
-var currentQuestion=null;
-var currentLang='ar';
-var currentTheme={mode:'dark',color:'gold'};
-var rateSelected=0;
-
-/* ============================================
-   الترجمات
-   ============================================ */
-var TRANSLATIONS={
-ar:{
-  app_name:'لحظة',morning:'صباح الخير',evening:'مساء الخير',
-  photo:'صورة',video:'فيديو',text:'كتابة',add_old:'إضافة بتاريخ قديم',
-  streak:'يوم متواصلة',moments_count:'لقطة',my_moments:'لقطاتي',settings:'إعدادات',
-  all:'الكل',photos:'صور',videos:'فيديو',texts:'كتابة',answers:'أجوبة',favorites:'المفضلة',
-  hint_filter:'اضغط على فلتر لعرض لقطاتك',
-  empty_title:'لا توجد لقطات بعد',empty_sub:'ارجع إلى الرئيسية ووثّق أول لحظة',
-  general:'عام',reminder:'التذكير اليومي',enabled:'مفعّل',disabled:'معطّل',
-  theme:'المظهر',dark:'غامق',light:'فاتح',auto:'تلقائي',language:'اللغة',
-  data:'البيانات',export:'تصدير نسخة احتياطية',import:'استيراد نسخة احتياطية',
-  delete_all:'حذف كل اللقطات',about:'عن التطبيق',privacy:'سياسة الخصوصية',
-  rate:'قيّم التطبيق',contact:'تواصل معنا',version:'الإصدار',
-  today:'اليوم',yesterday:'أمس',home:'الرئيسية',question:'سؤال اليوم',
-  choose_section:'اختر القسم',choose_answer:'كيف تريد الإجابة؟',your_answer:'جوابك',
-  write_answer:'اكتب جوابك...',save:'حفظ',cancel:'إلغاء',next:'التالي',
-  camera:'الكاميرا',back:'الخلفية',front:'الأمامية',start_record:'ابدأ التسجيل',
-  write_moment:'اكتب لحظتك',caption_placeholder:'أضف جملة (اختياري)...',
-  save_moment:'احفظ اللقطة',save_text:'التالي',choose_bg:'الخلفية',
-  remove_bg:'بدون خلفية',upload_bg:'اختر صورة من جهازك',
-  stats:'إحصائياتي',total:'لقطة',days_recorded:'يوم موثّق',
-  best_streak:'أطول سلسلة',this_month:'هذا الشهر',
-  export_success:'✅ تم التصدير',import_success:'✅ تم استيراد',error:'❌ خطأ',
-  delete_confirm:'هل تريد حذف هذه اللقطة؟',delete_all_confirm:'هل أنت متأكد؟ لا يمكن التراجع!',
-  no_data:'لا توجد لقطات',no_photos:'لا توجد صور',no_videos:'لا توجد فيديوهات',
-  no_texts:'لا توجد كتابات',no_answers:'لا توجد أجوبة',no_favorites:'لا توجد لقطات في المفضلة',
-  no_day_data:'لا توجد لقطات في هذا اليوم',
-  camera_error:'تعذّر فتح الكاميرا',camera_permission:'لم يتم إعطاء إذن الكاميرا',
-  camera_not_found:'لا توجد كاميرا',camera_busy:'الكاميرا مشغولة',
-  contact_msg:'تواصل معنا على lahzalaqta@gmail.com',rate_msg:'شكراً لدعمك!',
-  write_first:'اكتب شيئاً أولاً',pick_date:'اختر التاريخ',
-  tap_to_answer:'اضغط للإجابة'
-},
-en:{
-  app_name:'Lahza',morning:'Good morning',evening:'Good evening',
-  photo:'Photo',video:'Video',text:'Text',add_old:'Add with old date',
-  streak:'days streak',moments_count:'moments',my_moments:'My Moments',settings:'Settings',
-  all:'All',photos:'Photos',videos:'Videos',texts:'Texts',answers:'Answers',favorites:'Favorites',
-  hint_filter:'Tap a filter to view',
-  empty_title:'No moments yet',empty_sub:'Go to home and capture your first',
-  general:'General',reminder:'Daily Reminder',enabled:'Enabled',disabled:'Disabled',
-  theme:'Appearance',dark:'Dark',light:'Light',auto:'Auto',language:'Language',
-  data:'Data',export:'Export backup',import:'Import backup',
-  delete_all:'Delete all moments',about:'About',privacy:'Privacy Policy',
-  rate:'Rate the app',contact:'Contact us',version:'Version',
-  today:'Today',yesterday:'Yesterday',home:'Home',question:"Today's question",
-  choose_section:'Choose a section',choose_answer:'How do you want to answer?',your_answer:'Your answer',
-  write_answer:'Write your answer...',save:'Save',cancel:'Cancel',next:'Next',
-  camera:'Camera',back:'Back',front:'Front',start_record:'Start recording',
-  write_moment:'Write your moment',caption_placeholder:'Add a caption (optional)...',
-  save_moment:'Save moment',save_text:'Next',choose_bg:'Background',
-  remove_bg:'No background',upload_bg:'Choose image from device',
-  stats:'My Stats',total:'Moments',days_recorded:'Days recorded',
-  best_streak:'Best streak',this_month:'This month',
-  export_success:'✅ Exported',import_success:'✅ Imported',error:'❌ Error',
-  delete_confirm:'Delete this moment?',delete_all_confirm:'Are you sure? Cannot undo!',
-  no_data:'No moments',no_photos:'No photos',no_videos:'No videos',
-  no_texts:'No texts',no_answers:'No answers',no_favorites:'No favorites',
-  no_day_data:'No moments on this day',
-  camera_error:'Cannot open camera',camera_permission:'Camera permission denied',
-  camera_not_found:'No camera found',camera_busy:'Camera busy',
-  contact_msg:'Contact us at lahzalaqta@gmail.com',rate_msg:'Thanks for your support!',
-  write_first:'Write something first',pick_date:'Pick a date',
-  tap_to_answer:'Tap to answer'
-},
-sv:{
-  app_name:'Lahza',morning:'God morgon',evening:'God kväll',
-  photo:'Foto',video:'Video',text:'Text',add_old:'Lägg till med gammalt datum',
-  streak:'dagar i rad',moments_count:'ögonblick',my_moments:'Mina ögonblick',settings:'Inställningar',
-  all:'Alla',photos:'Foton',videos:'Videor',texts:'Texter',answers:'Svar',favorites:'Favoriter',
-  hint_filter:'Tryck på ett filter',
-  empty_title:'Inga ögonblick än',empty_sub:'Gå till hem och skapa ditt första',
-  general:'Allmänt',reminder:'Daglig påminnelse',enabled:'Aktiverad',disabled:'Inaktiverad',
-  theme:'Utseende',dark:'Mörkt',light:'Ljust',auto:'Auto',language:'Språk',
-  data:'Data',export:'Exportera backup',import:'Importera backup',
-  delete_all:'Radera alla ögonblick',about:'Om',privacy:'Integritetspolicy',
-  rate:'Betygsätt appen',contact:'Kontakta oss',version:'Version',
-  today:'Idag',yesterday:'Igår',home:'Hem',question:'Dagens fråga',
-  choose_section:'Välj en sektion',choose_answer:'Hur vill du svara?',your_answer:'Ditt svar',
-  write_answer:'Skriv ditt svar...',save:'Spara',cancel:'Avbryt',next:'Nästa',
-  camera:'Kamera',back:'Bak',front:'Fram',start_record:'Börja spela in',
-  write_moment:'Skriv ditt ögonblick',caption_placeholder:'Lägg till bildtext...',
-  save_moment:'Spara ögonblick',save_text:'Nästa',choose_bg:'Bakgrund',
-  remove_bg:'Ingen bakgrund',upload_bg:'Välj bild från enheten',
-  stats:'Min statistik',total:'Ögonblick',days_recorded:'Dagar',
-  best_streak:'Bästa svit',this_month:'Denna månad',
-  export_success:'✅ Exporterad',import_success:'✅ Importerad',error:'❌ Fel',
-  delete_confirm:'Radera detta ögonblick?',delete_all_confirm:'Är du säker? Går inte att ångra!',
-  no_data:'Inga ögonblick',no_photos:'Inga foton',no_videos:'Inga videor',
-  no_texts:'Inga texter',no_answers:'Inga svar',no_favorites:'Inga favoriter',
-  no_day_data:'Inga ögonblick denna dag',
-  camera_error:'Kan inte öppna kameran',camera_permission:'Kamera behörighet nekad',
-  camera_not_found:'Ingen kamera hittad',camera_busy:'Kameran upptagen',
-  contact_msg:'Kontakta oss på lahzalaqta@gmail.com',rate_msg:'Tack för ditt stöd!',
-  write_first:'Skriv något först',pick_date:'Välj datum',
-  tap_to_answer:'Tryck för att svara'
+var QUESTIONS_BANK={
+'ar':{
+'تأمل':['ما أكثر لحظة شعرت فيها بالراحة اليوم؟','ما الشيء الذي فاجأك اليوم؟','ما اللحظة التي تمنيت لو تدوم أطول؟','ما الذي أخذ من طاقتك اليوم؟','ما الذي جدّد طاقتك اليوم؟','ما اللحظة التي شعرت فيها بالامتنان؟','ما الذي كنت تتطلع إليه اليوم؟','ما الذي كان أصعب مما توقعت؟','ما الذي كان أسهل مما توقعت؟','ما اللحظة التي ابتسمت فيها من قلبك؟','ما الذي جعلك تتوقف وتفكر اليوم؟','ما الشيء الذي تعلمته عن نفسك اليوم؟','ما اللحظة التي شعرت فيها بالسلام؟','ما الذي غيّر مزاجك اليوم؟','لو تعيد اليوم، ما الذي ستغيّره؟','ما الذي احتاج منك صبراً اليوم؟','ما الشيء الذي تجاهلته اليوم ولماذا؟','ما القرار الصغير الذي اتخذته اليوم؟','ما الذي جعل يومك مختلفاً عن الأمس؟','ما الشيء الذي كنت تحتاج سماعه اليوم؟'],
+'مشاعر':['ما الشعور الذي سيطر عليك اليوم؟','ما الذي أضحكك اليوم؟','ما الذي أزعجك اليوم؟','متى شعرت بالفخر اليوم؟','ما الذي ذكّرك بالماضي اليوم؟','كيف كان مزاجك من 1 إلى 10؟','ما الذي أشعرك بالأمان؟','متى شعرت بالحب اليوم؟','ما الذي أشعرك بالرضا؟','ما الذي احتاج منك قوة اليوم؟','متى شعرت بالقوة اليوم؟','ما الموقف الذي أضعفك اليوم؟','ما الذي أدهشك اليوم؟','متى شعرت بالإلهام اليوم؟','ما الشعور الذي تريد أن تشعر به غداً؟'],
+'إنجاز':['ما الشيء الذي فعلته اليوم ولو كان صغيراً؟','ما الخطوة التي قرّبتك من هدفك؟','ما الشيء الذي كنت متردداً في فعله وفعلته؟','ما الذي تغلّبت عليه اليوم؟','ما الشيء الذي فعلته أفضل من الأمس؟','ما القرار الذي اتخذته اليوم؟','ما الشيء الذي ساعدت به أحداً اليوم؟','ما الشيء الذي فعلته وأفتخر فيه؟','ما الشيء الذي أنهيته اليوم؟','ما الذي جعلك تشعر أنك تقدّمت خطوة؟'],
+'أفكار':['ما الفكرة التي راودتك اليوم؟','ما الشيء الذي شغل تفكيرك؟','ما السؤال الذي حيّرك اليوم؟','ما الذي فتح عقلك على شيء جديد؟','ما الفكرة التي تريد تطويرها؟','ما الذي غيّر نظرتك؟','ما الذي جعلك تعيد التفكير في شيء؟','ما الفكرة التي تريد تنفيذها؟','ما الذي أثار فضولك اليوم؟','ما الشيء الذي فهمته أخيراً؟'],
+'علاقات':['من الشخص الذي أسعدك حضوره اليوم؟','من الشخص الذي فكرت فيه اليوم؟','ما الكلمة الجميلة التي سمعتها؟','من الشخص الذي تريد أن تشكره؟','ما اللحظة التي جمعتك بأحبابك؟','من الشخص الذي ساعدته اليوم؟','من الشخص الذي ساعدك اليوم؟','ما الشيء الذي فعلته لأجل شخص تحبه؟','من الشخص الذي تشتاق إليه؟','ما الكلمة التي قلتها وأثّرت في أحد؟'],
+'نمو':['ما الشيء الذي تعلمته اليوم؟','ما العادة التي بدأت تبنيها؟','ما الشيء الذي تحسّنت فيه؟','ما الخطأ الذي استفدت منه؟','ما الذي جعلك أقوى اليوم؟','ما الشيء الذي تريد تطويره في نفسك؟','ما الذي بدأت تلاحظه في نفسك؟','ما التغيير الذي تريد إحداثه؟','ما الشيء الذي أصبح أسهل عليك؟','ما الخطوة الصغيرة التي قمت بها لنفسك؟'],
+'امتنان':['ما ثلاثة أشياء أنت ممتن لها اليوم؟','ما النعمة التي أحياناً تنساها؟','من الشخص الذي أنت ممتن لوجوده؟','ما التفصيل الصغير الذي أسعدك؟','ما الشيء الذي أنت ممتن له في نفسك؟','ما الشيء الذي أنت ممتن له في يومك؟','ما النعمة التي لاحظتها اليوم؟','على ما أنت ممتن في صحتك؟','ما الشيء الذي أنت ممتن له في حياتك؟','ما الذي يجعلك تشعر بالامتنان كل يوم؟'],
+'لحظة':['صف يومك بثلاث كلمات.','لو كان يومك لوناً، ما هو؟','لو كان يومك أغنية، ما اسمها؟','ما اللحظة التي تريد تذكرها بعد سنة؟','لو صوّرت يومك بصورة واحدة، ما هي؟','اختصر يومك بجملة واحدة.','ما الذي كنت تريد قوله ولم تقله؟','لو أرسلت رسالة لنفسك في المستقبل، ما تقول؟','ما الشيء الذي كنت تحتاج قوله اليوم؟','لو كان يومك طعاماً، ما هو؟','ما اللحظة التي تريد الاحتفاظ بها؟','لو كتبت عنواناً ليومك، ما هو؟','ما الشيء الذي تريد نسيانه من اليوم؟','لو كان يومك فصلاً، ما هو؟','ما اللحظة التي تستحق أن تُروى؟']
 }
 };
 
-function t(key){
-  var lang=TRANSLATIONS[currentLang]||TRANSLATIONS.ar;
-  return lang[key]||TRANSLATIONS.ar[key]||key;
+var SECTION_ICONS={'تأمل':'📖','مشاعر':'💭','إنجاز':'🎯','أفكار':'💡','علاقات':'❤️','نمو':'🌱','امتنان':'🌟','لحظة':'✨'};
+
+/* ============================================
+   الثيمات
+   ============================================ */
+var THEMES={
+dark:{
+gold:{bg:'#0A0A0A',card:'#141414',text:'#F5F5F5',text2:'#C4C4C4',text3:'#8A8A8A',border:'rgba(255,255,255,.06)',primary:'#C9A961'},
+green:{bg:'#0A0A0A',card:'#141414',text:'#F5F5F5',text2:'#C4C4C4',text3:'#8A8A8A',border:'rgba(255,255,255,.06)',primary:'#4ADE80'},
+blue:{bg:'#0A0A0A',card:'#141414',text:'#F5F5F5',text2:'#C4C4C4',text3:'#8A8A8A',border:'rgba(255,255,255,.06)',primary:'#3B82F6'},
+purple:{bg:'#0A0A0A',card:'#141414',text:'#F5F5F5',text2:'#C4C4C4',text3:'#8A8A8A',border:'rgba(255,255,255,.06)',primary:'#A855F7'},
+red:{bg:'#0A0A0A',card:'#141414',text:'#F5F5F5',text2:'#C4C4C4',text3:'#8A8A8A',border:'rgba(255,255,255,.06)',primary:'#EF4444'},
+rose:{bg:'#0A0A0A',card:'#141414',text:'#F5F5F5',text2:'#C4C4C4',text3:'#8A8A8A',border:'rgba(255,255,255,.06)',primary:'#E11D48'}
+},
+light:{
+gold:{bg:'#FAF8F3',card:'#FFFFFF',text:'#1A1A1A',text2:'#4A4A4A',text3:'#8A8A8A',border:'rgba(0,0,0,.08)',primary:'#B8934A'},
+green:{bg:'#FAF8F3',card:'#FFFFFF',text:'#1A1A1A',text2:'#4A4A4A',text3:'#8A8A8A',border:'rgba(0,0,0,.08)',primary:'#16A34A'},
+blue:{bg:'#FAF8F3',card:'#FFFFFF',text:'#1A1A1A',text2:'#4A4A4A',text3:'#8A8A8A',border:'rgba(0,0,0,.08)',primary:'#2563EB'},
+purple:{bg:'#FAF8F3',card:'#FFFFFF',text:'#1A1A1A',text2:'#4A4A4A',text3:'#8A8A8A',border:'rgba(0,0,0,.08)',primary:'#9333EA'},
+red:{bg:'#FAF8F3',card:'#FFFFFF',text:'#1A1A1A',text2:'#4A4A4A',text3:'#8A8A8A',border:'rgba(0,0,0,.08)',primary:'#DC2626'},
+rose:{bg:'#FAF8F3',card:'#FFFFFF',text:'#1A1A1A',text2:'#4A4A4A',text3:'#8A8A8A',border:'rgba(0,0,0,.08)',primary:'#E11D48'}
+}
+};
+
+var COLOR_NAMES={gold:'ذهبي',green:'أخضر',blue:'أزرق',purple:'بنفسجي',red:'أحمر',rose:'وردي'};
+
+var DAYS_AR=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+var DAYS_EN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var DAYS_SV=['söndag','måndag','tisdag','onsdag','torsdag','fredag','lördag'];
+
+var MONTHS_AR=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+var MONTHS_EN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+var MONTHS_SV=['januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december'];
+
+function getDaysArray(){
+  if(currentLang==='ar')return DAYS_AR;
+  if(currentLang==='sv')return DAYS_SV;
+  return DAYS_EN;
+}
+function getMonthsArray(){
+  if(currentLang==='ar')return MONTHS_AR;
+  if(currentLang==='sv')return MONTHS_SV;
+  return MONTHS_EN;
 }/* ============================================
    IndexedDB — قاعدة البيانات
    ============================================ */
