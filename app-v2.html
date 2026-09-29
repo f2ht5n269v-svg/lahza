@@ -2490,6 +2490,26 @@ function showStatus(msg,color){
 /* ============================================
    Theme — الثيمات
    ============================================ */
+  var THEMES={
+dark:{
+gold:{bg:'#0A0A0A',card:'#141414',text:'#F5F5F5',text2:'#C4C4C4',text3:'#8A8A8A',border:'rgba(255,255,255,.06)',primary:'#C9A961'},
+green:{bg:'#0A0A0A',card:'#141414',text:'#F5F5F5',text2:'#C4C4C4',text3:'#8A8A8A',border:'rgba(255,255,255,.06)',primary:'#4ADE80'},
+blue:{bg:'#0A0A0A',card:'#141414',text:'#F5F5F5',text2:'#C4C4C4',text3:'#8A8A8A',border:'rgba(255,255,255,.06)',primary:'#3B82F6'},
+purple:{bg:'#0A0A0A',card:'#141414',text:'#F5F5F5',text2:'#C4C4C4',text3:'#8A8A8A',border:'rgba(255,255,255,.06)',primary:'#A855F7'},
+red:{bg:'#0A0A0A',card:'#141414',text:'#F5F5F5',text2:'#C4C4C4',text3:'#8A8A8A',border:'rgba(255,255,255,.06)',primary:'#EF4444'},
+rose:{bg:'#0A0A0A',card:'#141414',text:'#F5F5F5',text2:'#C4C4C4',text3:'#8A8A8A',border:'rgba(255,255,255,.06)',primary:'#E11D48'}
+},
+light:{
+gold:{bg:'#FAF8F3',card:'#FFFFFF',text:'#1A1A1A',text2:'#4A4A4A',text3:'#8A8A8A',border:'rgba(0,0,0,.08)',primary:'#B8934A'},
+green:{bg:'#FAF8F3',card:'#FFFFFF',text:'#1A1A1A',text2:'#4A4A4A',text3:'#8A8A8A',border:'rgba(0,0,0,.08)',primary:'#16A34A'},
+blue:{bg:'#FAF8F3',card:'#FFFFFF',text:'#1A1A1A',text2:'#4A4A4A',text3:'#8A8A8A',border:'rgba(0,0,0,.08)',primary:'#2563EB'},
+purple:{bg:'#FAF8F3',card:'#FFFFFF',text:'#1A1A1A',text2:'#4A4A4A',text3:'#8A8A8A',border:'rgba(0,0,0,.08)',primary:'#9333EA'},
+red:{bg:'#FAF8F3',card:'#FFFFFF',text:'#1A1A1A',text2:'#4A4A4A',text3:'#8A8A8A',border:'rgba(0,0,0,.08)',primary:'#DC2626'},
+rose:{bg:'#FAF8F3',card:'#FFFFFF',text:'#1A1A1A',text2:'#4A4A4A',text3:'#8A8A8A',border:'rgba(0,0,0,.08)',primary:'#E11D48'}
+}
+};
+
+var COLOR_NAMES={gold:'ذهبي',green:'أخضر',blue:'أزرق',purple:'بنفسجي',red:'أحمر',rose:'وردي'};
 function applyTheme(){
   var mode=currentTheme.mode;
   if(mode==='auto'){
