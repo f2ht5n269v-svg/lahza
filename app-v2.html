@@ -2442,6 +2442,24 @@ function countMoments(){
 }
 
 /* ============================================
+var DAYS_AR=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+var DAYS_EN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var DAYS_SV=['söndag','måndag','tisdag','onsdag','torsdag','fredag','lördag'];
+
+var MONTHS_AR=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+var MONTHS_EN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+var MONTHS_SV=['januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december'];
+
+function getDaysArray(){
+if(currentLang==='ar')return DAYS_AR;
+if(currentLang==='sv')return DAYS_SV;
+return DAYS_EN;
+}
+function getMonthsArray(){
+if(currentLang==='ar')return MONTHS_AR;
+if(currentLang==='sv')return MONTHS_SV;
+return MONTHS_EN;
+}
    دوال التاريخ
    ============================================ */
 function getDateStr(date){
