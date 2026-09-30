@@ -9,8 +9,8 @@
 <link rel="icon" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Amiri:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
-<style>
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Amiri:wght@400;700&family=Great+Vibes&display=swap" rel="sheet">
+<>
 :root{
   --bg:#0A0A0A;
   --bg-soft:#0F0F0F;
@@ -1077,7 +1077,7 @@ a{text-decoration:none;color:inherit;}
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.96);
+  background:var(--bag, rgba(0,0,0,.96);
   backdrop-filter:blur(20px);
   -webkit-backdrop-filter:blur(20px);
   z-index:300;
@@ -1640,7 +1640,7 @@ a{text-decoration:none;color:inherit;}
   .modal-actions{padding:0 32px;}
   .action-heart, .action-delete{width:52px;height:52px;}
 }
-</style>
+</>
 </head>
 <body>
 
@@ -1878,7 +1878,7 @@ a{text-decoration:none;color:inherit;}
         </div>
         <span class="arrow">›</span>
       </button>
-      <input type="file" id="importInput" accept=".zip" style="display:none;">
+      <input type="file" id="importInput" accept=".zip" ="display:none;">
 
       <button class="settings-item danger" id="btnDeleteAll">
         <span class="icon">
@@ -1898,7 +1898,7 @@ a{text-decoration:none;color:inherit;}
   <div class="settings-group">
     <div class="settings-group-title">عن التطبيق</div>
     <div class="settings-list">
-      <a href="privacy.html" class="settings-item" style="text-decoration:none;color:inherit;">
+      <a href="privacy.html" class="settings-item" ="text-decoration:none;color:inherit;">
         <span class="icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -1939,7 +1939,7 @@ a{text-decoration:none;color:inherit;}
         <span class="arrow">›</span>
       </button>
 
-      <div class="settings-item" style="cursor:default;">
+      <div class="settings-item" ="cursor:default;">
         <span class="icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/>
@@ -1999,7 +1999,7 @@ a{text-decoration:none;color:inherit;}
   <video id="photoVideo" class="camera-video" autoplay playsinline muted></video>
   <div class="camera-actions">
     <button class="switch-cam" id="switchPhotoCam">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ="width:22px;height:22px;">
         <polyline points="23 4 23 10 17 10"/>
         <polyline points="1 20 1 14 7 14"/>
         <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
@@ -2844,14 +2844,14 @@ function showPreview(){
   if(pendingType==='photo'){
     var i=document.createElement('img');
     i.src=URL.createObjectURL(pendingBlob);
-    i.style.cssText='width:100%;border-radius:14px;display:block;box-shadow:0 12px 40px rgba(0,0,0,.5);';
+    i..cssText='width:100%;border-radius:14px;display:block;box-shadow:0 12px 40px rgba(0,0,0,.5);';
     wrap.appendChild(i);
   }else if(pendingType==='video'){
     var v=document.createElement('video');
     v.src=URL.createObjectURL(pendingBlob);
     v.controls=true;
     v.playsInline=true;
-    v.style.cssText='width:100%;border-radius:14px;display:block;box-shadow:0 12px 40px rgba(0,0,0,.5);';
+    v..cssText='width:100%;border-radius:14px;display:block;box-shadow:0 12px 40px rgba(0,0,0,.5);';
     wrap.appendChild(v);
   }else if(pendingType==='text'){
     pendingBlob.text().then(function(txt){
@@ -2860,7 +2860,7 @@ function showPreview(){
       div.textContent=txt;
       if(pendingBg){
         var url=URL.createObjectURL(pendingBg);
-        div.style.backgroundImage='url('+url+')';
+        div..backgroundImage='url('+url+')';
       }
       wrap.appendChild(div);
     });
@@ -2983,16 +2983,16 @@ async function makeCard(m){
     content.className='text-content';
     content.textContent=await m.blob.text();
     if(m.background){
-      content.style.backgroundImage='url('+m.background+')';
+      content..backgroundImage='url('+m.background+')';
     }else{
-      content.style.background='linear-gradient(135deg, #1A1508, #0A0A0A)';
+      content..background='linear-gradient(135deg, #1A1508, #0A0A0A)';
     }
     card.appendChild(content);
   }else if(m.type==='answer'){
     content=document.createElement('div');
     content.className='text-content';
-    content.innerHTML='<div style="font-size:.8rem;color:var(--gold);margin-bottom:8px;font-family:var(--font-display);">'+(m.caption||'')+'</div><div>'+await m.blob.text()+'</div>';
-    content.style.background='linear-gradient(135deg, #1A1508, #0F0F0F)';
+    content.innerHTML='<div ="font-size:.8rem;color:var(--gold);margin-bottom:8px;font-family:var(--font-display);">'+(m.caption||'')+'</div><div>'+await m.blob.text()+'</div>';
+    content..background='linear-gradient(135deg, #1A1508, #0F0F0F)';
     card.appendChild(content);
   }
   
@@ -3197,24 +3197,24 @@ async function openMomentModal(id){
     tDiv.className='modal-text';
     tDiv.textContent=await m.blob.text();
     if(m.background){
-      tDiv.style.backgroundImage='url('+m.background+')';
+      tDiv..backgroundImage='url('+m.background+')';
     }else{
-      tDiv.style.background='linear-gradient(135deg, #1A1508, #0A0A0A)';
+      tDiv..background='linear-gradient(135deg, #1A1508, #0A0A0A)';
     }
     c.appendChild(tDiv);
   }else if(m.type==='answer'){
     var tDiv2=document.createElement('div');
     tDiv2.className='modal-text';
-    tDiv2.style.background='linear-gradient(135deg, #1A1508, #0F0F0F)';
+    tDiv2..background='linear-gradient(135deg, #1A1508, #0F0F0F)';
     var q=document.createElement('div');
-    q.style.color='var(--gold)';
-    q.style.fontSize='.85rem';
-    q.style.marginBottom='16px';
-    q.style.fontFamily='var(--font-display)';
+    q..color='var(--gold)';
+    q..fontSize='.85rem';
+    q..marginBottom='16px';
+    q..fontFamily='var(--font-display)';
     q.textContent=m.caption||'';
     var a=document.createElement('div');
-    a.style.fontSize='1.1rem';
-    a.style.lineHeight='1.9';
+    a..fontSize='1.1rem';
+    a..lineHeight='1.9';
     a.textContent=await m.blob.text();
     var inner=document.createElement('div');
     inner.appendChild(q);
@@ -3531,7 +3531,7 @@ document.getElementById('btnRate').onclick=function(){
   document.getElementById('rateModal').classList.remove('hidden');
   rateSelected=0;
   document.querySelectorAll('#rateStars span').forEach(function(s){
-    s.style.color='var(--text-4)';
+    s..color='var(--text-4)';
   });
   document.getElementById('rateFeedback').value='';
 };
@@ -3543,7 +3543,7 @@ document.querySelectorAll('#rateStars span').forEach(function(s){
     rateSelected=parseInt(s.getAttribute('data-star'));
     document.querySelectorAll('#rateStars span').forEach(function(x){
       var v=parseInt(x.getAttribute('data-star'));
-      x.style.color=v<=rateSelected?'var(--gold)':'var(--text-4)';
+      x..color=v<=rateSelected?'var(--gold)':'var(--text-4)';
     });
   };
 });
@@ -3650,8 +3650,8 @@ async function checkReminder(){
     var dismissed=localStorage.getItem('lahza-reminder-dismissed')===today;
     if(dismissed)return;
     var banner=document.createElement('div');
-    banner.style.cssText='position:fixed;top:0;left:0;right:0;background:linear-gradient(135deg,#1A1508,#0F0F0F);border-bottom:2px solid var(--gold);padding:14px 16px;z-index:9998;display:flex;align-items:center;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,.5);';
-    banner.innerHTML='<span style="font-size:1.5rem;">✦</span><div style="flex:1;"><div style="font-weight:500;font-family:var(--font-display);color:var(--gold);">لم توثّق لحظتك اليوم</div><div style="color:var(--text-3);font-size:.8rem;">اضغط لإضافة أول لقطة</div></div><button style="padding:8px 18px;background:var(--gold);color:#0A0A0A;border:none;border-radius:100px;font-weight:600;font-family:var(--font-body);cursor:pointer;" id="reminderBtnBanner">الآن</button>';
+    banner..cssText='position:fixed;top:0;left:0;right:0;background:linear-gradient(135deg,#1A1508,#0F0F0F);border-bottom:2px solid var(--gold);padding:14px 16px;z-index:9998;display:flex;align-items:center;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,.5);';
+    banner.innerHTML='<span ="font-size:1.5rem;">✦</span><div ="flex:1;"><div ="font-weight:500;font-family:var(--font-display);color:var(--gold);">لم توثّق لحظتك اليوم</div><div ="color:var(--text-3);font-size:.8rem;">اضغط لإضافة أول لقطة</div></div><button ="padding:8px 18px;background:var(--gold);color:#0A0A0A;border:none;border-radius:100px;font-weight:600;font-family:var(--font-body);cursor:pointer;" id="reminderBtnBanner">الآن</button>';
     document.body.appendChild(banner);
     document.getElementById('reminderBtnBanner').onclick=function(){
       banner.remove();
@@ -3668,7 +3668,7 @@ setTimeout(function(){
   var sp=document.getElementById('splash');
   if(sp){
     sp.classList.add('hide');
-    setTimeout(function(){sp.style.display='none';},800);
+    setTimeout(function(){sp..display='none';},800);
   }
 },1600);
 
