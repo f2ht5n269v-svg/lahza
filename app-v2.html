@@ -1351,6 +1351,36 @@ a{text-decoration:none;color:inherit;}
    Sheets — الأوراق السفلية
    ============================================ */
 .sheet{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.7);
+backdrop-filter:blur(6px);
+-webkit-backdrop-filter:blur(6px);
+z-index:400;
+display:flex;
+align-items:center;
+animation:fadeIn var(--t-mid) ease;
+}
+.sheet-close{
+position:absolute;
+top:12px;
+right:12px;
+width:36px;
+height:36px;
+border-radius:50%;
+background:rgba(255,255,255,.1);
+color:var(--text);
+font-size:1.2rem;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+z-index:10;
+border:none;
+}
+  .sheet-close:hover{
+    background:rgba(255,255,255,.2);
+    }
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.7);
@@ -1358,7 +1388,7 @@ a{text-decoration:none;color:inherit;}
   -webkit-backdrop-filter:blur(6px);
   z-index:400;
   display:flex;
-  align-items:flex-end;
+  align-items:center;
   animation:fadeIn var(--t-mid) ease;
 }
 .sheet-content{
@@ -1375,7 +1405,9 @@ a{text-decoration:none;color:inherit;}
   display:flex;
   flex-direction:column;
   align-items:center;
+  position:relative;
 }
+ 
 .sheet-handle{
   width:40px;
   height:4px;
@@ -2079,6 +2111,7 @@ a{text-decoration:none;color:inherit;}
      ============================================ -->
 <div class="sheet hidden" id="questionSheet">
   <div class="sheet-content">
+    <button class="sheet-close" id="sheetClose">X</botton>
     <div class="sheet-handle"></div>
     <div id="sectionList"style="display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;padding:8px 0;"></div>
     <button class="btn small" id="sheetCancel" style="margin-top:16px;">إلغاء</button>
@@ -3593,6 +3626,9 @@ document.getElementById('questionCard').onclick=function(){
 document.getElementById('sheetCancel').onclick=function(){
   document.getElementById('questionSheet').classList.add('hidden');
 };
+  document.getElementById('sheetClose').onclick=function(){
+  document.getElementById('questionSheet').classist.add('hidden');
+    };
 function openQuestionList(sec){
   var bank=QUESTIONS_BANK['ar'];
   var qs=bank[sec]||[];
