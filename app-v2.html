@@ -2079,7 +2079,6 @@ a{text-decoration:none;color:inherit;}
 <div class="sheet hidden" id="questionSheet">
   <div class="sheet-content">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">اختر القسم</div>
     <div id="sectionList"></div>
     <button class="btn small" id="sheetCancel" style="margin-top:16px;">إلغاء</button>
   </div>
@@ -3581,7 +3580,7 @@ document.getElementById('questionCard').onclick=function(){
   Object.keys(bank).forEach(function(sec){
     var item=document.createElement('div');
     item.className='section-item';
-    item.innerHTML='<div class="left"><span class="section-icon">'+SECTION_ICONS[sec]+'</span><span class="section-name">'+sec+'</span></div><span class="count">'+bank[sec].length+'</span>';
+    item.innerHTML='<div class="left"><span class="section-icon">'+SECTION_ICONS[sec]+'</span><span class="section-name">'+sec+'</span></div>';
     item.onclick=function(){
       document.getElementById('questionSheet').classList.add('hidden');
       openQuestionList(sec);
