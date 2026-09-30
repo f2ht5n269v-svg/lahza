@@ -2982,9 +2982,9 @@ async function makeCard(m){
     content.className='text-content';
     content.textContent=await m.blob.text();
     if(m.background){
-      content..backgroundImage='url('+m.background+')';
+      content.style.backgroundImage='url('+m.background+')';
     }else{
-      content..background='linear-gradient(135deg, #1A1508, #0A0A0A)';
+      content.style.background='linear-gradient(135deg, #1A1508, #0A0A0A)';
     }
     card.appendChild(content);
   }else if(m.type==='answer'){
