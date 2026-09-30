@@ -141,6 +141,11 @@ a{text-decoration:none;color:inherit;}
   0%,100%{box-shadow:0 0 20px rgba(201,169,97,.15);}
   50%{box-shadow:0 0 32px rgba(201,169,97,.3);}
 }
+  @keyframes tapPulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(0.96);}
+    100%{transform:scale(1);}
+    }
 .fade-in{animation:fadeIn var(--t-mid) ease both;}
 .fade-in-up{animation:fadeInUp var(--t-mid) ease both;}
 .fade-in-scale{animation:fadeInScale var(--t-mid) ease both;}
@@ -320,6 +325,9 @@ a{text-decoration:none;color:inherit;}
   margin:var(--space-xl) 0;
   text-align:center;
   animation:fadeInUp .6s ease .12s both;
+  cursor:pointer;transition:transform var(--t-fast);
+}
+  .home-quote:active{transform:scale(0.96);
 }
 .home-quote::before,
 .home-quote::after{
