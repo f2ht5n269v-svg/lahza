@@ -2843,14 +2843,14 @@ function showPreview(){
   if(pendingType==='photo'){
     var i=document.createElement('img');
     i.src=URL.createObjectURL(pendingBlob);
-    i..cssText='width:100%;border-radius:14px;display:block;box-shadow:0 12px 40px rgba(0,0,0,.5);';
+    i.style.cssText='width:100%;border-radius:14px;display:block;box-shadow:0 12px 40px rgba(0,0,0,.5);';
     wrap.appendChild(i);
   }else if(pendingType==='video'){
     var v=document.createElement('video');
     v.src=URL.createObjectURL(pendingBlob);
     v.controls=true;
     v.playsInline=true;
-    v..cssText='width:100%;border-radius:14px;display:block;box-shadow:0 12px 40px rgba(0,0,0,.5);';
+    v.style.cssText='width:100%;border-radius:14px;display:block;box-shadow:0 12px 40px rgba(0,0,0,.5);';
     wrap.appendChild(v);
   }else if(pendingType==='text'){
     pendingBlob.text().then(function(txt){
