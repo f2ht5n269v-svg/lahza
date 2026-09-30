@@ -2859,7 +2859,7 @@ function showPreview(){
       div.textContent=txt;
       if(pendingBg){
         var url=URL.createObjectURL(pendingBg);
-        div..backgroundImage='url('+url+')';
+        div.style.backgroundImage='url('+url+')';
       }
       wrap.appendChild(div);
     });
