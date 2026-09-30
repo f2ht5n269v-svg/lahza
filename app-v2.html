@@ -2991,7 +2991,7 @@ async function makeCard(m){
     content=document.createElement('div');
     content.className='text-content';
     content.innerHTML='<div ="font-size:.8rem;color:var(--gold);margin-bottom:8px;font-family:var(--font-display);">'+(m.caption||'')+'</div><div>'+await m.blob.text()+'</div>';
-    content..background='linear-gradient(135deg, #1A1508, #0F0F0F)';
+    content.style.background='linear-gradient(135deg, #1A1508, #0F0F0F)';
     card.appendChild(content);
   }
   
