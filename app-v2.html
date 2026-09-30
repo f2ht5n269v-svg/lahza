@@ -3196,24 +3196,24 @@ async function openMomentModal(id){
     tDiv.className='modal-text';
     tDiv.textContent=await m.blob.text();
     if(m.background){
-      tDiv..backgroundImage='url('+m.background+')';
+      tDiv.style.backgroundImage='url('+m.background+')';
     }else{
-      tDiv..background='linear-gradient(135deg, #1A1508, #0A0A0A)';
+      tDiv.style.background='linear-gradient(135deg, #1A1508, #0A0A0A)';
     }
     c.appendChild(tDiv);
   }else if(m.type==='answer'){
     var tDiv2=document.createElement('div');
     tDiv2.className='modal-text';
-    tDiv2..background='linear-gradient(135deg, #1A1508, #0F0F0F)';
+    tDiv2.style.background='linear-gradient(135deg, #1A1508, #0F0F0F)';
     var q=document.createElement('div');
-    q..color='var(--gold)';
-    q..fontSize='.85rem';
-    q..marginBottom='16px';
-    q..fontFamily='var(--font-display)';
+    q.style.color='var(--gold)';
+    q.style.fontSize='.85rem';
+    q.style.marginBottom='16px';
+    q.style.fontFamily='var(--font-display)';
     q.textContent=m.caption||'';
     var a=document.createElement('div');
-    a..fontSize='1.1rem';
-    a..lineHeight='1.9';
+    a.style.fontSize='1.1rem';
+    a.style.lineHeight='1.9';
     a.textContent=await m.blob.text();
     var inner=document.createElement('div');
     inner.appendChild(q);
@@ -3530,7 +3530,7 @@ document.getElementById('btnRate').onclick=function(){
   document.getElementById('rateModal').classList.remove('hidden');
   rateSelected=0;
   document.querySelectorAll('#rateStars span').forEach(function(s){
-    s..color='var(--text-4)';
+    s.style.color='var(--text-4)';
   });
   document.getElementById('rateFeedback').value='';
 };
@@ -3542,7 +3542,7 @@ document.querySelectorAll('#rateStars span').forEach(function(s){
     rateSelected=parseInt(s.getAttribute('data-star'));
     document.querySelectorAll('#rateStars span').forEach(function(x){
       var v=parseInt(x.getAttribute('data-star'));
-      x..color=v<=rateSelected?'var(--gold)':'var(--text-4)';
+      x.style.color=v<=rateSelected?'var(--gold)':'var(--text-4)';
     });
   };
 });
@@ -3649,7 +3649,7 @@ async function checkReminder(){
     var dismissed=localStorage.getItem('lahza-reminder-dismissed')===today;
     if(dismissed)return;
     var banner=document.createElement('div');
-    banner..cssText='position:fixed;top:0;left:0;right:0;background:linear-gradient(135deg,#1A1508,#0F0F0F);border-bottom:2px solid var(--gold);padding:14px 16px;z-index:9998;display:flex;align-items:center;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,.5);';
+    banner.style.cssText='position:fixed;top:0;left:0;right:0;background:linear-gradient(135deg,#1A1508,#0F0F0F);border-bottom:2px solid var(--gold);padding:14px 16px;z-index:9998;display:flex;align-items:center;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,.5);';
     banner.innerHTML='<span ="font-size:1.5rem;">✦</span><div ="flex:1;"><div ="font-weight:500;font-family:var(--font-display);color:var(--gold);">لم توثّق لحظتك اليوم</div><div ="color:var(--text-3);font-size:.8rem;">اضغط لإضافة أول لقطة</div></div><button ="padding:8px 18px;background:var(--gold);color:#0A0A0A;border:none;border-radius:100px;font-weight:600;font-family:var(--font-body);cursor:pointer;" id="reminderBtnBanner">الآن</button>';
     document.body.appendChild(banner);
     document.getElementById('reminderBtnBanner').onclick=function(){
@@ -3667,7 +3667,7 @@ setTimeout(function(){
   var sp=document.getElementById('splash');
   if(sp){
     sp.classList.add('hide');
-    setTimeout(function(){sp..display='none';},800);
+    setTimeout(function(){sp.style.display='none';},800);
   }
 },1600);
 
