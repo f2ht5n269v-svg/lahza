@@ -2671,7 +2671,7 @@ document.getElementById('actionOldDate').onclick=function(){
   monthSel.innerHTML='';
   daySel.innerHTML='';
   var thisYear=new Date().getFullYear();
-  for(var y=thisYear+100;y>=1900;y--){
+  for(var y=thisYear;y>=1900;y--){
     var o=document.createElement('option');
     o.value=y;o.textContent=y;
     yearSel.appendChild(o);
