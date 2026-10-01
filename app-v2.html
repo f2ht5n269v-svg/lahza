@@ -2874,7 +2874,6 @@ var bgCss='background:linear-gradient(135deg,#1F1508,#0F0A08);';
 if(m.background){
 bgCss='background-image:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),url('+m.background+');background-size:cover;background-position:center;background-repeat:no-repeat;';
 }
-c.style.maxwidth:100%;
 tDiv.style.cssText="width:100%;min-height:60vh;padding:32px 24px;border-radius:14px;color:#fff;font-family:var(--font-quote);font-size:1.25rem;line-height:1.9;text-align:center;display:flex;align-items:center;justify-content:center;box-sizing:border-box;margin-bottom:16px;"+bgCss;
 tDiv.textContent=await m.blob.text();
 c.appendChild(tDiv);
