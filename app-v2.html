@@ -1960,6 +1960,14 @@ modal     ============================================ -->
     <button class="btn primary" id="datePickerConfirm" style="margin-top:20px;">تأكيد</button>
   </div>
 </div>
+<!-- شاشة لقطات اليوم -->
+<div class="screen hidden" id="dayMomentsScreen">
+  <button class="btn-close" id="dayMomentsClose">X</button>
+  <div class="screen-header">
+    <h2 class="screen-title" id="dayMomentsTitle">...</h2>
+  </div>
+  <div id="dayMomentsGrid" class="moments-grid"></div>
+</div>
 
 <input type="file" accept="video/*" capture="environment" id="videoInput" style="display:none;"><script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
@@ -2614,7 +2622,7 @@ document.getElementById('actionOldDate').onclick=function(){
   monthSel.innerHTML='';
   daySel.innerHTML='';
   var thisYear=new Date().getFullYear();
-  for(var y=thisYear;y>=1990;y--){
+  for(var y=thisYear+100;y>=1900;y--){
     var o=document.createElement('option');
     o.value=y;o.textContent=y;
     yearSel.appendChild(o);
@@ -2814,21 +2822,8 @@ async function renderTree(){
     calendarSection.classList.add('hidden');
   }
   
-  if(selectedDay){
-    momentsSection.classList.remove('hidden');
-    var dayMoments=filtered.filter(function(m){return getDateStr(m.date)===selectedDay;});
-    momentsGrid.innerHTML='';
-    if(dayMoments.length===0){
-      momentsGrid.innerHTML='<div class="empty-state"><span class="empty-icon">✦</span><div class="empty-title">لا توجد لقطات</div><div>'+t('no_day_data')+'</div></div>';
-    }else{
-      dayMoments.sort(function(a,b){return new Date(a.date)-new Date(b.date);});
-      for(var i=0;i<dayMoments.length;i++){
-        var card=await makeCard(dayMoments[i]);
-        momentsGrid.appendChild(card);
-      }
-    }
-  }else{
-    momentsSection.classList.add('hidden');
+ if(selectedDay){
+    showDayScreen(filtered,selectedDay);
   }
 }
 
@@ -2900,6 +2895,31 @@ document.getElementById('calNext').onclick=function(){
   if(selectedMonth>11){selectedMonth=0;selectedYear++;}
   selectedDay=null;
   renderTree();
+};
+
+   async function showDayScreen(moments,day){
+  var screen=document.getElementById('dayMomentsScreen');
+  var title=document.getElementById('dayMomentsTitle');
+  var grid=document.getElementById('dayMomentsGrid');
+  var dayMoments=moments.filter(function(m){return getDateStr(m.date)===day;});
+  dayMoments.sort(function(a,b){return new Date(a.date)-new Date(b.date);});
+  var d=new Date(day+'T12:00:00');
+  var days=getDaysArray();
+  var months=getMonthsArray();
+  title.textContent=days[d.getDay()]+'، '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();
+  grid.innerHTML='';
+  if(dayMoments.length===0){
+    grid.innerHTML='<div class="empty-state"><span class="empty-icon">✦</span><div class="empty-title">لا توجد لقطات</div><div>'+t('no_day_data')+'</div></div>';
+  }else{
+    for(var i=0;i<dayMoments.length;i++){
+      var card=await makeCard(dayMoments[i]);
+      grid.appendChild(card);
+    }
+  }
+  screen.classList.remove('hidden');
+}
+document.getElementById('dayMomentsClose').onclick=function(){
+  document.getElementById('dayMomentsScreen').classList.add('hidden');
 };
 
 /* ============================================
