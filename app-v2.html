@@ -2868,19 +2868,16 @@ async function openMomentModal(id){
     v.controls=true;
     v.playsInline=true;
     c.appendChild(v);
-  }else if(m.type==='text'){
-    var tDiv=document.createElement('div');
-    tDiv.className='modal-text';
-    tDiv.textContent=await m.blob.text();
-    if(m.background){
-      tDiv.style.backgroundImage='url('+m.background+')';
-      tDiv.style.backgroundSize='cover';
-      tDiv.style.backgroundPosition='center';
-      tDiv.style.backgroundRrepeat='no-repeat';
-    }else{
-      tDiv.style.background='linear-gradient(135deg, #1F1508, #0F0A08)';
-    }
-    c.appendChild(tDiv);
+ }else if(m.type==='text'){
+var tDiv=document.createElement('div');
+var bgCss='background:linear-gradient(135deg,#1F1508,#0F0A08);';
+if(m.background){
+bgCss='background-image:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),url('+m.background+');background-size:cover;background-position:center;background-repeat:no-repeat;';
+}
+tDiv.style.cssText='width:100%;min-height:220px;padding:32px 24px;border-radius:14px;color:#fff;font-family:var(--font-quote);font-size:1.25rem;line-height:1.9;text-align:center;display:flex;align-items:center;justify-content:center;box-sizing:border-box;margin-bottom:16px;'+bgCss;
+tDiv.textContent=await m.blob.text();
+c.appendChild(tDiv);
+}
   }else if(m.type==='answer'){
     var tDiv2=document.createElement('div');
     tDiv2.className='modal-text';
