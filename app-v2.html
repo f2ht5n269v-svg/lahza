@@ -395,6 +395,50 @@ a{text-decoration:none;color:inherit;}
   transform:translateX(-4px);
   color:var(--gold);
 }
+   .on-this-day{
+  margin:var(--space-lg) auto;
+  max-width:340px;
+  width:100%;
+  padding:var(--space-md);
+  background:var(--card);
+  border:1px solid var(--border-strong);
+  border-radius:var(--radius-md);
+  animation:fadeInUp .5s ease both;
+}
+.on-this-day-title{
+  font-family:var(--font-display);
+  font-size:.9rem;
+  color:var(--gold);
+  text-align:center;
+  margin-bottom:var(--space-sm);
+  letter-spacing:.02em;
+}
+.on-this-day-year{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:var(--space-sm) var(--space-md);
+  margin:4px 0;
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  background:transparent;
+  width:100%;
+  font-family:var(--font-body);
+  color:var(--text);
+  transition:all var(--t-fast);
+}
+.on-this-day-year:active{
+  animation:tapPulse 0.3s ease;
+}
+.on-this-day-year:hover{
+  border-color:var(--gold);
+  color:var(--gold);
+}
+.on-this-day-count{
+  font-size:.78rem;
+  color:var(--text-3);
+}
 
 /* ============================================
    Stats — الإحصائيات
@@ -1449,6 +1493,11 @@ a{text-decoration:none;color:inherit;}
       <span class="arrow">›</span>
     </button>
   </div>
+   <!-- في مثل هذا اليوم -->
+<div class="on-this-day hidden" id="onThisDay">
+  <div class="on-this-day-title">في مثل هذا اليوم</div>
+  <div id="onThisDayYears"></div>
+</div>
 
   <!-- الإحصائيات -->
   <div class="home-stats">
@@ -3370,6 +3419,44 @@ document.getElementById('answerSaveBtn').onclick=async function(){
 /* ============================================
    Reminder Check
    ============================================ */
+   async function renderOnThisDay(){
+  var box=document.getElementById('onThisDay');
+  var yearsBox=document.getElementById('onThisDayYears');
+  if(!box||!yearsBox)return;
+  var ms=await getAllMoments();
+  var today=new Date();
+  var todayMonth=today.getMonth();
+  var todayDay=today.getDate();
+  var todayYear=today.getFullYear();
+  var matching=ms.filter(function(m){
+    var d=new Date(m.date);
+    return d.getMonth()===todayMonth&&d.getDate()===todayDay&&d.getFullYear()<todayYear;
+  });
+  if(matching.length===0){
+    box.classList.add('hidden');
+    return;
+  }
+  var years={};
+  matching.forEach(function(m){
+    var y=new Date(m.date).getFullYear();
+    if(!years[y])years[y]=[];
+    years[y].push(m);
+  });
+  yearsBox.innerHTML='';
+  var yearsSorted=Object.keys(years).sort(function(a,b){return b-a;});
+  yearsSorted.forEach(function(y){
+    var count=years[y].length;
+    var dateStr=y+'-'+String(todayMonth+1).padStart(2,'0')+'-'+String(todayDay).padStart(2,'0');
+    var btn=document.createElement('button');
+    btn.className='on-this-day-year';
+    var cntText=count===1?'لقطة واحدة':count===2?'لقطتان':count+' لقطات';
+    btn.innerHTML='<span>'+y+'</span><span class="on-this-day-count">'+cntText+'</span>';
+    btn.onclick=function(){showDayScreen(ms,dateStr);};
+    yearsBox.appendChild(btn);
+  });
+  box.classList.remove('hidden');
+}
+
 async function checkReminder(){
   try{
     var enabled=localStorage.getItem('lahza-reminder')==='true';
@@ -3414,6 +3501,7 @@ setTimeout(function(){
     await openDB();
     updateCounter();
     updateStreak();
+     renderOnThisDay();
     updateThemeStatus();
     updateLanguageStatus();
     loadReminderSettings();
