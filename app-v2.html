@@ -2874,6 +2874,9 @@ async function openMomentModal(id){
     tDiv.textContent=await m.blob.text();
     if(m.background){
       tDiv.style.backgroundImage='url('+m.background+')';
+      tDiv.style.backgroundSize='cover';
+      tDiv.style.backgroundPosition='center';
+      tDiv.style.backgroundRrepeat='no-repeat';
     }else{
       tDiv.style.background='linear-gradient(135deg, #1F1508, #0F0A08)';
     }
