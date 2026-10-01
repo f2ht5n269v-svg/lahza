@@ -1938,6 +1938,28 @@ modal     ============================================ -->
     <button class="btn primary" id="rateSubmit">إرسال</button>
   </div>
 </div>
+<!-- ورقة اختيار التاريخ -->
+<div class="sheet hidden" id="datePickerSheet">
+  <div class="sheet-content">
+    <button class="sheet-close" id="datePickerClose">X</button>
+    <div style="text-align:center;color:var(--gold);font-family:var(--font-display);font-size:1.1rem;margin:8px 0 20px;">اختر التاريخ</div>
+    <div style="display:flex;gap:8px;justify-content:center;padding:0 4px;">
+      <div style="flex:1;">
+        <label style="display:block;color:var(--text-3);font-size:.75rem;text-align:center;margin-bottom:6px;">السنة</label>
+        <select id="pickYear" style="width:100%;padding:14px 6px;background:var(--bg);color:var(--text);border:1.5px solid var(--border-strong);border-radius:10px;font-family:var(--font-body);font-size:1rem;text-align:center;"></select>
+      </div>
+      <div style="flex:1;">
+        <label style="display:block;color:var(--text-3);font-size:.75rem;text-align:center;margin-bottom:6px;">الشهر</label>
+        <select id="pickMonth" style="width:100%;padding:14px 6px;background:var(--bg);color:var(--text);border:1.5px solid var(--border-strong);border-radius:10px;font-family:var(--font-body);font-size:1rem;text-align:center;"></select>
+      </div>
+      <div style="flex:1;">
+        <label style="display:block;color:var(--text-3);font-size:.75rem;text-align:center;margin-bottom:6px;">اليوم</label>
+        <select id="pickDay" style="width:100%;padding:14px 6px;background:var(--bg);color:var(--text);border:1.5px solid var(--border-strong);border-radius:10px;font-family:var(--font-body);font-size:1rem;text-align:center;"></select>
+      </div>
+    </div>
+    <button class="btn primary" id="datePickerConfirm" style="margin-top:20px;">تأكيد</button>
+  </div>
+</div>
 
 <input type="file" accept="video/*" capture="environment" id="videoInput" style="display:none;"><script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
@@ -2585,18 +2607,52 @@ document.getElementById('saveClose').onclick=function(){
    Old Date — إضافة بتاريخ قديم
    ============================================ */
 document.getElementById('actionOldDate').onclick=function(){
-  var d=prompt(t('pick_date')+' (سنة-شهر-يوم):\nمثال: 2024-05-15');
-  if(!d)return;
-  var parts=d.split('-');
-  if(parts.length!==3){showStatus('صيغة خطأ — استخدم YYYY-MM-DD','#EF4444');return;}
-  var y=parseInt(parts[0]);
-  var mo=parseInt(parts[1])-1;
-  var dy=parseInt(parts[2]);
-  if(isNaN(y)||isNaN(mo)||isNaN(dy)||mo<0||mo>11||dy<1||dy>31){
-    showStatus('تاريخ غير صحيح','#EF4444');return;
+  var yearSel=document.getElementById('pickYear');
+  var monthSel=document.getElementById('pickMonth');
+  var daySel=document.getElementById('pickDay');
+  yearSel.innerHTML='';
+  monthSel.innerHTML='';
+  daySel.innerHTML='';
+  var thisYear=new Date().getFullYear();
+  for(var y=thisYear;y>=1990;y--){
+    var o=document.createElement('option');
+    o.value=y;o.textContent=y;
+    yearSel.appendChild(o);
   }
+  var months=getMonthsArray();
+  for(var mo=0;mo<12;mo++){
+    var o2=document.createElement('option');
+    o2.value=mo+1;o2.textContent=months[mo];
+    monthSel.appendChild(o2);
+  }
+  function fillDays(){
+    var y2=parseInt(yearSel.value);
+    var mo2=parseInt(monthSel.value);
+    var dim=new Date(y2,mo2,0).getDate();
+    var cv=parseInt(daySel.value)||1;
+    daySel.innerHTML='';
+    for(var d=1;d<=dim;d++){
+      var o3=document.createElement('option');
+      o3.value=d;o3.textContent=d;
+      daySel.appendChild(o3);
+    }
+    if(cv<=dim)daySel.value=cv;
+  }
+  fillDays();
+  yearSel.onchange=fillDays;
+  monthSel.onchange=fillDays;
+  document.getElementById('datePickerSheet').classList.remove('hidden');
+};
+document.getElementById('datePickerClose').onclick=function(){
+  document.getElementById('datePickerSheet').classList.add('hidden');
+};
+document.getElementById('datePickerConfirm').onclick=function(){
+  var y=parseInt(document.getElementById('pickYear').value);
+  var mo=parseInt(document.getElementById('pickMonth').value)-1;
+  var dy=parseInt(document.getElementById('pickDay').value);
   var date=new Date(y,mo,dy,12,0,0);
   window._pendingOldDate=date;
+  document.getElementById('datePickerSheet').classList.add('hidden');
   var choice=prompt('اختر النوع:\n1 - صورة\n2 - فيديو\n3 - كتابة');
   if(choice==='1'){
     document.getElementById('photoScreen').classList.remove('hidden');
