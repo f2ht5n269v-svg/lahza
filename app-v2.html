@@ -2398,6 +2398,67 @@ function loadTheme(){
 /* ============================================
    Language
    ============================================ */
+
+   /* ============================================
+تحديث نصوص الواجهة حسب اللغة
+============================================ */
+function updateUIText() {
+var t = TRANSLATIONS[currentLang] || TRANSLATIONS.ar;
+// أزرار الصفحة الرئيسية
+var el;
+el = document.querySelector('#actionPhoto .label'); if(el) el.textContent = t.photo;
+el = document.querySelector('#actionVideo .label'); if(el) el.textContent = t.video;
+el = document.querySelector('#actionText .label'); if(el) el.textContent = t.text;
+el = document.querySelector('#actionOldDate .label'); if(el) el.textContent = t.add_old;
+// الشريط السفلي
+el = document.querySelector('#tabBtnHome span:last-child'); if(el) el.textContent = t.home;
+el = document.querySelector('#tabBtnMoments span:last-child'); if(el) el.textContent = t.my_moments;
+el = document.querySelector('#tabBtnSettings span:last-child'); if(el) el.textContent = t.settings;
+// الإعدادات
+el = document.querySelector('#btnReminder .label'); if(el) el.textContent = t.reminder;
+el = document.querySelector('#btnTheme .label'); if(el) el.textContent = t.theme;
+el = document.querySelector('#btnLanguage .label'); if(el) el.textContent = t.language;
+el = document.querySelector('#btnExport .label'); if(el) el.textContent = t.export;
+el = document.querySelector('#btnImport .label'); if(el) el.textContent = t.import;
+el = document.querySelector('#btnDeleteAll .label'); if(el) el.textContent = t.delete_all;
+el = document.querySelector('#btnRate .label'); if(el) el.textContent = t.rate;
+el = document.querySelector('#btnContact .label'); if(el) el.textContent = t.contact;
+el = document.querySelector('a[href="privacy.html"] .label'); if(el) el.textContent = t.privacy;
+// الإحصائيات
+var stats = document.querySelectorAll('.home-stat .lbl');
+if(stats.length > 0) stats[0].textContent = t.streak;
+if(stats.length > 1) stats[1].textContent = t.moments_count;
+// سؤال اليوم
+var qTitle = document.querySelector('.quote-card-title');
+if(qTitle) {
+if(currentLang === 'ar') qTitle.textContent = 'سؤال اليوم';
+else if(currentLang === 'en') qTitle.textContent = 'Question of the Day';
+else if(currentLang === 'sv') qTitle.textContent = 'Dagens fråga';
+}
+// أزرار الفلاتر في لقطاتي
+var filters = document.querySelectorAll('#filterRow .filter-chip');
+if(filters.length >= 6) {
+filters[0].textContent = t.all;
+filters[1].textContent = t.photos;
+filters[2].textContent = t.videos;
+filters[3].textContent = t.texts;
+filters[4].textContent = t.answers;
+filters[5].textContent = t.favorites;
+}
+// عناوين الصفحات
+var pageTitleMoments = document.querySelector('#tabMoments .page-title');
+if(pageTitleMoments) pageTitleMoments.textContent = t.my_moments;
+
+var pageTitleSettings = document.querySelector('#tabSettings .page-title');
+if(pageTitleSettings) pageTitleSettings.textContent = t.settings;
+// تحديث نص الحالة في الإعدادات
+var langStatus = document.getElementById('languageStatus');
+if(langStatus) {
+if(currentLang === 'ar') langStatus.textContent = 'العربية';
+else if(currentLang === 'en') langStatus.textContent = 'English';
+else if(currentLang === 'sv') langStatus.textContent = 'Svenska';
+}
+}
 function applyLanguage(){
   var dir=currentLang==='ar'?'rtl':'ltr';
   document.documentElement.dir=dir;
