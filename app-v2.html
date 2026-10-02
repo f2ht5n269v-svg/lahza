@@ -3262,49 +3262,88 @@ document.getElementById('importInput').onchange=async function(e){
 /* ============================================
    Delete All
    ============================================ */
-document.getElementById('btnDeleteAll').onclick=async function(){
+document.getElementById('btnDeleteAll').onclick = async function(){
   try{
-    var ms=await getAllMoments();
-    if(ms.length===0){showStatus(t('no_data'),'#EF4444');return;}
-    var wantExport=confirm('عندك '+ms.length+' لقطة\n\nهل تريد تصدير نسخة احتياطية قبل الحذف؟');
-    if(wantExport){
-      var zip=new JSZip();
-      var meta=[];
-      for(var i=0;i<ms.length;i++){
-        var m=ms[i];
-        var ext='bin';
-        if(m.type==='photo')ext='jpg';
-        else if(m.type==='video')ext='mp4';
-        else if(m.type==='text'||m.type==='answer')ext='txt';
-        var fname=m.id+'.'+ext;
-        zip.file('moments/'+fname,m.blob);
-        meta.push({id:m.id,date:m.date,type:m.type,caption:m.caption||'',favorite:m.favorite||false,background:m.background||null,file:fname});
-      }
-      zip.file('data.json',JSON.stringify({version:'3.0',date:new Date().toISOString(),count:ms.length,moments:meta},null,2));
-      var blob=await zip.generateAsync({type:'blob'});
-      var url=URL.createObjectURL(blob);
-      var a=document.createElement('a');
-      a.href=url;
-      a.download='lahza-backup-'+getDateStr(new Date())+'.zip';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setTimeout(function(){URL.revokeObjectURL(url);},1000);
-      await new Promise(function(r){setTimeout(r,1000);});
-    }
-    var answer=prompt('تأكيد نهائي\n\nسيتم حذف '+ms.length+' لقطة نهائياً.\n\nاكتب كلمة "حذف" للتأكيد:');
-    if(answer!=='حذف'){showStatus('تم الإلغاء','#FBBF24');return;}
-    for(var i=0;i<ms.length;i++){
-      await deleteMoment(ms[i].id);
-    }
-    showStatus('تم حذف '+ms.length+' لقطة','var(--gold)');
-    updateCounter();
-    updateStreak();
-    renderTree();
-  }catch(e){
-    showStatus(t('error')+': '+e.message,'#EF4444');
-  }
+    var ms = await getAllMoments();
+    if(ms.length === 0){ showStatus(t('no_data'), '#EF4444'); return; }
+    
+    showCustomConfirm(
+      'حذف جميع اللقطات', 
+      'هل أنت متأكد أنك تريد حذف جميع اللقطات (' + ms.length + ' لقطة)؟', 
+      function() { step2Backup(ms); },
+      null,
+      { confirmText: 'نعم، متأكد', cancelText: 'إلغاء' }
+    );
+  }catch(e){ showStatus(t('error') + ': ' + e.message, '#EF4444'); }
 };
+
+function step2Backup(ms) {
+  showCustomConfirm(
+    'نسخة احتياطية', 
+    'هل تريد تصدير نسخة احتياطية قبل الحذف؟', 
+    function() { 
+      exportBackup(ms, function() { step3FinalConfirm(ms); });
+    },
+    function() { 
+      step3FinalConfirm(ms);
+    },
+    { confirmText: 'نعم، تصدير', cancelText: 'لا، تخطي' }
+  );
+}
+
+function step3FinalConfirm(ms) {
+  showCustomConfirm(
+    'تأكيد نهائي', 
+    'سيتم حذف كل اللقطات نهائياً. هذا الإجراء لا يمكن التراجع عنه!<br><br>يرجى كتابة كلمة "حذف" للتأكيد.', 
+    async function() { 
+      var typed = document.getElementById('confirmInput').value.trim();
+      if (typed !== 'حذف') {
+        showStatus('يجب كتابة كلمة "حذف" بالضبط للتأكيد', '#EF4444');
+        return; 
+      }
+      
+      document.getElementById('customConfirmSheet').classList.add('hidden');
+      
+      for(var i=0; i<ms.length; i++){
+        await deleteMoment(ms[i].id);
+      }
+      showStatus('تم حذف ' + ms.length + ' لقطة', 'var(--gold)');
+      updateCounter();
+      updateStreak();
+      renderTree();
+    },
+    null,
+    { requireInput: true, inputPlaceholder: 'اكتب "حذف" هنا', confirmText: 'حذف نهائي', cancelText: 'إلغاء' }
+  );
+}
+
+function exportBackup(ms, callback) {
+  var zip = new JSZip();
+  var meta = [];
+  for(var i=0; i<ms.length; i++){
+    var m = ms[i];
+    var ext = 'bin';
+    if(m.type==='photo') ext='jpg';
+    else if(m.type==='video') ext='mp4';
+    else if(m.type==='text'||m.type==='answer') ext='txt';
+    var fname = m.id + '.' + ext;
+    zip.file('moments/' + fname, m.blob);
+    meta.push({id:m.id, date:m.date, type:m.type, caption:m.caption||'', favorite:m.favorite||false, background:m.background||null, file:fname});
+  }
+  zip.file('data.json', JSON.stringify({version:'3.0', date:new Date().toISOString(), count:ms.length, moments:meta}, null, 2));
+  zip.generateAsync({type:'blob'}).then(function(blob){
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'lahza-backup-' + getDateStr(new Date()) + '.zip';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+    showStatus(t('export_success') + ' (' + ms.length + ')', 'var(--gold)');
+    setTimeout(callback, 1000); 
+  });
+}
 
 /* ============================================
    Contact
