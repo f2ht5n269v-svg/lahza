@@ -3533,20 +3533,25 @@ setTimeout(function(){
    Custom Confirm — نافذة التأكيد
    ============================================ */
 var confirmCallback = null;
-function showCustomConfirm(title, message, callback) {
+var cancelCallback = null;
+function showCustomConfirm(title, message, onConfirm, onCancel) {
   document.getElementById('confirmTitle').textContent = title;
   document.getElementById('confirmMessage').innerHTML = message;
-  confirmCallback = callback;
+  confirmCallback = onConfirm;
+  cancelCallback = onCancel;
   document.getElementById('customConfirmSheet').classList.remove('hidden');
 }
 document.getElementById('confirmCancelBtn').onclick = function() {
   document.getElementById('customConfirmSheet').classList.add('hidden');
+  if (cancelCallback) cancelCallback();
   confirmCallback = null;
+  cancelCallback = null;
 };
 document.getElementById('confirmOkBtn').onclick = function() {
   document.getElementById('customConfirmSheet').classList.add('hidden');
   if (confirmCallback) confirmCallback();
   confirmCallback = null;
+  cancelCallback = null;
 };
 
 (async function init(){
