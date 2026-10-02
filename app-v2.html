@@ -2451,20 +2451,41 @@ if(pageTitleMoments) pageTitleMoments.textContent = t.my_moments;
 
 var pageTitleSettings = document.querySelector('#tabSettings .page-title');
 if(pageTitleSettings) pageTitleSettings.textContent = t.settings;
-// تحديث نص الحالة في الإعدادات
+// حالة اللغة
 var langStatus = document.getElementById('languageStatus');
 if(langStatus) {
 if(currentLang === 'ar') langStatus.textContent = 'العربية';
 else if(currentLang === 'en') langStatus.textContent = 'English';
 else if(currentLang === 'sv') langStatus.textContent = 'Svenska';
 }
+// عناوين الإعدادات (عام، البيانات، عن التطبيق)
+var settingsTitles = document.querySelectorAll('.settings-group-title');
+if(settingsTitles.length >= 3) {
+if(currentLang === 'ar') { settingsTitles[0].textContent = 'عام'; settingsTitles[1].textContent = 'البيانات'; settingsTitles[2].textContent = 'عن التطبيق'; }
+else if(currentLang === 'en') { settingsTitles[0].textContent = 'General'; settingsTitles[1].textContent = 'Data'; settingsTitles[2].textContent = 'About'; }
+else if(currentLang === 'sv') { settingsTitles[0].textContent = 'Allmänt'; settingsTitles[1].textContent = 'Data'; settingsTitles[2].textContent = 'Om'; }
 }
-function applyLanguage(){
-  var dir=currentLang==='ar'?'rtl':'ltr';
-  document.documentElement.dir=dir;
-  document.documentElement.lang=currentLang;
-  localStorage.setItem('lahza-lang',currentLang);
-   updateUIText();
+// كلمة "الإصدار"
+var versionLabel = document.querySelector('#tabSettings .settings-item[style*="cursor:default"] .label');
+if(versionLabel) {
+if(currentLang === 'ar') versionLabel.textContent = 'الإصدار';
+else if(currentLang === 'en') versionLabel.textContent = 'Version';
+else if(currentLang === 'sv') versionLabel.textContent = 'Version';
+}
+
+// رسالة "لا توجد لقطات بعد"
+var emptyTitle = document.querySelector('#empty .empty-title');
+if(emptyTitle) {
+if(currentLang === 'ar') emptyTitle.textContent = 'لا توجد لقطات بعد';
+else if(currentLang === 'en') emptyTitle.textContent = 'No moments yet';
+else if(currentLang === 'sv') emptyTitle.textContent = 'Inga ögonblick än';
+}
+var emptySub = document.querySelector('#empty div:last-child');
+if(emptySub) {
+if(currentLang === 'ar') emptySub.textContent = 'ارجع إلى الرئيسية ووثّق أول لحظة';
+else if(currentLang === 'en') emptySub.textContent = 'Go to home and capture your first moment';
+else if(currentLang === 'sv') emptySub.textContent = 'Gå till hem och skapa ditt första ögonblick';
+}
 }
 function loadLanguage(){
   var lang=localStorage.getItem('lahza-lang')||'ar';
@@ -3681,26 +3702,33 @@ document.getElementById('answerSaveBtn').onclick=async function(){
 }
 
 async function checkReminder(){
-  try{
-    var enabled=localStorage.getItem('lahza-reminder')==='true';
-    if(!enabled)return;
-    var ms=await getAllMoments();
-    var today=getDateStr(new Date());
-    var hasToday=ms.some(function(m){return getDateStr(m.date)===today;});
-    if(hasToday)return;
-    var dismissed=localStorage.getItem('lahza-reminder-dismissed')===today;
-    if(dismissed)return;
-    var banner=document.createElement('div');
-    banner.style.cssText='position:fixed;top:0;left:0;right:0;background:linear-gradient(135deg,#1F1508,#150F0C);border-bottom:2px solid var(--gold);padding:14px 16px;z-index:9998;display:flex;align-items:center;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,.5);';
-    banner.innerHTML='<div style="flex:1;"><div style="font-weight:500;font-family:var(--font-display);color:var(--gold);">لم توثّق لحظتك اليوم</div><div style="color:var(--text-3);font-size:.8rem;">اضغط لإضافة أول لقطة</div></div><button style="padding:8px 18px;background:var(--gold);color:#0F0A08;border:none;border-radius:100px;font-weight:600;font-family:var(--font-body);cursor:pointer;" id="reminderBtnBanner">الآن</button>';
-    document.body.appendChild(banner);
-    document.getElementById('reminderBtnBanner').onclick=function(){
-      banner.remove();
-      switchTab('Home');
-    };
-    setTimeout(function(){banner.remove();},12000);
-  }catch(e){}
+try{
+var enabled=localStorage.getItem('lahza-reminder')==='true';
+if(!enabled)return;
+var ms=await getAllMoments();
+var today=getDateStr(new Date());
+var hasToday=ms.some(function(m){return getDateStr(m.date)===today;});
+if(hasToday)return;
+var dismissed=localStorage.getItem('lahza-reminder-dismissed')===today;
+if(dismissed)return;
+
+var title, sub, btn;
+if(currentLang==='ar'){ title='لم توثق لحظتك اليوم'; sub='اضغط لإضافة أول لقطة'; btn='الآن'; }
+else if(currentLang==='en'){ title='You haven\'t captured today'; sub='Tap to add your first moment'; btn='Now'; }
+else { title='Du har inte fångat idag'; sub='Tryck för att lägga till ditt första ögonblick'; btn='Nu'; }
+
+var banner=document.createElement('div');
+banner.style.cssText='position:fixed;top:0;left:0;right:0;background:linear-gradient(135deg,#1F1508,#150F0C);border-bottom:2px solid var(--gold);padding:14px 16px;z-index:9998;display:flex;align-items:center;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,.5);';
+banner.innerHTML='<div style="flex:1;"><div style="font-weight:500;font-family:var(--font-display);color:var(--gold);">'+title+'</div><div style="color:var(--text-3);font-size:.8rem;">'+sub+'</div></div><button style="padding:8px 18px;background:var(--gold);color:#0F0A08;border:none;border-radius:100px;font-weight:600;font-family:var(--font-body);cursor:pointer;" id="reminderBtnBanner">'+btn+'</button>';
+document.body.appendChild(banner);
+document.getElementById('reminderBtnBanner').onclick=function(){
+banner.remove();
+switchTab('Home');
+};
+setTimeout(function(){banner.remove();},12000);
+}catch(e){}
 }
+
 
 /* ============================================
    إخفاء شاشة الفتح
