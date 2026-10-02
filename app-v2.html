@@ -3507,7 +3507,7 @@ document.getElementById('statsClose').onclick=function(){
 document.getElementById('questionCard').onclick=function(){
   var list=document.getElementById('sectionList');
   list.innerHTML='';
-  var bank=QUESTIONS_BANK['ar'];
+  var bank=QUESTIONS_BANK[currentLang] || QUESTIONS_BANK['ar'];
   Object.keys(bank).forEach(function(sec){
     var item=document.createElement('button');
     item.className='section-item';
@@ -3525,7 +3525,7 @@ document.getElementById('sheetClose').onclick=function(){
 };
 
 function openQuestionList(sec){
-  var bank=QUESTIONS_BANK['ar'];
+  var bank=QUESTIONS_BANK[currentLang] || QUESTIONS_BANK['ar'];
   var qs=bank[sec]||[];
   document.getElementById('questionListTitle').textContent=sec;
   var list=document.getElementById('questionList');
