@@ -2010,6 +2010,18 @@ modal     ============================================ -->
   </div>
 </div>
 <!-- شاشة لقطات اليوم -->
+ <!-- ورقة اختيار النوع (صورة / فيديو / كتابة) -->
+<div class="sheet hidden" id="typePickerSheet">
+  <div class="sheet-content" style="text-align: center;">
+    <button class="sheet-close" id="typePickerClose">X</button>
+    <div style="color:var(--gold);font-family:var(--font-display);font-size:1.2rem;margin:8px 0 24px;">اختر النوع</div>
+    <button class="btn primary" id="pickTypePhoto" style="margin-bottom:12px;">📷 صورة</button>
+    <button class="btn primary" id="pickTypeVideo" style="margin-bottom:12px;">🎥 فيديو</button>
+    <button class="btn primary" id="pickTypeText" style="margin-bottom:12px;">📝 كتابة</button>
+    <button class="btn" id="pickTypeCancel" style="margin-top:16px;">إلغاء</button>
+  </div>
+</div>
+  
 <div class="screen hidden" id="dayMomentsScreen">
   <button class="btn-close" id="dayMomentsClose">X</button>
   <div class="screen-header">
@@ -2709,17 +2721,30 @@ document.getElementById('datePickerConfirm').onclick=function(){
   var dy=parseInt(document.getElementById('pickDay').value);
   var date=new Date(y,mo,dy,12,0,0);
   window._pendingOldDate=date;
+  
   document.getElementById('datePickerSheet').classList.add('hidden');
-  var choice=prompt('اختر النوع:\n1 - صورة\n2 - فيديو\n3 - كتابة');
-  if(choice==='1'){
-    document.getElementById('photoScreen').classList.remove('hidden');
-    openCamera(document.getElementById('photoVideo'));
-  }else if(choice==='2'){
-    document.getElementById('videoScreen').classList.remove('hidden');
-  }else if(choice==='3'){
-    document.getElementById('textScreen').classList.remove('hidden');
-    updateBgGrid();
-  }
+  document.getElementById('typePickerSheet').classList.remove('hidden');
+};
+
+document.getElementById('typePickerClose').onclick=function(){
+  document.getElementById('typePickerSheet').classList.add('hidden');
+};
+document.getElementById('pickTypeCancel').onclick=function(){
+  document.getElementById('typePickerSheet').classList.add('hidden');
+};
+document.getElementById('pickTypePhoto').onclick=function(){
+  document.getElementById('typePickerSheet').classList.add('hidden');
+  document.getElementById('photoScreen').classList.remove('hidden');
+  openCamera(document.getElementById('photoVideo'));
+};
+document.getElementById('pickTypeVideo').onclick=function(){
+  document.getElementById('typePickerSheet').classList.add('hidden');
+  document.getElementById('videoScreen').classList.remove('hidden');
+};
+document.getElementById('pickTypeText').onclick=function(){
+  document.getElementById('typePickerSheet').classList.add('hidden');
+  document.getElementById('textScreen').classList.remove('hidden');
+  updateBgGrid();
 };
 
 /* ============================================
