@@ -2336,13 +2336,17 @@ function formatDate(date){
   return days[d.getDay()]+'، '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();
 }
 function getHijriDate(){
-  try{
-    return new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{
-      day:'numeric',month:'long',year:'numeric'
-    }).format(new Date());
-  }catch(e){
-    return '';
-  }
+try{
+var locale = 'ar-SA-u-ca-islamic';
+if(currentLang === 'en') locale = 'en-US-u-ca-islamic';
+else if(currentLang === 'sv') locale = 'sv-SE-u-ca-islamic';
+
+return new Intl.DateTimeFormat(locale,{
+day:'numeric',month:'long',year:'numeric'
+}).format(new Date());
+}catch(e){
+return '';
+}
 }
 
 /* ============================================
