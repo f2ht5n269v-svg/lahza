@@ -2464,6 +2464,7 @@ function applyLanguage(){
   document.documentElement.dir=dir;
   document.documentElement.lang=currentLang;
   localStorage.setItem('lahza-lang',currentLang);
+   updateUIText();
 }
 function loadLanguage(){
   var lang=localStorage.getItem('lahza-lang')||'ar';
