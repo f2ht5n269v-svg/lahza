@@ -2021,7 +2021,18 @@ modal     ============================================ -->
     <button class="btn" id="pickTypeCancel" style="margin-top:16px;">إلغاء</button>
   </div>
 </div>
-  
+ <!-- نافذة تأكيد الحذف -->
+<div class="sheet hidden" id="customConfirmSheet">
+  <div class="sheet-content" style="text-align: center;">
+    <div style="font-family:var(--font-display);font-size:1.3rem;color:var(--gold);margin-bottom:16px;" id="confirmTitle">تأكيد</div>
+    <div style="font-family:var(--font-body);font-size:1rem;color:var(--text);margin-bottom:32px;line-height:1.7;" id="confirmMessage">هل أنت متأكد؟</div>
+    <div style="display:flex; gap:12px; justify-content:center;">
+      <button class="btn" id="confirmCancelBtn" style="flex:1; max-width:140px;">إلغاء</button>
+      <button class="btn primary" id="confirmOkBtn" style="flex:1; max-width:140px;">تأكيد</button>
+    </div>
+  </div>
+</div>
+ 
 <div class="screen hidden" id="dayMomentsScreen">
   <button class="btn-close" id="dayMomentsClose">X</button>
   <div class="screen-header">
@@ -3518,6 +3529,26 @@ setTimeout(function(){
 /* ============================================
    Init
    ============================================ */
+   /* ============================================
+   Custom Confirm — نافذة التأكيد
+   ============================================ */
+var confirmCallback = null;
+function showCustomConfirm(title, message, callback) {
+  document.getElementById('confirmTitle').textContent = title;
+  document.getElementById('confirmMessage').innerHTML = message;
+  confirmCallback = callback;
+  document.getElementById('customConfirmSheet').classList.remove('hidden');
+}
+document.getElementById('confirmCancelBtn').onclick = function() {
+  document.getElementById('customConfirmSheet').classList.add('hidden');
+  confirmCallback = null;
+};
+document.getElementById('confirmOkBtn').onclick = function() {
+  document.getElementById('customConfirmSheet').classList.add('hidden');
+  if (confirmCallback) confirmCallback();
+  confirmCallback = null;
+};
+
 (async function init(){
   try{
     loadTheme();
