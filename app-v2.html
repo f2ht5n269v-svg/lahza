@@ -2462,6 +2462,8 @@ if(currentLang === 'ar') langStatus.textContent = 'العربية';
 else if(currentLang === 'en') langStatus.textContent = 'English';
 else if(currentLang === 'sv') langStatus.textContent = 'Svenska';
 }
+   var langTitle = document.querySelector('#languageModal .stats-title');
+if(langTitle) langTitle.textContent = t('language');
 // عناوين الإعدادات (عام، البيانات، عن التطبيق)
 var settingsTitles = document.querySelectorAll('.settings-group-title');
 if(settingsTitles.length >= 3) {
