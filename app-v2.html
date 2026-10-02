@@ -2487,6 +2487,13 @@ else if(currentLang === 'en') emptySub.textContent = 'Go to home and capture you
 else if(currentLang === 'sv') emptySub.textContent = 'Gå till hem och skapa ditt första ögonblick';
 }
 }
+   function applyLanguage(){
+var dir=currentLang==='ar'?'rtl':'ltr';
+document.documentElement.dir=dir;
+document.documentElement.lang=currentLang;
+localStorage.setItem('lahza-lang',currentLang);
+updateUIText();
+}
 function loadLanguage(){
   var lang=localStorage.getItem('lahza-lang')||'ar';
   if(!TRANSLATIONS[lang])lang='ar';
