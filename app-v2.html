@@ -2479,6 +2479,13 @@ async function openCamera(v){
     stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:currentFacing},audio:false});
     v.srcObject=stream;
     v.muted=true;
+     // تصحيح اتجاه الكاميرا
+        if(currentFacing === 'user'){
+          v.style.transform = 'scaleX(-1)'; // الكاميرا الأمامية (سيلفي) تطلع معكوسة زي المرآة
+        } else {
+          v.style.transform = 'scaleX(1)'; // الكاميرا الخلفية تطلع طبيعية
+        }
+
   }catch(e){
     var msg=t('camera_error');
     if(e.name==='NotAllowedError')msg=t('camera_permission');
