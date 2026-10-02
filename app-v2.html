@@ -3270,7 +3270,10 @@ document.getElementById('btnDeleteAll').onclick = async function(){
     showCustomConfirm(
       'حذف جميع اللقطات', 
       'هل أنت متأكد أنك تريد حذف جميع اللقطات (' + ms.length + ' لقطة)؟', 
-      function() { step2Backup(ms); },
+      function() { 
+        // تخطي التصدير مؤقتاً والذهاب مباشرة للتأكيد النهائي
+        step3FinalConfirm(ms); 
+      },
       null,
       { confirmText: 'نعم، متأكد', cancelText: 'إلغاء' }
     );
