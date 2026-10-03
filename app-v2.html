@@ -9,8 +9,8 @@
 <link rel="icon" href="icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Amiri:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0F0A08;--card:#1A1410;--card-hover:#221A15;--border:rgba(255,255,255,.08);--border-strong:rgba(255,255,255,.18);--gold:#D4AF37;--gold-light:#F4D98C;--gold-soft:rgba(212,175,55,.12);--on-gold:#0F0A08;--text:#F5F5F5;--text-2:#D0D0D0;--text-3:#A8A8A8;--text-4:#8A8A8A;--nav:rgba(15,10,8,.94);--veil:rgba(0,0,0,.96);--splash:radial-gradient(ellipse at center,#1F1508 0%,#0F0A08 65%);--grad:linear-gradient(135deg,#1F1508,#0F0A08);--shadow:0 4px 20px rgba(0,0,0,.5);--r:14px;--fd:'Reem Kufi',sans-serif;--fb:'IBM Plex Sans Arabic',sans-serif;--fq:'Amiri',serif}
-:root[data-theme=light]{--bg:#FAF6EE;--card:#FFF;--card-hover:#F5F0E4;--border:rgba(0,0,0,.1);--border-strong:rgba(0,0,0,.2);--gold:#8B7524;--gold-light:#6A5820;--gold-soft:rgba(139,117,36,.12);--on-gold:#fff;--text:#1A1410;--text-2:#3A3025;--text-3:#5A5045;--text-4:#756B60;--nav:rgba(250,246,238,.95);--veil:rgba(250,246,238,.97);--splash:radial-gradient(ellipse at center,#FFF8E6 0%,#FAF6EE 65%);--grad:linear-gradient(135deg,#3a2a12,#1a1410);--shadow:0 4px 20px rgba(0,0,0,.15)}
+:root{color-scheme:dark;--bg:#0F0A08;--card:#1A1410;--card-hover:#221A15;--border:rgba(255,255,255,.08);--border-strong:rgba(255,255,255,.18);--gold:#D4AF37;--gold-light:#F4D98C;--gold-soft:rgba(212,175,55,.12);--on-gold:#0F0A08;--text:#F5F5F5;--text-2:#D0D0D0;--text-3:#A8A8A8;--text-4:#8A8A8A;--nav:rgba(15,10,8,.96);--veil:rgba(10,6,4,.98);--splash:radial-gradient(ellipse at center,#1F1508 0%,#0F0A08 65%);--grad:linear-gradient(135deg,#1F1508,#0F0A08);--shadow:0 4px 20px rgba(0,0,0,.5);--r:14px;--fd:'Reem Kufi',sans-serif;--fb:'IBM Plex Sans Arabic',sans-serif;--fq:'Amiri',serif}
+:root[data-theme=light]{color-scheme:light;--bg:#FAF6EE;--card:#FFF;--card-hover:#F5F0E4;--border:rgba(0,0,0,.1);--border-strong:rgba(0,0,0,.2);--gold:#8B7524;--gold-light:#6A5820;--gold-soft:rgba(139,117,36,.12);--on-gold:#fff;--text:#1A1410;--text-2:#3A3025;--text-3:#5A5045;--text-4:#756B60;--nav:rgba(250,246,238,.96);--veil:rgba(250,246,238,.99);--splash:radial-gradient(ellipse at center,#FFF8E6 0%,#FAF6EE 65%);--grad:linear-gradient(135deg,#3a2a12,#1a1410);--shadow:0 4px 20px rgba(0,0,0,.15)}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{font-size:18px;height:100%;-webkit-text-size-adjust:100%}
 html,body{overflow:hidden;background:var(--bg)}
@@ -29,7 +29,7 @@ audio{width:100%}
 .content::-webkit-scrollbar{display:none}
 .page-title{font:600 1.7rem var(--fd);text-align:center;margin-bottom:20px;padding-bottom:8px;position:relative}
 .page-title::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:40px;height:2px;background:var(--gold);opacity:.6}
-.tabs{position:fixed;bottom:0;left:0;right:0;background:var(--nav);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:100}
+.tabs{position:fixed;bottom:0;left:0;right:0;background:var(--nav);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:100}
 .tab{flex:1;padding:12px 0 10px;font-size:.8rem;font-weight:500;color:var(--text-4);display:flex;flex-direction:column;align-items:center;gap:4px;position:relative}
 .tab svg{width:24px;height:24px;stroke-width:1.8}
 .tab.active{color:var(--gold)}
@@ -60,8 +60,8 @@ audio{width:100%}
 .home-stat{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:80px}
 .home-stat .num{color:var(--text);font:600 1.6rem/1 var(--fd)}
 .home-stat .lbl{font-size:.85rem;color:var(--text-3)}
-.sheet{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:400;display:flex;align-items:center;justify-content:center;padding:16px;animation:fi .3s}
-.sheet-content{width:100%;max-width:480px;background:var(--card);border-radius:28px;border:1px solid var(--border-strong);padding:24px 16px;max-height:85vh;overflow-y:auto;position:relative;box-shadow:0 12px 40px rgba(0,0,0,.6);text-align:center}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:400;display:flex;align-items:center;justify-content:center;padding:16px;animation:fi .3s}
+.sheet-content{width:100%;max-width:480px;background:var(--card);color:var(--text);border-radius:28px;border:1px solid var(--border-strong);padding:24px 16px;max-height:85vh;overflow-y:auto;position:relative;box-shadow:0 12px 40px rgba(0,0,0,.6);text-align:center}
 .xbtn{width:44px;height:44px;border-radius:50%;background:var(--card);border:1px solid var(--border-strong);color:var(--text);font-size:1.15rem;display:flex;align-items:center;justify-content:center}
 .xbtn:active{color:var(--gold);border-color:var(--gold)}
 .sheet-close{position:absolute;top:12px;left:12px;z-index:10}
@@ -72,11 +72,12 @@ audio{width:100%}
 .section-item{font:500 1.1rem var(--fd)}
 .question-item{font:1.1rem/1.7 var(--fq);text-align:start;padding:16px}
 .section-item:hover,.question-item:hover{border-color:var(--gold);color:var(--gold)}
-.btn{display:block;width:100%;max-width:360px;margin:10px auto;padding:16px;border:1px solid var(--border-strong);border-radius:999px;font-weight:500;font-size:1.05rem;text-align:center}
+.btn{display:block;width:100%;max-width:360px;margin:10px auto;padding:16px;border:1.5px solid var(--border-strong);border-radius:999px;font-weight:500;font-size:1.05rem;text-align:center;color:var(--text);background:var(--card)}
 .btn:active{transform:scale(.97)}
+.btn.sel{border-color:var(--gold);color:var(--gold);background:var(--gold-soft)}
 .btn.primary{background:var(--gold);color:var(--on-gold);border-color:var(--gold);font-weight:600}
 .btn.small{padding:12px;font-size:.95rem;max-width:240px}
-.screen{position:fixed;inset:0;background:var(--bg);z-index:200;overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 16px 120px;animation:fi .3s}
+.screen{position:fixed;inset:0;background:var(--bg);color:var(--text);z-index:200;overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 16px 120px;animation:fi .3s}
 .screen-title{font:500 1.6rem var(--fd);text-align:center;margin-bottom:24px}
 .screen-subtitle{text-align:center;color:var(--text-3);font-size:.95rem;margin-bottom:20px}
 .camera-video{width:100%;max-width:400px;margin:0 auto 16px;border-radius:var(--r);display:block;background:#000;aspect-ratio:3/4;object-fit:cover}
@@ -91,9 +92,10 @@ audio{width:100%}
 .rec-time{font:600 3.2rem var(--fd);text-align:center;color:var(--gold);margin:28px 0}
 .rec-btn{width:100px;height:100px;border-radius:50%;background:var(--gold);margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:2.6rem;color:var(--on-gold)}
 .rec-btn.on{background:#EF4444;color:#fff;animation:pulse 1.2s infinite}
-.text-input,.answer-input,.search{width:100%;max-width:500px;margin:0 auto 16px;background:var(--card);border:1px solid var(--border-strong);border-radius:var(--r);padding:20px;font:1.15rem/1.9 var(--fq);display:block}
+.text-input,.answer-input,.search{width:100%;max-width:500px;margin:0 auto 16px;background:var(--card);border:1px solid var(--border-strong);border-radius:var(--r);padding:20px;font:1.15rem/1.9 var(--fq);display:block;color:var(--text)}
 .text-input,.answer-input{min-height:220px}
-.search{border-radius:999px;padding:12px 20px;font:1rem var(--fb);max-width:none;margin-bottom:14px}
+.search{border-radius:999px;padding:12px 20px;font:1rem var(--fb);max-width:none;margin-bottom:8px}
+.search-info{text-align:center;color:var(--text-3);font-size:.88rem;margin:0 0 14px;min-height:1.4em}
 .text-input:focus,.answer-input:focus,.search:focus{border-color:var(--gold)}
 ::placeholder{color:var(--text-4);font-family:var(--fb);font-size:1rem}
 .background-section{max-width:500px;margin:0 auto 16px}
@@ -108,7 +110,7 @@ audio{width:100%}
 .moods button.on{border-color:var(--gold);opacity:1}
 .preview{width:100%;max-width:500px;margin:0 auto;padding:48px 24px;border-radius:var(--r);font:1.3rem/1.9 var(--fq);text-align:center;color:#fff;min-height:200px;display:flex;align-items:center;justify-content:center;word-break:break-word;background:var(--grad) center/cover}
 .answer-question{max-width:500px;margin:0 auto 24px;padding:24px;background:var(--card);border:1px solid var(--border-strong);border-radius:var(--r);font:1.2rem/1.8 var(--fq);text-align:center;color:var(--gold-light)}
-.modal{position:fixed;inset:0;background:var(--veil);backdrop-filter:blur(20px);z-index:300;overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 8px 130px;animation:fi .3s}
+.modal{position:fixed;inset:0;background:var(--veil);color:var(--text);z-index:300;overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 8px 130px;animation:fi .3s}
 .modal-content img,.modal-content video{width:100%;border-radius:var(--r);margin-bottom:16px;background:#000}
 .modal-text{padding:32px 24px;border-radius:var(--r);font:1.3rem/1.9 var(--fq);text-align:center;margin-bottom:16px;color:#fff;word-break:break-word;background:var(--grad) center/cover}
 .modal-date{text-align:center;color:var(--gold);font:.95rem var(--fd);margin-bottom:24px;padding:8px 16px;border-radius:999px;background:var(--gold-soft)}
@@ -119,7 +121,9 @@ audio{width:100%}
 #modalDelete{color:#EF4444;border-color:rgba(239,68,68,.5)}
 .moments-grid{display:flex;flex-direction:column;gap:24px}
 .moment-card{border-radius:var(--r);overflow:hidden;background:var(--card);cursor:pointer;border:1px solid var(--border);animation:fu .4s both}
-.moment-card img,.moment-card video{width:100%;max-height:70vh;object-fit:contain;background:#000}
+.moment-card img{width:100%;max-height:70vh;object-fit:contain;background:#000}
+.vthumb{position:relative;width:100%;aspect-ratio:16/9;background:#111 center/cover no-repeat}
+.vthumb::after{content:'▶';position:absolute;inset:0;margin:auto;width:64px;height:64px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;font-size:1.6rem;display:flex;align-items:center;justify-content:center;padding-inline-start:4px}
 .text-content{padding:32px 24px;text-align:center;font:1.2rem/1.9 var(--fq);color:#fff;min-height:160px;display:flex;align-items:center;justify-content:center;word-break:break-word;background:var(--grad) center/cover}
 .moment-caption{font-size:1rem;color:var(--text-2);padding:10px 16px 0}
 .moment-meta{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-top:1px solid var(--border);min-height:40px}
@@ -139,8 +143,8 @@ audio{width:100%}
 .empty-title{font:500 1.2rem var(--fd);color:var(--text-2)}
 .settings-group{margin-bottom:24px}
 .settings-group-title{font:500 .85rem var(--fd);letter-spacing:.08em;color:var(--gold);padding:0 8px;margin-bottom:8px}
-.settings-list{background:var(--card);border-radius:var(--r);border:1px solid var(--border);overflow:hidden}
-.settings-item{display:flex;align-items:center;gap:16px;padding:16px;border-bottom:1px solid var(--border);width:100%;text-align:start;min-height:60px}
+.settings-list{background:var(--card);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;color:var(--text)}
+.settings-item{display:flex;align-items:center;gap:16px;padding:16px;border-bottom:1px solid var(--border);width:100%;text-align:start;min-height:60px;color:var(--text)}
 .settings-item:last-child{border:none}
 .settings-item:active{background:var(--card-hover)}
 .settings-item .icon{width:26px;display:flex;justify-content:center}
@@ -150,19 +154,11 @@ audio{width:100%}
 #toast{position:fixed;top:calc(12px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);max-width:90%;padding:12px 22px;border-radius:999px;background:var(--card);border:1px solid var(--gold);color:var(--gold);font-weight:500;font-size:.95rem;z-index:30000;box-shadow:var(--shadow);pointer-events:none;text-align:center}
 #toast.err{border-color:#EF4444;color:#EF4444}
 #remBanner{position:fixed;top:0;left:0;right:0;background:var(--card);border-bottom:2px solid var(--gold);padding:calc(14px + env(safe-area-inset-top)) 16px 14px;z-index:9998;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow)}
-#lock{position:fixed;inset:0;background:var(--bg);z-index:20000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px}
-.lock-t{font:600 1.5rem var(--fd);color:var(--gold)}
-.dots{display:flex;gap:18px}.dots i{width:16px;height:16px;border-radius:50%;border:2px solid var(--gold)}.dots i.on{background:var(--gold)}
-.lock-m{min-height:1.6em;color:#EF4444;font-size:.95rem}
-.pad{display:grid;grid-template-columns:repeat(3,78px);gap:14px}
-.pad button{height:78px;border-radius:50%;border:1px solid var(--border-strong);font:600 1.6rem var(--fd)}
-.pad button:active{background:var(--gold-soft)}
 </style>
 </head>
 <body>
 <div id="toast" class="hidden" role="status" aria-live="polite"></div>
 <div id="splash"><div class="splash-logo">Lahza</div><div class="splash-sub" data-i18n="app">لحظة</div></div>
-<div id="lock" class="hidden"><button class="xbtn" id="lockX" style="position:absolute;top:calc(16px + env(safe-area-inset-top));left:16px">✕</button><div class="lock-t" id="lockT"></div><div class="dots" id="dots"></div><div class="lock-m" id="lockM"></div><div class="pad" id="pad"></div></div>
 
 <div class="content" id="tabHome">
   <div class="home-greeting" id="greeting"></div>
@@ -186,7 +182,8 @@ audio{width:100%}
 
 <div class="content hidden" id="tabMoments">
   <h1 class="page-title" data-i18n="mine"></h1>
-  <input class="search" id="searchInput" type="search" data-ph="search">
+  <input class="search" id="searchInput" type="search" enterkeyhint="search" autocomplete="off" data-ph="search">
+  <div class="search-info" id="searchInfo"></div>
   <div id="tagsRow" class="filters"></div>
   <div class="filters" id="filterRow">
     <button class="filter-chip active" data-filter="all" data-i18n="all"></button>
@@ -217,7 +214,6 @@ audio{width:100%}
 <div class="content hidden" id="tabSettings">
   <h1 class="page-title" data-i18n="settings"></h1>
   <div class="settings-group"><div class="settings-group-title" data-i18n="general"></div><div class="settings-list">
-    <button class="settings-item" id="btnLock"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><div class="info"><span class="label" data-i18n="lock"></span><span class="value" id="lockStatus"></span></div><span class="arrow">›</span></button>
     <button class="settings-item" id="btnReminder"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span><div class="info"><span class="label" data-i18n="reminder"></span><span class="value" id="reminderStatus"></span></div><span class="arrow">›</span></button>
     <button class="settings-item" id="btnTheme"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg></span><div class="info"><span class="label" data-i18n="theme"></span><span class="value" id="themeStatus"></span></div><span class="arrow">›</span></button>
     <button class="settings-item" id="btnFont"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg></span><div class="info"><span class="label" data-i18n="fontsize"></span><span class="value" id="fontStatus"></span></div><span class="arrow">›</span></button>
@@ -233,7 +229,7 @@ audio{width:100%}
     <a href="privacy.html" class="settings-item"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><div class="info"><span class="label" data-i18n="privacy"></span></div><span class="arrow">›</span></a>
     <button class="settings-item" id="btnRate"><span class="icon"><svg viewBox="0 0 24 24" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><div class="info"><span class="label" data-i18n="rate"></span></div><span class="arrow">›</span></button>
     <button class="settings-item" id="btnContact"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span><div class="info"><span class="label" data-i18n="contact"></span></div><span class="arrow">›</span></button>
-    <div class="settings-item"><div class="info"><span class="label" data-i18n="ver"></span><span class="value">5.0</span></div></div>
+    <div class="settings-item"><div class="info"><span class="label" data-i18n="ver"></span><span class="value">5.1</span></div></div>
   </div></div>
 </div>
 
@@ -291,7 +287,7 @@ audio{width:100%}
 <div class="modal hidden" id="reminderModal"><button class="xbtn modal-close" id="reminderClose2">✕</button><div class="modal-content"><h2 class="stats-title" data-i18n="reminder"></h2>
   <button class="btn primary" id="reminderToggleBtn"></button>
   <div style="margin-top:24px;text-align:center"><span style="color:var(--text-3);font:1rem var(--fd)" data-i18n="rem_time"></span>
-  <input type="time" id="reminderTime" value="20:00" style="display:block;margin:12px auto;padding:14px;background:var(--card);border:1px solid var(--border-strong);border-radius:14px;font-size:1.1rem;text-align:center"></div></div></div>
+  <input type="time" id="reminderTime" value="20:00" style="display:block;margin:12px auto;padding:14px;background:var(--card);border:1px solid var(--border-strong);border-radius:14px;font-size:1.1rem;text-align:center;color:var(--text)"></div></div></div>
 <div class="modal hidden" id="languageModal"><button class="xbtn modal-close" id="languageClose">✕</button><div class="modal-content"><h2 class="stats-title" data-i18n="lang"></h2>
   <div class="settings-list"><button class="settings-item" data-lang="ar"><div class="info"><span class="label">العربية</span></div></button><button class="settings-item" data-lang="en"><div class="info"><span class="label">English</span></div></button><button class="settings-item" data-lang="sv"><div class="info"><span class="label">Svenska</span></div></button></div></div></div>
 
@@ -316,7 +312,7 @@ audio{width:100%}
 <div class="sheet hidden" id="cSheet" style="z-index:500"><div class="sheet-content">
   <div style="font:1.35rem var(--fd);color:var(--gold);margin-bottom:16px" id="cTitle"></div>
   <div style="margin-bottom:24px;line-height:1.7" id="cMsg"></div>
-  <div id="cInWrap" class="hidden" style="margin-bottom:16px"><input type="text" id="cIn" style="width:100%;padding:12px;text-align:center;border-radius:10px;border:1px solid var(--border-strong);background:var(--bg)"></div>
+  <div id="cInWrap" class="hidden" style="margin-bottom:16px"><input type="text" id="cIn" style="width:100%;padding:12px;text-align:center;border-radius:10px;border:1px solid var(--border-strong);background:var(--bg);color:var(--text)"></div>
   <div style="display:flex;gap:12px;justify-content:center"><button class="btn" id="cNo" style="flex:1;max-width:150px"></button><button class="btn primary" id="cOk" style="flex:1;max-width:150px"></button></div></div></div>
 <input type="file" accept="video/*" capture="environment" id="videoInput" style="display:none">
 
@@ -358,7 +354,7 @@ var QUESTIONS_BANK = {
 
 /* ============ الأساسيات ============ */
 const $=id=>document.getElementById(id);
-const S={lang:'ar',theme:'auto',fs:'m',filter:'all',year:null,month:null,day:null,dayList:null,fac:'environment',vfac:'environment',blob:null,photos:[],dur:0,type:null,bg:null,mood:null,oldDate:null,cur:null,sec:null,q:null,stream:null,word:null,filtered:[]};
+const S={lang:'ar',theme:'auto',fs:'m',filter:'all',year:null,month:null,day:null,dayList:null,fac:'environment',vfac:'environment',blob:null,photos:[],dur:0,type:null,bg:null,mood:null,oldDate:null,cur:null,sec:null,q:null,stream:null,word:null,filtered:[],dirty:false,seq:0};
 const CAP=window.Capacitor,PLG=n=>CAP&&CAP.Plugins&&CAP.Plugins[n];
 const LD=[],LM=[],LP=[];
 const track=l=>b=>{const u=URL.createObjectURL(b);l.push(u);return u};
@@ -374,23 +370,23 @@ ar:{app:'لحظة',gm:'صباح الخير',ge:'مساء الخير',qod:'سؤا
 saved:'تم الحفظ',saved_a:'تم حفظ الجواب',write_first:'اكتب شيئاً أولاً',err:'خطأ',no_data:'لا توجد لقطات',no_day:'لا توجد لقطات في هذا اليوم',del_c:'هل تريد حذف هذه اللقطة؟',deleted:'تم الحذف',theme_ok:'تم تغيير الوضع',exp_ok:'تم التصدير',imp_ok:'تم الاستيراد',prep:'جاري تجهيز النسخة الاحتياطية...',cam_err:'تعذّر فتح الكاميرا',cam_perm:'لم يتم إعطاء إذن الكاميرا',cam_nf:'لا توجد كاميرا',cam_busy:'الكاميرا مشغولة',
 delall_q:'هل أنت متأكد أنك تريد حذف جميع اللقطات ({n} لقطة)؟',backup:'نسخة احتياطية',backup_q:'هل تريد تصدير نسخة احتياطية قبل الحذف؟',yes_exp:'نعم، تصدير',skip:'لا، تخطي',exp_fail:'فشل التصدير',exp_fail_q:'لم تُنشأ النسخة الاحتياطية. هل تريد الحذف بدونها؟',del_anyway:'احذف بدون نسخة',final:'تأكيد نهائي',final_q:'سيتم حذف كل اللقطات نهائياً ولا يمكن التراجع. اكتب كلمة "حذف" للتأكيد.',del_word:'حذف',type_word:'اكتب الكلمة المطلوبة بالضبط',del_final:'حذف نهائي',
 rem_title:'لم توثق لحظتك اليوم',rem_sub:'اضغط لإضافة لقطة',now:'الآن',one:'لقطة واحدة',two:'لقطتان',many:'لقطات',mail_sub:'تواصل من تطبيق لحظة',sep:'، ',
-search:'ابحث في لقطاتك...',nothing:'لا نتائج',mood:'كيف كان مزاجك؟ (اختياري)',edit:'تعديل اللقطة',lock:'قفل التطبيق',lock_enter:'أدخل الرمز',lock_new:'اختر رمزاً من 4 أرقام',lock_confirm:'أعد إدخال الرمز',lock_wrong:'الرمز غير صحيح',lock_mismatch:'الرمزان غير متطابقين',lock_set:'تم تفعيل القفل',lock_q:'القفل مفعّل. هل تريد إزالته؟',lock_remove:'إزالة القفل',fontsize:'حجم الخط',small:'صغير',medium:'متوسط',large:'كبير',nudge_q:'مرّ أسبوع على آخر نسخة احتياطية. احفظ نسخة الآن في ملفاتك أو iCloud.',later:'لاحقاً',
+search:'ابحث بكلمة أو وسم أو تاريخ...',search_hint:'مثال: مارس 2024 أو 2024-03-15 أو 15/3/2024 أو #عمل',results:'نتيجة',nothing:'لا نتائج',mood:'كيف كان مزاجك؟ (اختياري)',edit:'تعديل اللقطة',fontsize:'حجم الخط',small:'صغير',medium:'متوسط',large:'كبير',nudge_q:'مرّ أسبوع على آخر نسخة احتياطية. احفظ نسخة الآن في ملفاتك أو iCloud.',later:'لاحقاً',
 share_t:'مشاركة اللقطة',share_img:'كصورة',share_txt:'كنص',share_saved:'تم حفظ الملف، شاركه من ملفاتك',share_copied:'تم نسخ النص',prep_share:'جاري تجهيز الصورة...',
-more_q:'أسئلة أخرى',mood30:'مزاجك آخر 30 يوم',rec_again:'إعادة التسجيل',mic_err:'تعذّر الوصول للميكروفون',max_photos:'الحد الأقصى 10 صور',rec_stop:'إيقاف'},
+more_q:'أسئلة أخرى',mood30:'مزاجك آخر 30 يوم',rec_again:'إعادة التسجيل',mic_err:'تعذّر الوصول للميكروفون',max_photos:'الحد الأقصى 10 صور'},
 en:{app:'Lahza',gm:'Good morning',ge:'Good evening',qod:'Question of the Day',photo:'Photo',video:'Video',audio:'Voice',text:'Text',old:'Add with old date',otd:'On this day',streak:'day streak',moments:'moments',mine:'My Moments',settings:'Settings',home:'Home',all:'All',photos:'Photos',videos:'Videos',audios:'Voice',texts:'Texts',answers:'Answers',favs:'Favorites',empty_t:'No moments yet',empty_s:'Go to Home and capture your first moment',general:'General',data:'Data',about:'About',reminder:'Daily reminder',on:'On',off:'Off',theme:'Appearance',dark:'Dark',light:'Light',auto:'Auto',lang:'Language',exp:'Export backup',imp:'Import backup',delall:'Delete all moments',privacy:'Privacy policy',rate:'Rate the app',contact:'Contact & feedback',ver:'Version',write_moment:'Write your moment',ph_text:'What happened today? Add a tag like #work',bg:'Background',next:'Next',save_moment:'Save moment',ph_cap:'Add a caption or #tag (optional)...',save:'Save',your_ans:'Your answer',ph_ans:'Write your answer...',save_ans:'Save answer',rec_hint:'Record a clip with the camera',start_rec:'Start recording',switch_cam:'Switch camera',stats:'My stats',days_rec:'days recorded',best:'Best streak',this_month:'This month',rem_time:'Reminder time',rem_on:'Turn on reminder',rem_off:'Turn off reminder',pick_date:'Pick a date',confirm:'Confirm',choose_type:'Choose type',cancel:'Cancel',ok:'Confirm',close:'Close',
 saved:'Saved',saved_a:'Answer saved',write_first:'Write something first',err:'Error',no_data:'No moments',no_day:'No moments on this day',del_c:'Delete this moment?',deleted:'Deleted',theme_ok:'Appearance changed',exp_ok:'Exported',imp_ok:'Imported',prep:'Preparing backup...',cam_err:'Cannot open camera',cam_perm:'Camera permission denied',cam_nf:'No camera found',cam_busy:'Camera is busy',
 delall_q:'Delete all moments ({n})?',backup:'Backup',backup_q:'Export a backup before deleting?',yes_exp:'Yes, export',skip:'No, skip',exp_fail:'Export failed',exp_fail_q:'No backup was created. Delete anyway?',del_anyway:'Delete anyway',final:'Final confirmation',final_q:'All moments will be deleted permanently. Type "delete" to confirm.',del_word:'delete',type_word:'Type the exact word',del_final:'Delete forever',
 rem_title:"You haven't captured today",rem_sub:'Tap to add a moment',now:'Now',one:'1 moment',two:'2 moments',many:'moments',mail_sub:'Message from Lahza app',sep:', ',
-search:'Search your moments...',nothing:'No results',mood:'How was your mood? (optional)',edit:'Edit moment',lock:'App lock',lock_enter:'Enter passcode',lock_new:'Choose a 4-digit passcode',lock_confirm:'Re-enter passcode',lock_wrong:'Wrong passcode',lock_mismatch:"Passcodes don't match",lock_set:'Lock enabled',lock_q:'Lock is on. Remove it?',lock_remove:'Remove lock',fontsize:'Text size',small:'Small',medium:'Medium',large:'Large',nudge_q:'It has been a week since your last backup. Save one now to Files or iCloud.',later:'Later',
+search:'Search by word, tag or date...',search_hint:'Example: March 2024, 2024-03-15, 15/3/2024 or #work',results:'results',nothing:'No results',mood:'How was your mood? (optional)',edit:'Edit moment',fontsize:'Text size',small:'Small',medium:'Medium',large:'Large',nudge_q:'It has been a week since your last backup. Save one now to Files or iCloud.',later:'Later',
 share_t:'Share moment',share_img:'As image',share_txt:'As text',share_saved:'File saved, share it from Files',share_copied:'Text copied',prep_share:'Preparing image...',
-more_q:'More questions',mood30:'Your mood, last 30 days',rec_again:'Record again',mic_err:'Cannot access the microphone',max_photos:'Maximum 10 photos',rec_stop:'Stop'},
+more_q:'More questions',mood30:'Your mood, last 30 days',rec_again:'Record again',mic_err:'Cannot access the microphone',max_photos:'Maximum 10 photos'},
 sv:{app:'Lahza',gm:'God morgon',ge:'God kväll',qod:'Dagens fråga',photo:'Foto',video:'Video',audio:'Röst',text:'Text',old:'Lägg till med gammalt datum',otd:'På denna dag',streak:'dagar i rad',moments:'ögonblick',mine:'Mina ögonblick',settings:'Inställningar',home:'Hem',all:'Alla',photos:'Foton',videos:'Videor',audios:'Röster',texts:'Texter',answers:'Svar',favs:'Favoriter',empty_t:'Inga ögonblick än',empty_s:'Gå till Hem och skapa ditt första ögonblick',general:'Allmänt',data:'Data',about:'Om',reminder:'Daglig påminnelse',on:'På',off:'Av',theme:'Utseende',dark:'Mörkt',light:'Ljust',auto:'Auto',lang:'Språk',exp:'Exportera backup',imp:'Importera backup',delall:'Radera alla ögonblick',privacy:'Integritetspolicy',rate:'Betygsätt appen',contact:'Kontakt och feedback',ver:'Version',write_moment:'Skriv ditt ögonblick',ph_text:'Vad hände idag? Lägg till en tagg som #jobb',bg:'Bakgrund',next:'Nästa',save_moment:'Spara ögonblick',ph_cap:'Lägg till bildtext eller #tagg (valfritt)...',save:'Spara',your_ans:'Ditt svar',ph_ans:'Skriv ditt svar...',save_ans:'Spara svar',rec_hint:'Spela in ett klipp med kameran',start_rec:'Starta inspelning',switch_cam:'Byt kamera',stats:'Min statistik',days_rec:'dagar',best:'Bästa svit',this_month:'Denna månad',rem_time:'Tid för påminnelse',rem_on:'Aktivera påminnelse',rem_off:'Stäng av påminnelse',pick_date:'Välj datum',confirm:'Bekräfta',choose_type:'Välj typ',cancel:'Avbryt',ok:'Bekräfta',close:'Stäng',
 saved:'Sparat',saved_a:'Svar sparat',write_first:'Skriv något först',err:'Fel',no_data:'Inga ögonblick',no_day:'Inga ögonblick denna dag',del_c:'Radera detta ögonblick?',deleted:'Raderat',theme_ok:'Utseende ändrat',exp_ok:'Exporterad',imp_ok:'Importerad',prep:'Förbereder backup...',cam_err:'Kan inte öppna kameran',cam_perm:'Kamerabehörighet nekad',cam_nf:'Ingen kamera hittad',cam_busy:'Kameran är upptagen',
 delall_q:'Radera alla ögonblick ({n})?',backup:'Backup',backup_q:'Exportera en backup före radering?',yes_exp:'Ja, exportera',skip:'Nej, hoppa över',exp_fail:'Exporten misslyckades',exp_fail_q:'Ingen backup skapades. Radera ändå?',del_anyway:'Radera ändå',final:'Slutlig bekräftelse',final_q:'Alla ögonblick raderas permanent. Skriv "radera" för att bekräfta.',del_word:'radera',type_word:'Skriv exakt ordet',del_final:'Radera för alltid',
 rem_title:'Du har inte fångat något idag',rem_sub:'Tryck för att lägga till',now:'Nu',one:'1 ögonblick',two:'2 ögonblick',many:'ögonblick',mail_sub:'Meddelande från Lahza',sep:', ',
-search:'Sök bland dina ögonblick...',nothing:'Inga resultat',mood:'Hur var ditt humör? (valfritt)',edit:'Redigera ögonblick',lock:'Applås',lock_enter:'Ange kod',lock_new:'Välj en 4-siffrig kod',lock_confirm:'Ange koden igen',lock_wrong:'Fel kod',lock_mismatch:'Koderna matchar inte',lock_set:'Lås aktiverat',lock_q:'Låset är på. Vill du ta bort det?',lock_remove:'Ta bort lås',fontsize:'Textstorlek',small:'Liten',medium:'Medel',large:'Stor',nudge_q:'Det har gått en vecka sedan din senaste backup. Spara en nu i Filer eller iCloud.',later:'Senare',
+search:'Sök med ord, tagg eller datum...',search_hint:'Exempel: mars 2024, 2024-03-15, 15/3/2024 eller #jobb',results:'resultat',nothing:'Inga resultat',mood:'Hur var ditt humör? (valfritt)',edit:'Redigera ögonblick',fontsize:'Textstorlek',small:'Liten',medium:'Medel',large:'Stor',nudge_q:'Det har gått en vecka sedan din senaste backup. Spara en nu i Filer eller iCloud.',later:'Senare',
 share_t:'Dela ögonblick',share_img:'Som bild',share_txt:'Som text',share_saved:'Filen sparades, dela den från Filer',share_copied:'Texten kopierades',prep_share:'Förbereder bild...',
-more_q:'Fler frågor',mood30:'Ditt humör, senaste 30 dagarna',rec_again:'Spela in igen',mic_err:'Kan inte komma åt mikrofonen',max_photos:'Högst 10 foton',rec_stop:'Stopp'}
+more_q:'Fler frågor',mood30:'Ditt humör, senaste 30 dagarna',rec_again:'Spela in igen',mic_err:'Kan inte komma åt mikrofonen',max_photos:'Högst 10 foton'}
 };
 const t=k=>(I[S.lang]&&I[S.lang][k])||I.ar[k]||k;
 const DAYS={ar:['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],en:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],sv:['söndag','måndag','tisdag','onsdag','torsdag','fredag','lördag']};
@@ -399,6 +395,7 @@ const MON={ar:['يناير','فبراير','مارس','أبريل','مايو','�
 const LN={ar:'العربية',en:'English',sv:'Svenska'};
 const FSZ={s:16,m:18,l:20},FSK={s:'small',m:'medium',l:'large'};
 
+function markSel(){document.querySelectorAll('#themeModal [data-mode]').forEach(b=>b.classList.toggle('sel',b.dataset.mode===S.theme));document.querySelectorAll('#fontModal [data-fs]').forEach(b=>b.classList.toggle('sel',b.dataset.fs===S.fs))}
 function applyI18n(){
   document.documentElement.lang=S.lang;document.documentElement.dir=S.lang==='ar'?'rtl':'ltr';
   document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=t(e.dataset.i18n));
@@ -407,9 +404,10 @@ function applyI18n(){
   $('calHead').innerHTML=WD[S.lang].map(d=>'<div>'+d+'</div>').join('');
   $('languageStatus').textContent=LN[S.lang];$('themeStatus').textContent=t(S.theme);$('fontStatus').textContent=t(FSK[S.fs]);
   $('moreQ').textContent=t('more_q');$('dailyQ').textContent=dailyQ();
-  loadReminder();updateLockStatus();showToday();lockUI();
+  if(!$('searchInput').value.trim())$('searchInfo').textContent=t('search_hint');
+  loadReminder();showToday();markSel();
 }
-function applyFs(){document.documentElement.style.fontSize=FSZ[S.fs]+'px';LS('lahza-fs',S.fs);$('fontStatus').textContent=t(FSK[S.fs])}
+function applyFs(){document.documentElement.style.fontSize=FSZ[S.fs]+'px';LS('lahza-fs',S.fs);$('fontStatus').textContent=t(FSK[S.fs]);markSel()}
 
 /* ============ أدوات ============ */
 function toast(msg,isErr){const e=$('toast');e.textContent=msg;e.className=isErr?'err':'';clearTimeout(e._t);e._t=setTimeout(()=>e.classList.add('hidden'),3500)}
@@ -445,40 +443,27 @@ async function addMoment(m,blob,bg,extras){extras=extras||[];
   bs.put(blob,id);if(bg)bs.put(bg,'bg'+id);extras.forEach((b,i)=>bs.put(b,'p'+id+'_'+i));
   await txDone(tx);return id}
 async function delMoment(id){const m=await getMeta(id),tx=db.transaction([M,B],'readwrite'),bs=tx.objectStore(B);
-  tx.objectStore(M).delete(id);bs.delete(id);bs.delete('bg'+id);for(let i=0;i<((m&&m.extra)||0);i++)bs.delete('p'+id+'_'+i);await txDone(tx)}
+  tx.objectStore(M).delete(id);bs.delete(id);bs.delete('bg'+id);bs.delete('th'+id);for(let i=0;i<((m&&m.extra)||0);i++)bs.delete('p'+id+'_'+i);await txDone(tx)}
 async function clearAll(){const tx=db.transaction([M,B],'readwrite');tx.objectStore(M).clear();tx.objectStore(B).clear();await txDone(tx)}
 async function backfill(){for(const m of await getAll()){if((m.type==='text'||m.type==='answer')&&m.txt===undefined){const b=await getBlob(m.id);if(b){m.txt=await b.text();await upd(m)}}}}
 async function photoBlobs(m){const a=[await getBlob(m.id)];for(let i=0;i<(m.extra||0);i++)a.push(await getBlob('p'+m.id+'_'+i));return a.filter(Boolean)}
+
+/* ============ صور مصغّرة للفيديو (تمنع الشاشة السوداء) ============ */
+function videoThumb(blob){return new Promise(res=>{const u=URL.createObjectURL(blob),v=document.createElement('video');let done=false;
+  const fin=b=>{if(done)return;done=true;URL.revokeObjectURL(u);v.removeAttribute('src');try{v.load()}catch(e){}res(b)};
+  v.muted=true;v.playsInline=true;v.preload='auto';v.setAttribute('playsinline','');
+  v.onloadeddata=()=>{try{v.currentTime=Math.min(.5,(v.duration||1)/2)}catch(e){fin(null)}};
+  v.onseeked=()=>{try{const w=480,h=Math.round(w*(v.videoHeight||9)/(v.videoWidth||16)),c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(v,0,0,w,h);c.toBlob(b=>fin(b),'image/jpeg',.7)}catch(e){fin(null)}};
+  v.onerror=()=>fin(null);setTimeout(()=>fin(null),8000);v.src=u})}
+let tq=Promise.resolve();
+function getThumb(m,blob){const p=tq.then(async()=>{let th=await getBlob('th'+m.id);if(th)return th;th=await videoThumb(blob);if(th)await putBlob('th'+m.id,th);return th});tq=p.catch(()=>{});return p}
 
 /* ============ المظهر ============ */
 const mq=window.matchMedia('(prefers-color-scheme: dark)');
 function applyTheme(){let m=S.theme;if(m==='auto')m=mq.matches?'dark':'light';
   document.documentElement.dataset.theme=m;document.querySelector('meta[name=theme-color]').content=m==='dark'?'#0F0A08':'#FAF6EE';
-  LS('lahza-theme',S.theme);$('themeStatus').textContent=t(S.theme)}
+  LS('lahza-theme',S.theme);$('themeStatus').textContent=t(S.theme);markSel()}
 mq.addEventListener&&mq.addEventListener('change',()=>S.theme==='auto'&&applyTheme());
-
-/* ============ قفل التطبيق ============ */
-const PIN={mode:'unlock',buf:'',first:''};
-async function hash(p){let s=LS('lahza-salt');if(!s){s=Array.from(crypto.getRandomValues(new Uint8Array(8))).join('');LS('lahza-salt',s)}
-  if(crypto.subtle){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s+p));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('')}
-  let h=5381;(s+p).split('').forEach(c=>h=((h<<5)+h+c.charCodeAt(0))|0);return String(h)}
-const pad=$('pad');['1','2','3','4','5','6','7','8','9','bio','0','<'].forEach(k=>{const b=document.createElement('button');
-  b.textContent=k==='<'?'⌫':k==='bio'?'🔓':k;if(k==='bio'){b.id='bioBtn';b.onclick=tryBio}else b.onclick=()=>pinKey(k);pad.appendChild(b)});
-function lockUI(){const m={unlock:'lock_enter',set1:'lock_new',set2:'lock_confirm',remove:'lock_enter'}[PIN.mode];$('lockT').textContent=t(m);
-  $('lockX').classList.toggle('hidden',PIN.mode==='unlock');$('bioBtn').style.visibility=(PIN.mode==='unlock'&&PLG('BiometricAuth'))?'visible':'hidden';
-  $('dots').innerHTML=[0,1,2,3].map(i=>'<i class="'+(i<PIN.buf.length?'on':'')+'"></i>').join('')}
-function showLock(mode){PIN.mode=mode;PIN.buf='';PIN.first='';$('lockM').textContent='';lockUI();show('lock');if(mode==='unlock')tryBio()}
-async function tryBio(){const p=PLG('BiometricAuth');if(!p||!LS('lahza-pin'))return;try{await p.authenticate({reason:t('lock_enter'),cancelTitle:t('cancel')});hide('lock')}catch(e){}}
-async function pinKey(k){if(k==='<'){PIN.buf=PIN.buf.slice(0,-1);lockUI();return}if(PIN.buf.length>=4)return;PIN.buf+=k;$('lockM').textContent='';lockUI();if(PIN.buf.length<4)return;
-  const b=PIN.buf;
-  if(PIN.mode==='unlock'||PIN.mode==='remove'){if(await hash(b)===LS('lahza-pin')){if(PIN.mode==='remove')LS('lahza-pin','');hide('lock');updateLockStatus()}else{PIN.buf='';$('lockM').textContent=t('lock_wrong');setTimeout(lockUI,150)}}
-  else if(PIN.mode==='set1'){PIN.first=b;PIN.buf='';PIN.mode='set2';lockUI()}
-  else if(b===PIN.first){LS('lahza-pin',await hash(b));hide('lock');updateLockStatus();toast(t('lock_set'))}
-  else{PIN.mode='set1';PIN.buf='';$('lockM').textContent=t('lock_mismatch');lockUI()}}
-function updateLockStatus(){$('lockStatus').textContent=LS('lahza-pin')?t('on'):t('off')}
-$('lockX').onclick=()=>hide('lock');
-$('btnLock').onclick=async()=>{if(!LS('lahza-pin'))return showLock('set1');if(await ask(t('lock'),t('lock_q'),{ok:t('lock_remove')}))showLock('remove')};
-let hAt=0;document.addEventListener('visibilitychange',()=>{if(document.hidden)hAt=Date.now();else if(LS('lahza-pin')&&Date.now()-hAt>15000&&$('lock').classList.contains('hidden'))showLock('unlock')});
 
 /* ============ الرئيسية ============ */
 async function updateHome(ms){ms=ms||await getAll();$('counterText').textContent=ms.length;
@@ -494,7 +479,10 @@ async function renderOnThisDay(ms){ms=ms||await getAll();const now=new Date(),mo
   show('onThisDay')}
 async function refreshAll(){const ms=await getAll();updateHome(ms);renderOnThisDay(ms);
   if(!$('tabMoments').classList.contains('hidden'))await renderTree(ms);
-  if(!$('dayMomentsScreen').classList.contains('hidden')&&S.day)openDay(S.day,S.dayList===null?null:undefined)}
+  if(!$('dayMomentsScreen').classList.contains('hidden')&&S.day)await openDay(S.day,S.dayList===null?null:undefined)}
+/* يحدّث الشاشة ويحافظ على مكان السكرول */
+async function refreshKeep(){const els=[$('dayMomentsScreen'),$('tabMoments'),$('tabHome')],pos=els.map(e=>e.scrollTop);
+  await refreshAll();els.forEach((e,i)=>e.scrollTop=pos[i]);setTimeout(()=>els.forEach((e,i)=>e.scrollTop=pos[i]),300)}
 function switchTab(n){['Home','Moments','Settings'].forEach(x=>{$('tabBtn'+x).classList.toggle('active',x===n);$('tab'+x).classList.toggle('hidden',x!==n)});
   closeDay();if(n==='Moments')renderTree()}
 ['Home','Moments','Settings'].forEach(n=>$('tabBtn'+n).onclick=()=>switchTab(n));
@@ -596,7 +584,7 @@ $('actionOldDate').onclick=()=>{const ys=$('pickYear'),ms=$('pickMonth'),ds=$('p
   MON[S.lang].forEach((n,i)=>ms.add(new Option(n,i+1)));
   const fill=()=>{const dim=new Date(+ys.value,+ms.value,0).getDate(),cv=+ds.value||1;ds.innerHTML='';for(let d=1;d<=dim;d++)ds.add(new Option(d,d));ds.value=Math.min(cv,dim)};
   fill();ys.onchange=ms.onchange=fill;
-  [ys,ms,ds].forEach(s=>s.style.cssText='flex:1;width:100%;padding:14px 6px;background:var(--bg);border:1.5px solid var(--border-strong);border-radius:10px;text-align:center;font-size:1.05rem');
+  [ys,ms,ds].forEach(s=>s.style.cssText='flex:1;width:100%;padding:14px 6px;background:var(--bg);color:var(--text);border:1.5px solid var(--border-strong);border-radius:10px;text-align:center;font-size:1.05rem');
   show('datePickerSheet')};
 $('datePickerClose').onclick=()=>{hide('datePickerSheet');S.oldDate=null};
 $('datePickerConfirm').onclick=()=>{S.oldDate=new Date(+$('pickYear').value,+$('pickMonth').value-1,+$('pickDay').value,12,0,0);hide('datePickerSheet');show('typePickerSheet')};
@@ -608,12 +596,11 @@ $('pickTypeAudio').onclick=()=>{hide('typePickerSheet');openAudio()};
 $('pickTypeText').onclick=()=>{hide('typePickerSheet');openText()};
 
 /* ============ البطاقات ============ */
-async function makeCard(m){const card=document.createElement('div');card.className='moment-card';let c;
+async function makeCard(m){const card=document.createElement('div');card.className='moment-card';card.dataset.id=m.id;let c;
   const b=await getBlob(m.id);
-  if(m.type==='photo'||m.type==='video'){if(!b)return null;
-    if(m.type==='photo'){c=new Image();c.loading='lazy';c.src=UD(b)}
-    else{c=document.createElement('video');c.preload='metadata';c.muted=true;c.playsInline=true;c.src=UD(b)+'#t=0.1'}
-    card.appendChild(c)}
+  if(m.type==='photo'){if(!b)return null;c=new Image();c.loading='lazy';c.src=UD(b);card.appendChild(c)}
+  else if(m.type==='video'){if(!b)return null;const w=document.createElement('div');w.className='vthumb';card.appendChild(w);
+    getThumb(m,b).then(th=>{if(th&&w.isConnected)w.style.backgroundImage='url("'+UD(th)+'")'}).catch(()=>{})}
   else if(m.type==='audio'){const w=document.createElement('div');w.style.cssText='padding:22px 16px;text-align:center';
     const h=document.createElement('div');h.style.cssText='font:1.3rem var(--fd);color:var(--gold);margin-bottom:12px';h.textContent='🎙 '+fdur(m.dur||0);w.appendChild(h);
     if(b){const a=document.createElement('audio');a.controls=true;a.preload='metadata';a.src=UD(b);a.onclick=e=>e.stopPropagation();w.appendChild(a)}card.appendChild(w)}
@@ -624,23 +611,32 @@ async function makeCard(m){const card=document.createElement('div');card.classNa
   tm.textContent=(m.mood?m.mood+' ':'')+(m.extra?'🖼'+(m.extra+1)+' ':'')+(m.noTime?'':ftime(m.date));meta.appendChild(tm);
   if(m.favorite){const f=document.createElement('span');f.className='moment-fav';f.textContent='♥';meta.appendChild(f)}
   card.appendChild(meta);card.onclick=()=>openModal(m.id);return card}
+function syncFavUI(id,flag){document.querySelectorAll('.moment-card[data-id="'+id+'"]').forEach(card=>{const meta=card.querySelector('.moment-meta'),ex=meta.querySelector('.moment-fav');
+  if(flag&&!ex){const f=document.createElement('span');f.className='moment-fav';f.textContent='♥';meta.appendChild(f)}else if(!flag&&ex)ex.remove()})}
 
-/* ============ البحث والوسوم ============ */
-let st;$('searchInput').oninput=()=>{clearTimeout(st);st=setTimeout(doSearch,250)};
-async function doSearch(){const q=$('searchInput').value.trim().toLowerCase(),r=$('searchResults');
-  if(!q){r.classList.add('hidden');r.innerHTML='';free(LD);return renderTree()}
-  hide('treeView');hide('empty');const ms=await getAll();
-  const f=ms.filter(m=>((m.caption||'')+' '+(m.txt||'')).toLowerCase().includes(q)).sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,50);
+/* ============ البحث (بالكلمات والوسوم والتواريخ) ============ */
+const AD={'٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'};
+const norm=s=>(s||'').replace(/[٠-٩]/g,c=>AD[c]).toLowerCase();
+function hay(m){const d=new Date(m.date),dd=d.getDate(),mo=d.getMonth(),y=d.getFullYear(),p2=n=>String(n).padStart(2,'0');
+  const w=[m.caption,m.txt,m.mood,dstr(d),dd+'/'+(mo+1)+'/'+y,p2(dd)+'/'+p2(mo+1)+'/'+y,dd+'-'+(mo+1)+'-'+y,dd+'.'+(mo+1)+'.'+y,(mo+1)+'/'+y,p2(mo+1)+'/'+y,String(y)];
+  ['ar','en','sv'].forEach(l=>{w.push(DAYS[l][d.getDay()],dd+' '+MON[l][mo],MON[l][mo]+' '+y,MON[l][mo],I[l][m.type==='answer'?'answers':m.type])});
+  return norm(w.join(' '))}
+let st;['input','search'].forEach(ev=>$('searchInput').addEventListener(ev,()=>{clearTimeout(st);st=setTimeout(doSearch,250)}));
+async function doSearch(){const raw=$('searchInput').value.trim(),r=$('searchResults'),info=$('searchInfo'),seq=++S.seq;
+  if(!raw){r.classList.add('hidden');r.innerHTML='';free(LD);show('filterRow');info.textContent=t('search_hint');return renderTree()}
+  hide('treeView');hide('empty');hide('filterRow');
+  const toks=norm(raw).split(/\s+/).filter(Boolean),ms=await getAll();if(seq!==S.seq)return;
+  const f=ms.filter(m=>{const h=hay(m);return toks.every(k=>h.includes(k))}).sort((a,b)=>new Date(b.date)-new Date(a.date));
+  info.textContent=f.length?f.length+' '+t('results'):t('nothing');
   free(LD);r.innerHTML='';r.classList.remove('hidden');
-  if(!f.length){r.innerHTML='<div class="empty-state"><div></div></div>';r.querySelector('div div').textContent=t('nothing');return}
-  for(const m of f){const c=await makeCard(m);if(c)r.appendChild(c)}}
+  for(const m of f.slice(0,60)){const c=await makeCard(m);if(seq!==S.seq)return;if(c)r.appendChild(c)}}
 function renderTags(ms){const c={};
   ms.forEach(m=>{const mt=((m.caption||'')+' '+(m.txt||'')).match(/#[\p{L}\p{N}_]+/gu);if(mt)mt.forEach(x=>{x=x.toLowerCase();c[x]=(c[x]||0)+1})});
   const row=$('tagsRow');row.innerHTML='';
   Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,12).forEach(([tag,n])=>{const b=document.createElement('button');b.className='filter-chip';b.textContent=tag+' ('+n+')';b.onclick=()=>{$('searchInput').value=tag;doSearch()};row.appendChild(b)})}
 
 /* ============ الشجرة والتقويم ============ */
-async function renderTree(ms){ms=ms||await getAll();renderTags(ms);if($('searchInput').value.trim()&&!$('searchResults').classList.contains('hidden')===false&&false){}
+async function renderTree(ms){ms=ms||await getAll();renderTags(ms);
   if($('searchInput').value.trim())return doSearch();
   let f=ms;
   if(S.filter==='favorite')f=ms.filter(m=>m.favorite);else if(S.filter!=='all')f=ms.filter(m=>m.type===S.filter);
@@ -681,7 +677,8 @@ $('dayMomentsClose').onclick=()=>{closeDay();if(!$('tabMoments').classList.conta
 /* ============ نافذة اللقطة والتعديل ============ */
 async function openModal(id){const m=await getMeta(id);if(!m)return;S.cur=id;const c=$('modalContent');c.innerHTML='';free(LM);const b=await getBlob(id);
   if(m.type==='photo'){for(const pb of await photoBlobs(m)){const i=new Image();i.src=UM(pb);c.appendChild(i)}}
-  else if(m.type==='video'){const v=document.createElement('video');v.src=UM(b);v.controls=true;v.playsInline=true;c.appendChild(v)}
+  else if(m.type==='video'){const v=document.createElement('video');v.src=UM(b);v.controls=true;v.playsInline=true;v.preload='metadata';
+    const th=await getBlob('th'+id);if(th)v.poster=UM(th);c.appendChild(v)}
   else if(m.type==='audio'){const w=document.createElement('div');w.className='modal-text';w.style.cssText+='display:flex;flex-direction:column;align-items:center;gap:14px';
     const ic=document.createElement('div');ic.style.fontSize='3rem';ic.textContent='🎙';const d=document.createElement('div');d.style.cssText='font:1.3rem var(--fd);color:var(--gold-light)';d.textContent=fdur(m.dur||0);
     w.append(ic,d);if(b){const a=document.createElement('audio');a.controls=true;a.src=UM(b);w.appendChild(a)}c.appendChild(w)}
@@ -692,10 +689,11 @@ async function openModal(id){const m=await getMeta(id);if(!m)return;S.cur=id;con
   if(m.caption&&m.type!=='answer'){const cp=document.createElement('div');cp.className='modal-cap';cp.textContent=m.caption;c.appendChild(cp)}
   const dd=document.createElement('div');dd.className='modal-date';dd.textContent=(m.mood?m.mood+'  ':'')+fdate(m.date)+(m.noTime?'':' - '+ftime(m.date));c.appendChild(dd);
   const hb=$('modalHeart'),paint=f=>{hb.textContent=f?'♥':'♡';hb.className=f?'active':''};paint(m.favorite);
-  hb.onclick=async()=>{const mm=await getMeta(id);if(!mm)return;mm.favorite=!mm.favorite;await upd(mm);paint(mm.favorite)};
-  show('momentModal')}
-$('modalClose').onclick=()=>{hide('momentModal');free(LM);$('modalContent').innerHTML='';S.cur=null;refreshAll()};
-$('modalDelete').onclick=async()=>{if(!S.cur)return;if(!await ask(t('del_c'),''))return;await delMoment(S.cur);hide('momentModal');free(LM);S.cur=null;toast(t('deleted'));refreshAll()};
+  hb.onclick=async()=>{const mm=await getMeta(id);if(!mm)return;mm.favorite=!mm.favorite;await upd(mm);paint(mm.favorite);syncFavUI(id,mm.favorite)};
+  $('momentModal').scrollTop=0;show('momentModal')}
+function closeModalNow(){hide('momentModal');free(LM);$('modalContent').innerHTML='';S.cur=null}
+$('modalClose').onclick=async()=>{closeModalNow();if(S.dirty){S.dirty=false;await refreshKeep()}};
+$('modalDelete').onclick=async()=>{if(!S.cur)return;if(!await ask(t('del_c'),''))return;await delMoment(S.cur);closeModalNow();S.dirty=false;toast(t('deleted'));await refreshKeep()};
 $('modalEdit').onclick=async()=>{if(!S.cur)return;const m=await getMeta(S.cur),b=await getBlob(S.cur),body=(m.type==='text'||m.type==='answer');
   $('eBodyWrap').classList.toggle('hidden',!body);$('eCapWrap').classList.toggle('hidden',m.type==='answer');
   $('eBody').value=body&&b?await b.text():'';$('eCap').value=m.caption||'';show('eSheet')};
@@ -703,7 +701,7 @@ $('eNo').onclick=()=>hide('eSheet');
 $('eOk').onclick=async()=>{const id=S.cur,m=await getMeta(id);if(!m)return;
   if(m.type!=='answer')m.caption=$('eCap').value.trim();
   if(m.type==='text'||m.type==='answer'){const x=$('eBody').value.trim();if(!x)return toast(t('write_first'),1);m.txt=x;await putBlob(id,new Blob([x],{type:'text/plain'}))}
-  await upd(m);hide('eSheet');toast(t('saved'));openModal(id);refreshAll()};
+  await upd(m);hide('eSheet');toast(t('saved'));S.dirty=true;openModal(id)};
 
 /* ============ المشاركة (عبر قائمة المشاركة في النظام، بدون أي خادم) ============ */
 const loadImg=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
@@ -782,9 +780,9 @@ async function checkReminder(){try{
   btn.onclick=()=>{b.remove();switchTab('Home')};b.append(w,btn);document.body.appendChild(b);setTimeout(()=>b.remove(),12000)}catch(e){}}
 
 /* ============ المظهر والخط واللغة ============ */
-$('btnTheme').onclick=()=>show('themeModal');$('themeClose').onclick=()=>hide('themeModal');
+$('btnTheme').onclick=()=>{markSel();show('themeModal')};$('themeClose').onclick=()=>hide('themeModal');
 document.querySelectorAll('#themeModal [data-mode]').forEach(b=>b.onclick=()=>{S.theme=b.dataset.mode;applyTheme();toast(t('theme_ok'))});
-$('btnFont').onclick=()=>show('fontModal');$('fontClose').onclick=()=>hide('fontModal');
+$('btnFont').onclick=()=>{markSel();show('fontModal')};$('fontClose').onclick=()=>hide('fontModal');
 document.querySelectorAll('#fontModal [data-fs]').forEach(b=>b.onclick=()=>{S.fs=b.dataset.fs;applyFs()});
 $('btnLanguage').onclick=()=>show('languageModal');$('languageClose').onclick=()=>hide('languageModal');
 document.querySelectorAll('#languageModal [data-lang]').forEach(b=>b.onclick=()=>{S.lang=b.dataset.lang;LS('lahza-lang',S.lang);applyTheme();applyI18n();hide('languageModal');renderOnThisDay();syncNative()});
@@ -796,7 +794,7 @@ async function buildZip(ms){const zip=new JSZip(),meta=[];
     if(m.bgKey){const bb=await getBlob('bg'+m.id);if(bb){zip.file('bg/'+m.id,bb);e.bgFile='bg/'+m.id}}
     for(let i=0;i<(m.extra||0);i++){const pb=await getBlob('p'+m.id+'_'+i);if(pb)zip.file('extra/'+m.id+'_'+i+'.jpg',pb)}
     meta.push(e)}
-  zip.file('data.json',JSON.stringify({version:'5.0',date:new Date().toISOString(),count:ms.length,moments:meta},null,2));
+  zip.file('data.json',JSON.stringify({version:'5.1',date:new Date().toISOString(),count:ms.length,moments:meta},null,2));
   return zip.generateAsync({type:'blob'})}
 async function exportZip(ms){toast(t('prep'));const blob=await buildZip(ms),name='lahza-backup-'+dstr(new Date())+'.zip',f=new File([blob],name,{type:'application/zip'});
   if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:name})}
@@ -821,7 +819,7 @@ $('btnDeleteAll').onclick=async()=>{const ms=await getAll();if(!ms.length)return
   if(!await ask(t('final'),t('final_q'),{word:t('del_word'),ok:t('del_final')}))return;
   await clearAll();toast(t('deleted'));closeDay();refreshAll()};
 $('btnContact').onclick=()=>{location.href='mailto:lahzalaqta@gmail.com?subject='+encodeURIComponent(t('mail_sub'))};
-async function nudge(){if(!$('lock').classList.contains('hidden'))return;const ms=await getAll();if(ms.length<3)return;const now=Date.now(),last=+LS('lahza-last-backup')||0;
+async function nudge(){const ms=await getAll();if(ms.length<3)return;const now=Date.now(),last=+LS('lahza-last-backup')||0;
   if(!last){LS('lahza-last-backup',String(now));return}
   if(now-last<6048e5||LS('lahza-nudged')===dstr(now))return;LS('lahza-nudged',dstr(now));
   if(await ask(t('backup'),t('nudge_q'),{ok:t('yes_exp'),no:t('later')}))try{await exportZip(ms)}catch(e){}}
@@ -855,7 +853,6 @@ setTimeout(()=>{const sp=$('splash');sp.classList.add('hide');setTimeout(()=>sp.
   try{S.theme=LS('lahza-theme')||'auto';if(!['dark','light','auto'].includes(S.theme))S.theme='auto';
     S.fs=LS('lahza-fs')||'m';if(!FSZ[S.fs])S.fs='m';
     const l=LS('lahza-lang');S.lang=I[l]?l:'ar';applyFs();applyTheme();applyI18n();
-    if(LS('lahza-pin'))showLock('unlock');
     await openDB();
     if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();
     refreshAll();backfill();syncNative();checkReminder();setInterval(checkReminder,60000);setTimeout(nudge,5000);
@@ -902,11 +899,10 @@ p{color:var(--text2);margin-bottom:12px}
 const L={
 ar:{n:'العربية',t:'سياسة الخصوصية',u:'آخر تحديث: 3 أكتوبر 2026',b:'← العودة للتطبيق',s:[
 ['الخلاصة','«لحظة» تطبيق يوميات خاص. كل ما تكتبه وتصوّره وتسجّله بصوتك يبقى على جهازك فقط. لا نملك خوادم لتخزين لقطاتك، ولا نطلب منك حساباً، ولا نرى بياناتك.'],
-['ما الذي يُحفظ على جهازك','لقطاتك (صور، فيديوهات، تسجيلات صوتية، نصوص، أجوبة، تعليقات، وسوم، تاريخ ومزاج) وإعداداتك (اللغة، المظهر، حجم الخط، وقت التذكير، ورمز القفل بصيغة مشفّرة). تُخزَّن داخل التطبيق على جهازك، وتُحذف عند حذف التطبيق أو عند استخدام «حذف كل اللقطات» من الإعدادات.'],
+['ما الذي يُحفظ على جهازك','لقطاتك (صور، فيديوهات، تسجيلات صوتية، نصوص، أجوبة، تعليقات، وسوم، تاريخ ومزاج) وإعداداتك (اللغة، المظهر، حجم الخط، ووقت التذكير). تُخزَّن داخل التطبيق على جهازك، وتُحذف عند حذف التطبيق أو عند استخدام «حذف كل اللقطات» من الإعدادات.'],
 ['ما الذي لا نفعله','لا نجمع بيانات شخصية. لا نستخدم أدوات تحليل أو تتبع. لا نعرض إعلانات. لا نبيع بياناتك ولا نشاركها نحن مع أي جهة. المشاركة الوحيدة هي التي تبدأها أنت بنفسك (انظر بند المشاركة).'],
 ['المشاركة','يمكنك مشاركة لقطة (صورة أو عدة صور أو فيديو أو تسجيل صوتي أو نص أو جواب) مع أشخاص آخرين عبر قائمة المشاركة في نظام iOS. تبدأ المشاركة بقرارك وحدك، وتنتقل اللقطة مباشرة من جهازك إلى التطبيق أو الشخص الذي تختاره (مثل الرسائل أو واتساب أو البريد)، دون أن تمر بأي خادم تابع لنا ودون أن نحتفظ بنسخة منها.\nعند مشاركة نص أو جواب كصورة يُنشأ شكل الصورة على جهازك مؤقتاً، وتحمل اسم التطبيق في أسفلها.\nبعد المشاركة تخضع النسخة التي استلمها الطرف الآخر لسياسة التطبيق الذي اخترته وليس لسياستنا، فاختر بعناية ما تشاركه ومع من. لا نضيف أي رابط تتبع أو معرّف إلى ما تشاركه.'],
-['الأذونات','الكاميرا: لالتقاط الصور وتسجيل الفيديو داخل التطبيق فقط.\nالميكروفون: لتسجيل الملاحظات الصوتية عندما تضغط زر التسجيل فقط. لا يعمل الميكروفون في الخلفية، ولا تُرسل التسجيلات إلى أي جهة، وتبقى على جهازك.\nالصور والملفات: لاختيار صور من معرض جهازك، أو خلفية للنص، أو فيديو.\nالإشعارات: لتذكيرك اليومي في الوقت الذي تحدده.\nFace ID أو البصمة: إذا فعّلت القفل، يتولى نظام iOS التحقق ولا يصل التطبيق إلى بياناتك الحيوية.\nيمكنك سحب أي إذن من إعدادات جهازك في أي وقت.'],
-['رمز القفل','يُحفظ الرمز على جهازك بصيغة مشفّرة (hash) ولا يغادر الجهاز. إذا نسيته فقد تضطر لإعادة تثبيت التطبيق، لذلك احتفظ بنسخة احتياطية.'],
+['الأذونات','الكاميرا: لالتقاط الصور وتسجيل الفيديو داخل التطبيق فقط.\nالميكروفون: لتسجيل الملاحظات الصوتية عندما تضغط زر التسجيل فقط. لا يعمل الميكروفون في الخلفية، ولا تُرسل التسجيلات إلى أي جهة، وتبقى على جهازك.\nالصور والملفات: لاختيار صور من معرض جهازك، أو خلفية للنص، أو فيديو.\nالإشعارات: لتذكيرك اليومي في الوقت الذي تحدده.\nيمكنك سحب أي إذن من إعدادات جهازك في أي وقت.'],
 ['النسخ الاحتياطية','تُنشأ النسخة بطلبك وتُحفظ في المكان الذي تختاره (مثل ملفات iCloud). هي ملفك وتحت مسؤوليتك، فلا نملك نسخة منها ولا نستطيع استرجاع بياناتك إذا فُقدت.'],
 ['خدمات خارجية','عند الاتصال بالإنترنت قد يحمّل التطبيق خطوطاً من Google Fonts، وبذلك يستلم خادم Google عنوان IP الخاص بجهازك كأي موقع ويب. لا تُرسل لقطاتك إلى أي خدمة.'],
 ['التواصل بالبريد','إذا راسلتنا من «تواصل معنا» فنستلم بريدك ورسالتك فقط، ونستخدمهما للرد عليك.'],
@@ -915,11 +911,10 @@ ar:{n:'العربية',t:'سياسة الخصوصية',u:'آخر تحديث: 3 �
 ['تواصل معنا','لأي سؤال عن الخصوصية: lahzalaqta@gmail.com']]},
 en:{n:'English',t:'Privacy Policy',u:'Last updated: October 3, 2026',b:'← Back to app',s:[
 ['Summary','Lahza is a private journal app. Everything you write, capture and record with your voice stays on your device only. We run no servers that store your moments, we do not ask for an account, and we cannot see your data.'],
-['What is stored on your device','Your moments (photos, videos, voice recordings, texts, answers, captions, tags, dates and mood) and your settings (language, appearance, text size, reminder time, and your passcode in hashed form). It is stored inside the app on your device and is removed when you delete the app or use "Delete all moments" in Settings.'],
+['What is stored on your device','Your moments (photos, videos, voice recordings, texts, answers, captions, tags, dates and mood) and your settings (language, appearance, text size and reminder time). It is stored inside the app on your device and is removed when you delete the app or use "Delete all moments" in Settings.'],
 ['What we do not do','We do not collect personal data. We use no analytics or tracking tools. We show no ads. We do not sell your data and we do not share it with anyone. The only sharing is what you start yourself (see the Sharing section).'],
 ['Sharing','You can share a moment (photo, several photos, video, voice recording, text or answer) with other people through the iOS share sheet. Sharing starts only by your decision, and the moment goes directly from your device to the app or person you choose (such as Messages, WhatsApp or Mail), without passing through any server of ours and without us keeping a copy.\nWhen you share a text or answer as an image, the image is created temporarily on your device and carries the app name at the bottom.\nAfter sharing, the copy received by the other party is governed by the privacy policy of the app you chose, not ours, so choose carefully what you share and with whom. We add no tracking link or identifier to what you share.'],
-['Permissions','Camera: to take photos and record video inside the app only.\nMicrophone: to record voice notes only while you press the record button. The microphone never runs in the background, and recordings are not sent anywhere; they stay on your device.\nPhotos and files: to pick photos from your library, a text background, or a video.\nNotifications: to send your daily reminder at the time you choose.\nFace ID or fingerprint: if you turn on the lock, iOS performs the check and the app never receives your biometric data.\nYou can revoke any permission in your device settings at any time.'],
-['Passcode','Your passcode is stored on your device in hashed form and never leaves it. If you forget it you may need to reinstall the app, so keep a backup.'],
+['Permissions','Camera: to take photos and record video inside the app only.\nMicrophone: to record voice notes only while you press the record button. The microphone never runs in the background, and recordings are not sent anywhere; they stay on your device.\nPhotos and files: to pick photos from your library, a text background, or a video.\nNotifications: to send your daily reminder at the time you choose.\nYou can revoke any permission in your device settings at any time.'],
 ['Backups','A backup is created when you ask for it and saved where you choose (for example Files or iCloud). It is your file and your responsibility. We hold no copy and cannot recover your data if it is lost.'],
 ['Third-party services','When online, the app may load fonts from Google Fonts, so Google\'s server receives your device\'s IP address as any website would. Your moments are never sent to any service.'],
 ['Contacting us by email','If you write to us from "Contact & feedback", we receive only your email address and message, and use them to reply to you.'],
@@ -928,11 +923,10 @@ en:{n:'English',t:'Privacy Policy',u:'Last updated: October 3, 2026',b:'← Back
 ['Contact','Questions about privacy: lahzalaqta@gmail.com']]},
 sv:{n:'Svenska',t:'Integritetspolicy',u:'Senast uppdaterad: 3 oktober 2026',b:'← Tillbaka till appen',s:[
 ['Sammanfattning','Lahza är en privat dagboksapp. Allt du skriver, fotograferar och spelar in med din röst stannar enbart på din enhet. Vi har inga servrar som lagrar dina ögonblick, vi kräver inget konto och vi kan inte se dina data.'],
-['Vad som lagras på din enhet','Dina ögonblick (foton, videor, röstinspelningar, texter, svar, bildtexter, taggar, datum och humör) och dina inställningar (språk, utseende, textstorlek, påminnelsetid och din kod i hashad form). Det lagras i appen på din enhet och tas bort när du raderar appen eller använder "Radera alla ögonblick" i Inställningar.'],
+['Vad som lagras på din enhet','Dina ögonblick (foton, videor, röstinspelningar, texter, svar, bildtexter, taggar, datum och humör) och dina inställningar (språk, utseende, textstorlek och påminnelsetid). Det lagras i appen på din enhet och tas bort när du raderar appen eller använder "Radera alla ögonblick" i Inställningar.'],
 ['Vad vi inte gör','Vi samlar inte in personuppgifter. Vi använder inga analys- eller spårningsverktyg. Vi visar ingen reklam. Vi säljer inte dina data och delar dem inte med någon. Den enda delningen är den du själv startar (se avsnittet Delning).'],
 ['Delning','Du kan dela ett ögonblick (foto, flera foton, video, röstinspelning, text eller svar) med andra via iOS delningsmeny. Delning startar bara på ditt eget beslut, och ögonblicket går direkt från din enhet till den app eller person du väljer (som Meddelanden, WhatsApp eller Mail), utan att passera någon server hos oss och utan att vi behåller en kopia.\nNär du delar en text eller ett svar som bild skapas bilden tillfälligt på din enhet och har appens namn längst ned.\nEfter delning gäller den mottagna kopian enligt integritetspolicyn för den app du valt, inte vår, så välj noga vad du delar och med vem. Vi lägger inte till någon spårningslänk eller identifierare i det du delar.'],
-['Behörigheter','Kamera: för att ta foton och spela in video endast i appen.\nMikrofon: för att spela in röstanteckningar endast medan du trycker på inspelningsknappen. Mikrofonen körs aldrig i bakgrunden och inspelningar skickas inte någonstans; de stannar på din enhet.\nFoton och filer: för att välja foton från ditt bibliotek, en textbakgrund eller en video.\nAviseringar: för att skicka din dagliga påminnelse vid den tid du väljer.\nFace ID eller fingeravtryck: om du aktiverar låset sköter iOS verifieringen och appen får aldrig dina biometriska data.\nDu kan när som helst återkalla en behörighet i enhetens inställningar.'],
-['Kod','Din kod lagras på enheten i hashad form och lämnar den aldrig. Om du glömmer den kan du behöva installera om appen, så behåll en backup.'],
+['Behörigheter','Kamera: för att ta foton och spela in video endast i appen.\nMikrofon: för att spela in röstanteckningar endast medan du trycker på inspelningsknappen. Mikrofonen körs aldrig i bakgrunden och inspelningar skickas inte någonstans; de stannar på din enhet.\nFoton och filer: för att välja foton från ditt bibliotek, en textbakgrund eller en video.\nAviseringar: för att skicka din dagliga påminnelse vid den tid du väljer.\nDu kan när som helst återkalla en behörighet i enhetens inställningar.'],
 ['Backuper','En backup skapas när du ber om den och sparas där du väljer (till exempel Filer eller iCloud). Det är din fil och ditt ansvar. Vi har ingen kopia och kan inte återställa dina data om de går förlorade.'],
 ['Tredjepartstjänster','När du är online kan appen hämta typsnitt från Google Fonts, så Googles server får enhetens IP-adress, som vilken webbplats som helst. Dina ögonblick skickas aldrig till någon tjänst.'],
 ['Kontakt via e-post','Om du skriver till oss via "Kontakt och feedback" får vi bara din e-postadress och ditt meddelande, och använder dem för att svara dig.'],
