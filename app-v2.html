@@ -2462,7 +2462,8 @@ if(currentLang === 'ar') langStatus.textContent = 'العربية';
 else if(currentLang === 'en') langStatus.textContent = 'English';
 else if(currentLang === 'sv') langStatus.textContent = 'Svenska';
 }
-   var langTitle = document.querySelector('#languageModal .stats-title');
+// كلمة "اللغة" في نافذة تغيير اللغة
+var langTitle = document.querySelector('#languageModal .stats-title');
 if(langTitle) langTitle.textContent = t('language');
 // عناوين الإعدادات (عام، البيانات، عن التطبيق)
 var settingsTitles = document.querySelectorAll('.settings-group-title');
@@ -2493,6 +2494,7 @@ else if(currentLang === 'en') emptySub.textContent = 'Go to home and capture you
 else if(currentLang === 'sv') emptySub.textContent = 'Gå till hem och skapa ditt första ögonblick';
 }
 }
+
    function applyLanguage(){
 var dir=currentLang==='ar'?'rtl':'ltr';
 document.documentElement.dir=dir;
