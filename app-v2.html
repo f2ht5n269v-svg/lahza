@@ -9,138 +9,150 @@
 <link rel="icon" href="icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Amiri:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0F0A08;--card:#1A1410;--card-hover:#221A15;--border:rgba(255,255,255,.06);--border-strong:rgba(255,255,255,.14);--gold:#D4AF37;--gold-light:#F4D98C;--gold-soft:rgba(212,175,55,.12);--on-gold:#0F0A08;--text:#F5F5F5;--text-2:#C4C4C4;--text-3:#8A8A8A;--text-4:#6A6A6A;--nav:rgba(15,10,8,.92);--veil:rgba(0,0,0,.96);--splash:radial-gradient(ellipse at center,#1F1508 0%,#0F0A08 65%);--grad:linear-gradient(135deg,#1F1508,#0F0A08);--shadow:0 4px 20px rgba(0,0,0,.5);--r:14px;--t:.2s ease;--fd:'Reem Kufi',sans-serif;--fb:'IBM Plex Sans Arabic',sans-serif;--fq:'Amiri',serif}
-:root[data-theme=light]{--bg:#FAF6EE;--card:#FFF;--card-hover:#F5F0E4;--border:rgba(0,0,0,.08);--border-strong:rgba(0,0,0,.16);--gold:#8B7524;--gold-light:#6A5820;--gold-soft:rgba(139,117,36,.12);--on-gold:#fff;--text:#1A1410;--text-2:#4A4035;--text-3:#6A6055;--text-4:#8A8075;--nav:rgba(250,246,238,.94);--veil:rgba(250,246,238,.97);--splash:radial-gradient(ellipse at center,#FFF8E6 0%,#FAF6EE 65%);--grad:linear-gradient(135deg,#3a2a12,#1a1410);--shadow:0 4px 20px rgba(0,0,0,.15)}
+:root{--bg:#0F0A08;--card:#1A1410;--card-hover:#221A15;--border:rgba(255,255,255,.08);--border-strong:rgba(255,255,255,.18);--gold:#D4AF37;--gold-light:#F4D98C;--gold-soft:rgba(212,175,55,.12);--on-gold:#0F0A08;--text:#F5F5F5;--text-2:#D0D0D0;--text-3:#A8A8A8;--text-4:#8A8A8A;--nav:rgba(15,10,8,.94);--veil:rgba(0,0,0,.96);--splash:radial-gradient(ellipse at center,#1F1508 0%,#0F0A08 65%);--grad:linear-gradient(135deg,#1F1508,#0F0A08);--shadow:0 4px 20px rgba(0,0,0,.5);--r:14px;--fd:'Reem Kufi',sans-serif;--fb:'IBM Plex Sans Arabic',sans-serif;--fq:'Amiri',serif}
+:root[data-theme=light]{--bg:#FAF6EE;--card:#FFF;--card-hover:#F5F0E4;--border:rgba(0,0,0,.1);--border-strong:rgba(0,0,0,.2);--gold:#8B7524;--gold-light:#6A5820;--gold-soft:rgba(139,117,36,.12);--on-gold:#fff;--text:#1A1410;--text-2:#3A3025;--text-3:#5A5045;--text-4:#756B60;--nav:rgba(250,246,238,.95);--veil:rgba(250,246,238,.97);--splash:radial-gradient(ellipse at center,#FFF8E6 0%,#FAF6EE 65%);--grad:linear-gradient(135deg,#3a2a12,#1a1410);--shadow:0 4px 20px rgba(0,0,0,.15)}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;background:var(--bg)}
-body{color:var(--text);font:16px/1.6 var(--fb);display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
-button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;transition:all var(--t)}
-input,textarea,select{font-family:var(--fb);outline:none;border:none;background:none;color:inherit}
+html{font-size:18px;height:100%;-webkit-text-size-adjust:100%}
+html,body{overflow:hidden;background:var(--bg)}
+body{height:100%;color:var(--text);font:1rem/1.65 var(--fb);display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea,select{font-family:var(--fb);font-size:1rem;outline:none;border:none;background:none;color:inherit}
 textarea{resize:none}img{display:block;max-width:100%}a{text-decoration:none;color:inherit}
 .hidden{display:none!important}
-button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @keyframes fi{from{opacity:0}to{opacity:1}}
 @keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @keyframes pulse{50%{transform:scale(1.04);opacity:.92}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-.content{flex:1;overflow-y:auto;padding:24px 16px 120px;animation:fi .3s}
+.content{flex:1;overflow-y:auto;padding:calc(24px + env(safe-area-inset-top)) 16px 120px;animation:fi .3s}
 .content::-webkit-scrollbar{display:none}
-.page-title{font:600 1.75rem var(--fd);text-align:center;margin-bottom:24px;padding-bottom:8px;position:relative}
+.page-title{font:600 1.7rem var(--fd);text-align:center;margin-bottom:20px;padding-bottom:8px;position:relative}
 .page-title::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:40px;height:2px;background:var(--gold);opacity:.6}
 .tabs{position:fixed;bottom:0;left:0;right:0;background:var(--nav);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:100}
-.tab{flex:1;padding:14px 0 12px;font-size:.72rem;font-weight:500;color:var(--text-4);display:flex;flex-direction:column;align-items:center;gap:5px;position:relative}
-.tab svg{width:22px;height:22px;stroke-width:1.8}
+.tab{flex:1;padding:12px 0 10px;font-size:.8rem;font-weight:500;color:var(--text-4);display:flex;flex-direction:column;align-items:center;gap:4px;position:relative}
+.tab svg{width:24px;height:24px;stroke-width:1.8}
 .tab.active{color:var(--gold)}
 .tab::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%) scaleX(0);width:28px;height:2px;background:var(--gold);transition:transform .3s}
 .tab.active::after{transform:translateX(-50%) scaleX(1)}
 #splash{position:fixed;inset:0;background:var(--splash);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s;pointer-events:none}
 #splash.hide{opacity:0}
-.splash-logo{font:400 5.5rem/1 'Great Vibes',cursive;color:var(--gold);animation:pulse 2.4s infinite}
-.splash-sub{color:var(--gold);font:1.1rem var(--fq);margin-top:16px}
-.home-greeting{font:400 1.15rem var(--fd);color:var(--text-2)}
-.home-date{font-size:.88rem;color:var(--text-3);margin-bottom:8px}
-.home-hijri{font:.82rem var(--fd);color:var(--gold);margin-bottom:32px}
-.quote-card{display:flex;justify-content:center;padding:32px 24px;margin:32px auto;max-width:340px;background:var(--card);border:1.5px solid var(--gold);border-radius:20px;cursor:pointer;box-shadow:0 8px 32px var(--gold-soft)}
-.quote-card-title{font:600 1.4rem var(--fd);color:var(--gold)}
-.home-action{display:flex;align-items:center;gap:16px;padding:16px 8px;border-bottom:1px solid var(--border);font-size:1.02rem;width:100%;text-align:start}
+.splash-logo{font:400 5rem/1 'Great Vibes',cursive;color:var(--gold);animation:pulse 2.4s infinite}
+.splash-sub{color:var(--gold);font:1.2rem var(--fq);margin-top:16px}
+.home-greeting{font:400 1.25rem var(--fd);color:var(--text-2)}
+.home-date{font-size:.95rem;color:var(--text-3);margin-bottom:6px}
+.home-hijri{font:.95rem var(--fd);color:var(--gold);margin-bottom:28px}
+.quote-card{display:flex;justify-content:center;padding:30px 24px;margin:28px auto;max-width:360px;background:var(--card);border:1.5px solid var(--gold);border-radius:20px;cursor:pointer;box-shadow:0 8px 32px var(--gold-soft)}
+.quote-card-title{font:600 1.5rem var(--fd);color:var(--gold)}
+.home-action{display:flex;align-items:center;gap:16px;padding:16px 8px;border-bottom:1px solid var(--border);font-size:1.1rem;width:100%;text-align:start}
 .home-action:last-child{border:none}
 .home-action:active{background:var(--gold-soft)}
-.home-action svg,.settings-item .icon svg{width:22px;height:22px;stroke:var(--gold);stroke-width:1.8;fill:none}
+.home-action svg,.settings-item .icon svg{width:24px;height:24px;stroke:var(--gold);stroke-width:1.8;fill:none}
 .home-action .label{flex:1}
-.arrow{color:var(--text-4);font-family:var(--fq)}
-.on-this-day{margin:24px auto;max-width:340px;padding:16px;background:var(--card);border:1px solid var(--border-strong);border-radius:var(--r)}
-.on-this-day-title{font:.9rem var(--fd);color:var(--gold);text-align:center;margin-bottom:8px}
-.on-this-day-year{display:flex;justify-content:space-between;padding:8px 16px;margin:4px 0;border:1px solid var(--border);border-radius:10px;width:100%}
-.on-this-day-year:hover{border-color:var(--gold);color:var(--gold)}
-.on-this-day-count{font-size:.78rem;color:var(--text-3)}
-.home-stats{margin-top:32px;display:flex;gap:32px;justify-content:center;padding:16px 0;border-block:1px solid var(--border);width:100%;color:var(--text-3)}
-.home-stat{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:70px}
-.home-stat .num{color:var(--text);font:600 1.4rem/1 var(--fd)}
-.home-stat .lbl{font-size:.72rem;color:var(--text-4)}
+.arrow{color:var(--text-4);font-family:var(--fq);font-size:1.2rem}
+.on-this-day{margin:24px auto;max-width:360px;padding:16px;background:var(--card);border:1px solid var(--border-strong);border-radius:var(--r)}
+.on-this-day-title{font:1rem var(--fd);color:var(--gold);text-align:center;margin-bottom:8px}
+.on-this-day-year{display:flex;justify-content:space-between;padding:10px 16px;margin:4px 0;border:1px solid var(--border);border-radius:10px;width:100%}
+.on-this-day-count{font-size:.88rem;color:var(--text-3)}
+.home-stats{margin-top:28px;display:flex;gap:32px;justify-content:center;padding:16px 0;border-block:1px solid var(--border);width:100%;color:var(--text-3)}
+.home-stat{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:80px}
+.home-stat .num{color:var(--text);font:600 1.6rem/1 var(--fd)}
+.home-stat .lbl{font-size:.85rem;color:var(--text-3)}
 .sheet{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:400;display:flex;align-items:center;justify-content:center;padding:16px;animation:fi .3s}
 .sheet-content{width:100%;max-width:480px;background:var(--card);border-radius:28px;border:1px solid var(--border-strong);padding:24px 16px;max-height:85vh;overflow-y:auto;position:relative;box-shadow:0 12px 40px rgba(0,0,0,.6);text-align:center}
-.xbtn{width:40px;height:40px;border-radius:50%;background:var(--card);border:1px solid var(--border-strong);color:var(--text);font-size:1.1rem;display:flex;align-items:center;justify-content:center}
+.xbtn{width:44px;height:44px;border-radius:50%;background:var(--card);border:1px solid var(--border-strong);color:var(--text);font-size:1.15rem;display:flex;align-items:center;justify-content:center}
 .xbtn:active{color:var(--gold);border-color:var(--gold)}
 .sheet-close{position:absolute;top:12px;left:12px;z-index:10}
-.btn-close,.modal-close{position:fixed;top:calc(16px + env(safe-area-inset-top));left:16px;width:44px;height:44px;z-index:410}
-#sectionList{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:24px 0 8px}
-#questionList{display:flex;flex-direction:column;gap:8px;padding:16px 0 8px}
+.btn-close,.modal-close{position:fixed;top:calc(16px + env(safe-area-inset-top));left:16px;z-index:410}
+#sectionList{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:28px 0 8px}
+#questionList{display:flex;flex-direction:column;gap:10px;padding:16px 0 8px}
 .section-item,.question-item{border:1.5px solid var(--border-strong);border-radius:var(--r);background:var(--bg);color:var(--text);padding:16px 8px;min-height:60px}
-.section-item{font:500 1rem var(--fd)}
-.question-item{font:.95rem/1.7 var(--fq);text-align:start;padding:16px}
+.section-item{font:500 1.1rem var(--fd)}
+.question-item{font:1.1rem/1.7 var(--fq);text-align:start;padding:16px}
 .section-item:hover,.question-item:hover{border-color:var(--gold);color:var(--gold)}
-.btn{display:block;width:100%;max-width:340px;margin:8px auto;padding:16px;border:1px solid var(--border-strong);border-radius:999px;font-weight:500;text-align:center}
+.btn{display:block;width:100%;max-width:360px;margin:10px auto;padding:16px;border:1px solid var(--border-strong);border-radius:999px;font-weight:500;font-size:1.05rem;text-align:center}
 .btn:active{transform:scale(.97)}
 .btn.primary{background:var(--gold);color:var(--on-gold);border-color:var(--gold);font-weight:600}
-.btn.small{padding:12px;font-size:.88rem;max-width:220px}
-.screen{position:fixed;inset:0;background:var(--bg);z-index:200;overflow-y:auto;padding:80px 16px 120px;animation:fi .3s}
-.screen-title{font:500 1.5rem var(--fd);text-align:center;margin-bottom:24px}
-.screen-subtitle{text-align:center;color:var(--text-4);font-size:.85rem;margin-bottom:24px}
+.btn.small{padding:12px;font-size:.95rem;max-width:240px}
+.screen{position:fixed;inset:0;background:var(--bg);z-index:200;overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 16px 120px;animation:fi .3s}
+.screen-title{font:500 1.6rem var(--fd);text-align:center;margin-bottom:24px}
+.screen-subtitle{text-align:center;color:var(--text-3);font-size:.95rem;margin-bottom:20px}
 .camera-video{width:100%;max-width:400px;margin:0 auto 16px;border-radius:var(--r);display:block;background:#000;aspect-ratio:3/4;object-fit:cover}
 .camera-actions{display:flex;gap:16px;justify-content:center;align-items:center}
-.capture-btn{width:72px;height:72px;border-radius:50%;background:var(--gold);border:4px solid var(--border-strong);box-shadow:0 0 24px var(--gold-soft)}
+.capture-btn{width:76px;height:76px;border-radius:50%;background:var(--gold);border:4px solid var(--border-strong)}
 .capture-btn:active{transform:scale(.92)}
-.switch-cam{width:48px;height:48px;border-radius:50%;border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center}
-.text-input,.answer-input{width:100%;max-width:500px;margin:0 auto 16px;min-height:220px;background:var(--card);border:1px solid var(--border-strong);border-radius:var(--r);padding:24px;font:1.05rem/1.9 var(--fq);display:block}
-.text-input:focus,.answer-input:focus{border-color:var(--gold)}
-::placeholder{color:var(--text-4);font-family:var(--fb);font-size:.95rem}
+.switch-cam{width:52px;height:52px;border-radius:50%;border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center}
+.text-input,.answer-input,.search{width:100%;max-width:500px;margin:0 auto 16px;background:var(--card);border:1px solid var(--border-strong);border-radius:var(--r);padding:20px;font:1.15rem/1.9 var(--fq);display:block}
+.text-input,.answer-input{min-height:220px}
+.search{border-radius:999px;padding:12px 20px;font:1rem var(--fb);max-width:none;margin-bottom:14px}
+.text-input:focus,.answer-input:focus,.search:focus{border-color:var(--gold)}
+::placeholder{color:var(--text-4);font-family:var(--fb);font-size:1rem}
 .background-section{max-width:500px;margin:0 auto 16px}
-.background-title{font:.8rem var(--fd);color:var(--text-3);display:block;margin-bottom:8px}
+.background-title{font:.95rem var(--fd);color:var(--text-3);display:block;margin-bottom:8px}
 .background-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
 .bg-option{aspect-ratio:1;border-radius:50%;border:2px solid var(--border-strong);display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--card);color:var(--text-3);cursor:pointer}
 .bg-option img{width:100%;height:100%;object-fit:cover}
-.bg-option.active{border-color:var(--gold);box-shadow:0 0 16px var(--gold-soft)}
-.bg-option.upload{border-style:dashed;color:var(--gold);font-size:1.5rem}
-.preview{width:100%;max-width:500px;margin:0 auto;padding:48px 24px;border-radius:var(--r);font:1.2rem/1.9 var(--fq);text-align:center;color:#fff;min-height:200px;display:flex;align-items:center;justify-content:center;word-break:break-word;background:var(--grad) center/cover}
-.answer-question{max-width:500px;margin:0 auto 24px;padding:24px;background:var(--card);border:1px solid var(--border-strong);border-radius:var(--r);font:1.1rem/1.8 var(--fq);text-align:center;color:var(--gold-light)}
-.modal{position:fixed;inset:0;background:var(--veil);backdrop-filter:blur(20px);z-index:300;overflow-y:auto;padding:80px 8px 120px;animation:fi .3s}
+.bg-option.active{border-color:var(--gold)}
+.bg-option.upload{border-style:dashed;color:var(--gold);font-size:1.6rem}
+.moods{display:flex;justify-content:center;gap:10px;margin:8px 0 4px}
+.moods button{font-size:1.9rem;width:52px;height:52px;border-radius:50%;border:2px solid transparent;opacity:.65}
+.moods button.on{border-color:var(--gold);opacity:1}
+.preview{width:100%;max-width:500px;margin:0 auto;padding:48px 24px;border-radius:var(--r);font:1.3rem/1.9 var(--fq);text-align:center;color:#fff;min-height:200px;display:flex;align-items:center;justify-content:center;word-break:break-word;background:var(--grad) center/cover}
+.answer-question{max-width:500px;margin:0 auto 24px;padding:24px;background:var(--card);border:1px solid var(--border-strong);border-radius:var(--r);font:1.2rem/1.8 var(--fq);text-align:center;color:var(--gold-light)}
+.modal{position:fixed;inset:0;background:var(--veil);backdrop-filter:blur(20px);z-index:300;overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 8px 130px;animation:fi .3s}
 .modal-content img,.modal-content video{width:100%;border-radius:var(--r);margin-bottom:16px;background:#000}
-.modal-text{padding:32px 24px;border-radius:var(--r);font:1.25rem/1.9 var(--fq);text-align:center;margin-bottom:16px;color:#fff;word-break:break-word;background:var(--grad) center/cover}
-.modal-date{text-align:center;color:var(--gold);font:.82rem var(--fd);margin-bottom:24px;padding:8px 16px;border-radius:999px;background:var(--gold-soft)}
-.modal-actions{position:fixed;bottom:calc(32px + env(safe-area-inset-bottom));left:0;right:0;display:flex;justify-content:space-between;padding:0 48px;z-index:320;max-width:560px;margin:0 auto;pointer-events:none}
-.modal-actions button{pointer-events:auto;width:60px;height:60px;border-radius:50%;background:var(--card);border:1px solid var(--border-strong);font-size:1.4rem;box-shadow:var(--shadow)}
+.modal-text{padding:32px 24px;border-radius:var(--r);font:1.3rem/1.9 var(--fq);text-align:center;margin-bottom:16px;color:#fff;word-break:break-word;background:var(--grad) center/cover}
+.modal-date{text-align:center;color:var(--gold);font:.95rem var(--fd);margin-bottom:24px;padding:8px 16px;border-radius:999px;background:var(--gold-soft)}
+.modal-cap{text-align:center;color:var(--text-2);margin-bottom:16px}
+.modal-actions{position:fixed;bottom:calc(28px + env(safe-area-inset-bottom));left:0;right:0;display:flex;justify-content:space-between;padding:0 40px;z-index:320;max-width:560px;margin:0 auto;pointer-events:none}
+.modal-actions button{pointer-events:auto;width:62px;height:62px;border-radius:50%;background:var(--card);border:1px solid var(--border-strong);font-size:1.5rem;box-shadow:var(--shadow)}
 #modalHeart.active{background:#EF4444;border-color:#EF4444;color:#fff}
 #modalDelete{color:#EF4444;border-color:rgba(239,68,68,.5)}
 .moments-grid{display:flex;flex-direction:column;gap:24px}
 .moment-card{border-radius:var(--r);overflow:hidden;background:var(--card);cursor:pointer;border:1px solid var(--border);animation:fu .4s both}
 .moment-card img,.moment-card video{width:100%;max-height:70vh;object-fit:contain;background:#000}
-.text-content{padding:32px 24px;text-align:center;font:1.15rem/1.9 var(--fq);color:#fff;min-height:160px;display:flex;align-items:center;justify-content:center;word-break:break-word;background:var(--grad) center/cover}
-.moment-caption{font-size:.85rem;color:var(--text-2);padding:8px 16px 0}
-.moment-meta{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;border-top:1px solid var(--border);min-height:36px}
-.moment-time{font:.75rem var(--fd);color:var(--text-3)}
-.moment-fav{color:var(--gold);font-size:1.1rem}
+.text-content{padding:32px 24px;text-align:center;font:1.2rem/1.9 var(--fq);color:#fff;min-height:160px;display:flex;align-items:center;justify-content:center;word-break:break-word;background:var(--grad) center/cover}
+.moment-caption{font-size:1rem;color:var(--text-2);padding:10px 16px 0}
+.moment-meta{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-top:1px solid var(--border);min-height:40px}
+.moment-time{font:.9rem var(--fd);color:var(--text-3)}
+.moment-fav{color:var(--gold);font-size:1.15rem}
 .filters{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
 .filters::-webkit-scrollbar{display:none}
-.filter-chip{padding:8px 18px;border-radius:999px;border:1px solid var(--border-strong);color:var(--text-3);font-size:.82rem;white-space:nowrap;flex-shrink:0;font-weight:500}
+.filter-chip{padding:9px 18px;border-radius:999px;border:1px solid var(--border-strong);color:var(--text-3);font-size:.92rem;white-space:nowrap;flex-shrink:0;font-weight:500}
 .filter-chip.active{background:var(--gold);border-color:var(--gold);color:var(--on-gold);font-weight:600}
-.stats-title{font:500 1.5rem var(--fd);text-align:center;margin-bottom:32px;color:var(--gold)}
+.stats-title{font:500 1.6rem var(--fd);text-align:center;margin-bottom:28px;color:var(--gold)}
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:560px;margin:0 auto}
 .stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px 16px;text-align:center}
-.stat-num{font:600 2rem/1 var(--fd);color:var(--gold);display:block;margin-bottom:4px}
-.stat-label{color:var(--text-3);font-size:.75rem}
-.empty-state{text-align:center;color:var(--text-3);margin-top:80px;line-height:2;padding:24px}
+.stat-num{font:600 2.1rem/1 var(--fd);color:var(--gold);display:block;margin-bottom:6px}
+.stat-label{color:var(--text-3);font-size:.9rem}
+.empty-state{text-align:center;color:var(--text-3);margin-top:70px;line-height:2;padding:24px}
 .empty-icon{font-size:3rem;display:block;opacity:.4;color:var(--gold)}
-.empty-title{font:500 1.1rem var(--fd);color:var(--text-2)}
-.hint{text-align:center;color:var(--text-4);font:.9rem/2 var(--fd);margin-top:100px}
+.empty-title{font:500 1.2rem var(--fd);color:var(--text-2)}
 .settings-group{margin-bottom:24px}
-.settings-group-title{font:500 .72rem var(--fd);letter-spacing:.1em;color:var(--gold);padding:0 8px;margin-bottom:8px}
+.settings-group-title{font:500 .85rem var(--fd);letter-spacing:.08em;color:var(--gold);padding:0 8px;margin-bottom:8px}
 .settings-list{background:var(--card);border-radius:var(--r);border:1px solid var(--border);overflow:hidden}
-.settings-item{display:flex;align-items:center;gap:16px;padding:16px;border-bottom:1px solid var(--border);width:100%;text-align:start}
+.settings-item{display:flex;align-items:center;gap:16px;padding:16px;border-bottom:1px solid var(--border);width:100%;text-align:start;min-height:60px}
 .settings-item:last-child{border:none}
 .settings-item:active{background:var(--card-hover)}
-.settings-item .icon{width:24px;display:flex;justify-content:center}
-.settings-item .icon svg{width:20px;height:20px}
+.settings-item .icon{width:26px;display:flex;justify-content:center}
 .settings-item .info{flex:1;display:flex;flex-direction:column}
-.settings-item .value{font-size:.78rem;color:var(--text-4)}
+.settings-item .value{font-size:.88rem;color:var(--text-3)}
 .settings-item.danger .label{color:#EF4444}.settings-item.danger svg{stroke:#EF4444}
-#toast{position:fixed;top:calc(12px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);max-width:90%;padding:12px 20px;border-radius:999px;background:var(--card);border:1px solid var(--gold);color:var(--gold);font-weight:500;font-size:.9rem;z-index:10000;box-shadow:var(--shadow);pointer-events:none;text-align:center}
+#toast{position:fixed;top:calc(12px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);max-width:90%;padding:12px 22px;border-radius:999px;background:var(--card);border:1px solid var(--gold);color:var(--gold);font-weight:500;font-size:.95rem;z-index:30000;box-shadow:var(--shadow);pointer-events:none;text-align:center}
 #toast.err{border-color:#EF4444;color:#EF4444}
 #remBanner{position:fixed;top:0;left:0;right:0;background:var(--card);border-bottom:2px solid var(--gold);padding:calc(14px + env(safe-area-inset-top)) 16px 14px;z-index:9998;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow)}
+#lock{position:fixed;inset:0;background:var(--bg);z-index:20000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px}
+.lock-t{font:600 1.5rem var(--fd);color:var(--gold)}
+.dots{display:flex;gap:18px}.dots i{width:16px;height:16px;border-radius:50%;border:2px solid var(--gold)}.dots i.on{background:var(--gold)}
+.lock-m{min-height:1.6em;color:#EF4444;font-size:.95rem}
+.pad{display:grid;grid-template-columns:repeat(3,78px);gap:14px}
+.pad button{height:78px;border-radius:50%;border:1px solid var(--border-strong);font:600 1.6rem var(--fd)}
+.pad button:active{background:var(--gold-soft)}
 </style>
 </head>
 <body>
 <div id="toast" class="hidden" role="status" aria-live="polite"></div>
 <div id="splash"><div class="splash-logo">Lahza</div><div class="splash-sub" data-i18n="app">لحظة</div></div>
+<div id="lock" class="hidden"><button class="xbtn" id="lockX" style="position:absolute;top:calc(16px + env(safe-area-inset-top));left:16px">✕</button><div class="lock-t" id="lockT"></div><div class="dots" id="dots"></div><div class="lock-m" id="lockM"></div><div class="pad" id="pad"></div></div>
 
 <div class="content" id="tabHome">
   <div class="home-greeting" id="greeting"></div>
@@ -162,6 +174,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
 
 <div class="content hidden" id="tabMoments">
   <h1 class="page-title" data-i18n="mine"></h1>
+  <input class="search" id="searchInput" type="search" data-ph="search">
   <div class="filters" id="filterRow">
     <button class="filter-chip active" data-filter="all" data-i18n="all"></button>
     <button class="filter-chip" data-filter="photo" data-i18n="photos"></button>
@@ -170,16 +183,17 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
     <button class="filter-chip" data-filter="answer" data-i18n="answers"></button>
     <button class="filter-chip" data-filter="favorite" data-i18n="favs"></button>
   </div>
+  <div id="searchResults" class="moments-grid hidden"></div>
   <div id="treeView">
     <div id="yearsRow" class="filters"></div>
-    <div class="hidden" id="monthsSection"><div id="monthsGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0 16px"></div></div>
+    <div class="hidden" id="monthsSection"><div id="monthsGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 16px"></div></div>
     <div class="hidden" id="calendarSection">
       <div style="display:flex;justify-content:space-between;align-items:center;margin:12px 0">
-        <button class="btn small" id="calPrev" aria-label="prev" style="width:44px;height:44px;padding:0;margin:0">›</button>
-        <div id="calTitle" style="font:1.05rem var(--fd)"></div>
-        <button class="btn small" id="calNext" aria-label="next" style="width:44px;height:44px;padding:0;margin:0">‹</button>
+        <button class="btn small" id="calPrev" aria-label="prev" style="width:48px;height:48px;padding:0;margin:0;font-size:1.3rem">›</button>
+        <div id="calTitle" style="font:1.15rem var(--fd)"></div>
+        <button class="btn small" id="calNext" aria-label="next" style="width:48px;height:48px;padding:0;margin:0;font-size:1.3rem">‹</button>
       </div>
-      <div id="calHead" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px;text-align:center;color:var(--text-4);font-size:.65rem"></div>
+      <div id="calHead" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px;text-align:center;color:var(--text-3);font-size:.8rem"></div>
       <div id="calendarGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px"></div>
     </div>
   </div>
@@ -189,8 +203,10 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
 <div class="content hidden" id="tabSettings">
   <h1 class="page-title" data-i18n="settings"></h1>
   <div class="settings-group"><div class="settings-group-title" data-i18n="general"></div><div class="settings-list">
+    <button class="settings-item" id="btnLock"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><div class="info"><span class="label" data-i18n="lock"></span><span class="value" id="lockStatus"></span></div><span class="arrow">›</span></button>
     <button class="settings-item" id="btnReminder"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span><div class="info"><span class="label" data-i18n="reminder"></span><span class="value" id="reminderStatus"></span></div><span class="arrow">›</span></button>
     <button class="settings-item" id="btnTheme"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg></span><div class="info"><span class="label" data-i18n="theme"></span><span class="value" id="themeStatus"></span></div><span class="arrow">›</span></button>
+    <button class="settings-item" id="btnFont"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg></span><div class="info"><span class="label" data-i18n="fontsize"></span><span class="value" id="fontStatus"></span></div><span class="arrow">›</span></button>
     <button class="settings-item" id="btnLanguage"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span><div class="info"><span class="label" data-i18n="lang"></span><span class="value" id="languageStatus"></span></div><span class="arrow">›</span></button>
   </div></div>
   <div class="settings-group"><div class="settings-group-title" data-i18n="data"></div><div class="settings-list">
@@ -203,7 +219,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
     <a href="privacy.html" class="settings-item"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><div class="info"><span class="label" data-i18n="privacy"></span></div><span class="arrow">›</span></a>
     <button class="settings-item" id="btnRate"><span class="icon"><svg viewBox="0 0 24 24" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><div class="info"><span class="label" data-i18n="rate"></span></div><span class="arrow">›</span></button>
     <button class="settings-item" id="btnContact"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span><div class="info"><span class="label" data-i18n="contact"></span></div><span class="arrow">›</span></button>
-    <div class="settings-item"><div class="info"><span class="label" data-i18n="ver"></span><span class="value">3.1</span></div></div>
+    <div class="settings-item"><div class="info"><span class="label" data-i18n="ver"></span><span class="value">4.0</span></div></div>
   </div></div>
 </div>
 
@@ -214,11 +230,11 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
 </div>
 
 <div class="sheet hidden" id="questionSheet"><div class="sheet-content"><button class="xbtn sheet-close" id="sheetClose">✕</button><div id="sectionList"></div></div></div>
-<div class="sheet hidden" id="questionListSheet"><div class="sheet-content"><button class="xbtn sheet-close" id="questionListClose">✕</button><div id="questionListTitle" style="color:var(--gold);font:1rem var(--fd);padding-top:4px"></div><div id="questionList"></div></div></div>
+<div class="sheet hidden" id="questionListSheet"><div class="sheet-content"><button class="xbtn sheet-close" id="questionListClose">✕</button><div id="questionListTitle" style="color:var(--gold);font:1.15rem var(--fd);padding-top:8px"></div><div id="questionList"></div></div></div>
 
 <div class="screen hidden" id="photoScreen"><button class="xbtn btn-close" id="photoClose">✕</button><h2 class="screen-title" data-i18n="photo"></h2>
   <video id="photoVideo" class="camera-video" autoplay playsinline muted></video>
-  <div class="camera-actions"><button class="switch-cam" id="switchPhotoCam" aria-label="switch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:22px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button><button class="capture-btn" id="snapBtn" aria-label="capture"></button><span style="width:48px"></span></div>
+  <div class="camera-actions"><button class="switch-cam" id="switchPhotoCam" aria-label="switch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:24px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button><button class="capture-btn" id="snapBtn" aria-label="capture"></button><span style="width:52px"></span></div>
 </div>
 <div class="screen hidden" id="videoScreen"><button class="xbtn btn-close" id="videoClose">✕</button><h2 class="screen-title" data-i18n="video"></h2><p class="screen-subtitle" data-i18n="rec_hint"></p>
   <button class="btn primary" id="startVideoRec" data-i18n="start_rec"></button><button class="btn small" id="switchVideoCam" data-i18n="switch_cam"></button></div>
@@ -226,18 +242,20 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
   <textarea class="text-input" id="textInput" data-ph="ph_text"></textarea>
   <div class="background-section"><span class="background-title" data-i18n="bg"></span>
     <div class="background-grid" id="bgGrid">
-      <button class="bg-option active" data-bg="none" id="bgNone" aria-label="none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:20px"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></button>
+      <button class="bg-option active" id="bgNone" aria-label="none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:22px"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></button>
       <label class="bg-option upload" for="bgInput" id="uploadBg">+</label>
     </div><input type="file" id="bgInput" accept="image/*" style="position:absolute;left:-9999px;opacity:0"></div>
   <button class="btn primary" id="saveTextBtn" data-i18n="next"></button></div>
 <div class="screen hidden" id="saveScreen"><button class="xbtn btn-close" id="saveClose">✕</button><h2 class="screen-title" data-i18n="save_moment"></h2>
-  <div id="previewWrap"></div><textarea class="text-input" id="captionInput" data-ph="ph_cap" style="min-height:80px;margin-top:16px"></textarea><button class="btn primary" id="saveBtn" data-i18n="save"></button></div>
+  <div id="previewWrap"></div>
+  <div class="screen-subtitle" style="margin-top:20px;margin-bottom:6px" data-i18n="mood"></div><div class="moods" id="moodRow"></div>
+  <textarea class="text-input" id="captionInput" data-ph="ph_cap" style="min-height:90px;margin-top:16px"></textarea><button class="btn primary" id="saveBtn" data-i18n="save"></button></div>
 <div class="screen hidden" id="answerScreen"><button class="xbtn btn-close" id="answerClose">✕</button><h2 class="screen-title" data-i18n="your_ans"></h2>
   <div class="answer-question" id="answerQuestion"></div><textarea class="answer-input" id="answerInput" data-ph="ph_ans"></textarea><button class="btn primary" id="answerSaveBtn" data-i18n="save_ans"></button></div>
 <div class="screen hidden" id="dayMomentsScreen"><button class="xbtn btn-close" id="dayMomentsClose">✕</button><h2 class="screen-title" id="dayMomentsTitle"></h2><div id="dayMomentsGrid" class="moments-grid"></div></div>
 
 <div class="modal hidden" id="momentModal"><button class="xbtn modal-close" id="modalClose">✕</button><div class="modal-content" id="modalContent"></div>
-  <div class="modal-actions"><button id="modalDelete" aria-label="delete">🗑</button><button id="modalHeart" aria-label="favorite">♡</button></div></div>
+  <div class="modal-actions"><button id="modalDelete" aria-label="delete">🗑</button><button id="modalEdit" aria-label="edit">✎</button><button id="modalHeart" aria-label="favorite">♡</button></div></div>
 <div class="modal hidden" id="statsModal"><button class="xbtn modal-close" id="statsClose">✕</button><div class="modal-content"><h2 class="stats-title" data-i18n="stats"></h2>
   <div class="stats-grid">
     <div class="stat-card"><span class="stat-num" id="statTotal">0</span><span class="stat-label" data-i18n="moments"></span></div>
@@ -247,26 +265,30 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
   </div></div></div>
 <div class="modal hidden" id="themeModal"><button class="xbtn modal-close" id="themeClose">✕</button><div class="modal-content"><h2 class="stats-title" data-i18n="theme"></h2>
   <button class="btn" data-mode="dark" data-i18n="dark"></button><button class="btn" data-mode="light" data-i18n="light"></button><button class="btn" data-mode="auto" data-i18n="auto"></button></div></div>
+<div class="modal hidden" id="fontModal"><button class="xbtn modal-close" id="fontClose">✕</button><div class="modal-content"><h2 class="stats-title" data-i18n="fontsize"></h2>
+  <button class="btn" data-fs="s" data-i18n="small"></button><button class="btn" data-fs="m" data-i18n="medium"></button><button class="btn" data-fs="l" data-i18n="large"></button></div></div>
 <div class="modal hidden" id="reminderModal"><button class="xbtn modal-close" id="reminderClose2">✕</button><div class="modal-content"><h2 class="stats-title" data-i18n="reminder"></h2>
   <button class="btn primary" id="reminderToggleBtn"></button>
-  <div style="margin-top:24px;text-align:center"><span style="color:var(--text-3);font:.85rem var(--fd)" data-i18n="rem_time"></span>
-  <input type="time" id="reminderTime" value="20:00" style="display:block;margin:12px auto;padding:14px;background:var(--card);border:1px solid var(--border-strong);border-radius:14px;font-size:1rem;text-align:center"></div></div></div>
+  <div style="margin-top:24px;text-align:center"><span style="color:var(--text-3);font:1rem var(--fd)" data-i18n="rem_time"></span>
+  <input type="time" id="reminderTime" value="20:00" style="display:block;margin:12px auto;padding:14px;background:var(--card);border:1px solid var(--border-strong);border-radius:14px;font-size:1.1rem;text-align:center"></div></div></div>
 <div class="modal hidden" id="languageModal"><button class="xbtn modal-close" id="languageClose">✕</button><div class="modal-content"><h2 class="stats-title" data-i18n="lang"></h2>
   <div class="settings-list"><button class="settings-item" data-lang="ar"><div class="info"><span class="label">العربية</span></div></button><button class="settings-item" data-lang="en"><div class="info"><span class="label">English</span></div></button><button class="settings-item" data-lang="sv"><div class="info"><span class="label">Svenska</span></div></button></div></div></div>
-<div class="modal hidden" id="rateModal"><button class="xbtn modal-close" id="rateClose">✕</button><div class="modal-content"><h2 class="stats-title" data-i18n="rate"></h2><p class="screen-subtitle" data-i18n="rate_q"></p>
-  <div id="rateStars" style="display:flex;justify-content:center;gap:8px;font-size:2.8rem;margin:32px 0;user-select:none"></div>
-  <textarea class="text-input" id="rateFeedback" data-ph="ph_fb" style="min-height:80px"></textarea><button class="btn primary" id="rateSubmit" data-i18n="send"></button></div></div>
 
 <div class="sheet hidden" id="datePickerSheet"><div class="sheet-content"><button class="xbtn sheet-close" id="datePickerClose">✕</button>
-  <div style="color:var(--gold);font:1.1rem var(--fd);margin:8px 0 20px" data-i18n="pick_date"></div>
+  <div style="color:var(--gold);font:1.2rem var(--fd);margin:8px 0 20px" data-i18n="pick_date"></div>
   <div style="display:flex;gap:8px"><select id="pickYear" aria-label="year"></select><select id="pickMonth" aria-label="month"></select><select id="pickDay" aria-label="day"></select></div>
   <button class="btn primary" id="datePickerConfirm" style="margin-top:20px" data-i18n="confirm"></button></div></div>
 <div class="sheet hidden" id="typePickerSheet"><div class="sheet-content"><button class="xbtn sheet-close" id="typePickerClose">✕</button>
-  <div style="color:var(--gold);font:1.2rem var(--fd);margin:8px 0 24px" data-i18n="choose_type"></div>
+  <div style="color:var(--gold);font:1.3rem var(--fd);margin:8px 0 24px" data-i18n="choose_type"></div>
   <button class="btn primary" id="pickTypePhoto">📷 <span data-i18n="photo"></span></button><button class="btn primary" id="pickTypeVideo">🎥 <span data-i18n="video"></span></button><button class="btn primary" id="pickTypeText">📝 <span data-i18n="text"></span></button>
   <button class="btn" id="pickTypeCancel" data-i18n="cancel"></button></div></div>
+<div class="sheet hidden" id="eSheet"><div class="sheet-content">
+  <div style="font:1.3rem var(--fd);color:var(--gold);margin-bottom:16px" data-i18n="edit"></div>
+  <div id="eBodyWrap"><textarea class="text-input" id="eBody" style="min-height:160px"></textarea></div>
+  <div id="eCapWrap"><textarea class="text-input" id="eCap" data-ph="ph_cap" style="min-height:80px"></textarea></div>
+  <div style="display:flex;gap:12px;justify-content:center"><button class="btn" id="eNo" data-i18n="cancel" style="flex:1;max-width:150px"></button><button class="btn primary" id="eOk" data-i18n="save" style="flex:1;max-width:150px"></button></div></div></div>
 <div class="sheet hidden" id="cSheet" style="z-index:500"><div class="sheet-content">
-  <div style="font:1.3rem var(--fd);color:var(--gold);margin-bottom:16px" id="cTitle"></div>
+  <div style="font:1.35rem var(--fd);color:var(--gold);margin-bottom:16px" id="cTitle"></div>
   <div style="margin-bottom:24px;line-height:1.7" id="cMsg"></div>
   <div id="cInWrap" class="hidden" style="margin-bottom:16px"><input type="text" id="cIn" style="width:100%;padding:12px;text-align:center;border-radius:10px;border:1px solid var(--border-strong);background:var(--bg)"></div>
   <div style="display:flex;gap:12px;justify-content:center"><button class="btn" id="cNo" style="flex:1;max-width:150px"></button><button class="btn primary" id="cOk" style="flex:1;max-width:150px"></button></div></div></div>
@@ -274,37 +296,75 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
-/* ===== بنك الأسئلة: استبدل هذا المتغير بالكامل بـ QUESTIONS_BANK الأصلي من نسختك ===== */
-var QUESTIONS_BANK={ar:{'لحظة':['صف يومك بثلاث كلمات.']},en:{'Moment':['Describe your day in three words.']},sv:{'Ögonblick':['Beskriv din dag med tre ord.']}};
-/* ======================================================================================= */
+/* ============ بنك الأسئلة ============ */
+var QUESTIONS_BANK = {
+'ar': {
+'تأمل':['ما أكثر لحظة شعرت فيها بالراحة اليوم؟','ما الشيء الذي فاجأك اليوم؟','ما اللحظة التي تمنيت لو تدوم أطول؟','ما الذي أخذ من طاقتك اليوم؟','ما الذي جدّد طاقتك اليوم؟','ما اللحظة التي شعرت فيها بالامتنان؟','ما الذي كنت تتطلع إليه اليوم؟','ما الذي كان أصعب مما توقعت؟','ما الذي كان أسهل مما توقعت؟','ما اللحظة التي ابتسمت فيها من قلبك؟','ما الذي جعلك تتوقف وتفكر اليوم؟','ما الشيء الذي تعلمته عن نفسك اليوم؟','ما اللحظة التي شعرت فيها بالسلام؟','ما الذي غيّر مزاجك اليوم؟','لو تعيد اليوم، ما الذي ستغيّره؟','ما الذي احتاج منك صبراً اليوم؟','ما الشيء الذي تجاهلته اليوم ولماذا؟','ما القرار الصغير الذي اتخذته اليوم؟','ما الذي جعل يومك مختلفاً عن الأمس؟','ما الشيء الذي كنت تحتاج سماعه اليوم؟'],
+'مشاعر':['ما الشعور الذي سيطر عليك اليوم؟','ما الذي أضحكك اليوم؟','ما الذي أزعجك اليوم؟','متى شعرت بالفخر اليوم؟','ما الذي ذكّرك بالماضي اليوم؟','كيف كان مزاجك من 1 إلى 10؟','ما الذي أشعرك بالأمان؟','متى شعرت بالحب اليوم؟','ما الذي أشعرك بالرضا؟','ما الذي احتاج منك قوة اليوم؟','متى شعرت بالقوة اليوم؟','ما الموقف الذي أضعفك اليوم؟','ما الذي أدهشك اليوم؟','متى شعرت بالإلهام اليوم؟','ما الشعور الذي تريد أن تشعر به غداً؟'],
+'إنجاز':['ما الشيء الذي فعلته اليوم ولو كان صغيراً؟','ما الخطوة التي قرّبتك من هدفك؟','ما الشيء الذي كنت متردداً في فعله وفعلته؟','ما الذي تغلّبت عليه اليوم؟','ما الشيء الذي فعلته أفضل من الأمس؟','ما القرار الذي اتخذته اليوم؟','ما الشيء الذي ساعدت به أحداً اليوم؟','ما الشيء الذي فعلته وأفتخر فيه؟','ما الشيء الذي أنهيته اليوم؟','ما الذي جعلك تشعر أنك تقدّمت خطوة؟'],
+'أفكار':['ما الفكرة التي راودتك اليوم؟','ما الشيء الذي شغل تفكيرك؟','ما السؤال الذي حيّرك اليوم؟','ما الذي فتح عقلك على شيء جديد؟','ما الفكرة التي تريد تطويرها؟','ما الذي غيّر نظرتك؟','ما الذي جعلك تعيد التفكير في شيء؟','ما الفكرة التي تريد تنفيذها؟','ما الذي أثار فضولك اليوم؟','ما الشيء الذي فهمته أخيراً؟'],
+'علاقات':['من الشخص الذي أسعدك حضوره اليوم؟','من الشخص الذي فكرت فيه اليوم؟','ما الكلمة الجميلة التي سمعتها؟','من الشخص الذي تريد أن تشكره؟','ما اللحظة التي جمعتك بأحبابك؟','من الشخص الذي ساعدته اليوم؟','من الشخص الذي ساعدك اليوم؟','ما الشيء الذي فعلته لأجل شخص تحبه؟','من الشخص الذي تشتاق إليه؟','ما الكلمة التي قلتها وأثّرت في أحد؟'],
+'نمو':['ما الشيء الذي تعلمته اليوم؟','ما العادة التي بدأت تبنيها؟','ما الشيء الذي تحسّنت فيه؟','ما الخطأ الذي استفدت منه؟','ما الذي جعلك أقوى اليوم؟','ما الشيء الذي تريد تطويره في نفسك؟','ما الذي بدأت تلاحظه في نفسك؟','ما التغيير الذي تريد إحداثه؟','ما الشيء الذي أصبح أسهل عليك؟','ما الخطوة الصغيرة التي قمت بها لنفسك؟'],
+'امتنان':['ما ثلاثة أشياء أنت ممتن لها اليوم؟','ما النعمة التي أحياناً تنساها؟','من الشخص الذي أنت ممتن لوجوده؟','ما التفصيل الصغير الذي أسعدك؟','ما الشيء الذي أنت ممتن له في نفسك؟','ما الشيء الذي أنت ممتن له في يومك؟','ما النعمة التي لاحظتها اليوم؟','على ما أنت ممتن في صحتك؟','ما الشيء الذي أنت ممتن له في حياتك؟','ما الذي يجعلك تشعر بالامتنان كل يوم؟'],
+'لحظة':['صف يومك بثلاث كلمات.','لو كان يومك لوناً، ما هو؟','لو كان يومك أغنية، ما اسمها؟','ما اللحظة التي تريد تذكرها بعد سنة؟','لو صوّرت يومك بصورة واحدة، ما هي؟','اختصر يومك بجملة واحدة.','ما الذي كنت تريد قوله ولم تقله؟','لو أرسلت رسالة لنفسك في المستقبل، ما تقول؟','ما الشيء الذي كنت تحتاج قوله اليوم؟','لو كان يومك طعاماً، ما هو؟','ما اللحظة التي تريد الاحتفاظ بها؟','لو كتبت عنواناً ليومك، ما هو؟','ما الشيء الذي تريد نسيانه من اليوم؟','لو كان يومك فصلاً، ما هو؟','ما اللحظة التي تستحق أن تُروى؟']
+},
+'en': {
+'Reflection':['What moment made you feel most at ease today?','What surprised you today?','What moment did you wish would last longer?','What took your energy today?','What renewed your energy today?','What moment did you feel gratitude?','What were you looking forward to today?','What was harder than you expected?','What was easier than you expected?','What moment made you smile from the heart?','What made you stop and think today?','What did you learn about yourself today?','What moment did you feel peace?','What changed your mood today?','If you could redo today, what would you change?','What required patience from you today?','What did you ignore today and why?','What small decision did you make today?','What made your day different from yesterday?','What did you need to hear today?'],
+'Emotions':['What emotion dominated your day?','What made you laugh today?','What annoyed you today?','When did you feel proud today?','What reminded you of the past today?','How was your mood from 1 to 10?','What made you feel safe?','When did you feel loved today?','What made you feel satisfied?','What required strength from you today?','When did you feel strong today?','What situation weakened you today?','What amazed you today?','When did you feel inspired today?','What emotion do you want to feel tomorrow?'],
+'Achievement':['What did you do today, even if it was small?','What step brought you closer to your goal?','What did you hesitate to do but did anyway?','What did you overcome today?','What did you do better than yesterday?','What decision did you make today?','What did you do to help someone today?','What did you do that you are proud of?','What did you finish today?','What made you feel you moved a step forward?'],
+'Thoughts':['What thought crossed your mind today?','What occupied your thinking?','What question puzzled you today?','What opened your mind to something new?','What idea do you want to develop?','What changed your perspective?','What made you rethink something?','What idea do you want to implement?','What sparked your curiosity today?','What did you finally understand?'],
+'Relationships':['Who made you happy by their presence today?','Who did you think about today?','What beautiful word did you hear?','Who do you want to thank?','What moment brought you together with loved ones?','Who did you help today?','Who helped you today?','What did you do for someone you love?','Who do you miss?','What word did you say that affected someone?'],
+'Growth':['What did you learn today?','What habit are you starting to build?','What did you improve in?','What mistake did you benefit from?','What made you stronger today?','What do you want to develop in yourself?','What are you starting to notice in yourself?','What change do you want to make?','What has become easier for you?','What small step did you take for yourself?'],
+'Gratitude':['What three things are you grateful for today?','What blessing do you sometimes forget?','Who are you grateful for their existence?','What small detail made you happy?','What are you grateful for in yourself?','What are you grateful for in your day?','What blessing did you notice today?','What are you grateful for in your health?','What are you grateful for in your life?','What makes you feel grateful every day?'],
+'Moment':['Describe your day in three words.','If your day was a color, what would it be?','If your day was a song, what is its name?','What moment do you want to remember a year from now?','If you pictured your day in one image, what would it be?','Summarize your day in one sentence.','What did you want to say but didn\'t?','If you sent a message to your future self, what would it say?','What did you need to say today?','If your day was a food, what would it be?','What moment do you want to keep?','If you wrote a title for your day, what would it be?','What do you want to forget from today?','If your day was a season, what would it be?','What moment deserves to be told?']
+},
+'sv': {
+'Reflektion':['Vilket ögonblick kände du dig mest avslappnad idag?','Vad överraskade dig idag?','Vilket ögonblick önskade du skulle vara längre?','Vad tog din energi idag?','Vad förnyade din energi idag?','Vilket ögonblick kände du tacksamhet?','Vad såg du fram emot idag?','Vad var svårare än du förväntade dig?','Vad var lättare än du förväntade dig?','Vilket ögonblick fick dig att le från hjärtat?','Vad fick dig att stanna upp och tänka idag?','Vad lärde du dig om dig själv idag?','Vilket ögonblick kände du frid?','Vad förändrade ditt humör idag?','Om du fick göra om dagen, vad skulle du ändra?','Vad krävde tålamod av dig idag?','Vad ignorerade du idag och varför?','Vilket litet beslut tog du idag?','Vad gjorde din dag annorlunda än igår?','Vad behövde du höra idag?'],
+'Känslor':['Vilken känsla dominerade din dag?','Vad fick dig att skratta idag?','Vad irriterade dig idag?','När kände du dig stolt idag?','Vad påminde dig om det förflutna idag?','Hur var ditt humör från 1 till 10?','Vad fick dig att känna dig trygg?','När kände du dig älskad idag?','Vad fick dig att känna dig nöjd?','Vad krävde styrka av dig idag?','När kände du dig stark idag?','Vilken situation försvagade dig idag?','Vad förvånade dig idag?','När kände du dig inspirerad idag?','Vilken känsla vill du känna imorgon?'],
+'Prestation':['Vad gjorde du idag, även om det var litet?','Vilket steg tog dig närmare ditt mål?','Vad tvekade du att göra men gjorde ändå?','Vad övervann du idag?','Vad gjorde du bättre än igår?','Vilket beslut tog du idag?','Vad gjorde du för att hjälpa någon idag?','Vad gjorde du som du är stolt över?','Vad avslutade du idag?','Vad fick dig att känna att du tog ett steg framåt?'],
+'Tankar':['Vilken tanke dök upp i ditt sinne idag?','Vad upptog ditt tänkande?','Vilken fråga förbryllade dig idag?','Vad öppnade ditt sinne för något nytt?','Vilken idé vill du utveckla?','Vad förändrade ditt perspektiv?','Vad fick dig att tänka om något?','Vilken idé vill du förverkliga?','Vad väckte din nyfikenhet idag?','Vad förstod du äntligen?'],
+'Relationer':['Vem gjorde dig glad med sin närvaro idag?','Vem tänkte du på idag?','Vilket vackert ord hörde du?','Vem vill du tacka?','Vilket ögonblick förde dig samman med nära och kära?','Vem hjälpte du idag?','Vem hjälpte dig idag?','Vad gjorde du för någon du älskar?','Vem saknar du?','Vilket ord sa du som påverkade någon?'],
+'Tillväxt':['Vad lärde du dig idag?','Vilken vana börjar du bygga?','Vad förbättrade du?','Vilket misstag drog du nytta av?','Vad gjorde dig starkare idag?','Vad vill du utveckla hos dig själv?','Vad börjar du lägga märke till hos dig själv?','Vilken förändring vill du göra?','Vad har blivit lättare för dig?','Vilket litet steg tog du för dig själv?'],
+'Tacksamhet':['Vilka tre saker är du tacksam för idag?','Vilken välsignelse glömmer du ibland?','Vem är du tacksam för att de finns?','Vilken liten detalj gjorde dig glad?','Vad är du tacksam för hos dig själv?','Vad är du tacksam för i din dag?','Vilken välsignelse lade du märke till idag?','Vad är du tacksam för i din hälsa?','Vad är du tacksam för i ditt liv?','Vad får dig att känna tacksamhet varje dag?'],
+'Ögonblick':['Beskriv din dag med tre ord.','Om din dag var en färg, vilken skulle det vara?','Om din dag var en låt, vad heter den?','Vilket ögonblick vill du komma ihåg om ett år?','Om du föreställde dig din dag i en bild, vad skulle det vara?','Sammanfatta din dag i en mening.','Vad ville du säga men gjorde det inte?','Om du skickade ett meddelande till ditt framtida jag, vad skulle det stå?','Vad behövde du säga idag?','Om din dag var en maträtt, vad skulle det vara?','Vilket ögonblick vill du behålla?','Om du skrev en titel för din dag, vad skulle det vara?','Vad vill du glömma från idag?','Om din dag var en årstid, vilken skulle det vara?','Vilket ögonblick förtjänar att berättas?']
+}
+};
 
+/* ============ الأساسيات ============ */
 const $=id=>document.getElementById(id);
-const S={lang:'ar',theme:'auto',filter:'all',year:null,month:null,day:null,dayList:null,fac:'environment',vfac:'environment',blob:null,type:null,bg:null,oldDate:null,cur:null,sec:null,q:null,stars:0,stream:null,word:null,filtered:[]};
+const S={lang:'ar',theme:'auto',fs:'m',filter:'all',year:null,month:null,day:null,dayList:null,fac:'environment',vfac:'environment',blob:null,type:null,bg:null,mood:null,oldDate:null,cur:null,sec:null,q:null,stream:null,word:null,filtered:[]};
+const CAP=window.Capacitor,PLG=n=>CAP&&CAP.Plugins&&CAP.Plugins[n];
 const LD=[],LM=[],LP=[];
 const track=l=>b=>{const u=URL.createObjectURL(b);l.push(u);return u};
 const free=l=>{l.forEach(u=>URL.revokeObjectURL(u));l.length=0};
 const UD=track(LD),UM=track(LM),UP=track(LP);
+const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}};
+const MOODS=['😄','🙂','😐','😔','😢'];
 
-/* ---------- الترجمة ---------- */
+/* ============ الترجمة ============ */
 const I={
-ar:{app:'لحظة',gm:'صباح الخير',ge:'مساء الخير',qod:'سؤال اليوم',photo:'صورة',video:'فيديو',text:'كتابة',old:'إضافة بتاريخ قديم',otd:'في مثل هذا اليوم',streak:'يوم متواصل',moments:'لقطة',mine:'لقطاتي',settings:'الإعدادات',home:'الرئيسية',all:'الكل',photos:'صور',videos:'فيديو',texts:'كتابة',answers:'أجوبة',favs:'المفضلة',empty_t:'لا توجد لقطات بعد',empty_s:'ارجع إلى الرئيسية ووثّق أول لحظة',general:'عام',data:'البيانات',about:'عن التطبيق',reminder:'التذكير اليومي',on:'مفعّل',off:'معطّل',theme:'المظهر',dark:'غامق',light:'فاتح',auto:'تلقائي',lang:'اللغة',exp:'تصدير نسخة احتياطية',imp:'استيراد نسخة احتياطية',delall:'حذف كل اللقطات',privacy:'سياسة الخصوصية',rate:'قيّم التطبيق',contact:'تواصل معنا',ver:'الإصدار',write_moment:'اكتب لحظتك',ph_text:'ماذا حدث اليوم؟',bg:'الخلفية',next:'التالي',save_moment:'حفظ اللقطة',ph_cap:'أضف جملة (اختياري)...',save:'احفظ',your_ans:'جوابك',ph_ans:'اكتب جوابك...',save_ans:'احفظ الجواب',rec_hint:'سجّل مقطعاً من الكاميرا',start_rec:'ابدأ التسجيل',switch_cam:'تبديل الكاميرا',stats:'إحصائياتي',days_rec:'يوم موثّق',best:'أطول سلسلة',this_month:'هذا الشهر',rem_time:'وقت التذكير',rem_on:'تفعيل التذكير',rem_off:'إيقاف التذكير',rate_q:'كيف تقيّم تجربتك مع لحظة؟',ph_fb:'رأيك (اختياري)...',send:'إرسال',pick_date:'اختر التاريخ',confirm:'تأكيد',choose_type:'اختر النوع',cancel:'إلغاء',ok:'تأكيد',close:'إغلاق',
+ar:{app:'لحظة',gm:'صباح الخير',ge:'مساء الخير',qod:'سؤال اليوم',photo:'صورة',video:'فيديو',text:'كتابة',old:'إضافة بتاريخ قديم',otd:'في مثل هذا اليوم',streak:'يوم متواصل',moments:'لقطة',mine:'لقطاتي',settings:'الإعدادات',home:'الرئيسية',all:'الكل',photos:'صور',videos:'فيديو',texts:'كتابة',answers:'أجوبة',favs:'المفضلة',empty_t:'لا توجد لقطات بعد',empty_s:'ارجع إلى الرئيسية ووثّق أول لحظة',general:'عام',data:'البيانات',about:'عن التطبيق',reminder:'التذكير اليومي',on:'مفعّل',off:'معطّل',theme:'المظهر',dark:'غامق',light:'فاتح',auto:'تلقائي',lang:'اللغة',exp:'تصدير نسخة احتياطية',imp:'استيراد نسخة احتياطية',delall:'حذف كل اللقطات',privacy:'سياسة الخصوصية',rate:'قيّم التطبيق',contact:'تواصل معنا وملاحظات',ver:'الإصدار',write_moment:'اكتب لحظتك',ph_text:'ماذا حدث اليوم؟',bg:'الخلفية',next:'التالي',save_moment:'حفظ اللقطة',ph_cap:'أضف جملة (اختياري)...',save:'احفظ',your_ans:'جوابك',ph_ans:'اكتب جوابك...',save_ans:'احفظ الجواب',rec_hint:'سجّل مقطعاً من الكاميرا',start_rec:'ابدأ التسجيل',switch_cam:'تبديل الكاميرا',stats:'إحصائياتي',days_rec:'يوم موثّق',best:'أطول سلسلة',this_month:'هذا الشهر',rem_time:'وقت التذكير',rem_on:'تفعيل التذكير',rem_off:'إيقاف التذكير',pick_date:'اختر التاريخ',confirm:'تأكيد',choose_type:'اختر النوع',cancel:'إلغاء',ok:'تأكيد',close:'إغلاق',
 saved:'تم الحفظ',saved_a:'تم حفظ الجواب',write_first:'اكتب شيئاً أولاً',err:'خطأ',no_data:'لا توجد لقطات',no_day:'لا توجد لقطات في هذا اليوم',del_c:'هل تريد حذف هذه اللقطة؟',deleted:'تم الحذف',theme_ok:'تم تغيير الوضع',exp_ok:'تم التصدير',imp_ok:'تم الاستيراد',prep:'جاري تجهيز النسخة الاحتياطية...',cam_err:'تعذّر فتح الكاميرا',cam_perm:'لم يتم إعطاء إذن الكاميرا',cam_nf:'لا توجد كاميرا',cam_busy:'الكاميرا مشغولة',
 delall_q:'هل أنت متأكد أنك تريد حذف جميع اللقطات ({n} لقطة)؟',backup:'نسخة احتياطية',backup_q:'هل تريد تصدير نسخة احتياطية قبل الحذف؟',yes_exp:'نعم، تصدير',skip:'لا، تخطي',exp_fail:'فشل التصدير',exp_fail_q:'لم تُنشأ النسخة الاحتياطية. هل تريد الحذف بدونها؟',del_anyway:'احذف بدون نسخة',final:'تأكيد نهائي',final_q:'سيتم حذف كل اللقطات نهائياً ولا يمكن التراجع. اكتب كلمة "حذف" للتأكيد.',del_word:'حذف',type_word:'اكتب الكلمة المطلوبة بالضبط',del_final:'حذف نهائي',
-rem_title:'لم توثق لحظتك اليوم',rem_sub:'اضغط لإضافة لقطة',now:'الآن',one:'لقطة واحدة',two:'لقطتان',many:'لقطات',pick_rate:'اختر عدد النجوم',rate_sub:'تقييم',rate_fb:'رأي',mail_sub:'تواصل من تطبيق لحظة',sep:'، '},
-en:{app:'Lahza',gm:'Good morning',ge:'Good evening',qod:'Question of the Day',photo:'Photo',video:'Video',text:'Text',old:'Add with old date',otd:'On this day',streak:'day streak',moments:'moments',mine:'My Moments',settings:'Settings',home:'Home',all:'All',photos:'Photos',videos:'Videos',texts:'Texts',answers:'Answers',favs:'Favorites',empty_t:'No moments yet',empty_s:'Go to Home and capture your first moment',general:'General',data:'Data',about:'About',reminder:'Daily reminder',on:'On',off:'Off',theme:'Appearance',dark:'Dark',light:'Light',auto:'Auto',lang:'Language',exp:'Export backup',imp:'Import backup',delall:'Delete all moments',privacy:'Privacy policy',rate:'Rate the app',contact:'Contact us',ver:'Version',write_moment:'Write your moment',ph_text:'What happened today?',bg:'Background',next:'Next',save_moment:'Save moment',ph_cap:'Add a caption (optional)...',save:'Save',your_ans:'Your answer',ph_ans:'Write your answer...',save_ans:'Save answer',rec_hint:'Record a clip with the camera',start_rec:'Start recording',switch_cam:'Switch camera',stats:'My stats',days_rec:'days recorded',best:'Best streak',this_month:'This month',rem_time:'Reminder time',rem_on:'Turn on reminder',rem_off:'Turn off reminder',rate_q:'How was your experience with Lahza?',ph_fb:'Your feedback (optional)...',send:'Send',pick_date:'Pick a date',confirm:'Confirm',choose_type:'Choose type',cancel:'Cancel',ok:'Confirm',close:'Close',
+rem_title:'لم توثق لحظتك اليوم',rem_sub:'اضغط لإضافة لقطة',now:'الآن',one:'لقطة واحدة',two:'لقطتان',many:'لقطات',mail_sub:'تواصل من تطبيق لحظة',sep:'، ',
+search:'ابحث في لقطاتك...',nothing:'لا نتائج',mood:'كيف كان مزاجك؟ (اختياري)',edit:'تعديل اللقطة',lock:'قفل التطبيق',lock_enter:'أدخل الرمز',lock_new:'اختر رمزاً من 4 أرقام',lock_confirm:'أعد إدخال الرمز',lock_wrong:'الرمز غير صحيح',lock_mismatch:'الرمزان غير متطابقين',lock_set:'تم تفعيل القفل',lock_q:'القفل مفعّل. هل تريد إزالته؟',lock_remove:'إزالة القفل',fontsize:'حجم الخط',small:'صغير',medium:'متوسط',large:'كبير',nudge_q:'مرّ أسبوع على آخر نسخة احتياطية. احفظ نسخة الآن في ملفاتك أو iCloud.',later:'لاحقاً'},
+en:{app:'Lahza',gm:'Good morning',ge:'Good evening',qod:'Question of the Day',photo:'Photo',video:'Video',text:'Text',old:'Add with old date',otd:'On this day',streak:'day streak',moments:'moments',mine:'My Moments',settings:'Settings',home:'Home',all:'All',photos:'Photos',videos:'Videos',texts:'Texts',answers:'Answers',favs:'Favorites',empty_t:'No moments yet',empty_s:'Go to Home and capture your first moment',general:'General',data:'Data',about:'About',reminder:'Daily reminder',on:'On',off:'Off',theme:'Appearance',dark:'Dark',light:'Light',auto:'Auto',lang:'Language',exp:'Export backup',imp:'Import backup',delall:'Delete all moments',privacy:'Privacy policy',rate:'Rate the app',contact:'Contact & feedback',ver:'Version',write_moment:'Write your moment',ph_text:'What happened today?',bg:'Background',next:'Next',save_moment:'Save moment',ph_cap:'Add a caption (optional)...',save:'Save',your_ans:'Your answer',ph_ans:'Write your answer...',save_ans:'Save answer',rec_hint:'Record a clip with the camera',start_rec:'Start recording',switch_cam:'Switch camera',stats:'My stats',days_rec:'days recorded',best:'Best streak',this_month:'This month',rem_time:'Reminder time',rem_on:'Turn on reminder',rem_off:'Turn off reminder',pick_date:'Pick a date',confirm:'Confirm',choose_type:'Choose type',cancel:'Cancel',ok:'Confirm',close:'Close',
 saved:'Saved',saved_a:'Answer saved',write_first:'Write something first',err:'Error',no_data:'No moments',no_day:'No moments on this day',del_c:'Delete this moment?',deleted:'Deleted',theme_ok:'Appearance changed',exp_ok:'Exported',imp_ok:'Imported',prep:'Preparing backup...',cam_err:'Cannot open camera',cam_perm:'Camera permission denied',cam_nf:'No camera found',cam_busy:'Camera is busy',
 delall_q:'Delete all moments ({n})?',backup:'Backup',backup_q:'Export a backup before deleting?',yes_exp:'Yes, export',skip:'No, skip',exp_fail:'Export failed',exp_fail_q:'No backup was created. Delete anyway?',del_anyway:'Delete anyway',final:'Final confirmation',final_q:'All moments will be deleted permanently. Type "delete" to confirm.',del_word:'delete',type_word:'Type the exact word',del_final:'Delete forever',
-rem_title:"You haven't captured today",rem_sub:'Tap to add a moment',now:'Now',one:'1 moment',two:'2 moments',many:'moments',pick_rate:'Choose a star rating',rate_sub:'Rating',rate_fb:'Feedback',mail_sub:'Message from Lahza app',sep:', '},
-sv:{app:'Lahza',gm:'God morgon',ge:'God kväll',qod:'Dagens fråga',photo:'Foto',video:'Video',text:'Text',old:'Lägg till med gammalt datum',otd:'På denna dag',streak:'dagar i rad',moments:'ögonblick',mine:'Mina ögonblick',settings:'Inställningar',home:'Hem',all:'Alla',photos:'Foton',videos:'Videor',texts:'Texter',answers:'Svar',favs:'Favoriter',empty_t:'Inga ögonblick än',empty_s:'Gå till Hem och skapa ditt första ögonblick',general:'Allmänt',data:'Data',about:'Om',reminder:'Daglig påminnelse',on:'På',off:'Av',theme:'Utseende',dark:'Mörkt',light:'Ljust',auto:'Auto',lang:'Språk',exp:'Exportera backup',imp:'Importera backup',delall:'Radera alla ögonblick',privacy:'Integritetspolicy',rate:'Betygsätt appen',contact:'Kontakta oss',ver:'Version',write_moment:'Skriv ditt ögonblick',ph_text:'Vad hände idag?',bg:'Bakgrund',next:'Nästa',save_moment:'Spara ögonblick',ph_cap:'Lägg till bildtext (valfritt)...',save:'Spara',your_ans:'Ditt svar',ph_ans:'Skriv ditt svar...',save_ans:'Spara svar',rec_hint:'Spela in ett klipp med kameran',start_rec:'Starta inspelning',switch_cam:'Byt kamera',stats:'Min statistik',days_rec:'dagar',best:'Bästa svit',this_month:'Denna månad',rem_time:'Tid för påminnelse',rem_on:'Aktivera påminnelse',rem_off:'Stäng av påminnelse',rate_q:'Hur var din upplevelse av Lahza?',ph_fb:'Din åsikt (valfritt)...',send:'Skicka',pick_date:'Välj datum',confirm:'Bekräfta',choose_type:'Välj typ',cancel:'Avbryt',ok:'Bekräfta',close:'Stäng',
+rem_title:"You haven't captured today",rem_sub:'Tap to add a moment',now:'Now',one:'1 moment',two:'2 moments',many:'moments',mail_sub:'Message from Lahza app',sep:', ',
+search:'Search your moments...',nothing:'No results',mood:'How was your mood? (optional)',edit:'Edit moment',lock:'App lock',lock_enter:'Enter passcode',lock_new:'Choose a 4-digit passcode',lock_confirm:'Re-enter passcode',lock_wrong:'Wrong passcode',lock_mismatch:"Passcodes don't match",lock_set:'Lock enabled',lock_q:'Lock is on. Remove it?',lock_remove:'Remove lock',fontsize:'Text size',small:'Small',medium:'Medium',large:'Large',nudge_q:'It has been a week since your last backup. Save one now to Files or iCloud.',later:'Later'},
+sv:{app:'Lahza',gm:'God morgon',ge:'God kväll',qod:'Dagens fråga',photo:'Foto',video:'Video',text:'Text',old:'Lägg till med gammalt datum',otd:'På denna dag',streak:'dagar i rad',moments:'ögonblick',mine:'Mina ögonblick',settings:'Inställningar',home:'Hem',all:'Alla',photos:'Foton',videos:'Videor',texts:'Texter',answers:'Svar',favs:'Favoriter',empty_t:'Inga ögonblick än',empty_s:'Gå till Hem och skapa ditt första ögonblick',general:'Allmänt',data:'Data',about:'Om',reminder:'Daglig påminnelse',on:'På',off:'Av',theme:'Utseende',dark:'Mörkt',light:'Ljust',auto:'Auto',lang:'Språk',exp:'Exportera backup',imp:'Importera backup',delall:'Radera alla ögonblick',privacy:'Integritetspolicy',rate:'Betygsätt appen',contact:'Kontakt och feedback',ver:'Version',write_moment:'Skriv ditt ögonblick',ph_text:'Vad hände idag?',bg:'Bakgrund',next:'Nästa',save_moment:'Spara ögonblick',ph_cap:'Lägg till bildtext (valfritt)...',save:'Spara',your_ans:'Ditt svar',ph_ans:'Skriv ditt svar...',save_ans:'Spara svar',rec_hint:'Spela in ett klipp med kameran',start_rec:'Starta inspelning',switch_cam:'Byt kamera',stats:'Min statistik',days_rec:'dagar',best:'Bästa svit',this_month:'Denna månad',rem_time:'Tid för påminnelse',rem_on:'Aktivera påminnelse',rem_off:'Stäng av påminnelse',pick_date:'Välj datum',confirm:'Bekräfta',choose_type:'Välj typ',cancel:'Avbryt',ok:'Bekräfta',close:'Stäng',
 saved:'Sparat',saved_a:'Svar sparat',write_first:'Skriv något först',err:'Fel',no_data:'Inga ögonblick',no_day:'Inga ögonblick denna dag',del_c:'Radera detta ögonblick?',deleted:'Raderat',theme_ok:'Utseende ändrat',exp_ok:'Exporterad',imp_ok:'Importerad',prep:'Förbereder backup...',cam_err:'Kan inte öppna kameran',cam_perm:'Kamerabehörighet nekad',cam_nf:'Ingen kamera hittad',cam_busy:'Kameran är upptagen',
 delall_q:'Radera alla ögonblick ({n})?',backup:'Backup',backup_q:'Exportera en backup före radering?',yes_exp:'Ja, exportera',skip:'Nej, hoppa över',exp_fail:'Exporten misslyckades',exp_fail_q:'Ingen backup skapades. Radera ändå?',del_anyway:'Radera ändå',final:'Slutlig bekräftelse',final_q:'Alla ögonblick raderas permanent. Skriv "radera" för att bekräfta.',del_word:'radera',type_word:'Skriv exakt ordet',del_final:'Radera för alltid',
-rem_title:'Du har inte fångat något idag',rem_sub:'Tryck för att lägga till',now:'Nu',one:'1 ögonblick',two:'2 ögonblick',many:'ögonblick',pick_rate:'Välj antal stjärnor',rate_sub:'Betyg',rate_fb:'Åsikt',mail_sub:'Meddelande från Lahza',sep:', '}
+rem_title:'Du har inte fångat något idag',rem_sub:'Tryck för att lägga till',now:'Nu',one:'1 ögonblick',two:'2 ögonblick',many:'ögonblick',mail_sub:'Meddelande från Lahza',sep:', ',
+search:'Sök bland dina ögonblick...',nothing:'Inga resultat',mood:'Hur var ditt humör? (valfritt)',edit:'Redigera ögonblick',lock:'Applås',lock_enter:'Ange kod',lock_new:'Välj en 4-siffrig kod',lock_confirm:'Ange koden igen',lock_wrong:'Fel kod',lock_mismatch:'Koderna matchar inte',lock_set:'Lås aktiverat',lock_q:'Låset är på. Vill du ta bort det?',lock_remove:'Ta bort lås',fontsize:'Textstorlek',small:'Liten',medium:'Medel',large:'Stor',nudge_q:'Det har gått en vecka sedan din senaste backup. Spara en nu i Filer eller iCloud.',later:'Senare'}
 };
 const t=k=>(I[S.lang]&&I[S.lang][k])||I.ar[k]||k;
 const DAYS={ar:['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],en:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],sv:['söndag','måndag','tisdag','onsdag','torsdag','fredag','lördag']};
 const WD={ar:['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'],en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],sv:['sön','mån','tis','ons','tors','fre','lör']};
 const MON={ar:['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'],en:['January','February','March','April','May','June','July','August','September','October','November','December'],sv:['januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december']};
 const LN={ar:'العربية',en:'English',sv:'Svenska'};
+const FSZ={s:16,m:18,l:20},FSK={s:'small',m:'medium',l:'large'};
 
 function applyI18n(){
   document.documentElement.lang=S.lang;document.documentElement.dir=S.lang==='ar'?'rtl':'ltr';
@@ -312,12 +372,12 @@ function applyI18n(){
   document.querySelectorAll('[data-ph]').forEach(e=>e.placeholder=t(e.dataset.ph));
   document.querySelectorAll('.xbtn').forEach(e=>e.setAttribute('aria-label',t('close')));
   $('calHead').innerHTML=WD[S.lang].map(d=>'<div>'+d+'</div>').join('');
-  $('languageStatus').textContent=LN[S.lang];
-  const m=S.theme;$('themeStatus').textContent=t(m);
-  loadReminder();showToday();
+  $('languageStatus').textContent=LN[S.lang];$('themeStatus').textContent=t(S.theme);$('fontStatus').textContent=t(FSK[S.fs]);
+  loadReminder();updateLockStatus();showToday();lockUI();
 }
+function applyFs(){document.documentElement.style.fontSize=FSZ[S.fs]+'px';LS('lahza-fs',S.fs);$('fontStatus').textContent=t(FSK[S.fs])}
 
-/* ---------- أدوات ---------- */
+/* ============ أدوات ============ */
 function toast(msg,isErr){const e=$('toast');e.textContent=msg;e.className=isErr?'err':'';clearTimeout(e._t);e._t=setTimeout(()=>e.classList.add('hidden'),3500)}
 const dstr=d=>{d=new Date(d);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const fdate=d=>{d=new Date(d);return DAYS[S.lang][d.getDay()]+t('sep')+d.getDate()+' '+MON[S.lang][d.getMonth()]+' '+d.getFullYear()};
@@ -326,12 +386,12 @@ function hijri(){if(S.lang!=='ar')return '';try{return new Intl.DateTimeFormat('
 function showToday(){$('todayDate').textContent=fdate(new Date());$('hijriDate').textContent=hijri();const h=new Date().getHours();$('greeting').textContent=(h>=5&&h<12)?t('gm'):t('ge')}
 const show=id=>$(id).classList.remove('hidden'),hide=id=>$(id).classList.add('hidden');
 
-/* ---------- قاعدة البيانات (بيانات منفصلة عن الملفات) ---------- */
+/* ============ قاعدة البيانات ============ */
 const M='moments',B='blobs';let db;
 const rq=r=>new Promise((s,j)=>{r.onsuccess=()=>s(r.result);r.onerror=()=>j(r.error)});
 const txDone=tx=>new Promise((s,j)=>{tx.oncomplete=s;tx.onerror=tx.onabort=()=>j(tx.error)});
 function openDB(){return new Promise((s,j)=>{const r=indexedDB.open('lahza-db',2);
-  r.onupgradeneeded=e=>{const d=r.result,tx=r.transaction;
+  r.onupgradeneeded=()=>{const d=r.result,tx=r.transaction;
     if(!d.objectStoreNames.contains(M))d.createObjectStore(M,{keyPath:'id',autoIncrement:true});
     if(!d.objectStoreNames.contains(B))d.createObjectStore(B);
     tx.objectStore(M).openCursor().onsuccess=ev=>{const c=ev.target.result;if(!c)return;const v=c.value;
@@ -340,6 +400,7 @@ function openDB(){return new Promise((s,j)=>{const r=indexedDB.open('lahza-db',2
 const getAll=()=>rq(db.transaction(M).objectStore(M).getAll());
 const getMeta=id=>rq(db.transaction(M).objectStore(M).get(id));
 const getBlob=k=>rq(db.transaction(B).objectStore(B).get(k));
+const putBlob=(k,b)=>rq(db.transaction(B,'readwrite').objectStore(B).put(b,k));
 const upd=m=>rq(db.transaction(M,'readwrite').objectStore(M).put(m));
 async function addMoment(m,blob,bg){
   const tx=db.transaction([M,B],'readwrite');if(bg)m.bgKey=true;
@@ -347,15 +408,39 @@ async function addMoment(m,blob,bg){
   await txDone(tx);return id}
 async function delMoment(id){const tx=db.transaction([M,B],'readwrite');tx.objectStore(M).delete(id);tx.objectStore(B).delete(id);tx.objectStore(B).delete('bg'+id);await txDone(tx)}
 async function clearAll(){const tx=db.transaction([M,B],'readwrite');tx.objectStore(M).clear();tx.objectStore(B).clear();await txDone(tx)}
+async function backfill(){for(const m of await getAll()){if((m.type==='text'||m.type==='answer')&&m.txt===undefined){const b=await getBlob(m.id);if(b){m.txt=await b.text();await upd(m)}}}}
 
-/* ---------- المظهر ---------- */
+/* ============ المظهر ============ */
 const mq=window.matchMedia('(prefers-color-scheme: dark)');
 function applyTheme(){let m=S.theme;if(m==='auto')m=mq.matches?'dark':'light';
   document.documentElement.dataset.theme=m;document.querySelector('meta[name=theme-color]').content=m==='dark'?'#0F0A08':'#FAF6EE';
-  try{localStorage.setItem('lahza-theme',S.theme)}catch(e){}$('themeStatus').textContent=t(S.theme)}
+  LS('lahza-theme',S.theme);$('themeStatus').textContent=t(S.theme)}
 mq.addEventListener&&mq.addEventListener('change',()=>S.theme==='auto'&&applyTheme());
 
-/* ---------- الرئيسية ---------- */
+/* ============ قفل التطبيق ============ */
+const PIN={mode:'unlock',buf:'',first:''};
+async function hash(p){let s=LS('lahza-salt');if(!s){s=Array.from(crypto.getRandomValues(new Uint8Array(8))).join('');LS('lahza-salt',s)}
+  if(crypto.subtle){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s+p));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('')}
+  let h=5381;(s+p).split('').forEach(c=>h=((h<<5)+h+c.charCodeAt(0))|0);return String(h)}
+const pad=$('pad');['1','2','3','4','5','6','7','8','9','bio','0','<'].forEach(k=>{const b=document.createElement('button');
+  b.textContent=k==='<'?'⌫':k==='bio'?'🔓':k;if(k==='bio'){b.id='bioBtn';b.onclick=tryBio}else b.onclick=()=>pinKey(k);pad.appendChild(b)});
+function lockUI(){const m={unlock:'lock_enter',set1:'lock_new',set2:'lock_confirm',remove:'lock_enter'}[PIN.mode];$('lockT').textContent=t(m);
+  $('lockX').classList.toggle('hidden',PIN.mode==='unlock');$('bioBtn').style.visibility=(PIN.mode==='unlock'&&PLG('BiometricAuth'))?'visible':'hidden';
+  $('dots').innerHTML=[0,1,2,3].map(i=>'<i class="'+(i<PIN.buf.length?'on':'')+'"></i>').join('')}
+function showLock(mode){PIN.mode=mode;PIN.buf='';PIN.first='';$('lockM').textContent='';lockUI();show('lock');if(mode==='unlock')tryBio()}
+async function tryBio(){const p=PLG('BiometricAuth');if(!p||!LS('lahza-pin'))return;try{await p.authenticate({reason:t('lock_enter'),cancelTitle:t('cancel')});hide('lock')}catch(e){}}
+async function pinKey(k){if(k==='<'){PIN.buf=PIN.buf.slice(0,-1);lockUI();return}if(PIN.buf.length>=4)return;PIN.buf+=k;$('lockM').textContent='';lockUI();if(PIN.buf.length<4)return;
+  const b=PIN.buf;
+  if(PIN.mode==='unlock'||PIN.mode==='remove'){if(await hash(b)===LS('lahza-pin')){if(PIN.mode==='remove')LS('lahza-pin','');hide('lock');updateLockStatus()}else{PIN.buf='';$('lockM').textContent=t('lock_wrong');setTimeout(lockUI,150)}}
+  else if(PIN.mode==='set1'){PIN.first=b;PIN.buf='';PIN.mode='set2';lockUI()}
+  else if(b===PIN.first){LS('lahza-pin',await hash(b));hide('lock');updateLockStatus();toast(t('lock_set'))}
+  else{PIN.mode='set1';PIN.buf='';$('lockM').textContent=t('lock_mismatch');lockUI()}}
+function updateLockStatus(){$('lockStatus').textContent=LS('lahza-pin')?t('on'):t('off')}
+$('lockX').onclick=()=>hide('lock');
+$('btnLock').onclick=async()=>{if(!LS('lahza-pin'))return showLock('set1');if(await ask(t('lock'),t('lock_q'),{ok:t('lock_remove')}))showLock('remove')};
+let hAt=0;document.addEventListener('visibilitychange',()=>{if(document.hidden)hAt=Date.now();else if(LS('lahza-pin')&&Date.now()-hAt>15000&&$('lock').classList.contains('hidden'))showLock('unlock')});
+
+/* ============ الرئيسية ============ */
 async function updateHome(ms){ms=ms||await getAll();$('counterText').textContent=ms.length;
   const days=new Set(ms.map(m=>dstr(m.date)));let n=0,c=new Date();if(!days.has(dstr(c)))c.setDate(c.getDate()-1);
   while(days.has(dstr(c))){n++;c.setDate(c.getDate()-1)}$('streakText').textContent=n}
@@ -370,17 +455,16 @@ async function renderOnThisDay(ms){ms=ms||await getAll();const now=new Date(),mo
 async function refreshAll(){const ms=await getAll();updateHome(ms);renderOnThisDay(ms);
   if(!$('tabMoments').classList.contains('hidden'))await renderTree(ms);
   if(!$('dayMomentsScreen').classList.contains('hidden')&&S.day)openDay(S.day,S.dayList===null?null:undefined)}
-
 function switchTab(n){['Home','Moments','Settings'].forEach(x=>{$('tabBtn'+x).classList.toggle('active',x===n);$('tab'+x).classList.toggle('hidden',x!==n)});
   closeDay();if(n==='Moments')renderTree()}
 ['Home','Moments','Settings'].forEach(n=>$('tabBtn'+n).onclick=()=>switchTab(n));
 document.querySelectorAll('#filterRow .filter-chip').forEach(b=>b.onclick=()=>{document.querySelectorAll('#filterRow .filter-chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');S.filter=b.dataset.filter;S.year=S.month=S.day=null;renderTree()});
 
-/* ---------- الكاميرا ---------- */
+/* ============ الكاميرا ============ */
 async function openCamera(v){try{closeCamera();S.stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:S.fac},audio:false});v.srcObject=S.stream;v.muted=true;v.style.transform=S.fac==='user'?'scaleX(-1)':'none'}
   catch(e){toast(e.name==='NotAllowedError'?t('cam_perm'):e.name==='NotFoundError'?t('cam_nf'):e.name==='NotReadableError'?t('cam_busy'):t('cam_err'),1)}}
 function closeCamera(){if(S.stream){S.stream.getTracks().forEach(x=>x.stop());S.stream=null}}
-function resetPending(){S.blob=null;S.type=null;S.bg=null;S.oldDate=null;free(LP)}
+function resetPending(){S.blob=null;S.type=null;S.bg=null;S.mood=null;S.oldDate=null;free(LP)}
 $('actionPhoto').onclick=async()=>{S.oldDate=null;show('photoScreen');await openCamera($('photoVideo'))};
 $('photoClose').onclick=()=>{closeCamera();hide('photoScreen');resetPending()};
 $('switchPhotoCam').onclick=()=>{S.fac=S.fac==='environment'?'user':'environment';openCamera($('photoVideo'))};
@@ -393,7 +477,7 @@ $('switchVideoCam').onclick=()=>{S.vfac=S.vfac==='environment'?'user':'environme
 $('startVideoRec').onclick=()=>{vin.value='';vin.click()};
 vin.onchange=e=>{const f=e.target.files[0];if(!f)return;S.blob=f;S.type='video';S.bg=null;hide('videoScreen');showPreview();show('saveScreen')};
 
-/* ---------- الكتابة والخلفية ---------- */
+/* ============ الكتابة والخلفية ============ */
 function bgGrid(){const g=$('bgGrid');g.querySelectorAll('.dyn').forEach(e=>e.remove());
   if(S.bg){const b=document.createElement('button');b.className='bg-option dyn active';const im=new Image();im.src=UP(S.bg);b.appendChild(im);g.insertBefore(b,$('uploadBg'));$('bgNone').classList.remove('active')}
   else $('bgNone').classList.add('active')}
@@ -404,26 +488,26 @@ $('bgNone').onclick=()=>{S.bg=null;bgGrid()};
 $('bgInput').onchange=e=>{const f=e.target.files[0];if(!f)return;S.bg=f;bgGrid();e.target.value=''};
 $('saveTextBtn').onclick=()=>{const x=$('textInput').value.trim();if(!x)return toast(t('write_first'),1);
   S.blob=new Blob([x],{type:'text/plain'});S.type='text';hide('textScreen');showPreview();show('saveScreen')};
-
-async function bgUrl(m,track){if(m.bgKey){const b=await getBlob('bg'+m.id);return b?track(b):null}return m.background||null}
+async function bgUrl(m,tr){if(m.bgKey){const b=await getBlob('bg'+m.id);return b?tr(b):null}return m.background||null}
 const bgCss=u=>u?'linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),url("'+u+'")':'';
-function showPreview(){const w=$('previewWrap');w.innerHTML='';free(LP);
+function paintMoods(){const r=$('moodRow');r.innerHTML='';MOODS.forEach(e=>{const b=document.createElement('button');b.textContent=e;b.className=S.mood===e?'on':'';b.onclick=()=>{S.mood=S.mood===e?null:e;paintMoods()};r.appendChild(b)})}
+function showPreview(){const w=$('previewWrap');w.innerHTML='';free(LP);paintMoods();
   if(S.type==='photo'||S.type==='video'){const el=document.createElement(S.type==='photo'?'img':'video');el.src=UP(S.blob);if(S.type==='video'){el.controls=true;el.playsInline=true}el.style.cssText='width:100%;border-radius:14px';w.appendChild(el)}
   else{S.blob.text().then(x=>{const d=document.createElement('div');d.className='preview';d.textContent=x;if(S.bg)d.style.background=bgCss(UP(S.bg))+' center/cover';w.appendChild(d)})}}
-
 function closeSave(){$('captionInput').value='';$('previewWrap').innerHTML='';closeCamera();resetPending();hide('saveScreen')}
 $('saveClose').onclick=closeSave;
 $('saveBtn').onclick=async()=>{if(!S.blob)return;
-  try{const m={date:(S.oldDate||new Date()).toISOString(),type:S.type,caption:$('captionInput').value.trim(),favorite:false};if(S.oldDate)m.noTime=true;
+  try{const m={date:(S.oldDate||new Date()).toISOString(),type:S.type,caption:$('captionInput').value.trim(),favorite:false};
+    if(S.oldDate)m.noTime=true;if(S.mood)m.mood=S.mood;if(S.type==='text')m.txt=await S.blob.text();
     await addMoment(m,S.blob,S.bg);closeSave();refreshAll();toast(t('saved'))}catch(e){toast(t('err')+': '+e.message,1)}};
 
-/* ---------- تاريخ قديم ---------- */
+/* ============ تاريخ قديم ============ */
 $('actionOldDate').onclick=()=>{const ys=$('pickYear'),ms=$('pickMonth'),ds=$('pickDay');ys.innerHTML=ms.innerHTML='';
   for(let y=new Date().getFullYear();y>=1900;y--)ys.add(new Option(y,y));
   MON[S.lang].forEach((n,i)=>ms.add(new Option(n,i+1)));
   const fill=()=>{const dim=new Date(+ys.value,+ms.value,0).getDate(),cv=+ds.value||1;ds.innerHTML='';for(let d=1;d<=dim;d++)ds.add(new Option(d,d));ds.value=Math.min(cv,dim)};
   fill();ys.onchange=ms.onchange=fill;
-  [ys,ms,ds].forEach(s=>s.style.cssText='flex:1;width:100%;padding:14px 6px;background:var(--bg);border:1.5px solid var(--border-strong);border-radius:10px;text-align:center');
+  [ys,ms,ds].forEach(s=>s.style.cssText='flex:1;width:100%;padding:14px 6px;background:var(--bg);border:1.5px solid var(--border-strong);border-radius:10px;text-align:center;font-size:1.05rem');
   show('datePickerSheet')};
 $('datePickerClose').onclick=()=>{hide('datePickerSheet');S.oldDate=null};
 $('datePickerConfirm').onclick=()=>{S.oldDate=new Date(+$('pickYear').value,+$('pickMonth').value-1,+$('pickDay').value,12,0,0);hide('datePickerSheet');show('typePickerSheet')};
@@ -433,21 +517,33 @@ $('pickTypePhoto').onclick=()=>{hide('typePickerSheet');show('photoScreen');open
 $('pickTypeVideo').onclick=()=>{hide('typePickerSheet');show('videoScreen')};
 $('pickTypeText').onclick=()=>{hide('typePickerSheet');openText()};
 
-/* ---------- البطاقات ---------- */
+/* ============ البطاقات ============ */
 async function makeCard(m){const card=document.createElement('div');card.className='moment-card';let c;
   if(m.type==='photo'||m.type==='video'){const b=await getBlob(m.id);if(!b)return null;
     if(m.type==='photo'){c=new Image();c.loading='lazy';c.src=UD(b)}
     else{c=document.createElement('video');c.preload='metadata';c.muted=true;c.playsInline=true;c.src=UD(b)+'#t=0.1'}
     card.appendChild(c)}
   else{const b=await getBlob(m.id);c=document.createElement('div');c.className='text-content';c.textContent=b?await b.text():'';
-    if(m.type==='text'){const u=await bgUrl(m,UD);if(u)c.style.background=bgCss(u)+' center/cover'}else c.style.fontSize='.9rem';card.appendChild(c)}
+    if(m.type==='text'){const u=await bgUrl(m,UD);if(u)c.style.background=bgCss(u)+' center/cover'}else c.style.fontSize='1.05rem';card.appendChild(c)}
   if(m.caption&&m.type!=='answer'){const cp=document.createElement('div');cp.className='moment-caption';cp.textContent=m.caption;card.appendChild(cp)}
-  const meta=document.createElement('div');meta.className='moment-meta';const tm=document.createElement('div');tm.className='moment-time';tm.textContent=m.noTime?'':ftime(m.date);meta.appendChild(tm);
+  const meta=document.createElement('div');meta.className='moment-meta';const tm=document.createElement('div');tm.className='moment-time';
+  tm.textContent=(m.mood?m.mood+' ':'')+(m.noTime?'':ftime(m.date));meta.appendChild(tm);
   if(m.favorite){const f=document.createElement('span');f.className='moment-fav';f.textContent='♥';meta.appendChild(f)}
   card.appendChild(meta);card.onclick=()=>openModal(m.id);return card}
 
-/* ---------- الشجرة والتقويم ---------- */
-async function renderTree(ms){ms=ms||await getAll();let f=ms;
+/* ============ البحث ============ */
+let st;$('searchInput').oninput=()=>{clearTimeout(st);st=setTimeout(doSearch,250)};
+async function doSearch(){const q=$('searchInput').value.trim().toLowerCase(),r=$('searchResults');
+  if(!q){r.classList.add('hidden');r.innerHTML='';free(LD);return renderTree()}
+  hide('treeView');hide('empty');const ms=await getAll();
+  const f=ms.filter(m=>((m.caption||'')+' '+(m.txt||'')).toLowerCase().includes(q)).sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,50);
+  free(LD);r.innerHTML='';r.classList.remove('hidden');
+  if(!f.length){r.innerHTML='<div class="empty-state"><div></div></div>';r.querySelector('div div').textContent=t('nothing');return}
+  for(const m of f){const c=await makeCard(m);if(c)r.appendChild(c)}}
+
+/* ============ الشجرة والتقويم ============ */
+async function renderTree(ms){if($('searchInput').value.trim())return doSearch();
+  ms=ms||await getAll();let f=ms;
   if(S.filter==='favorite')f=ms.filter(m=>m.favorite);else if(S.filter!=='all')f=ms.filter(m=>m.type===S.filter);
   S.filtered=f;const ys=[...new Set(f.map(m=>new Date(m.date).getFullYear()))].sort((a,b)=>b-a);
   const row=$('yearsRow');row.innerHTML='';
@@ -456,7 +552,7 @@ async function renderTree(ms){ms=ms||await getAll();let f=ms;
   ys.forEach(y=>{const n=f.filter(m=>new Date(m.date).getFullYear()===y).length,b=document.createElement('button');b.className='filter-chip'+(S.year===y?' active':'');b.textContent=y+' ('+n+')';b.onclick=()=>{S.year=y;S.month=S.day=null;renderTree()};row.appendChild(b)});
   if(S.year){show('monthsSection');const g=$('monthsGrid');g.innerHTML='';const now=new Date();
     MON[S.lang].forEach((n,mo)=>{const c=f.filter(m=>{const d=new Date(m.date);return d.getFullYear()===S.year&&d.getMonth()===mo}).length,b=document.createElement('button');
-      b.className='filter-chip'+(S.month===mo?' active':'');b.style.cssText='font-size:.75rem;padding:8px 4px';if(S.year===now.getFullYear()&&mo===now.getMonth())b.style.borderColor='var(--gold)';
+      b.className='filter-chip'+(S.month===mo?' active':'');b.style.cssText='padding:10px 4px';if(S.year===now.getFullYear()&&mo===now.getMonth())b.style.borderColor='var(--gold)';
       b.textContent=n+(c?' ('+c+')':'');b.onclick=()=>{S.month=mo;S.day=null;renderTree()};g.appendChild(b)})}
   else hide('monthsSection');
   if(S.year!==null&&S.month!==null){show('calendarSection');renderCalendar()}else hide('calendarSection')}
@@ -464,94 +560,109 @@ function renderCalendar(){const y=S.year,mo=S.month,g=$('calendarGrid');g.innerH
   const has=new Set(S.filtered.map(m=>dstr(m.date))),today=dstr(new Date()),first=new Date(y,mo,1).getDay(),dim=new Date(y,mo+1,0).getDate();
   for(let i=0;i<first;i++)g.appendChild(document.createElement('div'));
   for(let d=1;d<=dim;d++){const ds=y+'-'+String(mo+1).padStart(2,'0')+'-'+String(d).padStart(2,'0'),el=document.createElement('button');
-    el.style.cssText='aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;position:relative;color:var(--text-2)';
+    el.style.cssText='aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;position:relative;color:var(--text-2)';
     if(ds===S.day){el.style.background='var(--gold)';el.style.color='var(--on-gold)';el.style.fontWeight='600'}
     else if(ds===today){el.style.border='1.5px solid var(--gold)';el.style.color='var(--gold)'}
     else if(has.has(ds)){el.style.background='var(--gold-soft)';el.style.color='var(--text)'}
     el.textContent=d;
-    if(has.has(ds)&&ds!==S.day){const dot=document.createElement('span');dot.style.cssText='position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--gold)';el.appendChild(dot)}
+    if(has.has(ds)&&ds!==S.day){const dot=document.createElement('span');dot.style.cssText='position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:var(--gold)';el.appendChild(dot)}
     el.onclick=()=>{S.day=ds;renderCalendar();openDay(ds,S.filtered)};g.appendChild(el)}}
 $('calPrev').onclick=()=>{if(S.month===null)return;S.month--;if(S.month<0){S.month=11;S.year--}S.day=null;renderTree()};
 $('calNext').onclick=()=>{if(S.month===null)return;S.month++;if(S.month>11){S.month=0;S.year++}S.day=null;renderTree()};
-
 async function openDay(day,list){S.day=day;if(list!==undefined)S.dayList=list;
-  const src=(S.dayList===null||S.dayList===undefined)?await getAll():await getAll().then(all=>S.filter==='all'?all:S.filter==='favorite'?all.filter(m=>m.favorite):all.filter(m=>m.type===S.filter));
+  const all=await getAll(),src=(S.dayList===null||S.dayList===undefined)?all:(S.filter==='all'?all:S.filter==='favorite'?all.filter(m=>m.favorite):all.filter(m=>m.type===S.filter));
   const dm=src.filter(m=>dstr(m.date)===day).sort((a,b)=>new Date(a.date)-new Date(b.date));
-  const d=new Date(day+'T12:00:00');$('dayMomentsTitle').textContent=fdate(d);free(LD);const g=$('dayMomentsGrid');g.innerHTML='';
+  $('dayMomentsTitle').textContent=fdate(new Date(day+'T12:00:00'));free(LD);const g=$('dayMomentsGrid');g.innerHTML='';
   if(!dm.length){g.innerHTML='<div class="empty-state"><span class="empty-icon">✦</span><div></div></div>';g.querySelector('div div').textContent=t('no_day')}
   else for(const m of dm){const c=await makeCard(m);if(c)g.appendChild(c)}
   show('dayMomentsScreen')}
 function closeDay(){hide('dayMomentsScreen');free(LD);$('dayMomentsGrid').innerHTML='';S.day=null;S.dayList=undefined}
 $('dayMomentsClose').onclick=()=>{closeDay();if(!$('tabMoments').classList.contains('hidden'))renderTree()};
 
-/* ---------- نافذة اللقطة ---------- */
+/* ============ نافذة اللقطة والتعديل ============ */
 async function openModal(id){const m=await getMeta(id);if(!m)return;S.cur=id;const c=$('modalContent');c.innerHTML='';free(LM);const b=await getBlob(id);
   if(m.type==='photo'){const i=new Image();i.src=UM(b);c.appendChild(i)}
   else if(m.type==='video'){const v=document.createElement('video');v.src=UM(b);v.controls=true;v.playsInline=true;c.appendChild(v)}
   else{const d=document.createElement('div');d.className='modal-text';const txt=await b.text();
-    if(m.type==='text'){d.style.minHeight='60vh';d.style.display='flex';d.style.alignItems='center';d.style.justifyContent='center';d.textContent=txt;const u=await bgUrl(m,UM);if(u)d.style.background=bgCss(u)+' center/cover'}
-    else{d.style.textAlign='start';const q=document.createElement('div');q.style.cssText='color:var(--gold);margin-bottom:16px;font-family:var(--fd);font-size:1rem';q.textContent=m.caption||'';const a=document.createElement('div');a.style.cssText='font-size:1rem';a.textContent=txt;d.append(q,a)}
+    if(m.type==='text'){d.style.minHeight='55vh';d.style.display='flex';d.style.alignItems='center';d.style.justifyContent='center';d.textContent=txt;const u=await bgUrl(m,UM);if(u)d.style.background=bgCss(u)+' center/cover'}
+    else{d.style.textAlign='start';const q=document.createElement('div');q.style.cssText='color:var(--gold);margin-bottom:16px;font-family:var(--fd);font-size:1.1rem';q.textContent=m.caption||'';const a=document.createElement('div');a.style.cssText='font-size:1.1rem';a.textContent=txt;d.append(q,a)}
     c.appendChild(d)}
-  const dd=document.createElement('div');dd.className='modal-date';dd.textContent=fdate(m.date)+(m.noTime?'':' - '+ftime(m.date));c.appendChild(dd);
+  if(m.caption&&m.type!=='answer'){const cp=document.createElement('div');cp.className='modal-cap';cp.textContent=m.caption;c.appendChild(cp)}
+  const dd=document.createElement('div');dd.className='modal-date';dd.textContent=(m.mood?m.mood+'  ':'')+fdate(m.date)+(m.noTime?'':' - '+ftime(m.date));c.appendChild(dd);
   const hb=$('modalHeart'),paint=f=>{hb.textContent=f?'♥':'♡';hb.className=f?'active':''};paint(m.favorite);
   hb.onclick=async()=>{const mm=await getMeta(id);if(!mm)return;mm.favorite=!mm.favorite;await upd(mm);paint(mm.favorite)};
   show('momentModal')}
 $('modalClose').onclick=()=>{hide('momentModal');free(LM);$('modalContent').innerHTML='';S.cur=null;refreshAll()};
-$('modalDelete').onclick=async()=>{if(!S.cur)return;if(!await ask(t('del_c'),'',{}))return;await delMoment(S.cur);hide('momentModal');free(LM);S.cur=null;toast(t('deleted'));refreshAll()};
+$('modalDelete').onclick=async()=>{if(!S.cur)return;if(!await ask(t('del_c'),''))return;await delMoment(S.cur);hide('momentModal');free(LM);S.cur=null;toast(t('deleted'));refreshAll()};
+$('modalEdit').onclick=async()=>{if(!S.cur)return;const m=await getMeta(S.cur),b=await getBlob(S.cur),body=(m.type==='text'||m.type==='answer');
+  $('eBodyWrap').classList.toggle('hidden',!body);$('eCapWrap').classList.toggle('hidden',m.type==='answer');
+  $('eBody').value=body&&b?await b.text():'';$('eCap').value=m.caption||'';show('eSheet')};
+$('eNo').onclick=()=>hide('eSheet');
+$('eOk').onclick=async()=>{const id=S.cur,m=await getMeta(id);if(!m)return;
+  if(m.type!=='answer')m.caption=$('eCap').value.trim();
+  if(m.type==='text'||m.type==='answer'){const x=$('eBody').value.trim();if(!x)return toast(t('write_first'),1);m.txt=x;await putBlob(id,new Blob([x],{type:'text/plain'}))}
+  await upd(m);hide('eSheet');toast(t('saved'));openModal(id);refreshAll()};
 
-/* ---------- نافذة التأكيد ---------- */
+/* ============ نافذة التأكيد ============ */
 let _res=null;
 function ask(title,msg,o){o=o||{};return new Promise(r=>{_res=r;$('cTitle').textContent=title;$('cMsg').textContent=msg;$('cMsg').classList.toggle('hidden',!msg);
   $('cOk').textContent=o.ok||t('ok');$('cNo').textContent=o.no||t('cancel');S.word=o.word||null;$('cInWrap').classList.toggle('hidden',!o.word);$('cIn').value='';show('cSheet')})}
 $('cNo').onclick=()=>{hide('cSheet');_res&&_res(false)};
 $('cOk').onclick=()=>{if(S.word&&$('cIn').value.trim()!==S.word)return toast(t('type_word'),1);hide('cSheet');_res&&_res(true)};
 
-/* ---------- التذكير ---------- */
-const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}};
+/* ============ التذكير (إشعارات أصلية داخل Capacitor، وبانر في المتصفح) ============ */
 function loadReminder(){const on=LS('lahza-reminder')==='true';$('reminderStatus').textContent=on?t('on'):t('off');$('reminderTime').value=LS('lahza-reminder-time')||'20:00';$('reminderToggleBtn').textContent=on?t('rem_off'):t('rem_on')}
+async function syncNative(){const p=PLG('LocalNotifications');if(!p)return;
+  try{await p.cancel({notifications:[{id:1}]});if(LS('lahza-reminder')!=='true')return;
+    const pm=await p.requestPermissions();if(pm.display!=='granted')return;
+    const tm=(LS('lahza-reminder-time')||'20:00').split(':').map(Number);
+    await p.schedule({notifications:[{id:1,title:t('rem_title'),body:t('rem_sub'),schedule:{on:{hour:tm[0],minute:tm[1]},allowWhileIdle:true}}]})}catch(e){}}
 $('btnReminder').onclick=()=>{loadReminder();show('reminderModal')};
 $('reminderClose2').onclick=()=>hide('reminderModal');
 $('reminderToggleBtn').onclick=()=>{const on=LS('lahza-reminder')==='true';LS('lahza-reminder',on?'false':'true');LS('lahza-reminder-dismissed','');
-  if(!on&&window.Notification&&Notification.permission==='default')Notification.requestPermission();loadReminder()};
-$('reminderTime').onchange=e=>{LS('lahza-reminder-time',e.target.value);LS('lahza-reminder-dismissed','')};
+  if(!on&&!PLG('LocalNotifications')&&window.Notification&&Notification.permission==='default')Notification.requestPermission();loadReminder();syncNative()};
+$('reminderTime').onchange=e=>{LS('lahza-reminder-time',e.target.value);LS('lahza-reminder-dismissed','');syncNative()};
 async function checkReminder(){try{
-  if(LS('lahza-reminder')!=='true')return;const now=new Date(),today=dstr(now);if(LS('lahza-reminder-dismissed')===today)return;
-  const [h,mi]=(LS('lahza-reminder-time')||'20:00').split(':').map(Number);if(now.getHours()*60+now.getMinutes()<h*60+mi)return;
+  if(PLG('LocalNotifications')||LS('lahza-reminder')!=='true')return;const now=new Date(),today=dstr(now);if(LS('lahza-reminder-dismissed')===today)return;
+  const tm=(LS('lahza-reminder-time')||'20:00').split(':').map(Number);if(now.getHours()*60+now.getMinutes()<tm[0]*60+tm[1])return;
   const ms=await getAll();if(ms.some(m=>dstr(m.date)===today&&!m.noTime))return;
   LS('lahza-reminder-dismissed',today);
   if(window.Notification&&Notification.permission==='granted'&&document.hidden){new Notification(t('rem_title'),{body:t('rem_sub')});return}
   const old=$('remBanner');if(old)old.remove();
   const b=document.createElement('div');b.id='remBanner';const w=document.createElement('div');w.style.flex='1';
-  const a=document.createElement('div');a.style.cssText='font:500 1rem var(--fd);color:var(--gold)';a.textContent=t('rem_title');
-  const s=document.createElement('div');s.style.cssText='color:var(--text-3);font-size:.8rem';s.textContent=t('rem_sub');w.append(a,s);
-  const btn=document.createElement('button');btn.className='btn primary small';btn.style.cssText='width:auto;margin:0;padding:8px 18px';btn.textContent=t('now');
+  const a=document.createElement('div');a.style.cssText='font:500 1.1rem var(--fd);color:var(--gold)';a.textContent=t('rem_title');
+  const s=document.createElement('div');s.style.cssText='color:var(--text-3);font-size:.9rem';s.textContent=t('rem_sub');w.append(a,s);
+  const btn=document.createElement('button');btn.className='btn primary small';btn.style.cssText='width:auto;margin:0;padding:10px 20px';btn.textContent=t('now');
   btn.onclick=()=>{b.remove();switchTab('Home')};b.append(w,btn);document.body.appendChild(b);setTimeout(()=>b.remove(),12000)}catch(e){}}
 
-/* ---------- المظهر واللغة ---------- */
+/* ============ المظهر والخط واللغة ============ */
 $('btnTheme').onclick=()=>show('themeModal');$('themeClose').onclick=()=>hide('themeModal');
 document.querySelectorAll('#themeModal [data-mode]').forEach(b=>b.onclick=()=>{S.theme=b.dataset.mode;applyTheme();toast(t('theme_ok'))});
+$('btnFont').onclick=()=>show('fontModal');$('fontClose').onclick=()=>hide('fontModal');
+document.querySelectorAll('#fontModal [data-fs]').forEach(b=>b.onclick=()=>{S.fs=b.dataset.fs;applyFs()});
 $('btnLanguage').onclick=()=>show('languageModal');$('languageClose').onclick=()=>hide('languageModal');
-document.querySelectorAll('#languageModal [data-lang]').forEach(b=>b.onclick=()=>{S.lang=b.dataset.lang;LS('lahza-lang',S.lang);applyTheme();applyI18n();hide('languageModal');renderOnThisDay()});
+document.querySelectorAll('#languageModal [data-lang]').forEach(b=>b.onclick=()=>{S.lang=b.dataset.lang;LS('lahza-lang',S.lang);applyTheme();applyI18n();hide('languageModal');renderOnThisDay();syncNative()});
 
-/* ---------- التصدير والاستيراد ---------- */
+/* ============ التصدير والاستيراد ============ */
 async function buildZip(ms){const zip=new JSZip(),meta=[];
   for(const m of ms){const ext=m.type==='photo'?'jpg':m.type==='video'?'mp4':'txt',fn=m.id+'.'+ext,b=await getBlob(m.id);if(b)zip.file('moments/'+fn,b);
-    const e={id:m.id,date:m.date,type:m.type,caption:m.caption||'',favorite:!!m.favorite,noTime:!!m.noTime,background:m.background||null,file:fn};
+    const e={id:m.id,date:m.date,type:m.type,caption:m.caption||'',favorite:!!m.favorite,noTime:!!m.noTime,mood:m.mood||null,background:m.background||null,file:fn};
     if(m.bgKey){const bb=await getBlob('bg'+m.id);if(bb){zip.file('bg/'+m.id,bb);e.bgFile='bg/'+m.id}}meta.push(e)}
-  zip.file('data.json',JSON.stringify({version:'3.1',date:new Date().toISOString(),count:ms.length,moments:meta},null,2));
-  return zip.generateAsync({type:'blob'},null)}
+  zip.file('data.json',JSON.stringify({version:'4.0',date:new Date().toISOString(),count:ms.length,moments:meta},null,2));
+  return zip.generateAsync({type:'blob'})}
 async function exportZip(ms){toast(t('prep'));const blob=await buildZip(ms),name='lahza-backup-'+dstr(new Date())+'.zip',f=new File([blob],name,{type:'application/zip'});
   if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:name})}
   else{const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)}
-  toast(t('exp_ok')+' ('+ms.length+')')}
+  LS('lahza-last-backup',String(Date.now()));toast(t('exp_ok')+' ('+ms.length+')')}
 $('btnExport').onclick=async()=>{try{const ms=await getAll();if(!ms.length)return toast(t('no_data'),1);await exportZip(ms)}catch(e){if(e.name!=='AbortError')toast(t('err')+': '+e.message,1)}};
 $('btnImport').onclick=()=>$('importInput').click();
 $('importInput').onchange=async e=>{const f=e.target.files[0];if(!f)return;
   try{const zip=await JSZip.loadAsync(f),df=zip.file('data.json');if(!df)throw new Error('Invalid file');const data=JSON.parse(await df.async('string'));if(!Array.isArray(data.moments))throw new Error('Invalid structure');
     const key=m=>m.date+'|'+m.type+'|'+(m.caption||''),have=new Set((await getAll()).map(key));let added=0;
     for(const x of data.moments){if(have.has(key(x)))continue;const file=zip.file('moments/'+x.file);if(!file)continue;const blob=await file.async('blob');
-      const m={date:x.date,type:x.type,caption:x.caption||'',favorite:!!x.favorite};if(x.noTime)m.noTime=true;let bg=null;
-      if(x.bgFile&&zip.file(x.bgFile))bg=await zip.file(x.bgFile).async('blob');else if(x.background)m.background=x.background;
+      const m={date:x.date,type:x.type,caption:x.caption||'',favorite:!!x.favorite};if(x.noTime)m.noTime=true;if(x.mood)m.mood=x.mood;
+      if(x.type==='text'||x.type==='answer')m.txt=await blob.text();
+      let bg=null;if(x.bgFile&&zip.file(x.bgFile))bg=await zip.file(x.bgFile).async('blob');else if(x.background)m.background=x.background;
       await addMoment(m,blob,bg);added++}
     toast(t('imp_ok')+' ('+added+')');refreshAll()}catch(err){toast(t('err')+': '+err.message,1)}e.target.value=''};
 $('btnDeleteAll').onclick=async()=>{const ms=await getAll();if(!ms.length)return toast(t('no_data'),1);
@@ -560,24 +671,23 @@ $('btnDeleteAll').onclick=async()=>{const ms=await getAll();if(!ms.length)return
   if(!await ask(t('final'),t('final_q'),{word:t('del_word'),ok:t('del_final')}))return;
   await clearAll();toast(t('deleted'));closeDay();refreshAll()};
 $('btnContact').onclick=()=>{location.href='mailto:lahzalaqta@gmail.com?subject='+encodeURIComponent(t('mail_sub'))};
+async function nudge(){if(!$('lock').classList.contains('hidden'))return;const ms=await getAll();if(ms.length<3)return;const now=Date.now(),last=+LS('lahza-last-backup')||0;
+  if(!last){LS('lahza-last-backup',String(now));return}
+  if(now-last<6048e5||LS('lahza-nudged')===dstr(now))return;LS('lahza-nudged',dstr(now));
+  if(await ask(t('backup'),t('nudge_q'),{ok:t('yes_exp'),no:t('later')}))try{await exportZip(ms)}catch(e){}}
 
-/* ---------- التقييم ---------- */
-const stars=$('rateStars');for(let i=1;i<=5;i++){const s=document.createElement('button');s.textContent='★';s.setAttribute('aria-label',i);s.style.cssText='font-size:2.8rem;color:var(--text-4)';
-  s.onclick=()=>{S.stars=i;[...stars.children].forEach((x,j)=>x.style.color=j<i?'var(--gold)':'var(--text-4)')};stars.appendChild(s)}
-$('btnRate').onclick=()=>{S.stars=0;[...stars.children].forEach(x=>x.style.color='var(--text-4)');$('rateFeedback').value='';show('rateModal')};
-$('rateClose').onclick=()=>hide('rateModal');
-$('rateSubmit').onclick=()=>{if(!S.stars)return toast(t('pick_rate'),1);const fb=$('rateFeedback').value.trim();
-  let msg=t('rate_sub')+': '+S.stars+'/5';if(fb)msg+='\n'+t('rate_fb')+': '+fb;
-  hide('rateModal');location.href='mailto:lahzalaqta@gmail.com?subject='+encodeURIComponent(t('rate_sub')+' Lahza')+'&body='+encodeURIComponent(msg)};
+/* ============ التقييم (نافذة آبل الرسمية) ============ */
+$('btnRate').onclick=async()=>{const p=PLG('InAppReview');
+  try{if(p)await p.requestReview();else window.open('https://apps.apple.com/app/idYOUR_APP_ID?action=write-review','_blank')}catch(e){}};
 
-/* ---------- الإحصائيات ---------- */
+/* ============ الإحصائيات ============ */
 $('homeStats').onclick=async()=>{const ms=await getAll(),days=[...new Set(ms.map(m=>dstr(m.date)))].sort();let best=days.length?1:0,cur=1;
   for(let i=1;i<days.length;i++){const d=Math.round((new Date(days[i]+'T12:00:00')-new Date(days[i-1]+'T12:00:00'))/864e5);if(d===1){cur++;best=Math.max(best,cur)}else cur=1}
-  const now=new Date(),ms0=new Date(now.getFullYear(),now.getMonth(),1);
-  $('statTotal').textContent=ms.length;$('statDays').textContent=days.length;$('statBest').textContent=best;$('statMonth').textContent=ms.filter(m=>new Date(m.date)>=ms0).length;show('statsModal')};
+  const now=new Date(),m0=new Date(now.getFullYear(),now.getMonth(),1);
+  $('statTotal').textContent=ms.length;$('statDays').textContent=days.length;$('statBest').textContent=best;$('statMonth').textContent=ms.filter(m=>new Date(m.date)>=m0).length;show('statsModal')};
 $('statsClose').onclick=()=>hide('statsModal');
 
-/* ---------- الأسئلة ---------- */
+/* ============ الأسئلة ============ */
 const bank=()=>QUESTIONS_BANK[S.lang]||QUESTIONS_BANK.ar;
 $('questionCard').onclick=()=>{const l=$('sectionList');l.innerHTML='';Object.keys(bank()).forEach(sec=>{const b=document.createElement('button');b.className='section-item';b.textContent=sec;b.onclick=()=>{hide('questionSheet');openQList(sec)};l.appendChild(b)});show('questionSheet')};
 $('questionCard').onkeydown=e=>{if(e.key==='Enter')e.target.click()};
@@ -587,16 +697,18 @@ function openQList(sec){$('questionListTitle').textContent=sec;const l=$('questi
 $('questionListClose').onclick=()=>hide('questionListSheet');
 $('answerClose').onclick=()=>hide('answerScreen');
 $('answerSaveBtn').onclick=async()=>{const x=$('answerInput').value.trim();if(!x)return toast(t('write_first'),1);
-  try{await addMoment({date:new Date().toISOString(),type:'answer',caption:S.q,favorite:false,section:S.sec},new Blob([x],{type:'text/plain'}));hide('answerScreen');toast(t('saved_a'));refreshAll()}catch(e){toast(t('err'),1)}};
+  try{await addMoment({date:new Date().toISOString(),type:'answer',caption:S.q,favorite:false,section:S.sec,txt:x},new Blob([x],{type:'text/plain'}));hide('answerScreen');toast(t('saved_a'));refreshAll()}catch(e){toast(t('err'),1)}};
 
-/* ---------- التشغيل ---------- */
+/* ============ التشغيل ============ */
 setTimeout(()=>{const sp=$('splash');sp.classList.add('hide');setTimeout(()=>sp.style.display='none',800)},1600);
 (async function init(){
   try{S.theme=LS('lahza-theme')||'auto';if(!['dark','light','auto'].includes(S.theme))S.theme='auto';
-    const l=LS('lahza-lang');S.lang=I[l]?l:'ar';applyTheme();applyI18n();
+    S.fs=LS('lahza-fs')||'m';if(!FSZ[S.fs])S.fs='m';
+    const l=LS('lahza-lang');S.lang=I[l]?l:'ar';applyFs();applyTheme();applyI18n();
+    if(LS('lahza-pin'))showLock('unlock');
     await openDB();
     if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();
-    refreshAll();checkReminder();setInterval(checkReminder,60000);
+    refreshAll();backfill();syncNative();checkReminder();setInterval(checkReminder,60000);setTimeout(nudge,5000);
   }catch(e){console.error(e);toast(t('err')+': '+e.message,1)}
 })();
 </script>
