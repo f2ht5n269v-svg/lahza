@@ -2462,9 +2462,6 @@ if(currentLang === 'ar') langStatus.textContent = 'العربية';
 else if(currentLang === 'en') langStatus.textContent = 'English';
 else if(currentLang === 'sv') langStatus.textContent = 'Svenska';
 }
-// كلمة "اللغة" في نافذة تغيير اللغة
-var langTitle = document.querySelector('#languageModal .stats-title');
-if(langTitle) langTitle.textContent = t('language');
 // عناوين الإعدادات (عام، البيانات، عن التطبيق)
 var settingsTitles = document.querySelectorAll('.settings-group-title');
 if(settingsTitles.length >= 3) {
@@ -2494,7 +2491,6 @@ else if(currentLang === 'en') emptySub.textContent = 'Go to home and capture you
 else if(currentLang === 'sv') emptySub.textContent = 'Gå till hem och skapa ditt första ögonblick';
 }
 }
-
    function applyLanguage(){
 var dir=currentLang==='ar'?'rtl':'ltr';
 document.documentElement.dir=dir;
@@ -3389,94 +3385,62 @@ document.getElementById('importInput').onchange=async function(e){
    Delete All
    ============================================ */
 document.getElementById('btnDeleteAll').onclick = async function(){
-try{
-var ms = await getAllMoments();
-if(ms.length === 0){ showStatus(t('no_data'), '#EF4444'); return; }
-
-var title, msg, confirmTxt, cancelTxt;
-if(currentLang === 'ar'){
-title = 'حذف جميع اللقطات';
-msg = 'هل أنت متأكد أنك تريد حذف جميع اللقطات (' + ms.length + ' لقطة)؟';
-confirmTxt = 'نعم، متأكد'; cancelTxt = 'إلغاء';
-} else if(currentLang === 'en'){
-title = 'Delete All Moments';
-msg = 'Are you sure you want to delete all (' + ms.length + ') moments?';
-confirmTxt = 'Yes, sure'; cancelTxt = 'Cancel';
-} else {
-title = 'Radera alla ögonblick';
-msg = 'Är du säker på att du vill radera alla (' + ms.length + ') ögonblick?';
-confirmTxt = 'Ja, säker'; cancelTxt = 'Avbryt';
-}
-
-showCustomConfirm(title, msg, function() { step2Backup(ms); }, null, { confirmText: confirmTxt, cancelText: cancelTxt });
-}catch(e){ showStatus(t('error') + ': ' + e.message, '#EF4444'); }
+  try{
+    var ms = await getAllMoments();
+    if(ms.length === 0){ showStatus(t('no_data'), '#EF4444'); return; }
+    
+    showCustomConfirm(
+      'حذف جميع اللقطات', 
+      'هل أنت متأكد أنك تريد حذف جميع اللقطات (' + ms.length + ' لقطة)؟', 
+      function() { 
+        // تخطي التصدير مؤقتاً والذهاب مباشرة للتأكيد النهائي
+        step2Backup(ms); 
+      },
+      null,
+      { confirmText: 'نعم، متأكد', cancelText: 'إلغاء' }
+    );
+  }catch(e){ showStatus(t('error') + ': ' + e.message, '#EF4444'); }
 };
 
 function step2Backup(ms) {
-var title, msg, confirmTxt, cancelTxt;
-if(currentLang === 'ar'){
-title = 'نسخة احتياطية';
-msg = 'هل تريد تصدير نسخة احتياطية قبل الحذف؟';
-confirmTxt = 'نعم، تصدير'; cancelTxt = 'لا، تخطي';
-} else if(currentLang === 'en'){
-title = 'Backup';
-msg = 'Do you want to export a backup before deleting?';
-confirmTxt = 'Yes, export'; cancelTxt = 'No, skip';
-} else {
-title = 'Säkerhetskopiering';
-msg = 'Vill du exportera en säkerhetskopia innan du raderar?';
-confirmTxt = 'Ja, exportera'; cancelTxt = 'Nej, hoppa över';
-}
-
-showCustomConfirm(title, msg,
-function() { exportBackup(ms, function() { step3FinalConfirm(ms); }); },
-function() { step3FinalConfirm(ms); },
-{ confirmText: confirmTxt, cancelText: cancelTxt }
-);
+  showCustomConfirm(
+    'نسخة احتياطية', 
+    'هل تريد تصدير نسخة احتياطية قبل الحذف؟', 
+    function() { 
+      exportBackup(ms, function() { step3FinalConfirm(ms); });
+    },
+    function() { 
+      step3FinalConfirm(ms);
+    },
+    { confirmText: 'نعم، تصدير', cancelText: 'لا، تخطي' }
+  );
 }
 
 function step3FinalConfirm(ms) {
-var title, msg, confirmTxt, cancelTxt, inputPlaceholder, expectedWord;
-if(currentLang === 'ar'){
-title = 'تأكيد نهائي';
-msg = 'سيتم حذف كل اللقطات نهائياً. هذا الإجراء لا يمكن التراجع عنه!<br><br>يرجى كتابة كلمة "حذف" للتأكيد.';
-confirmTxt = 'حذف نهائي'; cancelTxt = 'إلغاء';
-inputPlaceholder = 'اكتب "حذف" هنا'; expectedWord = 'حذف';
-} else if(currentLang === 'en'){
-title = 'Final Confirmation';
-msg = 'All moments will be permanently deleted. This action cannot be undone!<br><br>Please type "delete" to confirm.';
-confirmTxt = 'Delete permanently'; cancelTxt = 'Cancel';
-inputPlaceholder = 'Type "delete" here'; expectedWord = 'delete';
-} else {
-title = 'Slutlig bekräftelse';
-msg = 'Alla ögonblick kommer att raderas permanent. Denna åtgärd kan inte ångras!<br><br>Vänligen skriv "radera" för att bekräfta.';
-confirmTxt = 'Radera permanent'; cancelTxt = 'Avbryt';
-inputPlaceholder = 'Skriv "radera" här'; expectedWord = 'radera';
+  showCustomConfirm(
+    'تأكيد نهائي', 
+    'سيتم حذف كل اللقطات نهائياً. هذا الإجراء لا يمكن التراجع عنه!<br><br>يرجى كتابة كلمة "حذف" للتأكيد.', 
+    async function() { 
+      var typed = document.getElementById('confirmInput').value.trim();
+      if (typed !== 'حذف') {
+        showStatus('يجب كتابة كلمة "حذف" بالضبط للتأكيد', '#EF4444');
+        return; 
+      }
+      
+      document.getElementById('customConfirmSheet').classList.add('hidden');
+      
+      for(var i=0; i<ms.length; i++){
+        await deleteMoment(ms[i].id);
+      }
+      showStatus('تم حذف ' + ms.length + ' لقطة', 'var(--gold)');
+      updateCounter();
+      updateStreak();
+      renderTree();
+    },
+    null,
+    { requireInput: true, inputPlaceholder: 'اكتب "حذف" هنا', confirmText: 'حذف نهائي', cancelText: 'إلغاء' }
+  );
 }
-
-showCustomConfirm(title, msg,
-async function() {
-var typed = document.getElementById('confirmInput').value.trim().toLowerCase();
-if (typed !== expectedWord) {
-var errMsg = currentLang === 'ar' ? 'يجب كتابة الكلمة بالضبط للتأكيد' : (currentLang === 'en' ? 'You must type the exact word to confirm' : 'Du måste skriva det exakta ordet för att bekräfta');
-showStatus(errMsg, '#EF4444');
-return;
-}
-
-document.getElementById('customConfirmSheet').classList.add('hidden');
-for(var i=0; i<ms.length; i++){ await deleteMoment(ms[i].id); }
-
-var successMsg = currentLang === 'ar' ? 'تم حذف ' + ms.length + ' لقطة' : (currentLang === 'en' ? 'Deleted ' + ms.length + ' moments' : 'Raderade ' + ms.length + ' ögonblick');
-showStatus(successMsg, 'var(--gold)');
-updateCounter();
-updateStreak();
-renderTree();
-},
-null,
-{ requireInput: true, inputPlaceholder: inputPlaceholder, confirmText: confirmTxt, cancelText: cancelTxt }
-);
-}
-
 function exportBackup(ms, callback) {
   showStatus('جاري تجهيز النسخة الاحتياطية... يرجى الانتظار', 'var(--gold)');
 
