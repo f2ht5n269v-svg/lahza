@@ -1149,6 +1149,73 @@ if(jw&&jCard){
 const vs=[...document.querySelectorAll('#tabSettings .settings-item .value')].pop();if(vs)vs.textContent='7.2';
 }catch(e){console.error(e)}
 })();
+  /* ===== 7.3: دمج الرحلات داخل التحديات ===== */
+(function(){
+try{
+const W=$('chalWrap'),jBtn=document.querySelector('#tabHome .hs'),jw=jBtn&&jBtn.parentNode,jCard=jw&&jw.querySelector('.jc');
+if(!W)return;
+
+/* إخفاء "رحلات" من الرئيسية */
+const st=document.createElement('style');
+st.textContent='.jwx,#tabHome .hs,#tabHome .jc{display:none!important}';
+document.head.appendChild(st);
+if(jw)jw.classList.add('jwx');
+
+const getJ=()=>{try{return JSON.parse(LS('lahza-j'))}catch(e){return null}};
+const jOn=()=>!!(jCard&&S.lang==='ar'&&jCard.style.display!=='none');
+async function jDone(){const ms=await getAll(),td=dstr(new Date());return ms.some(m=>m.type==='answer'&&m.section==='journey'&&dstr(m.date)===td)}
+
+/* نافذة "اليوم" */
+function sheet(title,items,manage){
+  const s=document.createElement('div');s.className='sheet';s.style.zIndex=470;
+  const c=document.createElement('div');c.className='sheet-content';s.appendChild(c);
+  const h=document.createElement('div');h.textContent=title;h.style.cssText='font:1.3rem var(--fd);color:var(--gold);margin-bottom:16px';c.appendChild(h);
+  const close=()=>s.remove();
+  items.forEach(it=>{const b=document.createElement('button');b.className='btn'+(it.done?'':' primary');b.style.whiteSpace='pre-line';b.textContent=it.text;
+    if(it.done){b.style.opacity='.6';b.disabled=true}else b.onclick=()=>{close();it.go()};c.appendChild(b)});
+  if(manage){const m=document.createElement('button');m.className='btn';m.textContent=manage.label;m.onclick=()=>{close();manage.go()};c.appendChild(m)}
+  const x=document.createElement('button');x.className='btn';x.textContent=t('close');x.onclick=close;c.appendChild(x);
+  s.addEventListener('click',e=>{if(e.target===s)close()});
+  document.body.appendChild(s)}
+
+/* الضغط على عنوان "التحديات": يأخذ الأولوية على المعالج السابق */
+$('tabHome').addEventListener('click',async e=>{
+  const h=W.lastElementChild,b=e.target.closest&&e.target.closest('button');
+  if(!h||!b||b!==h||b.parentNode!==W)return;
+  e.stopPropagation();e.preventDefault();
+  const orig=h.onclick,rows=[...W.children].filter(x=>x!==h);
+  const items=rows.map(r=>({text:r.children[0].textContent+'\n'+r.children[1].textContent,done:typeof r.onclick!=='function',go:()=>r.click()}));
+  if(jOn()){const j=getJ(),fin=jCard.textContent===t('j_done'),done=fin?false:await jDone();
+    items.push({text:(j?t(j.k==='rm'?'j_rm':'j_gr')+'\n':'')+jCard.textContent,done,go:()=>jCard.click()})}
+  if(!items.length)return orig&&orig.call(h);
+  sheet(t('chal'),items,{label:t('ch_manage'),go:()=>orig&&orig.call(h)})
+},true);
+
+/* الشارة على العنوان تحسب التحديات + الرحلة */
+async function mark(){
+  const rows=[...W.children].slice(0,-1);let any=rows.length,p=rows.filter(r=>typeof r.onclick==='function').length;
+  if(jOn()){any++;if(jCard.textContent!==t('j_done')&&!(await jDone()))p++}
+  const h=W.lastElementChild;if(!h)return;
+  if(!any){h.removeAttribute('data-n');h.classList.remove('dn');return}
+  h.setAttribute('data-n',p?String(p):'✓');h.classList.toggle('dn',!p)}
+new MutationObserver(mark).observe(W,{childList:true});
+if(jCard)new MutationObserver(mark).observe(jCard,{attributes:true,childList:true,subtree:true});
+mark();
+
+/* إضافة بدء/إيقاف الرحلات داخل قائمة إدارة التحديات */
+new MutationObserver(ms=>{ms.forEach(m=>m.addedNodes.forEach(n=>{
+  if(!(n instanceof HTMLElement)||!n.classList.contains('sheet')||n.style.zIndex!=='460'||S.lang!=='ar')return;
+  const c=n.querySelector('.sheet-content');if(!c||!c.firstElementChild||c.firstElementChild.textContent!==t('chal'))return;
+  const first=c.querySelector('.btn.primary'),orig=W.lastElementChild&&W.lastElementChild.onclick;
+  [['gr','j_gr'],['rm','j_rm']].forEach(a=>{const k=a[0],cur=getJ(),on=cur&&cur.k===k;
+    const b=document.createElement('button');b.className='btn'+(on?' sel':'');b.style.whiteSpace='pre-line';b.textContent=t(a[1])+'\n'+(on?t('ch_stop'):t('ch_start'));
+    b.onclick=()=>{if(on)LS('lahza-j','');else LS('lahza-j',JSON.stringify({k,start:dstr(new Date())}));n.remove();applyI18n();setTimeout(()=>{mark();orig&&orig()},60)};
+    c.insertBefore(b,first)})
+}))}).observe(document.body,{childList:true});
+
+const vs=[...document.querySelectorAll('#tabSettings .settings-item .value')].pop();if(vs)vs.textContent='7.3';
+}catch(e){console.error(e)}
+})();
 </script>
 </body>
 </html>
