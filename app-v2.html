@@ -1058,6 +1058,44 @@ setTimeout(checkLetters,3000);chRender();
 $('languageStatus').textContent=LN[S.lang];
 const vs=[...document.querySelectorAll('#tabSettings .settings-item .value')].pop();if(vs)vs.textContent='7.0';
 })();
+  /* ===== تحسين الصفحة الرئيسية 7.1 ===== */
+(function(){
+const st=document.createElement('style');
+st.textContent=`
+#questionCard.quote-card{display:block;background:none;border:0;box-shadow:none;border-radius:0;padding:0;margin:22px auto 0;max-width:none;width:100%;text-align:center}
+.quote-card-title,.hs,#moreQ,#chalWrap>button:last-child{display:block!important;width:100%;margin:22px auto 0!important;padding:4px 0 0!important;font:600 1.35rem var(--fd)!important;color:var(--gold)!important;background:none!important;border:0!important;text-align:center;cursor:pointer}
+.quote-card-title{margin-top:0!important}
+.quote-card-title::after,.hs::after,#moreQ::after,#chalWrap>button:last-child::after{content:'';display:block;width:var(--ln,7rem);height:2px;background:var(--gold);margin:8px auto 0}
+#dailyQ{display:block;width:fit-content;max-width:92%;margin:14px auto 0;padding-bottom:10px;border-bottom:1px solid var(--gold);text-align:center;font:1.2rem/1.8 var(--fq);color:var(--text)}
+#chalWrap{display:flex;flex-direction:column;align-items:center;max-width:none!important;width:100%;margin:0 auto!important}
+#chalWrap>button:last-child{order:-1}
+#chalWrap>button:not(:last-child){display:block!important;width:100%;max-width:360px;background:none!important;border:0!important;border-radius:0!important;padding:8px 0!important;margin:2px 0!important;text-align:center!important}
+#chalWrap>button:not(:last-child) div:first-child{font:1.05rem var(--fq)!important;color:var(--text)!important}
+#chalWrap>button:not(:last-child) div:first-child::before{content:'● ';color:var(--gold);font-size:.7em}
+#chalWrap>button:not(:last-child) div:nth-child(2){font:.9rem var(--fb)!important;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:92%;margin:2px auto 0}
+.jc{border:0!important;background:none!important;padding:6px 0!important;margin:4px 0 0!important;font:1.05rem/1.7 var(--fq)!important;color:var(--text)!important;width:100%}
+`;
+document.head.appendChild(st);
+
+/* ترتيب العناصر: سؤال اليوم، أسئلة أخرى، تحديات، رحلات */
+try{
+  const moreQ=$('moreQ'),jw=moreQ.nextElementSibling,w=document.querySelector('#tabHome .home-actions').previousElementSibling;
+  if(w&&jw&&w!==jw){
+    w.id='chalWrap';
+    jw.parentNode.insertBefore(w,jw);
+    const jCard=jw.firstElementChild,jBtn=jw.lastElementChild;
+    if(jCard&&jBtn&&jCard!==jBtn){jCard.classList.add('jc');jBtn.classList.add('hs');jw.insertBefore(jBtn,jCard)}
+  }
+}catch(e){}
+
+/* طول السطر الذهبي = طول كلمتي "سؤال اليوم" (ونفسه لباقي العناوين) */
+function setLn(){try{const t=document.querySelector('.quote-card-title');if(!t)return;const r=document.createRange();r.selectNodeContents(t);const w=r.getBoundingClientRect().width;if(w>20)document.documentElement.style.setProperty('--ln',Math.ceil(w)+'px')}catch(e){}}
+const _a=applyI18n;applyI18n=function(){_a();setLn()};
+setLn();setTimeout(setLn,600);setTimeout(setLn,2000);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(setLn);
+
+const vs=[...document.querySelectorAll('#tabSettings .settings-item .value')].pop();if(vs)vs.textContent='7.1';
+})();
 </script>
 </body>
 </html>
