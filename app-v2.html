@@ -1096,6 +1096,59 @@ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(setLn);
 
 const vs=[...document.querySelectorAll('#tabSettings .settings-item .value')].pop();if(vs)vs.textContent='7.1';
 })();
+  /* ===== تحسين الرئيسية 7.2: التحديات والرحلات تتجمّع داخل العنوان ===== */
+Object.assign(I.ar,{ch_manage:'إدارة التحديات',j_manage:'إدارة الرحلات'});
+Object.assign(I.en,{ch_manage:'Manage challenges',j_manage:'Manage journeys'});
+Object.assign(I.sv,{ch_manage:'Hantera utmaningar',j_manage:'Hantera resor'});
+(function(){
+try{
+const st=document.createElement('style');
+st.textContent=`
+#tabHome #chalWrap>button:not(:last-child){display:none!important}
+#tabHome .jc{display:none!important}
+#chalWrap>button:last-child[data-n]::before,#tabHome .hs[data-n]::before{content:attr(data-n);display:inline-block;min-width:1.35em;height:1.35em;padding:0 .3em;border-radius:999px;background:var(--gold);color:var(--on-gold);font:600 .65em/1.35em var(--fb);margin-inline-end:.5em;vertical-align:middle;text-align:center}
+#chalWrap>button:last-child.dn[data-n]::before{background:none;color:var(--gold);border:1px solid var(--gold);line-height:1.2em}
+`;
+document.head.appendChild(st);
+
+const W=$('chalWrap'),jBtn=document.querySelector('#tabHome .hs'),jw=jBtn&&jBtn.parentNode,jCard=jw&&jw.querySelector('.jc');
+
+function sheet(title,items,manage){
+  const s=document.createElement('div');s.className='sheet';s.style.zIndex=470;
+  const c=document.createElement('div');c.className='sheet-content';s.appendChild(c);
+  const h=document.createElement('div');h.textContent=title;h.style.cssText='font:1.3rem var(--fd);color:var(--gold);margin-bottom:16px';c.appendChild(h);
+  const close=()=>s.remove();
+  items.forEach(it=>{const b=document.createElement('button');b.className='btn'+(it.done?'':' primary');b.style.whiteSpace='pre-line';b.textContent=it.text;
+    if(it.done){b.style.opacity='.6';b.disabled=true}else b.onclick=()=>{close();it.go()};c.appendChild(b)});
+  if(manage){const m=document.createElement('button');m.className='btn';m.textContent=manage.label;m.onclick=()=>{close();manage.go()};c.appendChild(m)}
+  const x=document.createElement('button');x.className='btn';x.textContent=t('close');x.onclick=close;c.appendChild(x);
+  s.addEventListener('click',e=>{if(e.target===s)close()});
+  document.body.appendChild(s)}
+
+/* التحديات: شارة على العنوان + نافذة لمهام اليوم */
+function markC(){const h=W.lastElementChild;if(!h)return;const rows=[...W.children].filter(x=>x!==h);
+  if(!rows.length){h.removeAttribute('data-n');h.classList.remove('dn');return}
+  const p=rows.filter(r=>typeof r.onclick==='function').length;
+  h.setAttribute('data-n',p?String(p):'✓');h.classList.toggle('dn',!p)}
+new MutationObserver(markC).observe(W,{childList:true});markC();
+W.addEventListener('click',e=>{const h=W.lastElementChild,b=e.target.closest('button');
+  if(!b||b.parentNode!==W||b!==h)return;
+  const rows=[...W.children].filter(x=>x!==h);if(!rows.length)return;
+  e.stopImmediatePropagation();e.preventDefault();const orig=h.onclick;
+  sheet(t('chal'),rows.map(r=>({text:r.children[0].textContent+'\n'+r.children[1].textContent,done:typeof r.onclick!=='function',go:()=>r.click()})),
+    {label:t('ch_manage'),go:()=>orig&&orig.call(h)})},true);
+
+/* الرحلات: نفس الفكرة */
+if(jw&&jCard){
+  const markJ=()=>{const on=jCard.style.display!=='none';if(on)jBtn.setAttribute('data-n','●');else jBtn.removeAttribute('data-n')};
+  new MutationObserver(markJ).observe(jCard,{attributes:true,childList:true,subtree:true});markJ();
+  jw.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b!==jBtn||jCard.style.display==='none')return;
+    e.stopImmediatePropagation();e.preventDefault();const orig=jBtn.onclick;
+    sheet(t('journeys'),[{text:jCard.textContent,done:false,go:()=>jCard.click()}],{label:t('j_manage'),go:()=>orig&&orig.call(jBtn)})},true)}
+
+const vs=[...document.querySelectorAll('#tabSettings .settings-item .value')].pop();if(vs)vs.textContent='7.2';
+}catch(e){console.error(e)}
+})();
 </script>
 </body>
 </html>
