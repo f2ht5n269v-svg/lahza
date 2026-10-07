@@ -948,6 +948,116 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncNative
 
 const vl=document.querySelector('#tabSettings .settings-item:last-child .value');if(vl)vl.textContent='6.0';
 })();
+  /* ===== إضافات 7.0: تحديات + شارات + رسالة إلى نفسي ===== */
+Object.assign(I.ar,{chal:'التحديات',ch_photo:'صورة كل يوم (30 يوماً)',ch_line:'جملة كل يوم (سنة)',ch_voice:'صوت 10 ثوانٍ (7 أيام)',ch_thanks:'رسالة شكر (7 أيام)',ch_dh:'العشر الأوائل من ذي الحجة',ch_rm10:'العشر الأواخر من رمضان',ch_sh:'ست من شوال',p_photo:'صوّر شيئاً من يومك',p_line:'اكتب جملة واحدة عن يومك',p_voice:'سجّل 10 ثوانٍ عن يومك',p_thanks:'اكتب رسالة شكر لشخص اليوم',ch_day:'اليوم',ch_ok:'تم اليوم ✓',ch_start:'ابدأ',ch_stop:'إيقاف',ch_fin:'مكتمل 🏅',ch_in:'بعد {n} يوم',ch_now:'متاح الآن',ch_grid:'شبكة صور التحدّي',ch_badges:'الشارات',letter:'رسالة إلى نفسي',l_ph:'اكتب لنفسك في المستقبل...',l_new:'رسالة جديدة',l_1m:'افتحها بعد شهر',l_6m:'افتحها بعد 6 أشهر',l_1y:'افتحها بعد سنة',l_lock:'مغلقة حتى',l_saved:'تم قفل الرسالة',l_got:'📬 وصلتك رسالة من نفسك',l_nt:'رسالة من نفسك 📬',l_nb:'حان وقت فتحها',bd_streak:'{n} يوم متواصل',bd_new:'🏅 شارة جديدة:'});
+Object.assign(I.en,{chal:'Challenges',ch_photo:'A photo a day (30 days)',ch_line:'A sentence a day (1 year)',ch_voice:'10-second voice (7 days)',ch_thanks:'Thank-you note (7 days)',p_photo:'Photograph something from your day',p_line:'Write one sentence about your day',p_voice:'Record 10 seconds about your day',p_thanks:'Write a thank-you note to someone today',ch_day:'Day',ch_ok:'Done today ✓',ch_start:'Start',ch_stop:'Stop',ch_fin:'Completed 🏅',ch_in:'in {n} days',ch_now:'Available now',ch_grid:'Challenge photo grid',ch_badges:'Badges',letter:'Letter to myself',l_ph:'Write to your future self...',l_new:'New letter',l_1m:'Open in 1 month',l_6m:'Open in 6 months',l_1y:'Open in 1 year',l_lock:'Sealed until',l_saved:'Letter sealed',l_got:'📬 A letter from your past self',l_nt:'A letter from yourself 📬',l_nb:'Time to open it',bd_streak:'{n}-day streak',bd_new:'🏅 New badge:'});
+Object.assign(I.sv,{chal:'Utmaningar',ch_photo:'Ett foto om dagen (30 dagar)',ch_line:'En mening om dagen (1 år)',ch_voice:'10 sekunders röst (7 dagar)',ch_thanks:'Tackbrev (7 dagar)',p_photo:'Fota något från din dag',p_line:'Skriv en mening om din dag',p_voice:'Spela in 10 sekunder om din dag',p_thanks:'Skriv ett tackbrev till någon idag',ch_day:'Dag',ch_ok:'Klart idag ✓',ch_start:'Starta',ch_stop:'Avsluta',ch_fin:'Klar 🏅',ch_in:'om {n} dagar',ch_now:'Tillgänglig nu',ch_grid:'Utmaningens fotorutnät',ch_badges:'Märken',letter:'Brev till mig själv',l_ph:'Skriv till ditt framtida jag...',l_new:'Nytt brev',l_1m:'Öppna om 1 månad',l_6m:'Öppna om 6 månader',l_1y:'Öppna om 1 år',l_lock:'Förseglat till',l_saved:'Brevet är förseglat',l_got:'📬 Ett brev från dig själv',l_nt:'Ett brev från dig själv 📬',l_nb:'Dags att öppna det',bd_streak:'{n} dagar i rad',bd_new:'🏅 Nytt märke:'});
+(function(){
+const mk=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e};
+const LB=[];
+const CH=[
+{id:'photo',days:30,k:'ch_photo',p:'p_photo',type:'photo'},
+{id:'line',days:365,k:'ch_line',p:'p_line',type:'text'},
+{id:'voice',days:7,k:'ch_voice',p:'p_voice',type:'audio'},
+{id:'thanks',days:7,k:'ch_thanks',p:'p_thanks',type:'text'},
+{id:'dh',days:10,k:'ch_dh',type:'text',ar:1,hj:{m:12,a:1,b:10},P:['اكتب نيّتك لهذه العشر','ما عمل صالح بدأته اليوم؟','ما دعاء تكرره اليوم؟','من تريد أن تصله اليوم؟','ما شيء تركته لله؟','ما ذكر لزمته اليوم؟','ما صدقة قدّمتها؟','ما أكثر ما شكرت الله عليه؟','من سامحت؟','ما شعورك مع اقتراب العيد؟']},
+{id:'rm10',days:10,k:'ch_rm10',type:'text',ar:1,hj:{m:9,a:21,b:30},P:['ما أمنيتك للعشر الأواخر؟','من تدعو له الليلة؟','ما ذنب تريد تركه؟','ما صلاة شعرت فيها بخشوع؟','ما أجمل ما سمعته من أهلك؟','ما عمل صغير أسعد غيرك؟','ما شيء تتمنى أن يبقى بعد رمضان؟','ما نعمة اكتشفتها هذا الشهر؟','ما الذي ستشتاق له من رمضان؟','ما رسالتك لنفسك بعد رمضان؟']},
+{id:'sh',days:6,k:'ch_sh',type:'text',ar:1,hj:{m:10,a:1,b:30},P:['ما دافعك لإكمال الست؟','ما شعورك بعد العيد؟','ما عادة رمضانية بقيت معك؟','ما أصعب ما واجهت؟','ما نعمة تشكرها اليوم؟','ما أثر رمضان فيك بعد انتهائه؟']}];
+const hf=(()=>{try{return new Intl.DateTimeFormat('en-u-ca-islamic-umalqura',{day:'numeric',month:'numeric'})}catch(e){return null}})();
+function hij(d){try{const p=hf.formatToParts(d);return{m:+p.find(x=>x.type==='month').value,d:+p.find(x=>x.type==='day').value}}catch(e){return{m:0,d:0}}}
+const getCS=()=>{try{return JSON.parse(LS('lahza-ch'))||{}}catch(e){return{}}};
+const setCS=o=>LS('lahza-ch',JSON.stringify(o));
+const getL=()=>{try{return JSON.parse(LS('lahza-letters'))||[]}catch(e){return[]}};
+const setL=a=>LS('lahza-letters',JSON.stringify(a));
+const getB=()=>{try{return JSON.parse(LS('lahza-bd'))||{}}catch(e){return{}}};
+
+/* --- ربط اللقطة بالتحدّي --- */
+const _am=addMoment;addMoment=async function(m,b,bg,ex){if(S.chal&&Date.now()-S.chalT<18e5){const c=CH.find(x=>x.id===S.chal);if(c&&c.type===m.type){m.ch=c.id;S.chal=null}}return _am(m,b,bg,ex)};
+['actionPhoto','actionVideo','actionAudio','actionText','actionOldDate','pickTypePhoto','pickTypeVideo','pickTypeAudio','pickTypeText'].forEach(id=>$(id).addEventListener('click',()=>{S.chal=null}));
+setInterval(()=>{if(S.chal==='voice'&&Date.now()-S.chalT<18e5&&rec&&rec.state==='recording'&&recT>=10)stopRec(false)},500);
+
+/* --- حالة التحدّي --- */
+function info(c,ms,cs){const dates=new Set(ms.filter(m=>m.ch===c.id).map(m=>dstr(m.date))),done=dates.size,today=dstr(new Date()),dt=dates.has(today);
+  if(done>=c.days)return{fin:1,done,dt};if(!cs[c.id])return{on:false,done,dt};let n;
+  if(c.hj){const h=hij(new Date());if(h.m!==c.hj.m||h.d<c.hj.a||h.d>c.hj.b)return{on:false,wait:1,done,dt};n=c.id==='sh'?Math.min(done+(dt?0:1),c.days):h.d-c.hj.a+1}
+  else{n=Math.floor((new Date(today+'T12:00:00')-new Date(cs[c.id]+'T12:00:00'))/864e5)+1;if(n>c.days)return{on:false,over:1,done,dt}}
+  return{on:true,n,done,dt}}
+function until(c){let d=new Date();for(let i=0;i<420;i++){const h=hij(d);if(h.m===c.hj.m&&h.d>=c.hj.a&&h.d<=c.hj.b)return i;d=new Date(d.getTime()+864e5)}return null}
+const promptOf=(c,n)=>c.P?c.P[Math.min(n-1,c.P.length-1)]:t(c.p);
+function doTask(c,n){const p=promptOf(c,n);S.chal=c.id;S.chalT=Date.now();toast(p);
+  if(c.type==='photo')openPhoto();else if(c.type==='audio')openAudio();else{openText();$('textInput').placeholder=p}}
+
+/* --- بطاقات الرئيسية --- */
+const W=mk('div');W.style.cssText='max-width:360px;margin:0 auto 14px;text-align:center';
+document.querySelector('.home-actions').insertAdjacentElement('beforebegin',W);
+async function chRender(){const ms=await getAll(),cs=getCS();W.innerHTML='';
+  CH.forEach(c=>{if(c.ar&&S.lang!=='ar')return;const i=info(c,ms,cs);if(!i.on)return;
+    const b=mk('button','');b.style.cssText='display:block;width:100%;padding:16px;margin-bottom:8px;border:1px solid var(--border-strong);border-radius:var(--r);background:var(--card);color:var(--text);text-align:start;line-height:1.7';
+    const a=mk('div','',(c.hj?'':'')+t(c.k)+' · '+t('ch_day')+' '+i.n+'/'+c.days);a.style.cssText='color:var(--gold);font:1.05rem var(--fd)';
+    const p=mk('div','',i.dt?t('ch_ok'):promptOf(c,i.n));p.style.cssText='font:1.1rem var(--fq)';b.append(a,p);
+    if(!i.dt)b.onclick=()=>doTask(c,i.n);else b.style.opacity='.7';W.appendChild(b)});
+  const bt=mk('button','',t('chal'));bt.style.cssText='color:var(--gold);padding:8px 18px';bt.onclick=chSheet;W.appendChild(bt)}
+
+/* --- نوافذ --- */
+function overlay(build){const s=mk('div','sheet');s.style.zIndex=460;const c=mk('div','sheet-content');s.appendChild(c);const close=()=>s.remove();build(c,close);document.body.appendChild(s)}
+const ttl=txt=>{const e=mk('div','',txt);e.style.cssText='font:1.3rem var(--fd);color:var(--gold);margin-bottom:16px';return e};
+const cancelBtn=(c,close)=>{const x=mk('button','btn',t('close'));x.onclick=close;c.appendChild(x)};
+async function chSheet(){const ms=await getAll(),cs=getCS();
+  overlay((c,close)=>{c.appendChild(ttl(t('chal')));
+    CH.forEach(x=>{if(x.ar&&S.lang!=='ar')return;const i=info(x,ms,cs);let st;
+      if(i.fin)st=t('ch_fin');else if(cs[x.id])st=t('ch_stop')+(i.wait?' · '+t('ch_in').replace('{n}',until(x)):'');
+      else{st=t('ch_start');if(x.hj){const u=until(x);st+=' · '+(u===0?t('ch_now'):u===null?'':t('ch_in').replace('{n}',u))}}
+      const b=mk('button','btn'+(cs[x.id]&&!i.fin?' sel':''),t(x.k)+'\n'+st);b.style.whiteSpace='pre-line';
+      b.onclick=()=>{if(i.fin)return;const o=getCS();if(o[x.id])delete o[x.id];else o[x.id]=dstr(new Date());setCS(o);close();chSheet();chRender()};c.appendChild(b)});
+    [['ch_grid',()=>{close();grid()}],['letter',()=>{close();lettersUI()}],['ch_badges',()=>{close();badgesUI()}]].forEach(a=>{const b=mk('button','btn primary',t(a[0]));b.onclick=a[1];c.appendChild(b)});
+    cancelBtn(c,close)})}
+
+/* --- شبكة صور التحدّي --- */
+async function grid(){const ms=(await getAll()).filter(m=>m.ch==='photo'&&m.type==='photo').sort((a,b)=>new Date(a.date)-new Date(b.date));
+  if(!ms.length)return toast(t('no_moments'),1);const n=ms.length,cols=Math.min(6,n),rows=Math.ceil(n/cols),cell=300,gap=8,cv=document.createElement('canvas');
+  cv.width=cols*cell+(cols+1)*gap;cv.height=rows*cell+(rows+1)*gap;const x=cv.getContext('2d');x.fillStyle='#0F0A08';x.fillRect(0,0,cv.width,cv.height);
+  for(let i=0;i<n;i++){const b=await getBlob(ms[i].id);if(!b)continue;const u=URL.createObjectURL(b),im=await loadImg(u);URL.revokeObjectURL(u);if(!im)continue;
+    const px=gap+(i%cols)*(cell+gap),py=gap+Math.floor(i/cols)*(cell+gap),k=Math.max(cell/im.width,cell/im.height),w=im.width*k,h=im.height*k;
+    x.save();x.beginPath();x.rect(px,py,cell,cell);x.clip();x.drawImage(im,px+(cell-w)/2,py+(cell-h)/2,w,h);x.restore()}
+  const png=await new Promise(r=>cv.toBlob(r,'image/png'));shareFiles([new File([png],'lahza-grid.png',{type:'image/png'})])}
+
+/* --- الشارات --- */
+const TH=[7,30,100,365];
+async function checkBadges(ms){try{ms=ms||await getAll();const days=new Set(ms.map(m=>dstr(m.date)));let n=0,c=new Date();if(!days.has(dstr(c)))c.setDate(c.getDate()-1);
+  while(days.has(dstr(c))){n++;c.setDate(c.getDate()-1)}const bd=getB();let nw=null;
+  TH.forEach(x=>{if(n>=x&&!bd[x]){bd[x]=dstr(new Date());nw=x}});if(nw){LS('lahza-bd',JSON.stringify(bd));toast(t('bd_new')+' '+t('bd_streak').replace('{n}',nw))}}catch(e){}}
+async function badgesUI(){const ms=await getAll(),bd=getB();overlay((c,close)=>{c.appendChild(ttl(t('ch_badges')));
+  TH.forEach(x=>{const r=mk('div','',(bd[x]?'🏅 ':'🔒 ')+t('bd_streak').replace('{n}',x));r.style.cssText='padding:14px;border:1px solid var(--border-strong);border-radius:var(--r);margin:8px 0;opacity:'+(bd[x]?1:.5);c.appendChild(r)});
+  CH.forEach(x=>{if(x.ar&&S.lang!=='ar')return;const f=info(x,ms,{}).fin;const r=mk('div','',(f?'✅ ':'🔒 ')+t(x.k));r.style.cssText='padding:14px;border:1px solid var(--border-strong);border-radius:var(--r);margin:8px 0;opacity:'+(f?1:.5);c.appendChild(r)});
+  cancelBtn(c,close)})}
+
+/* --- رسالة إلى نفسي --- */
+function lettersUI(){const L=getL().sort((a,b)=>new Date(a.o)-new Date(b.o));
+  overlay((c,close)=>{c.appendChild(ttl(t('letter')));
+    const nb=mk('button','btn primary',t('l_new'));nb.onclick=()=>{close();writeLetter()};c.appendChild(nb);
+    const now=Date.now();let ch=false;
+    L.forEach(l=>{const r=mk('div','');r.style.cssText='padding:14px;border:1px solid var(--border-strong);border-radius:var(--r);margin:10px 0;text-align:start';
+      if(new Date(l.o)<=now){const d=mk('div','',fdate(l.c));d.style.cssText='color:var(--gold);font:.95rem var(--fd);margin-bottom:6px';const x=mk('div','',l.x);x.style.cssText='font:1.1rem/1.8 var(--fq);white-space:pre-wrap';r.append(d,x);if(!l.s){l.s=1;ch=true}}
+      else r.textContent='🔒 '+t('l_lock')+' '+fdate(l.o);c.appendChild(r)});
+    if(ch)setL(L);cancelBtn(c,close)})}
+function writeLetter(){overlay((c,close)=>{c.appendChild(ttl(t('letter')));const ta=mk('textarea','text-input');ta.placeholder=t('l_ph');ta.style.minHeight='180px';c.appendChild(ta);
+  [['l_1m',1],['l_6m',6],['l_1y',12]].forEach(a=>{const b=mk('button','btn primary',t(a[0]));b.onclick=()=>{const x=ta.value.trim();if(!x)return toast(t('write_first'),1);
+    const o=new Date();o.setMonth(o.getMonth()+a[1]);o.setHours(9,0,0,0);const L=getL();L.push({id:Date.now(),c:new Date().toISOString(),o:o.toISOString(),x});setL(L);toast(t('l_saved'));close();syncNative()};c.appendChild(b)});
+  cancelBtn(c,close)})}
+function checkLetters(){if(getL().some(l=>!l.s&&new Date(l.o)<=Date.now()))toast(t('l_got'))}
+const _sn=syncNative;syncNative=async function(){await _sn();const p=PLG('LocalNotifications');if(!p)return;
+  try{await p.cancel({notifications:Array.from({length:50},(_,i)=>({id:1000+i}))});const L=getL().filter(l=>new Date(l.o)>new Date()).slice(0,50);if(!L.length)return;
+    const pm=await p.requestPermissions();if(pm.display!=='granted')return;
+    await p.schedule({notifications:L.map((l,i)=>({id:1000+i,title:t('l_nt'),body:t('l_nb'),schedule:{at:new Date(l.o),allowWhileIdle:true}}))})}catch(e){}};
+
+/* --- تشغيل --- */
+const _uh=updateHome;updateHome=async function(ms){await _uh(ms);chRender();checkBadges()};
+const _ai2=applyI18n;applyI18n=function(){_ai2();chRender()};
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkLetters();syncNative()}});
+setTimeout(checkLetters,3000);chRender();
+$('languageStatus').textContent=LN[S.lang];
+const vs=[...document.querySelectorAll('#tabSettings .settings-item .value')].pop();if(vs)vs.textContent='7.0';
+})();
 </script>
 </body>
 </html>
