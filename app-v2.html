@@ -1216,6 +1216,20 @@ new MutationObserver(ms=>{ms.forEach(m=>m.addedNodes.forEach(n=>{
 const vs=[...document.querySelectorAll('#tabSettings .settings-item .value')].pop();if(vs)vs.textContent='7.3';
 }catch(e){console.error(e)}
 })();
+  /* ===== 7.4: إعادة عرض الترحيب ===== */
+Object.assign(I.ar,{intro_again:'عرض شاشة الترحيب'});
+Object.assign(I.en,{intro_again:'Show intro again'});
+Object.assign(I.sv,{intro_again:'Visa intro igen'});
+(function(){
+const rows=[...document.querySelectorAll('#tabSettings .settings-item')],ver=rows[rows.length-1];
+const b=document.createElement('button');b.className='settings-item';b.id='btnIntro';
+b.innerHTML='<span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></span><div class="info"><span class="label"></span></div><span class="arrow">›</span>';
+ver.parentNode.insertBefore(b,ver);
+const lab=()=>{b.querySelector('.label').textContent=t('intro_again')};lab();
+const _a=applyI18n;applyI18n=function(){_a();lab()};
+b.onclick=()=>{try{localStorage.removeItem('lahza-onb')}catch(e){}location.reload()};
+const vs=[...document.querySelectorAll('#tabSettings .settings-item .value')].pop();if(vs)vs.textContent='7.4';
+})();
 </script>
 </body>
 </html>
