@@ -9,11 +9,10 @@
   body{background:#000;color:#D4AF37;font-family:system-ui;
        min-height:100vh;display:flex;flex-direction:column;
        justify-content:center;align-items:center;gap:24px;padding:20px;margin:0}
-  canvas{width:min(85vw,400px);height:min(85vw,400px);border-radius:22.5%;
-         box-shadow:0 0 80px rgba(212,175,55,0.35)}
+  canvas{width:min(85vw,400px);height:min(85vw,400px);border-radius:22.5%}
   button{padding:20px 50px;background:#D4AF37;color:#0F0A08;
-         border:none;border-radius:99px;font-size:1.2rem;
-         font-weight:700;cursor:pointer;font-family:inherit}
+         borderه:none;border-radius:99px;بيةfont-size:1.2rem;
+ نظ         font-weight:700;cursor:pointer;font-family:inherit}
   button:active{transform:scale(.95)}
   p{color:#D4AF37;text-align:center;font-size:1rem;max-width:400px;line-height:1.7}
 </style>
@@ -30,42 +29,14 @@ async function draw(){
   try{await document.fonts.load('400 200px "Great Vibes"');
       await document.fonts.ready}catch(e){}
 
-  // 1. خلفية سوداء دافئة عميقة
-  x.fillStyle='#0A0505';
+  // خلفية سوداء عميقة
+  x.fillStyle='#050202';
   x.fillRect(0,0,S,S);
 
-  // 2. توهج ذهبي من الحواف (vignette ذهبي)
-  const edge=x.createRadialGradient(R,R,R*0.3,R,R,R*1.4);
-  edge.addColorStop(0,'rgba(212,175,55,0)');
-  edge.addColorStop(0.6,'rgba(212,175,55,0.08)');
-  edge.addColorStop(0.85,'rgba(212,175,55,0.28)');
-  edge.addColorStop(1,'rgba(212,175,55,0.5)');
-  x.fillStyle=edge;
-  x.fillRect(0,0,S,S);
-
-  // 3. توهج دافئ داخل الأطراف (أحمر خفيف)
-  const warm=x.createRadialGradient(R,R,R*0.5,R,R,R*1.2);
-  warm.addColorStop(0,'rgba(42,8,8,0)');
-  warm.addColorStop(1,'rgba(60,20,10,0.4)');
-  x.fillStyle=warm;
-  x.fillRect(0,0,S,S);
-
-  // 4. توهج خلف "Lahza"
-  const halo=x.createRadialGradient(R,R+10,0,R,R+10,220);
-  halo.addColorStop(0,'rgba(212,175,55,0.35)');
-  halo.addColorStop(0.5,'rgba(212,175,55,0.12)');
-  halo.addColorStop(1,'rgba(212,175,55,0)');
-  x.fillStyle=halo;
-  x.fillRect(0,0,S,S);
-
-  // 5. النص "Lahza" بخط Great Vibes
+  // النص "Lahza" ذهبي بدون أي توهج
   x.font='400 200px "Great Vibes", cursive';
   x.textAlign='center';x.textBaseline='middle';
-  x.shadowColor='rgba(212,175,55,0.9)';
-  x.shadowBlur=40;
   x.fillStyle='#D4AF37';
-  x.fillText('Lahza',R,R+8);
-  x.shadowBlur=20;
   x.fillText('Lahza',R,R+8);
 }
 
