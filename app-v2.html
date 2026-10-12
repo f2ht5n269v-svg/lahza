@@ -979,6 +979,118 @@ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(setLn);
     setTimeout(nudge,5000);setTimeout(checkLetters,3000);setTimeout(onboard,1900);setTimeout(setLn,600);
   }catch(e){console.error(e);toast(t('err')+': '+e.message,1)}
 })();
+  /* ===== 10.0 دفعة 1: صوت + زر إضافة + قبل/بعد + أسئلة ذكية + يوم صعب + ملخص الأسبوع ===== */
+Object.assign(I.ar,{rec_tap:'اضغط على الميكروفون لبدء التسجيل',rec_on:'جاري التسجيل... اضغط ⏹ للإيقاف',rec_ready:'تم التسجيل، استمع ثم احفظ',add:'إضافة',add_t:'ماذا تريد أن تضيف؟',hard:'يوم صعب',hard_on:'اليوم صعب؟ لا بأس. اكتب سطراً واحداً فقط، وهذا يكفي 🤍',hard_off:'العودة للوضع العادي',ba_t:'قبل وبعد',ba_6m:'قبل 6 أشهر',ba_1y:'قبل سنة',ba_first:'الأقدم',ba_need:'أضف صورتين أو فيديوهين على الأقل',wk_t:'ملخص الأسبوع',wk_mood:'مزاج الأسبوع',wk_tag:'أكثر وسم'});
+Object.assign(I.en,{rec_tap:'Tap the microphone to start',rec_on:'Recording... tap ⏹ to stop',rec_ready:'Recorded. Listen, then save',add:'Add',add_t:'What would you like to add?',hard:'Hard day',hard_on:'A hard day? That is okay. Write just one line, that is enough 🤍',hard_off:'Back to normal mode',ba_t:'Before & after',ba_6m:'6 months ago',ba_1y:'1 year ago',ba_first:'Oldest',ba_need:'Add at least two photos or videos',wk_t:'Week summary',wk_mood:'Mood of the week',wk_tag:'Top tag'});
+Object.assign(I.sv,{rec_tap:'Tryck på mikrofonen för att börja',rec_on:'Spelar in... tryck ⏹ för att stoppa',rec_ready:'Inspelat. Lyssna och spara',add:'Lägg till',add_t:'Vad vill du lägga till?',hard:'Tung dag',hard_on:'Tung dag? Det är okej. Skriv bara en rad, det räcker 🤍',hard_off:'Tillbaka till vanligt läge',ba_t:'Före och efter',ba_6m:'För 6 månader sedan',ba_1y:'För ett år sedan',ba_first:'Äldsta',ba_need:'Lägg till minst två foton eller videor',wk_t:'Veckosammanfattning',wk_mood:'Veckans humör',wk_tag:'Vanligaste taggen'});
+(function(){
+const css=mk('style');css.textContent='.home-actions{display:none!important}#fab{position:fixed;bottom:calc(86px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:150;display:flex;align-items:center;gap:10px;padding:14px 28px;border-radius:999px;background:var(--gold);color:var(--on-gold);font:600 1.1rem var(--fd);box-shadow:0 8px 24px rgba(0,0,0,.35)}#fab b{font-size:1.6rem;line-height:1}.addgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.addgrid button{display:flex;flex-direction:column;align-items:center;gap:10px;padding:20px 8px;border:1.5px solid var(--border-strong);border-radius:var(--r);background:var(--bg);color:var(--text);font:1.1rem var(--fd)}.addgrid button:last-child:nth-child(odd){grid-column:1/-1}.addgrid svg{width:34px;height:34px;stroke:var(--gold);stroke-width:1.6;fill:none}#tabHome.hard .home-stats,#tabHome.hard .on-this-day,#tabHome.hard #moreQ,#tabHome.hard .home-hijri{display:none!important}';
+document.head.appendChild(css);
+const title=(c,k)=>{const h=mk('div','',t(k));h.style.cssText='font:1.4rem var(--fd);color:var(--gold);margin-bottom:14px';c.appendChild(h)};
+
+/* 1) إصلاح التسجيل الصوتي */
+const sc=$('audioScreen'),msg=mk('div','screen-subtitle');sc.insertBefore(msg,$('recTime'));
+const cn=mk('button','btn');cn.style.marginTop='28px';cn.onclick=()=>$('audioClose').click();sc.appendChild(cn);
+const dc=mk('button','btn');dc.onclick=()=>$('audioClose').click();$('recDone').appendChild(dc);
+const rn=$('recNext');rn.removeAttribute('data-i18n');
+let cur='idle';
+const labA=()=>{msg.textContent=t(cur==='rec'?'rec_on':cur==='done'?'rec_ready':'rec_tap');rn.textContent=t('save_moment');cn.textContent=t('cancel');dc.textContent=t('cancel')};
+recUI=function(st){cur=st;const b=$('recBtn');b.className='rec-btn'+(st==='rec'?' on':'');b.textContent=st==='rec'?'⏹':'🎙';b.classList.toggle('hidden',st==='done');$('recDone').classList.toggle('hidden',st!=='done');cn.classList.toggle('hidden',st!=='rec');labA()};
+startRec=async function(){
+  if(!window.MediaRecorder||!navigator.mediaDevices){msg.textContent=t('mic_err');return toast(t('mic_err'),1)}
+  try{recStream=await navigator.mediaDevices.getUserMedia({audio:true});const mt=pickMime();
+    try{rec=new MediaRecorder(recStream,mt?{mimeType:mt}:undefined)}catch(e){rec=new MediaRecorder(recStream)}
+    recChunks=[];rec.ondataavailable=e=>{if(e.data&&e.data.size)recChunks.push(e.data)};rec.onstop=finishRec;rec.start(1000);
+    recT=0;$('recTime').textContent='0:00';recUI('rec');clearInterval(recInt);
+    recInt=setInterval(()=>{recT++;$('recTime').textContent=fdur(recT);if(recT>=MAXREC)stopRec(false)},1000)}
+  catch(e){killMic();recUI('idle');msg.textContent=t('mic_err');toast(t('mic_err'),1)}};
+const _fr=finishRec;finishRec=function(){_fr();if(!S.blob||S.blob.size<100){S.blob=null;recUI('idle');msg.textContent=t('mic_err');toast(t('mic_err'),1)}};
+
+/* 2) زر الإضافة الواحد */
+const fab=mk('button');fab.id='fab';fab.innerHTML='<b>+</b><span></span>';document.body.appendChild(fab);
+const labF=()=>fab.lastChild.textContent=t('add');
+fab.onclick=()=>{const acts=[...document.querySelectorAll('.home-actions .home-action')];
+  overlay((c,close)=>{title(c,'add_t');const g=mk('div','addgrid');
+    acts.forEach(a=>{const b=mk('button');b.appendChild(a.querySelector('svg').cloneNode(true));b.appendChild(mk('span','',a.querySelector('.label').textContent));b.onclick=()=>{close();a.click()};g.appendChild(b)});
+    c.appendChild(g);const x=mk('button','btn',t('close'));x.style.marginTop='16px';x.onclick=close;c.appendChild(x)})};
+const _sw=switchTab;switchTab=function(n){_sw(n);fab.style.display=n==='Home'?'flex':'none'};
+
+/* 3) يوم صعب + أسئلة ذكية */
+const GENTLE={ar:['ما أصغر شيء يريّح قلبك الآن؟','ما الذي يمكنك أن تسامح نفسك عليه اليوم؟','ما أمر بسيط كان لطيفاً اليوم؟','ما جملة طيبة تقولها لنفسك الآن؟'],en:['What is the smallest thing that would comfort you right now?','What can you forgive yourself for today?','What small thing was kind today?','What kind sentence can you say to yourself now?'],sv:['Vad är det minsta som skulle trösta dig just nu?','Vad kan du förlåta dig själv för idag?','Vad litet var snällt idag?','Vilken vänlig mening kan du säga till dig själv nu?']};
+const KW={tired:['تعب','مرهق','منهك','إرهاق','ارهاق','نعسان','tired','exhaust','drain','sleepy','burnt','trött','utmattad','orkar inte'],sad:['حزين','زعلان','بكيت','وحيد','ضيق','مهموم','sad','lonely','cried','depress','ledsen','ensam','grät','deppig'],anx:['قلق','خايف','خوف','متوتر','توتر','anxious','worried','stress','scared','nervous','overwhelm','orolig','rädd','nervös','ångest'],ang:['غضب','معصب','عصبي','غاضب','angry','mad ','annoy','frustrat','furious',' arg','irriterad','frustrerad','förbannad'],joy:['سعيد','مبسوط','فرحان','ممتن','الحمد','happy','grateful','proud','excited','thankful','glad','tacksam','lycklig','stolt','nöjd']};
+const SQ={
+ar:{tired:['ما أصغر خطوة ممكنة تعيد لك بعض الطاقة؟','ما الذي أتعبك فعلاً، وما الذي يمكنك تأجيله؟','ماذا يحتاج جسدك الآن: نوم، ماء، أم هدوء؟'],sad:['ما الذي يخفف عنك قليلاً حين تحزن؟','من تثق به ويمكنك أن تحكي له اليوم؟','ما أمر بسيط كان لطيفاً اليوم رغم كل شيء؟'],anx:['ما أسوأ ما تخاف منه، وما احتمال حدوثه فعلاً؟','ما الذي في يدك أن تفعله اليوم بشأنه؟','ما الذي يهدّئك عادة؟ جرّبه الآن لخمس دقائق.'],ang:['ما الذي وراء هذا الغضب فعلاً؟','ماذا تحتاج لتشعر أن حقك محفوظ؟','كيف تريد أن تتصرف غداً حين يهدأ قلبك؟'],joy:['ما الذي صنع هذه السعادة، وكيف تكرّره؟','من تحب أن تشاركه هذه الفرحة؟','ما الذي تريد أن تتذكره من هذا اليوم بعد سنة؟']},
+en:{tired:['What is the smallest step that could bring back a little energy?','What is draining you most, and what can wait?'],sad:['What softens things a little when you feel low?','Who could you talk to today?'],anx:['What is in your hands to do about it today?','What usually calms you? Try it for five minutes.'],ang:['What is really underneath this anger?','What do you need to feel respected?'],joy:['What created this joy, and how can you repeat it?','Who would you love to share it with?']},
+sv:{tired:['Vilket är det minsta steg som kan ge dig lite energi?','Vad tröttar ut dig mest, och vad kan vänta?'],sad:['Vad mjukar upp det lite när du är nere?','Vem kan du prata med idag?'],anx:['Vad kan du göra åt det idag?','Vad brukar lugna dig? Prova i fem minuter.'],ang:['Vad ligger egentligen under ilskan?','Vad behöver du för att känna dig respekterad?'],joy:['Vad skapade glädjen, och hur kan du upprepa den?','Vem vill du dela den med?']}};
+const hardOn=()=>LS('lahza-hard')===dstr(new Date());
+const _dq=dailyQ;
+dailyQ=function(){if(hardOn()){const a=GENTLE[S.lang]||GENTLE.ar;return a[Math.floor(Date.now()/864e5)%a.length]}return S.sq||_dq()};
+const hb=mk('button');hb.style.cssText='display:block;margin:0 auto 6px;padding:8px 18px;border:1px solid var(--border-strong);border-radius:999px;color:var(--text-2);font-size:.95rem';
+const hm=mk('div');hm.style.cssText='text-align:center;color:var(--text-2);font:1.15rem/1.9 var(--fq);margin:6px 0 4px';
+$('questionCard').before(hb,hm);
+function hardUI(){const on=hardOn();$('tabHome').classList.toggle('hard',on);hm.style.display=on?'block':'none';hm.textContent=t('hard_on');hb.textContent=on?t('hard_off'):'🤍 '+t('hard');$('dailyQ').textContent=dailyQ();setLn()}
+hb.onclick=()=>{LS('lahza-hard',hardOn()?'':dstr(new Date()));hardUI()};
+async function smartRefresh(){try{const ms=await getAll(),now=Date.now();S.sq=null;
+  const rs=ms.filter(m=>now-new Date(m.date)<4*864e5&&(m.txt||m.caption||m.mood)).sort((a,b)=>new Date(b.date)-new Date(a.date));
+  for(const m of rs){let th=null;const x=norm(' '+(m.txt||'')+' '+(m.type==='answer'?'':(m.caption||''))+' ');
+    for(const k of Object.keys(KW)){if(KW[k].some(w=>x.includes(norm(w)))){th=k;break}}
+    if(!th&&(m.mood==='😔'||m.mood==='😢'))th='sad';
+    if(th){const a=SQ[S.lang][th];S.sq=a[Math.floor(now/864e5)%a.length];break}}
+  $('dailyQ').textContent=dailyQ()}catch(e){}}
+const _ra=refreshAll;refreshAll=async function(){await _ra.apply(this,arguments);smartRefresh()};
+
+/* 4) قبل وبعد */
+const LB2=[],UB=track(LB2);
+async function ba(){const all=await getAll(),ms=all.filter(m=>m.type==='photo'||m.type==='video').sort((a,b)=>new Date(a.date)-new Date(b.date));
+  if(ms.length<2)return toast(t('ba_need'),1);free(LB2);
+  overlay((c,close)=>{title(c,'ba_t');
+    const sd=d=>{d=new Date(d);return d.getDate()+' '+MON[S.lang][d.getMonth()]+' '+d.getFullYear()};
+    const cols=[0,1].map(()=>{const w=mk('div'),sel=document.createElement('select'),box=mk('div'),tx=mk('div');
+      w.style.cssText='flex:1;min-width:0';sel.style.cssText='width:100%;padding:10px 4px;background:var(--bg);color:var(--text);border:1.5px solid var(--border-strong);border-radius:10px;font-size:.85rem';
+      ms.forEach((m,k)=>sel.add(new Option((m.type==='video'?'🎥 ':'📷 ')+sd(m.date),k)));
+      box.style.marginTop='10px';tx.style.cssText='margin-top:8px;font:.95rem/1.7 var(--fq);color:var(--text-2);text-align:start;word-break:break-word';
+      w.append(sel,box,tx);return{w,sel,box,tx}});
+    async function paint(k){const col=cols[k],m=ms[col.sel.value];col.box.innerHTML='';const b=await getBlob(m.id);
+      if(b&&m.type==='photo'){const im=new Image();im.src=UB(b);im.style.cssText='width:100%;border-radius:10px';col.box.appendChild(im)}
+      else if(b){const v=document.createElement('video');v.src=UB(b);v.controls=true;v.playsInline=true;v.preload='metadata';v.style.cssText='width:100%;border-radius:10px;background:#000';const th=await getThumb(m,b);if(th)v.poster=UB(th);col.box.appendChild(v)}
+      const day=all.filter(x=>x.id!==m.id&&dstr(x.date)===dstr(m.date)&&(x.txt||(x.caption&&x.type!=='answer')));
+      col.tx.textContent=[m.mood,m.caption,...day.map(x=>x.txt||x.caption)].filter(Boolean).join(' · ').slice(0,160)}
+    const near=mo=>{const tg=new Date();tg.setMonth(tg.getMonth()-mo);let bi=0,bd=1e18;ms.forEach((m,i)=>{const d=Math.abs(new Date(m.date)-tg);if(d<bd){bd=d;bi=i}});return bi};
+    const qr=mk('div','filters');qr.style.justifyContent='center';
+    [['ba_first',()=>0],['ba_1y',()=>near(12)],['ba_6m',()=>near(6)]].forEach(a=>{const b=mk('button','filter-chip',t(a[0]));b.onclick=()=>{cols[0].sel.value=a[1]();cols[1].sel.value=ms.length-1;paint(0);paint(1)};qr.appendChild(b)});
+    c.appendChild(qr);const row=mk('div');row.style.cssText='display:flex;gap:8px';cols.forEach(x=>row.appendChild(x.w));c.appendChild(row);
+    cols.forEach((x,k)=>x.sel.onchange=()=>paint(k));
+    cols[0].sel.value=0;cols[1].sel.value=ms.length-1;paint(0);paint(1);
+    const x=mk('button','btn',t('close'));x.style.marginTop='16px';x.onclick=()=>{free(LB2);close()};c.appendChild(x)})}
+
+/* 5) ملخص الأسبوع */
+const LW=[],UW=track(LW);
+async function weekly(){free(LW);const ms=await getAll(),now=Date.now(),f=ms.filter(m=>now-new Date(m.date)<7*864e5).sort((a,b)=>new Date(a.date)-new Date(b.date));
+  overlay((c,close)=>{title(c,'wk_t');
+    if(!f.length)c.appendChild(mk('div','empty-state',t('no_moments')));
+    else{const days=new Set(f.map(m=>dstr(m.date))).size,mc={},tg={};
+      f.forEach(m=>{if(m.mood)mc[m.mood]=(mc[m.mood]||0)+1;const mt=(((m.type==='answer'?'':m.caption)||'')+' '+(m.txt||'')).match(/#[\p{L}\p{N}_]+/gu);if(mt)mt.forEach(x=>tg[x]=(tg[x]||0)+1)});
+      const top=o=>(Object.entries(o).sort((a,b)=>b[1]-a[1])[0]||['–'])[0];
+      const g=mk('div','stats-grid');g.style.marginBottom='16px';
+      [[f.length,t('moments')],[days+'/7',t('days_rec')],[top(mc),t('wk_mood')],[top(tg),t('wk_tag')]].forEach(a=>{const d=mk('div','stat-card');d.append(mk('span','stat-num',a[0]),mk('span','stat-label',a[1]));g.appendChild(d)});c.appendChild(g);
+      f.filter(m=>m.txt).slice(-4).forEach(m=>{const r=mk('div','',DAYS[S.lang][new Date(m.date).getDay()]+': '+m.txt.slice(0,100));r.style.cssText='text-align:start;font:1.05rem/1.8 var(--fq);padding:8px 0;border-bottom:1px solid var(--border)';c.appendChild(r)});
+      const ph=f.filter(m=>m.type==='photo').slice(-6);
+      if(ph.length){const gr=mk('div');gr.style.cssText='display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0';c.appendChild(gr);
+        ph.forEach(async m=>{const b=await getBlob(m.id);if(b){const im=new Image();im.src=UW(b);im.style.cssText='width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px';gr.appendChild(im)}})}
+      let bd={};try{bd=JSON.parse(LS('lahza-bd')||'{}')}catch(e){}
+      const bk=Object.keys(bd);if(bk.length){const bl=mk('div','','🏅 '+bk.map(n=>t('bd_streak').replace('{n}',n)).join(' · '));bl.style.cssText='color:var(--gold);margin:10px 0';c.appendChild(bl)}}
+    const x=mk('button','btn',t('close'));x.style.marginTop='12px';x.onclick=()=>{free(LW);close()};c.appendChild(x)})}
+
+/* شريط أدوات لقطاتي */
+const tr=mk('div','filters');
+[['⇄ ','ba_t',ba],['📅 ','wk_t',weekly]].forEach(a=>{const b=mk('button','filter-chip');b.append(a[0]);const s=mk('span');s.dataset.i18n=a[1];b.appendChild(s);b.onclick=a[2];tr.appendChild(b)});
+$('searchInfo').after(tr);
+
+/* ربط الترجمة */
+const _ai=applyI18n;applyI18n=function(){_ai();labA();labF();hardUI()};
+applyI18n();recUI('idle');smartRefresh();
+$('verVal').textContent='10.0';
+})();
 </script>
 </body>
 </html>
