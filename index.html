@@ -1487,90 +1487,6 @@ const _om=openModal;openModal=async function(id){await _om(id);
 const _ai=applyI18n;applyI18n=function(){_ai();ab.textContent=t('av_btn')};
 applyI18n();
 })();
-  /* ===== 11.0 · دفعة 2: شاشة الكتابة الموحّدة ===== */
-Object.assign(I.ar,{wr:'✍️ اكتب',q_other:'🔄 سؤال آخر',q_lib:'📚 المكتبة',q_ask:'💬 أجب عن سؤال',q_clear:'إزالة السؤال'});
-Object.assign(I.en,{wr:'✍️ Write',q_other:'🔄 Another question',q_lib:'📚 Library',q_ask:'💬 Answer a question',q_clear:'Remove question'});
-Object.assign(I.sv,{wr:'✍️ Skriv',q_other:'🔄 Annan fråga',q_lib:'📚 Bibliotek',q_ask:'💬 Svara på en fråga',q_clear:'Ta bort frågan'});
-(function(){
-const css=mk('style');css.textContent='#moreQ,#whispers,#actionText,#actionDraw{display:none!important}#qLabel{display:block;margin:6px auto 0;color:var(--text-3);font-size:.9rem}.quote-card-title[data-n]::before{content:attr(data-n);display:inline-block;min-width:1.35em;height:1.35em;padding:0 .3em;border-radius:999px;background:var(--gold);color:var(--on-gold);font:600 .65em/1.35em var(--fb);margin-inline-end:.5em;vertical-align:middle;text-align:center}#qBox{max-width:500px;margin:0 auto 14px;padding:14px;border:1px solid var(--gold);border-radius:var(--r);text-align:center}#qBox .qt{font:1.2rem/1.8 var(--fq);color:var(--gold-light);margin-bottom:10px;word-break:break-word}#qBox .qr{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}';
-document.head.appendChild(css);
-if(!S.nbSave)S.nbSave='personal';
-
-/* العنوان الرئيسي صار مدخل الكتابة الوحيد */
-const qc=$('questionCard'),ttl=qc.querySelector('.quote-card-title');
-ttl.dataset.i18n='wr';
-const ql=mk('div');ql.id='qLabel';ql.dataset.i18n='qod';ttl.after(ql);
-qc.onclick=()=>{S.oldDate=null;openAnswer(dailyQ(),'daily')};
-
-const ts=$('textScreen'),ti=$('textInput');
-const old=ts.querySelector('[data-i18n="nb_t"]');
-if(old){const r=old.nextElementSibling,b=r&&r.nextElementSibling;[old,r,b].forEach(e=>{if(e)e.style.display='none'})}
-
-const SUG={
-goals:{ar:['ما هدفك الأهم هذا الأسبوع؟','ما أصغر خطوة تقوم بها اليوم نحوه؟','ما الذي يعيقك وكيف تتجاوزه؟','كيف سيبدو نجاحك بعد سنة؟'],en:['What is your most important goal this week?','What is the smallest step you can take toward it today?','What is in your way, and how will you get past it?','What will success look like in a year?'],sv:['Vilket är ditt viktigaste mål den här veckan?','Vilket är det minsta steget du kan ta idag mot det?','Vad hindrar dig och hur kommer du förbi det?','Hur ser din framgång ut om ett år?']},
-dreams:{ar:['صف حلماً راودك مؤخراً بكل تفاصيله','ما حلم تتمنى أن يتحقق؟','ما أجمل ما رأيت في منامك؟','لو لم يكن هناك خوف، ماذا كنت ستفعل؟'],en:['Describe a recent dream in detail','What dream do you hope will come true?','What was the most beautiful thing you saw in a dream?','If there were no fear, what would you do?'],sv:['Beskriv en dröm du hade nyligen i detalj','Vilken dröm hoppas du ska bli verklighet?','Vad var det vackraste du drömde om?','Om det inte fanns rädsla, vad skulle du göra?']}};
-const TY=[['personal','✍️','nb_personal'],['gratitude','🙏','nb_gratitude'],['goals','🎯','nb_goals'],['dreams','🌙','nb_dreams'],['letter','💌','letter'],['draw','🖌','draw']];
-const tr=mk('div','filters');tr.style.cssText='max-width:560px;margin:0 auto 12px';
-const gr=mk('div');gr.style.cssText='max-width:500px;margin:0 auto 12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap';
-const qb=mk('div');qb.id='qBox';
-const qt=mk('div','qt'),qr=mk('div','qr'),bo=mk('button','filter-chip'),bl=mk('button','filter-chip'),bx=mk('button','filter-chip','✕');
-qr.append(bo,bl,bx);qb.append(qt,qr);ti.before(tr,gr,qb);
-
-function paintTypes(){tr.innerHTML='';
-  const nl=getL().filter(l=>!l.s&&new Date(l.o)<=Date.now()).length;
-  TY.forEach(a=>{const b=mk('button','filter-chip'+(S.nbSave===a[0]?' active':''),a[1]+' '+t(a[2])+(a[0]==='letter'&&nl?' ('+nl+')':''));
-    b.onclick=()=>{
-      if(a[0]==='letter'){lettersUI();return}
-      if(a[0]==='draw'){const d=S.oldDate;hide('textScreen');const ab=$('actionDraw');if(ab)ab.click();S.oldDate=d;return}
-      S.nbSave=a[0];hubUI()};
-    tr.appendChild(b)})}
-async function hubUI(){paintTypes();
-  qt.textContent=S.wq||'';qt.style.display=S.wq?'block':'none';
-  bo.textContent=S.wq?t('q_other'):t('q_ask');bl.textContent=t('q_lib');bx.style.display=S.wq?'':'none';bx.setAttribute('aria-label',t('q_clear'));
-  ti.placeholder=S.wq?t('ph_ans'):t('ph_text');
-  const bs=ts.querySelector('.background-section');if(bs)bs.style.display=S.wq?'none':'';
-  $('saveTextBtn').textContent=S.wq?t('save'):t('next');
-  const gi=S.nbSave==='gratitude'?await grInfo():undefined;
-  gr.innerHTML='';
-  if(gi!==undefined){
-    const mkb=(txt,fn)=>{const b=mk('button','filter-chip',txt);b.onclick=fn;gr.appendChild(b)};
-    const start=()=>{LS('lahza-gr',dstr(new Date()));wBadge();attach(GR[S.lang][0],'gratitude')};
-    if(!gi)mkb('🌱 '+t('gr_t'),start);
-    else if(gi.over)mkb('🌱 '+t('gr_again'),start);
-    else{if(gi.done){const d=mk('div','','✓ '+t('gr_ok'));d.style.color='var(--gold)';gr.appendChild(d)}
-      else mkb('🌱 '+t('gr_day').replace('{n}',gi.n),()=>attach(GR[S.lang][gi.n-1],'gratitude'));
-      mkb('✕ '+t('gr_stop'),()=>{LS('lahza-gr','');wBadge();hubUI()})}}}
-function attach(q,sec){if(ts.classList.contains('hidden'))openText();S.wq=q;S.wsec=sec||'lib';hubUI()}
-function nextQ(){const l=S.lang,k=S.nbSave;let pool;
-  if(k==='gratitude')pool=bank()[{ar:'امتنان',en:'Gratitude',sv:'Tacksamhet'}[l]];
-  else if(SUG[k])pool=SUG[k][l];
-  else pool=[].concat(...Object.values(bank()));
-  pool=pool||[];if(!pool.length)return;
-  let q=S.wq;for(let i=0;i<10&&q===S.wq;i++)q=pool[Math.floor(Math.random()*pool.length)];
-  attach(q,'lib')}
-bo.onclick=nextQ;
-bl.onclick=()=>$('moreQ').click();
-bx.onclick=()=>{S.wq=null;S.wsec=null;hubUI()};
-
-/* كل مداخل الأسئلة القديمة صارت تفتح شاشة الكتابة الموحّدة */
-openAnswer=function(q,sec){hide('questionSheet');hide('questionListSheet');attach(q,sec)};
-const _ot=openText;openText=function(){_ot();S.wq=null;S.wsec=null;S.nbSave='personal';hubUI()};
-
-/* حفظ الإجابة على سؤال */
-async function saveAnswer(x){try{
-  const k=S.nbSave,sec=S.wsec==='gratitude'?'gratitude':(k&&k!=='personal'?'nb:'+k:(S.wsec||'daily'));
-  const m={date:(S.oldDate||new Date()).toISOString(),type:'answer',caption:S.wq,favorite:false,section:sec,txt:x};if(S.oldDate)m.noTime=true;
-  await addMoment(m,new Blob([x],{type:'text/plain'}));hide('textScreen');resetPending();toast(t('saved_a'));refreshAll();wBadge()}
-  catch(e){toast(t('err')+': '+e.message,1)}}
-const _stb=$('saveTextBtn').onclick;
-$('saveTextBtn').onclick=()=>{const x=ti.value.trim();if(!x)return toast(t('write_first'),1);if(S.wq)return saveAnswer(x);_stb()};
-
-/* الشارة على العنوان تجمع: تحدّي الامتنان + الرسائل الواصلة */
-const _wb=wBadge;wBadge=async function(){await _wb();const n=$('whispers').getAttribute('data-n');if(n)ttl.setAttribute('data-n',n);else ttl.removeAttribute('data-n')};
-
-const _ai=applyI18n;applyI18n=function(){_ai();hubUI();setLn()};
-applyI18n();wBadge();
-})();
 /* ===== 11.0 · دفعة 3: حماية البيانات وتصدير أسرع ===== */
 Object.assign(I.ar,{st_t:'التخزين والحماية',st_used:'المستخدم',st_safe:'محمي من الحذف التلقائي ✓',st_unsafe:'غير مضمون: قد يمسحه النظام عند امتلاء الجهاز',st_ask:'اطلب حماية التخزين',st_last:'آخر نسخة احتياطية',st_never:'لم تُنشأ بعد',st_ago:'قبل {n} يوم',st_today:'اليوم',st_full:'مساحة التخزين ممتلئة، صدّر نسخة احتياطية ثم أفرغ مساحة',st_low:'مساحة التخزين تكاد تمتلئ، صدّر نسخة احتياطية',st_now:'تصدير نسخة احتياطية الآن',st_tip:'الأفضل أن تحفظ النسخة بملفات iCloud أو Google Drive، فهي أأمن من الجهاز وحده.',st_verify:'تعذّر التأكد من حفظ اللقطة، حاول مرة أخرى'});
 Object.assign(I.en,{st_t:'Storage and protection',st_used:'Used',st_safe:'Protected from automatic cleanup ✓',st_unsafe:'Not guaranteed: the system may clear it when the device is full',st_ask:'Request storage protection',st_last:'Last backup',st_never:'None yet',st_ago:'{n} days ago',st_today:'Today',st_full:'Storage is full. Export a backup, then free some space',st_low:'Storage is almost full. Export a backup',st_now:'Export a backup now',st_tip:'Best to save the backup in iCloud Files or Google Drive. It is safer than the device alone.',st_verify:'Could not confirm the moment was saved. Please try again'});
@@ -1637,6 +1553,118 @@ $('importInput').onchange=async e=>{const f=e.target.files[0];if(!f)return;
 const _ai=applyI18n;applyI18n=function(){_ai();paintSt()};
 applyI18n();
 $('verVal').textContent='11.0';
+})();
+  /* ===== 12.0: الرئيسية المبسّطة + قائمة الكتابة + لقطاتي بتقويم موحّد ===== */
+Object.assign(I.ar,{text:'كتابة',draw:'رسم وكتابة بالقلم',answers:'إجاباتي',m_journal:'يومياتي',m_goals:'أهدافي',m_questions:'أسئلة',ws_journal:'اكتب ما تشاء بحرية',ws_goals:'اكتب أهدافك وتابع تحقيقها',ws_letter:'تُفتح في تاريخ تختاره',ws_draw:'بإصبعك أو بقلم الجهاز',ws_q:'اختر قسماً ثم سؤالاً',q_today:'اقتراح اليوم',q_back:'رجوع',q_change:'تغيير السؤال',ph_goal:'ما هدفك؟ وما الخطوة القادمة نحوه؟'});
+Object.assign(I.en,{text:'Write',m_journal:'Journal',m_goals:'Goals',m_questions:'Questions',ws_journal:'Write freely whatever you like',ws_goals:'Write your goals and track them',ws_letter:'Opens on a date you choose',ws_draw:'With your finger or a stylus',ws_q:'Pick a section, then a question',q_today:"Today's suggestion",q_back:'Back',q_change:'Change question',ph_goal:'What is your goal? What is the next step?'});
+Object.assign(I.sv,{text:'Skriv',m_journal:'Dagbok',m_goals:'Mål',m_questions:'Frågor',ws_journal:'Skriv fritt vad du vill',ws_goals:'Skriv dina mål och följ upp dem',ws_letter:'Öppnas på ett datum du väljer',ws_draw:'Med fingret eller en penna',ws_q:'Välj en avdelning och sedan en fråga',q_today:'Dagens förslag',q_back:'Tillbaka',q_change:'Byt fråga',ph_goal:'Vad är ditt mål? Vad är nästa steg?'});
+(function(){
+const css=mk('style');css.textContent='#questionCard,#moreQ,#whispers,#actionDraw{display:none!important}.home-actions{margin-top:8px}.wopt{display:flex;align-items:center;gap:14px;width:100%;text-align:start;padding:14px 16px;margin:8px 0;border:1.5px solid var(--border-strong);border-radius:var(--r);background:var(--bg);color:var(--text)}.wopt:active{border-color:var(--gold)}.wopt .ic{font-size:1.7rem}.wopt b{display:block;font:500 1.15rem var(--fd);color:var(--text)}.wopt small{display:block;color:var(--text-3);font:.85rem var(--fb);margin-top:2px}#actionText.hasn .label::after{content:"●";color:var(--gold);margin-inline-start:.5em;font-size:.7em}#qBox2{max-width:500px;margin:0 auto 14px;padding:14px;border:1px solid var(--gold);border-radius:var(--r);text-align:center}#qBox2 .qt{font:1.2rem/1.8 var(--fq);color:var(--gold-light);margin-bottom:8px;word-break:break-word}';
+document.head.appendChild(css);
+
+/* ---- الرئيسية: كتابة، صورة، فيديو، صوت، تاريخ قديم ---- */
+$('tabHome').querySelector('.home-actions').prepend($('actionText'));
+
+/* ---- شاشة الكتابة: يومياتي / أهدافي / إجابة سؤال ---- */
+const ts=$('textScreen'),ti=$('textInput'),h2=ts.querySelector('.screen-title');
+h2.removeAttribute('data-i18n');
+const oldT=ts.querySelector('[data-i18n="nb_t"]');
+if(oldT){const r=oldT.nextElementSibling,b=r&&r.nextElementSibling;[oldT,r,b].forEach(e=>{if(e)e.style.display='none'})}
+const qb=mk('div');qb.id='qBox2';const qt=mk('div','qt'),qc=mk('button','filter-chip');qb.append(qt,qc);ti.before(qb);
+qc.onclick=()=>qHub();
+function hubUI(){const q=S.wq,k=S.nbSave;
+  h2.textContent=q?t('your_ans'):(k==='goals'?t('m_goals'):t('m_journal'));
+  qb.style.display=q?'block':'none';qt.textContent=q||'';qc.textContent=t('q_change');
+  ti.placeholder=q?t('ph_ans'):(k==='goals'?t('ph_goal'):t('ph_text'));
+  $('saveTextBtn').textContent=q?t('save'):t('next')}
+const _ot=openText;openText=function(){_ot();S.wq=null;S.wsec=null;hubUI()};
+function openWrite(kind){openText();S.nbSave=kind;hubUI()}
+function attach(q,sec){if(ts.classList.contains('hidden'))openText();S.wq=q;S.wsec=sec;hubUI()}
+openAnswer=function(q,sec){hide('questionSheet');hide('questionListSheet');attach(q,sec)};
+
+/* حفظ إجابة سؤال (مع الخلفية إن اخترتها) */
+async function saveAnswer(x){try{
+  const m={date:(S.oldDate||new Date()).toISOString(),type:'answer',caption:S.wq,favorite:false,section:S.wsec||'lib',txt:x};if(S.oldDate)m.noTime=true;
+  await addMoment(m,new Blob([x],{type:'text/plain'}),S.bg||null);
+  hide('textScreen');resetPending();S.wq=null;S.wsec=null;toast(t('saved_a'));refreshAll()}
+  catch(e){toast(t('err')+': '+e.message,1)}}
+const _stb=$('saveTextBtn').onclick;
+$('saveTextBtn').onclick=()=>{const x=ti.value.trim();if(!x)return toast(t('write_first'),1);if(S.wq)return saveAnswer(x);_stb()};
+$('textClose').addEventListener('click',()=>{S.wq=null;S.wsec=null});
+
+/* خلفية الإجابات تظهر على البطاقة وداخل اللقطة */
+const _mc=makeCard;makeCard=async function(m){const c=await _mc(m);
+  if(c&&m.type==='answer'&&m.bgKey){const d=c.querySelector('.text-content');if(d){const u=await bgUrl(m,UD);if(u)d.style.background=bgCss(u)+' center/cover'}}return c};
+const _om=openModal;openModal=async function(id){await _om(id);
+  try{const m=await getMeta(id);if(m&&m.type==='answer'&&m.bgKey&&S.cur===id){const d=document.querySelector('#modalContent .modal-text');if(d){const u=await bgUrl(m,UM);if(u)d.style.background=bgCss(u)+' center/cover'}}}catch(e){}};
+
+/* ---- قائمة الكتابة ---- */
+function writeMenu(){overlay((c,close)=>{
+  const h=mk('div','',t('text'));h.style.cssText='font:1.5rem var(--fd);color:var(--gold);margin-bottom:10px';c.appendChild(h);
+  const nl=getL().filter(l=>!l.s&&new Date(l.o)<=Date.now()).length;
+  [['✍️','m_journal','ws_journal',()=>openWrite('personal')],
+   ['🎯','m_goals','ws_goals',()=>openWrite('goals')],
+   ['💌','letter','ws_letter',()=>lettersUI()],
+   ['🖌','draw','ws_draw',()=>{const ab=$('actionDraw');if(!ab)return toast(t('err'),1);const d=S.oldDate;ab.click();S.oldDate=d}],
+   ['❓','m_questions','ws_q',()=>qHub()]].forEach(a=>{
+    const b=mk('button','wopt'),w=mk('span');w.append(mk('b','',t(a[1])+(a[1]==='letter'&&nl?' ('+nl+')':'')),mk('small','',t(a[2])));
+    b.append(mk('span','ic',a[0]),w);b.onclick=()=>{close();a[3]()};c.appendChild(b)});
+  const x=mk('button','btn',t('close'));x.style.marginTop='10px';x.onclick=close;c.appendChild(x)})}
+$('actionText').onclick=()=>{S.oldDate=null;writeMenu()};
+$('pickTypeText').onclick=()=>{hide('typePickerSheet');writeMenu()};
+
+/* ---- الأسئلة: أقسام ثم سؤال ---- */
+function qHub(){overlay((c,close)=>{const B=bank();
+  const draw=s=>{c.innerHTML='';
+    const h=mk('div','',s||t('m_questions'));h.style.cssText='font:1.5rem var(--fd);color:var(--gold);margin-bottom:12px';c.appendChild(h);
+    if(!s){const q=dailyQ(),sg=mk('button','wopt'),w=mk('span');w.append(mk('b','',t('q_today')),mk('small','',q));sg.append(mk('span','ic','✨'),w);sg.onclick=()=>{close();attach(q,'daily')};c.appendChild(sg);
+      const g=mk('div');g.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px';
+      Object.keys(B).forEach(k=>{const b=mk('button','section-item',k);b.onclick=()=>draw(k);g.appendChild(b)});c.appendChild(g)}
+    else{const bk=mk('button','filter-chip',t('q_back'));bk.style.marginBottom='10px';bk.onclick=()=>draw();c.appendChild(bk);
+      (B[s]||[]).forEach(q=>{const b=mk('button','question-item',q);b.style.cssText='display:block;width:100%;margin:8px 0';b.onclick=()=>{close();attach(q,s)};c.appendChild(b)})}
+    const x=mk('button','btn',t('close'));x.style.marginTop='12px';x.onclick=close;c.appendChild(x)};
+  draw()})}
+
+/* ---- لقطاتي: فلاتر جديدة + نفس التقويم لكلها (سنة، شهر، يوم) ---- */
+const isGoal=m=>(m.section||'')==='nb:goals';
+const PRED={all:()=>true,photo:m=>m.type==='photo',video:m=>m.type==='video',audio:m=>m.type==='audio',
+  answer:m=>m.type==='answer'&&!isGoal(m),journal:m=>m.type==='text'&&!isGoal(m),goals:isGoal};
+const FL=[['all','all'],['photo','photos'],['video','videos'],['audio','audios'],['answer','answers'],['journal','m_journal'],['goals','m_goals']];
+const fr=$('filterRow');
+if(!PRED[S.filter])S.filter='all';S.nbf=null;
+fr.innerHTML='';
+FL.forEach(a=>{const b=mk('button','filter-chip'+(S.filter===a[0]?' active':''),t(a[1]));b.dataset.filter=a[0];b.dataset.i18n=a[1];
+  b.onclick=()=>{fr.querySelectorAll('.filter-chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');S.filter=a[0];S.nbf=null;S.year=S.month=S.day=null;renderTree()};fr.appendChild(b)});
+
+renderTree=async function(ms){ms=ms||await getAll();renderTags(ms);
+  if($('searchInput').value.trim())return doSearch();
+  const f=ms.filter(PRED[S.filter]||PRED.all);
+  S.filtered=f;const ys=[...new Set(f.map(m=>new Date(m.date).getFullYear()))].sort((a,b)=>b-a);
+  const row=$('yearsRow');row.innerHTML='';
+  if(!ys.length){hide('treeView');show('empty');return}
+  show('treeView');hide('empty');
+  ys.forEach(y=>{const n=f.filter(m=>new Date(m.date).getFullYear()===y).length,b=mk('button','filter-chip'+(S.year===y?' active':''),y+' ('+n+')');b.onclick=()=>{S.year=y;S.month=S.day=null;renderTree()};row.appendChild(b)});
+  if(S.year){show('monthsSection');const g=$('monthsGrid');g.innerHTML='';const now=new Date();
+    MON[S.lang].forEach((n,mo)=>{const c=f.filter(m=>{const d=new Date(m.date);return d.getFullYear()===S.year&&d.getMonth()===mo}).length,b=mk('button','filter-chip'+(S.month===mo?' active':''),n+(c?' ('+c+')':''));
+      b.style.cssText='padding:10px 4px';if(S.year===now.getFullYear()&&mo===now.getMonth())b.style.borderColor='var(--gold)';
+      b.onclick=()=>{S.month=mo;S.day=null;renderTree()};g.appendChild(b)})}
+  else hide('monthsSection');
+  if(S.year!==null&&S.month!==null){show('calendarSection');renderCalendar()}else hide('calendarSection')};
+openDay=async function(day,list){S.day=day;if(list!==undefined)S.dayList=list;
+  const all=await getAll(),src=(S.dayList===null||S.dayList===undefined)?all:all.filter(PRED[S.filter]||PRED.all);
+  const dm=src.filter(m=>dstr(m.date)===day).sort((a,b)=>new Date(a.date)-new Date(b.date));
+  $('dayMomentsTitle').textContent=fdate(new Date(day+'T12:00:00'));free(LD);const g=$('dayMomentsGrid');g.innerHTML='';
+  if(!dm.length){g.innerHTML='<div class="empty-state"><span class="empty-icon">✦</span><div></div></div>';g.querySelector('div div').textContent=t('no_day')}
+  else for(const m of dm){const c=await makeCard(m);if(c)g.appendChild(c)}
+  show('dayMomentsScreen')};
+
+/* نقطة صغيرة على "كتابة" إذا وصلتك رسالة من نفسك */
+const ln=()=>{try{$('actionText').classList.toggle('hasn',getL().some(l=>!l.s&&new Date(l.o)<=Date.now()))}catch(e){}};
+setInterval(ln,60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)ln()});
+const _ai=applyI18n;applyI18n=function(){_ai();hubUI();ln()};
+applyI18n();
+$('verVal').textContent='12.0';
 })();
 </script>
 </body>
