@@ -1072,10 +1072,10 @@ const _ai=applyI18n;applyI18n=function(){_ai();labA()};
 applyI18n();recUI('idle');smartRefresh();
 $('verVal').textContent='10.0';
 })();
-  /* ===== 10.0 · دفعة 2 من 3 ===== */
-Object.assign(I.ar,{dv_t:'فيديو اليوميات',dv_week:'آخر أسبوع',dv_month:'آخر شهر',dv_year:'آخر سنة',dv_sec:'ثواني لكل لقطة',dv_perday:'لقطة واحدة من كل يوم',dv_music:'🎵 موسيقى من جهازك',dv_voice:'🎙 تعليق صوتي',dv_voice_stop:'⏹ إيقاف التعليق',dv_make:'ابدأ إنشاء الفيديو',dv_info:'{n} لقطة · حوالي {s} ثانية',dv_few:'تحتاج لقطتين على الأقل بهذه الفترة',dv_busy:'جاري الإنشاء... اترك الشاشة مفتوحة ولا تخرج من التطبيق',dv_cancel:'إلغاء الإنشاء',dv_done:'اكتمل الفيديو',dv_save:'حفظ كلقطة',dv_share:'مشاركة',dv_unsup:'تعذّر إنشاء الفيديو على هذا الجهاز',dv_aerr:'تعذّرت قراءة ملف الصوت، سيُنشأ الفيديو بدونه',dv_saved:'تم حفظ الفيديو بين لقطاتك',gh_on:'👻 ظل آخر صورة (لضبط الوضعية)',gh_off:'إخفاء الظل',gh_none:'لا توجد صورة سابقة'});
-Object.assign(I.en,{dv_t:'Diary video',dv_week:'Last week',dv_month:'Last month',dv_year:'Last year',dv_sec:'Seconds per clip',dv_perday:'One clip per day',dv_music:'🎵 Music from your device',dv_voice:'🎙 Voice-over',dv_voice_stop:'⏹ Stop voice-over',dv_make:'Create the video',dv_info:'{n} clips · about {s} seconds',dv_few:'You need at least two clips in this period',dv_busy:'Creating... keep the screen on and stay in the app',dv_cancel:'Cancel',dv_done:'Video is ready',dv_save:'Save as moment',dv_share:'Share',dv_unsup:'Could not create the video on this device',dv_aerr:'Could not read the audio file, creating the video without it',dv_saved:'Video saved to your moments',gh_on:'👻 Ghost of last photo (to align)',gh_off:'Hide ghost',gh_none:'No previous photo'});
-Object.assign(I.sv,{dv_t:'Dagboksvideo',dv_week:'Senaste veckan',dv_month:'Senaste månaden',dv_year:'Senaste året',dv_sec:'Sekunder per klipp',dv_perday:'Ett klipp per dag',dv_music:'🎵 Musik från din enhet',dv_voice:'🎙 Berättarröst',dv_voice_stop:'⏹ Stoppa berättarröst',dv_make:'Skapa videon',dv_info:'{n} klipp · ungefär {s} sekunder',dv_few:'Du behöver minst två klipp under perioden',dv_busy:'Skapar... låt skärmen vara på och stanna i appen',dv_cancel:'Avbryt',dv_done:'Videon är klar',dv_save:'Spara som ögonblick',dv_share:'Dela',dv_unsup:'Kunde inte skapa videon på den här enheten',dv_aerr:'Kunde inte läsa ljudfilen, skapar videon utan den',dv_saved:'Videon sparades bland dina ögonblick',gh_on:'👻 Skugga av senaste foto (för att passa in)',gh_off:'Dölj skugga',gh_none:'Inget tidigare foto'});
+ /* ===== 11.0 · دفعة 1: فيديو اليوميات المحسّن + ظل الصورة ===== */
+Object.assign(I.ar,{dv_t:'فيديو اليوميات',dv_week:'آخر أسبوع',dv_month:'آخر شهر',dv_year:'آخر سنة',dv_sec:'ثواني لكل لقطة',dv_perday:'لقطة واحدة من كل يوم',dv_music:'🎵 موسيقى من جهازك',dv_voice:'🎙 تعليق صوتي',dv_voice_stop:'⏹ إيقاف التعليق',dv_make:'ابدأ إنشاء الفيديو',dv_info:'{n} لقطة · حوالي {s} ثانية',dv_few:'تحتاج لقطتين على الأقل بهذه الفترة',dv_busy:'جاري الإنشاء... أبقِ الشاشة مفتوحة ولا تخرج من التطبيق',dv_cancel:'إلغاء الإنشاء',dv_done:'اكتمل الفيديو',dv_save:'حفظ كلقطة',dv_share:'مشاركة',dv_unsup:'تعذّر إنشاء الفيديو على هذا الجهاز',dv_aerr:'تعذّرت قراءة ملف الصوت، سيُنشأ الفيديو بدونه',dv_saved:'تم حفظ الفيديو بين لقطاتك',dv_note:'الإنشاء يتم بالزمن الحقيقي فيستغرق بقدر مدة الفيديو. الحد الأقصى حوالي 90 ثانية، وتُختار اللقطات بالتساوي على الفترة.',dv_hidden:'توقّف الإنشاء لأنك غادرت التطبيق. أعد المحاولة وأبقِ الشاشة مفتوحة',gh_on:'👻 ظل آخر صورة (لضبط الوضعية)',gh_off:'إخفاء الظل',gh_none:'لا توجد صورة سابقة'});
+Object.assign(I.en,{dv_t:'Diary video',dv_week:'Last week',dv_month:'Last month',dv_year:'Last year',dv_sec:'Seconds per clip',dv_perday:'One clip per day',dv_music:'🎵 Music from your device',dv_voice:'🎙 Voice-over',dv_voice_stop:'⏹ Stop voice-over',dv_make:'Create the video',dv_info:'{n} clips · about {s} seconds',dv_few:'You need at least two clips in this period',dv_busy:'Creating... keep the screen on and stay in the app',dv_cancel:'Cancel',dv_done:'Video is ready',dv_save:'Save as moment',dv_share:'Share',dv_unsup:'Could not create the video on this device',dv_aerr:'Could not read the audio file, creating the video without it',dv_saved:'Video saved to your moments',dv_note:'Creation runs in real time, so it takes as long as the video. Maximum about 90 seconds; clips are picked evenly across the period.',dv_hidden:'Creation stopped because you left the app. Try again and keep the screen on',gh_on:'👻 Ghost of last photo (to align)',gh_off:'Hide ghost',gh_none:'No previous photo'});
+Object.assign(I.sv,{dv_t:'Dagboksvideo',dv_week:'Senaste veckan',dv_month:'Senaste månaden',dv_year:'Senaste året',dv_sec:'Sekunder per klipp',dv_perday:'Ett klipp per dag',dv_music:'🎵 Musik från din enhet',dv_voice:'🎙 Berättarröst',dv_voice_stop:'⏹ Stoppa berättarröst',dv_make:'Skapa videon',dv_info:'{n} klipp · ungefär {s} sekunder',dv_few:'Du behöver minst två klipp under perioden',dv_busy:'Skapar... låt skärmen vara på och stanna i appen',dv_cancel:'Avbryt',dv_done:'Videon är klar',dv_save:'Spara som ögonblick',dv_share:'Dela',dv_unsup:'Kunde inte skapa videon på den här enheten',dv_aerr:'Kunde inte läsa ljudfilen, skapar videon utan den',dv_saved:'Videon sparades bland dina ögonblick',dv_note:'Skapandet sker i realtid och tar lika lång tid som videon. Högst ungefär 90 sekunder; klippen väljs jämnt över perioden.',dv_hidden:'Skapandet stoppades eftersom du lämnade appen. Försök igen och låt skärmen vara på',gh_on:'👻 Skugga av senaste foto (för att passa in)',gh_off:'Dölj skugga',gh_none:'Inget tidigare foto'});
 (function(){
 const title=(c,k)=>{const h=mk('div','',t(k));h.style.cssText='font:1.4rem var(--fd);color:var(--gold);margin-bottom:14px';c.appendChild(h)};
 const LG=[],UG=track(LG),LR=[],UR=track(LR);
@@ -1100,20 +1100,30 @@ $('photoNext').addEventListener('click',gOff);
 const _op=openPhoto;openPhoto=function(){_op();gOff()};
 
 /* فيديو اليوميات */
-const D={days:30,sec:2,perDay:true,music:null,voice:null,recording:false};
+const D={days:30,sec:2,perDay:true,music:null,voice:null,recording:false},MAXOUT=90;
 function items(all){const from=Date.now()-D.days*864e5;
   let a=all.filter(m=>(m.type==='photo'||m.type==='video')&&new Date(m.date)>=from).sort((x,y)=>new Date(x.date)-new Date(y.date));
   if(D.perDay){const seen=new Set();a=a.filter(m=>{const k=dstr(m.date);if(seen.has(k))return false;seen.add(k);return true})}
-  if(a.length>60){const r=[];for(let i=0;i<60;i++)r.push(a[Math.floor(i*a.length/60)]);a=r}
+  const cap=Math.max(8,Math.floor(MAXOUT/D.sec));
+  if(a.length>cap){const r=[];for(let i=0;i<cap;i++)r.push(a[Math.floor(i*a.length/cap)]);a=r}
   return a}
+
+/* تجهيز اللقطة التالية مسبقاً أثناء عرض الحالية */
+async function prep(m){try{const b=await getBlob(m.id);if(!b)return null;const u=URL.createObjectURL(b);
+  if(m.type==='photo'){const im=await loadImg(u);if(!im){URL.revokeObjectURL(u);return null}return{m,k:'p',el:im,w:im.width,h:im.height,u}}
+  const v=document.createElement('video');v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='auto';v.src=u;
+  await new Promise(r=>{v.onloadeddata=r;v.onerror=r;setTimeout(r,5000)});
+  if(!v.videoWidth){URL.revokeObjectURL(u);return null}
+  return{m,k:'v',el:v,w:v.videoWidth,h:v.videoHeight,u,d:v.duration}}catch(e){return null}}
+function rel(p){try{if(p.k==='v'){p.el.pause();p.el.removeAttribute('src');p.el.load()}else p.el.src=''}catch(e){}try{URL.revokeObjectURL(p.u)}catch(e){}}
 
 async function makeVideo(its,o,prog,stop,ac){
   if(!window.MediaRecorder)throw new Error('unsupported');
-  const W=720,H=960,cv=document.createElement('canvas');cv.width=W;cv.height=H;
+  const W=540,H=720,cv=document.createElement('canvas');cv.width=W;cv.height=H;
   if(!cv.captureStream)throw new Error('unsupported');
-  const x=cv.getContext('2d');
+  const x=cv.getContext('2d',{alpha:false});
   try{await Promise.all([document.fonts.load('40px "Reem Kufi"'),document.fonts.load('60px "Great Vibes"')])}catch(e){}
-  const stream=cv.captureStream(30),srcs=[];
+  const stream=cv.captureStream(24),srcs=[];
   if(ac){const dest=ac.createMediaStreamDestination();
     const dec=async b=>{const buf=await b.arrayBuffer();return new Promise((res,rej)=>ac.decodeAudioData(buf,res,rej))};
     const add=async(b,vol,loop)=>{try{const s=ac.createBufferSource();s.buffer=await dec(b);s.loop=loop;const g=ac.createGain();g.gain.value=vol;s.connect(g);g.connect(dest);srcs.push(s)}catch(e){toast(t('dv_aerr'),1)}};
@@ -1121,31 +1131,39 @@ async function makeVideo(its,o,prog,stop,ac){
     if(o.voice)await add(o.voice,1,false);
     dest.stream.getAudioTracks().forEach(tk=>stream.addTrack(tk))}
   const mt=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(m=>MediaRecorder.isTypeSupported(m))||'';
-  const mr=new MediaRecorder(stream,mt?{mimeType:mt,videoBitsPerSecond:2500000}:{videoBitsPerSecond:2500000});
+  const mr=new MediaRecorder(stream,mt?{mimeType:mt,videoBitsPerSecond:1800000}:{videoBitsPerSecond:1800000});
   const chunks=[];mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
   const done=new Promise(r=>{mr.onstop=r});
   const frames=(ms,draw)=>new Promise(res=>{const t0=performance.now();const tick=()=>{if(stop()){res();return}const e=performance.now()-t0;draw(e);if(e>=ms)res();else requestAnimationFrame(tick)};tick()});
   const dir=S.lang==='ar'?'rtl':'ltr';
-  const card=(l1,l2)=>{const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#2a1c0a');g.addColorStop(1,'#0F0A08');x.fillStyle=g;x.fillRect(0,0,W,H);x.textAlign='center';x.direction=dir;x.fillStyle='#D4AF37';x.font='96px "Great Vibes",cursive';x.fillText('Lahza',W/2,H/2-60);x.font='46px "Reem Kufi",sans-serif';if(l1)x.fillText(l1,W/2,H/2+30);x.fillStyle='#F5F5F5';x.font='32px "Reem Kufi",sans-serif';if(l2)x.fillText(l2,W/2,H/2+90)};
+  const bgg=x.createLinearGradient(0,0,W,H);bgg.addColorStop(0,'#2a1c0a');bgg.addColorStop(1,'#0F0A08');
+  const shade=x.createLinearGradient(0,H-170,0,H);shade.addColorStop(0,'rgba(0,0,0,0)');shade.addColorStop(1,'rgba(0,0,0,.65)');
+  const card=(l1,l2)=>{x.fillStyle=bgg;x.fillRect(0,0,W,H);x.textAlign='center';x.direction=dir;x.fillStyle='#D4AF37';x.font='72px "Great Vibes",cursive';x.fillText('Lahza',W/2,H/2-45);x.font='34px "Reem Kufi",sans-serif';if(l1)x.fillText(l1,W/2,H/2+22);x.fillStyle='#F5F5F5';x.font='24px "Reem Kufi",sans-serif';if(l2)x.fillText(l2,W/2,H/2+66)};
   const frame=(src,sw,sh,m)=>{x.fillStyle='#000';x.fillRect(0,0,W,H);
     if(sw&&sh){const k=Math.max(W/sw,H/sh),w=sw*k,h=sh*k;x.drawImage(src,(W-w)/2,(H-h)/2,w,h)}
-    const g=x.createLinearGradient(0,H-220,0,H);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.65)');x.fillStyle=g;x.fillRect(0,H-220,W,220);
-    x.textAlign='center';x.direction=dir;x.fillStyle='#fff';x.font='34px "Reem Kufi",sans-serif';x.fillText(fdate(m.date),W/2,H-92);
-    x.fillStyle='#D4AF37';x.font='46px "Great Vibes",cursive';x.fillText('Lahza',W/2,H-34)};
+    x.fillStyle=shade;x.fillRect(0,H-170,W,170);
+    x.textAlign='center';x.direction=dir;x.fillStyle='#fff';x.font='26px "Reem Kufi",sans-serif';x.fillText(fdate(m.date),W/2,H-68);
+    x.fillStyle='#D4AF37';x.font='34px "Great Vibes",cursive';x.fillText('Lahza',W/2,H-24)};
+  let nxt=null;
   try{
     mr.start(500);srcs.forEach(s=>s.start(0));
-    await frames(1600,()=>card(o.label,its.length+' '+t('moments')));
-    for(let i=0;i<its.length;i++){if(stop())break;const m=its[i];prog(i,its.length);const b=await getBlob(m.id);if(!b)continue;
-      if(m.type==='photo'){const u=URL.createObjectURL(b),im=await loadImg(u);URL.revokeObjectURL(u);if(!im)continue;await frames(o.sec*1000,()=>frame(im,im.width,im.height,m))}
-      else{const u=URL.createObjectURL(b),v=document.createElement('video');v.muted=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='auto';v.src=u;
-        await new Promise(r=>{v.onloadeddata=r;v.onerror=r;setTimeout(r,6000)});
-        if(v.videoWidth){try{await v.play()}catch(e){}await frames(Math.min(o.sec*1000,(v.duration||o.sec)*1000),()=>frame(v,v.videoWidth,v.videoHeight,m));v.pause()}
-        URL.revokeObjectURL(u);v.removeAttribute('src')}}
-    if(!stop())await frames(1200,()=>card('',''));
+    nxt=prep(its[0]);
+    await frames(1400,()=>card(o.label,its.length+' '+t('moments')));
+    for(let i=0;i<its.length;i++){if(stop())break;
+      const cur=await nxt;nxt=i+1<its.length?prep(its[i+1]):null;prog(i,its.length);
+      if(!cur)continue;
+      try{
+        if(cur.k==='p')await frames(o.sec*1000,()=>frame(cur.el,cur.w,cur.h,cur.m));
+        else{try{await cur.el.play()}catch(e){}
+          await frames(Math.min(o.sec*1000,(isFinite(cur.d)&&cur.d?cur.d:o.sec)*1000),()=>frame(cur.el,cur.w,cur.h,cur.m))}
+      }finally{rel(cur)}}
+    if(!stop())await frames(1000,()=>card('',''));
   }finally{
+    if(nxt)nxt.then(p=>{if(p)rel(p)}).catch(()=>{});
     try{if(mr.state!=='inactive')mr.stop()}catch(e){}
     srcs.forEach(s=>{try{s.stop()}catch(e){}});if(ac){try{ac.close()}catch(e){}}}
   await done;
+  try{stream.getTracks().forEach(tk=>tk.stop())}catch(e){}
   if(stop())throw new Error('aborted');
   return new Blob(chunks,{type:mr.mimeType||mt||'video/webm'})}
 
@@ -1176,8 +1194,11 @@ async function diaryUI(){const all=await getAll();free(LR);D.recording=false;
       vb.onclick=()=>{if(!D.recording&&D.voice){D.voice=null;paint()}else voice()};box.appendChild(vb);
       const it=items(all);
       const info=mk('div','screen-subtitle',it.length>=2?t('dv_info').replace('{n}',it.length).replace('{s}',3+it.length*D.sec):t('dv_few'));info.style.marginTop='12px';box.appendChild(info);
+      const nt=mk('div','screen-subtitle',t('dv_note'));nt.style.cssText='font-size:.8rem;margin:0 0 8px';box.appendChild(nt);
       const go=mk('button','btn primary',t('dv_make'));go.disabled=it.length<2||busy||D.recording;go.onclick=()=>start(it);box.appendChild(go)}
-    function start(it){if(busy)return;busy=true;abort=false;box.style.display='none';out.innerHTML='';
+    async function start(it){if(busy)return;busy=true;abort=false;box.style.display='none';out.innerHTML='';
+      let hid=false,wl=null;const onVis=()=>{if(document.hidden){hid=true;abort=true}};document.addEventListener('visibilitychange',onVis);
+      try{if(navigator.wakeLock)wl=await navigator.wakeLock.request('screen')}catch(e){}
       const AC=window.AudioContext||window.webkitAudioContext;let ac=null;
       if(AC&&(D.music||D.voice)){try{ac=new AC();if(ac.resume)ac.resume()}catch(e){ac=null}}
       const info=mk('div','screen-subtitle',t('dv_busy'));
@@ -1193,163 +1214,16 @@ async function diaryUI(){const all=await getAll();free(LR);D.recording=false;
         const ext=(blob.type||'').includes('mp4')?'mp4':'webm';
         const sh=mk('button','btn primary',t('dv_share'));sh.onclick=()=>shareFiles([new File([blob],'lahza-diary-'+dstr(new Date())+'.'+ext,{type:blob.type||'video/'+ext})]);
         const sv=mk('button','btn primary',t('dv_save'));
-        sv.onclick=async()=>{try{await addMoment({date:new Date().toISOString(),type:'video',caption:'🎞 '+label,favorite:false,mime:blob.type},blob,null,[]);toast(t('dv_saved'));refreshAll()}catch(e){toast(t('err'),1)}};
+        sv.onclick=async()=>{try{await addMoment({date:new Date().toISOString(),type:'video',caption:'🎞 '+label,favorite:false,mime:blob.type},blob,null,[]);toast(t('dv_saved'));refreshAll()}catch(e){toast(t('err')+': '+e.message,1)}};
         out.append(sh,sv)})
-      .catch(e=>{out.innerHTML='';if(!(e&&e.message==='aborted'))toast(t('dv_unsup'),1)})
-      .finally(()=>{busy=false;if(c.isConnected){box.style.display='';paint()}})}
+      .catch(e=>{out.innerHTML='';if(e&&e.message==='aborted'){if(hid)toast(t('dv_hidden'),1)}else toast(t('dv_unsup'),1)})
+      .finally(()=>{busy=false;document.removeEventListener('visibilitychange',onVis);try{if(wl)wl.release()}catch(e){}if(c.isConnected&&!out.firstChild){box.style.display='';paint()}})}
     paint();
     const x=mk('button','btn',t('close'));x.style.marginTop='8px';x.onclick=()=>{abort=true;clearInterval(wd);try{if(vr&&vr.state==='recording')vr.stop()}catch(e){}close()};c.appendChild(x)})}
 addTB('🎞','dv_t',diaryUI);
 
 const _ai=applyI18n;applyI18n=function(){_ai();gLab()};
 applyI18n();
-})();
-/* ===== 10.1 · دفعة 3 من 3 (معدّلة): أنواع الكتابة + رسم + تقويم السنة + في مثل هذا اليوم ===== */
-Object.assign(I.ar,{nb_t:'نوع الكتابة',nb_personal:'يومياتي',nb_gratitude:'امتنان',nb_goals:'أهدافي',nb_dreams:'أحلامي',nb_idea:'💡 اقترح لي فكرة',g_open:'جارٍ',g_done:'تحقق ✓',draw:'رسم / كتابة بالقلم',dr_er:'ممحاة',dr_undo:'تراجع',dr_clear:'مسح',dr_empty:'ارسم شيئاً أولاً',yc_t:'تقويم السنة',otd_t:'في مثل هذا اليوم',otd_none:'لا ذكريات في هذا اليوم'});
-Object.assign(I.en,{nb_t:'Type of entry',nb_personal:'Journal',nb_gratitude:'Gratitude',nb_goals:'Goals',nb_dreams:'Dreams',nb_idea:'💡 Suggest an idea',g_open:'In progress',g_done:'Achieved ✓',draw:'Draw / handwrite',dr_er:'Eraser',dr_undo:'Undo',dr_clear:'Clear',dr_empty:'Draw something first',yc_t:'Year calendar',otd_t:'On this day',otd_none:'No memories on this day'});
-Object.assign(I.sv,{nb_t:'Typ av anteckning',nb_personal:'Dagbok',nb_gratitude:'Tacksamhet',nb_goals:'Mål',nb_dreams:'Drömmar',nb_idea:'💡 Ge mig en idé',g_open:'Pågår',g_done:'Uppnått ✓',draw:'Rita / skriv för hand',dr_er:'Sudd',dr_undo:'Ångra',dr_clear:'Rensa',dr_empty:'Rita något först',yc_t:'Årskalender',otd_t:'På denna dag',otd_none:'Inga minnen denna dag'});
-(function(){
-const p2=n=>String(n).padStart(2,'0');
-
-/* ---- أنواع الكتابة ---- */
-const NBS=['personal','gratitude','goals','dreams'],ICN={personal:'✍️',gratitude:'🙏',goals:'🎯',dreams:'🌙'};
-const GRS=['gratitude','امتنان','Gratitude','Tacksamhet'];
-const nbOf=m=>{const s=m.section||'';if(s.indexOf('nb:')===0)return s.slice(3);return GRS.includes(s)?'gratitude':'personal'};
-const PR={
-ar:{personal:['ما أهم ما حدث معك اليوم؟','ما الذي تشعر به الآن بصدق؟','ما شيء تريد أن تتذكره عن هذه الفترة؟','ماذا تقول لنفسك قبل النوم؟'],gratitude:['ما ثلاث نعم صغيرة اليوم؟','من تشكره اليوم ولماذا؟','ما شيء تعتبره عادياً وهو نعمة؟','ما موقف جميل لم تقل عنه شكراً؟'],goals:['ما هدفك الأهم هذا الأسبوع؟','ما أصغر خطوة تقوم بها اليوم نحوه؟','ما الذي يعيقك وكيف تتجاوزه؟','كيف سيبدو نجاحك بعد سنة؟'],dreams:['صف حلماً راودك مؤخراً بكل تفاصيله','ما حلم تتمنى أن يتحقق؟','ما أجمل ما رأيت في منامك؟','لو لم يكن هناك خوف، ماذا كنت ستفعل؟']},
-en:{personal:['What was the most important thing that happened today?','What do you honestly feel right now?','What do you want to remember about this time?','What do you tell yourself before sleep?'],gratitude:['What are three small blessings today?','Who do you thank today, and why?','What do you take for granted that is really a gift?','What lovely moment did you forget to say thanks for?'],goals:['What is your most important goal this week?','What is the smallest step you can take toward it today?','What is in your way, and how will you get past it?','What will success look like in a year?'],dreams:['Describe a recent dream in detail','What dream do you hope will come true?','What was the most beautiful thing you saw in a dream?','If there were no fear, what would you do?']},
-sv:{personal:['Vad var viktigast som hände idag?','Vad känner du just nu, ärligt?','Vad vill du minnas från den här tiden?','Vad säger du till dig själv innan du sover?'],gratitude:['Vilka tre små saker är du tacksam för idag?','Vem tackar du idag och varför?','Vad tar du för givet som egentligen är en gåva?','Vilket fint ögonblick glömde du säga tack för?'],goals:['Vilket är ditt viktigaste mål den här veckan?','Vilket är det minsta steget du kan ta idag mot det?','Vad hindrar dig och hur kommer du förbi det?','Hur ser din framgång ut om ett år?'],dreams:['Beskriv en dröm du hade nyligen i detalj','Vilken dröm hoppas du ska bli verklighet?','Vad var det vackraste du drömde om?','Om det inte fanns rädsla, vad skulle du göra?']}};
-S.nbSave='personal';S.nbf=null;
-
-const tl=mk('div','background-title');tl.dataset.i18n='nb_t';
-const tRow=mk('div','filters');tRow.style.justifyContent='center';
-const ib=mk('button','btn small');ib.dataset.i18n='nb_idea';
-const setPh=()=>{const a=PR[S.lang][S.nbSave];$('textInput').placeholder=a[Math.floor(Math.random()*a.length)]};
-function paintNb(){tRow.innerHTML='';NBS.forEach(k=>{const b=mk('button','filter-chip'+(S.nbSave===k?' active':''),ICN[k]+' '+t('nb_'+k));b.onclick=()=>{S.nbSave=k;paintNb();setPh()};tRow.appendChild(b)})}
-ib.onclick=setPh;
-$('textScreen').querySelector('.background-section').before(tl,tRow,ib);
-const _ot=openText;openText=function(){_ot();S.nbSave='personal';paintNb();$('textInput').placeholder=t('ph_text')};
-const _rp=resetPending;resetPending=function(){_rp();S.nbSave='personal';paintNb()};
-const _am=addMoment;addMoment=async function(m,b,bg,ex){if(m.type==='text'&&!m.section&&S.nbSave&&S.nbSave!=='personal')m.section='nb:'+S.nbSave;return _am(m,b,bg,ex)};
-
-/* تغيير النوع من شاشة التعديل (للنصوص فقط) */
-const eRow=mk('div','filters');eRow.style.justifyContent='center';$('eCapWrap').after(eRow);
-function paintE(){eRow.innerHTML='';NBS.forEach(k=>{const b=mk('button','filter-chip'+(S.nbEdit===k?' active':''),ICN[k]+' '+t('nb_'+k));b.onclick=()=>{S.nbEdit=k;paintE()};eRow.appendChild(b)})}
-const _me=$('modalEdit').onclick;
-$('modalEdit').onclick=async()=>{await _me();const m=await getMeta(S.cur);if(!m)return;eRow.style.display=m.type==='text'?'flex':'none';S.nbEdit=nbOf(m);paintE()};
-const _eo=$('eOk').onclick;
-$('eOk').onclick=async()=>{const id=S.cur;await _eo();
-  try{const m=await getMeta(id);if(m&&m.type==='text'&&S.nbEdit&&S.nbEdit!==nbOf(m)){if(S.nbEdit==='personal')delete m.section;else m.section='nb:'+S.nbEdit;await upd(m);S.dirty=true}}catch(e){}};
-
-/* أيقونة النوع على البطاقة + زر "تحقق" للأهداف */
-function addGoal(card,m){const meta=card.querySelector('.moment-meta');if(!meta)return;
-  const b=mk('button','filter-chip'+(m.done?' active':''),m.done?t('g_done'):t('g_open'));b.style.padding='6px 14px';
-  b.onclick=async e=>{e.stopPropagation();const mm=await getMeta(m.id);if(!mm)return;mm.done=!mm.done;await upd(mm);m.done=mm.done;b.textContent=mm.done?t('g_done'):t('g_open');b.classList.toggle('active',mm.done)};
-  meta.insertBefore(b,meta.firstChild)}
-const _mc=makeCard;makeCard=async function(m){const c=await _mc(m);if(!c)return c;const k=nbOf(m);
-  if(k!=='personal'){const tm=c.querySelector('.moment-time');if(tm)tm.textContent=ICN[k]+' '+tm.textContent}
-  if(k==='goals')addGoal(c,m);return c};
-
-/* أزرار الأنواع داخل نفس صف الفلاتر (بدون صف إضافي) */
-const fr=$('filterRow');
-['gratitude','goals','dreams'].forEach(k=>{const b=mk('button','filter-chip',ICN[k]+' '+t('nb_'+k));b.dataset.nb=k;
-  b.onclick=()=>{fr.querySelectorAll('.filter-chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');S.nbf=k;S.filter='all';S.year=S.month=S.day=null;renderTree()};fr.appendChild(b)});
-fr.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('.filter-chip');if(b&&!b.dataset.nb)S.nbf=null},true);
-const syncNb=()=>fr.querySelectorAll('[data-nb]').forEach(b=>b.textContent=ICN[b.dataset.nb]+' '+t('nb_'+b.dataset.nb));
-const _rt=renderTree;renderTree=async function(ms){if(S.nbf&&!$('searchInput').value.trim())return doSearch();return _rt(ms)};
-doSearch=async function(){const raw=$('searchInput').value.trim(),r=$('searchResults'),info=$('searchInfo'),seq=++S.seq;
-  if(!raw&&!S.nbf){r.classList.add('hidden');r.innerHTML='';free(LD);show('filterRow');info.textContent=t('search_hint');return renderTree()}
-  hide('treeView');hide('empty');if(raw)hide('filterRow');else show('filterRow');
-  const toks=norm(raw).split(/\s+/).filter(Boolean),ms=await getAll();if(seq!==S.seq)return;
-  let f=ms.filter(m=>(!S.nbf||nbOf(m)===S.nbf)&&toks.every(k=>hay(m).includes(k)));
-  f.sort((a,b)=>new Date(b.date)-new Date(a.date));
-  info.textContent=f.length?f.length+' '+t('results'):t('nothing');
-  free(LD);r.innerHTML='';r.classList.remove('hidden');
-  for(const m of f.slice(0,60)){const c=await makeCard(m);if(seq!==S.seq)return;if(c)r.appendChild(c)}};
-
-/* ---- الرسم والكتابة بالقلم (إصبع أو Apple Pencil) ---- */
-const COLORS=['#1A1410','#D4AF37','#C0392B','#2E6FD1','#2E8B57','#FFFFFF'];
-const dr={strokes:[],cur:null,color:COLORS[0],size:6,er:false,dark:false};
-const scr=mk('div','screen hidden');scr.id='drawScreen';scr.style.zIndex='420';
-const xb=mk('button','xbtn btn-close','✕');xb.style.zIndex='430';
-const ttl=mk('h2','screen-title');ttl.dataset.i18n='draw';
-const tools=mk('div');tools.style.cssText='display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:10px';
-const wrap=mk('div');wrap.style.cssText='width:100%;max-width:560px;margin:0 auto;height:calc(100vh - 380px);min-height:300px;border-radius:14px;overflow:hidden;border:1px solid var(--border-strong)';
-const cv=document.createElement('canvas');cv.style.cssText='width:100%;height:100%;display:block;touch-action:none';wrap.appendChild(cv);
-const nx=mk('button','btn primary');nx.dataset.i18n='next';nx.style.marginTop='16px';
-scr.append(xb,ttl,tools,wrap,nx);document.body.appendChild(scr);
-let ctx=null,CW=0,CH=0;
-const bgc=()=>dr.dark?'#1A1410':'#FAF6EE';
-function seg(s,a,b){ctx.lineCap='round';ctx.lineJoin='round';const col=s.er?bgc():s.c;ctx.strokeStyle=col;ctx.fillStyle=col;const w=s.w*(s.er?3:1)*(b.p||1);ctx.lineWidth=w;
-  if(a===b){ctx.beginPath();ctx.arc(a.x,a.y,w/2,0,7);ctx.fill()}else{ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}}
-function redraw(){if(!ctx)return;ctx.fillStyle=bgc();ctx.fillRect(0,0,CW,CH);dr.strokes.forEach(s=>{for(let i=0;i<s.pts.length;i++)seg(s,s.pts[Math.max(0,i-1)],s.pts[i])})}
-function fit(){const r=wrap.getBoundingClientRect();if(!r.width)return;const dpr=Math.min(2,window.devicePixelRatio||1);CW=r.width;CH=r.height;cv.width=Math.round(CW*dpr);cv.height=Math.round(CH*dpr);ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);redraw()}
-function paintTools(){tools.innerHTML='';
-  COLORS.forEach(c=>{const b=mk('button');b.style.cssText='width:34px;height:34px;border-radius:50%;background:'+c+';border:3px solid '+((!dr.er&&dr.color===c)?'var(--gold)':'var(--border-strong)');b.onclick=()=>{dr.color=c;dr.er=false;paintTools()};tools.appendChild(b)});
-  [[3,'•'],[6,'●'],[12,'⬤']].forEach(a=>{const b=mk('button','filter-chip'+(dr.size===a[0]?' active':''),a[1]);b.onclick=()=>{dr.size=a[0];paintTools()};tools.appendChild(b)});
-  const er=mk('button','filter-chip'+(dr.er?' active':''),'⌫ '+t('dr_er'));er.onclick=()=>{dr.er=!dr.er;paintTools()};tools.appendChild(er);
-  const un=mk('button','filter-chip','↶ '+t('dr_undo'));un.onclick=()=>{dr.strokes.pop();redraw()};tools.appendChild(un);
-  const cl=mk('button','filter-chip','🗑 '+t('dr_clear'));cl.onclick=()=>{dr.strokes=[];redraw()};tools.appendChild(cl);
-  const bg=mk('button','filter-chip','◐');bg.setAttribute('aria-label','background');bg.onclick=()=>{dr.dark=!dr.dark;redraw()};tools.appendChild(bg)}
-const P=e=>{const r=cv.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top,p:e.pointerType==='pen'?Math.max(.25,Math.min(1.6,(e.pressure||.5)*1.6)):1}};
-cv.addEventListener('pointerdown',e=>{e.preventDefault();try{cv.setPointerCapture(e.pointerId)}catch(x){}const p=P(e);dr.cur={c:dr.color,w:dr.size,er:dr.er,pts:[p]};dr.strokes.push(dr.cur);if(ctx)seg(dr.cur,p,p)});
-cv.addEventListener('pointermove',e=>{if(!dr.cur||!ctx)return;e.preventDefault();const evs=(e.getCoalescedEvents&&e.getCoalescedEvents())||[];(evs.length?evs:[e]).forEach(x=>{const p=P(x),a=dr.cur.pts[dr.cur.pts.length-1];dr.cur.pts.push(p);seg(dr.cur,a,p)})});
-['pointerup','pointercancel'].forEach(n=>cv.addEventListener(n,()=>{dr.cur=null}));
-window.addEventListener('resize',()=>{if(!scr.classList.contains('hidden'))fit()});
-nx.onclick=()=>{if(!dr.strokes.length)return toast(t('dr_empty'),1);
-  cv.toBlob(b=>{if(!b)return;S.photos=[b];S.blob=b;S.type='photo';S.bg=null;hide('drawScreen');showPreview();show('saveScreen')},'image/jpeg',.92)};
-xb.onclick=()=>{hide('drawScreen');resetPending()};
-function openDraw(){dr.strokes=[];dr.cur=null;paintTools();show('drawScreen');setTimeout(fit,60)}
-const act=mk('button','home-action');act.id='actionDraw';
-act.innerHTML='<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg><span class="label"></span><span class="arrow">›</span>';
-act.querySelector('.label').dataset.i18n='draw';
-$('actionOldDate').before(act);act.onclick=()=>{S.oldDate=null;openDraw()};
-const pdb=mk('button','btn primary');pdb.innerHTML='✍️ <span data-i18n="draw"></span>';$('pickTypeCancel').before(pdb);pdb.onclick=()=>{hide('typePickerSheet');openDraw()};
-
-/* ---- تقويم السنة ---- */
-async function yearCal(yr){yr=yr||new Date().getFullYear();const all=await getAll(),cnt={};all.forEach(m=>{const k=dstr(m.date);cnt[k]=(cnt[k]||0)+1});
-  overlay((c,close)=>{
-    const nav=mk('div');nav.style.cssText='display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;direction:ltr';
-    const a=mk('button','filter-chip','‹ '+(yr-1)),b=mk('button','filter-chip',(yr+1)+' ›'),h=mk('div','',String(yr));h.style.cssText='font:1.6rem var(--fd);color:var(--gold)';
-    a.onclick=()=>{close();yearCal(yr-1)};b.onclick=()=>{close();yearCal(yr+1)};nav.append(a,h,b);c.appendChild(nav);
-    const g=mk('div');g.style.cssText='display:grid;grid-template-columns:repeat(3,1fr);gap:14px 10px';
-    const today=dstr(new Date());
-    for(let mo=0;mo<12;mo++){const w=mk('div'),h2=mk('div','',MON[S.lang][mo]);h2.style.cssText='font:.85rem var(--fd);color:var(--gold);margin-bottom:4px';
-      const dg=mk('div');dg.style.cssText='display:grid;grid-template-columns:repeat(7,1fr);gap:2px;direction:ltr';
-      const first=new Date(yr,mo,1).getDay(),dim=new Date(yr,mo+1,0).getDate();
-      for(let i=0;i<first;i++)dg.appendChild(mk('i'));
-      for(let d=1;d<=dim;d++){const ds=yr+'-'+p2(mo+1)+'-'+p2(d),n=cnt[ds]||0,sq=mk('button');
-        sq.style.cssText='aspect-ratio:1;border-radius:3px;background:'+(n?'var(--gold)':'var(--border)')+';opacity:'+(n?Math.min(1,.35+n*.25):1);
-        if(ds===today)sq.style.outline='1.5px solid var(--text)';
-        if(n)sq.onclick=()=>{close();openDay(ds,null)};dg.appendChild(sq)}
-      w.append(h2,dg);g.appendChild(w)}
-    c.appendChild(g);const x=mk('button','btn',t('close'));x.style.marginTop='16px';x.onclick=close;c.appendChild(x)})}
-
-/* ---- في مثل هذا اليوم ---- */
-const LO=[],UO=track(LO);
-async function otdUI(d){d=d||new Date();const all=await getAll();free(LO);const mo=d.getMonth(),dy=d.getDate();
-  overlay((c,close)=>{
-    const nav=mk('div');nav.style.cssText='display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;direction:ltr';
-    const a=mk('button','filter-chip','‹'),b=mk('button','filter-chip','›'),h=mk('div','',dy+' '+MON[S.lang][mo]);h.style.cssText='font:1.5rem var(--fd);color:var(--gold)';
-    a.onclick=()=>{close();otdUI(new Date(d.getFullYear(),mo,dy-1))};b.onclick=()=>{close();otdUI(new Date(d.getFullYear(),mo,dy+1))};nav.append(a,h,b);c.appendChild(nav);
-    const list=all.filter(m=>{const e=new Date(m.date);return e.getMonth()===mo&&e.getDate()===dy}).sort((x,y)=>new Date(y.date)-new Date(x.date));
-    if(!list.length)c.appendChild(mk('div','empty-state',t('otd_none')));
-    let cy=null;
-    for(const m of list){const y=new Date(m.date).getFullYear();
-      if(y!==cy){cy=y;const yh=mk('div','',String(y));yh.style.cssText='font:1.6rem var(--fd);color:var(--gold);margin:16px 0 6px;text-align:start;border-bottom:1px solid var(--gold);padding-bottom:4px';c.appendChild(yh)}
-      const r=mk('button');r.style.cssText='display:flex;gap:12px;align-items:center;width:100%;padding:10px 4px;text-align:start;border-bottom:1px solid var(--border)';
-      const ic=mk('div');ic.style.cssText='flex:0 0 56px;height:56px;border-radius:10px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:1.6rem;overflow:hidden';
-      if(m.type==='photo'){ic.textContent='📷';getBlob(m.id).then(bl=>{if(bl){const im=new Image();im.src=UO(bl);im.style.cssText='width:100%;height:100%;object-fit:cover';ic.textContent='';ic.appendChild(im)}})}
-      else ic.textContent=m.type==='video'?'🎥':m.type==='audio'?'🎙':'✎';
-      const tx=mk('div','',((m.mood?m.mood+' ':'')+(m.txt||m.caption||'')).slice(0,120)||(m.noTime?'':ftime(m.date)));tx.style.cssText='flex:1;font:1.05rem/1.6 var(--fq);color:var(--text)';
-      r.append(ic,tx);r.onclick=()=>{close();openModal(m.id)};c.appendChild(r)}
-    const x=mk('button','btn',t('close'));x.style.marginTop='16px';x.onclick=close;c.appendChild(x)})}
-
-addTB('🕰','otd_t',()=>otdUI());addTB('🗓','yc_t',()=>yearCal());
-
-const _ai=applyI18n;applyI18n=function(){_ai();paintNb();paintE();paintTools();syncNb()};
-applyI18n();
-$('verVal').textContent='10.1';
 })();
 /* ===== 10.1 · دفعة 4: صوت وموسيقى للفيديو ===== */
 Object.assign(I.ar,{av_btn:'🎵 أضف صوتاً أو موسيقى',av_t:'صوت وموسيقى للفيديو',av_music:'🎵 اختر موسيقى من جهازك',av_voice:'🎙 سجّل تعليقاً صوتياً',av_voice_stop:'⏹ إيقاف التسجيل',av_keep:'الاحتفاظ بصوت الفيديو الأصلي',av_vol:'مستوى الموسيقى',av_low:'منخفض',av_mid:'متوسط',av_high:'عالٍ',av_make:'إنشاء الفيديو بالصوت',av_busy:'جاري الإنشاء... اترك الشاشة مفتوحة، يستغرق بقدر مدة الفيديو',av_cancel:'إلغاء',av_ready:'جاهز، استمع للنتيجة',av_use:'استخدام هذا الفيديو',av_save2:'حفظ كلقطة جديدة',av_back:'تعديل الإعدادات',av_applied:'تم تطبيق الصوت على الفيديو',av_saved:'تم حفظ النسخة الجديدة',av_none:'اختر موسيقى أو سجّل تعليقاً أولاً',av_hint:'للتعليق: اضغط تسجيل وتكلّم، وسيعمل الفيديو لحاله أثناء التسجيل'});
@@ -1466,6 +1340,157 @@ const _om=openModal;openModal=async function(id){await _om(id);
 const _ai=applyI18n;applyI18n=function(){_ai();ab.textContent=t('av_btn')};
 applyI18n();
 })();
+  /* ===== 11.0 · دفعة 2: شاشة الكتابة الموحّدة ===== */
+Object.assign(I.ar,{wr:'✍️ اكتب',q_other:'🔄 سؤال آخر',q_lib:'📚 المكتبة',q_ask:'💬 أجب عن سؤال',q_clear:'إزالة السؤال'});
+Object.assign(I.en,{wr:'✍️ Write',q_other:'🔄 Another question',q_lib:'📚 Library',q_ask:'💬 Answer a question',q_clear:'Remove question'});
+Object.assign(I.sv,{wr:'✍️ Skriv',q_other:'🔄 Annan fråga',q_lib:'📚 Bibliotek',q_ask:'💬 Svara på en fråga',q_clear:'Ta bort frågan'});
+(function(){
+const css=mk('style');css.textContent='#moreQ,#whispers,#actionText,#actionDraw{display:none!important}#qLabel{display:block;margin:6px auto 0;color:var(--text-3);font-size:.9rem}.quote-card-title[data-n]::before{content:attr(data-n);display:inline-block;min-width:1.35em;height:1.35em;padding:0 .3em;border-radius:999px;background:var(--gold);color:var(--on-gold);font:600 .65em/1.35em var(--fb);margin-inline-end:.5em;vertical-align:middle;text-align:center}#qBox{max-width:500px;margin:0 auto 14px;padding:14px;border:1px solid var(--gold);border-radius:var(--r);text-align:center}#qBox .qt{font:1.2rem/1.8 var(--fq);color:var(--gold-light);margin-bottom:10px;word-break:break-word}#qBox .qr{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}';
+document.head.appendChild(css);
+if(!S.nbSave)S.nbSave='personal';
+
+/* العنوان الرئيسي صار مدخل الكتابة الوحيد */
+const qc=$('questionCard'),ttl=qc.querySelector('.quote-card-title');
+ttl.dataset.i18n='wr';
+const ql=mk('div');ql.id='qLabel';ql.dataset.i18n='qod';ttl.after(ql);
+qc.onclick=()=>{S.oldDate=null;openAnswer(dailyQ(),'daily')};
+
+const ts=$('textScreen'),ti=$('textInput');
+const old=ts.querySelector('[data-i18n="nb_t"]');
+if(old){const r=old.nextElementSibling,b=r&&r.nextElementSibling;[old,r,b].forEach(e=>{if(e)e.style.display='none'})}
+
+const SUG={
+goals:{ar:['ما هدفك الأهم هذا الأسبوع؟','ما أصغر خطوة تقوم بها اليوم نحوه؟','ما الذي يعيقك وكيف تتجاوزه؟','كيف سيبدو نجاحك بعد سنة؟'],en:['What is your most important goal this week?','What is the smallest step you can take toward it today?','What is in your way, and how will you get past it?','What will success look like in a year?'],sv:['Vilket är ditt viktigaste mål den här veckan?','Vilket är det minsta steget du kan ta idag mot det?','Vad hindrar dig och hur kommer du förbi det?','Hur ser din framgång ut om ett år?']},
+dreams:{ar:['صف حلماً راودك مؤخراً بكل تفاصيله','ما حلم تتمنى أن يتحقق؟','ما أجمل ما رأيت في منامك؟','لو لم يكن هناك خوف، ماذا كنت ستفعل؟'],en:['Describe a recent dream in detail','What dream do you hope will come true?','What was the most beautiful thing you saw in a dream?','If there were no fear, what would you do?'],sv:['Beskriv en dröm du hade nyligen i detalj','Vilken dröm hoppas du ska bli verklighet?','Vad var det vackraste du drömde om?','Om det inte fanns rädsla, vad skulle du göra?']}};
+const TY=[['personal','✍️','nb_personal'],['gratitude','🙏','nb_gratitude'],['goals','🎯','nb_goals'],['dreams','🌙','nb_dreams'],['letter','💌','letter'],['draw','🖌','draw']];
+const tr=mk('div','filters');tr.style.cssText='max-width:560px;margin:0 auto 12px';
+const gr=mk('div');gr.style.cssText='max-width:500px;margin:0 auto 12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap';
+const qb=mk('div');qb.id='qBox';
+const qt=mk('div','qt'),qr=mk('div','qr'),bo=mk('button','filter-chip'),bl=mk('button','filter-chip'),bx=mk('button','filter-chip','✕');
+qr.append(bo,bl,bx);qb.append(qt,qr);ti.before(tr,gr,qb);
+
+function paintTypes(){tr.innerHTML='';
+  const nl=getL().filter(l=>!l.s&&new Date(l.o)<=Date.now()).length;
+  TY.forEach(a=>{const b=mk('button','filter-chip'+(S.nbSave===a[0]?' active':''),a[1]+' '+t(a[2])+(a[0]==='letter'&&nl?' ('+nl+')':''));
+    b.onclick=()=>{
+      if(a[0]==='letter'){lettersUI();return}
+      if(a[0]==='draw'){const d=S.oldDate;hide('textScreen');const ab=$('actionDraw');if(ab)ab.click();S.oldDate=d;return}
+      S.nbSave=a[0];hubUI()};
+    tr.appendChild(b)})}
+async function hubUI(){paintTypes();
+  qt.textContent=S.wq||'';qt.style.display=S.wq?'block':'none';
+  bo.textContent=S.wq?t('q_other'):t('q_ask');bl.textContent=t('q_lib');bx.style.display=S.wq?'':'none';bx.setAttribute('aria-label',t('q_clear'));
+  ti.placeholder=S.wq?t('ph_ans'):t('ph_text');
+  const bs=ts.querySelector('.background-section');if(bs)bs.style.display=S.wq?'none':'';
+  $('saveTextBtn').textContent=S.wq?t('save'):t('next');
+  const gi=S.nbSave==='gratitude'?await grInfo():undefined;
+  gr.innerHTML='';
+  if(gi!==undefined){
+    const mkb=(txt,fn)=>{const b=mk('button','filter-chip',txt);b.onclick=fn;gr.appendChild(b)};
+    const start=()=>{LS('lahza-gr',dstr(new Date()));wBadge();attach(GR[S.lang][0],'gratitude')};
+    if(!gi)mkb('🌱 '+t('gr_t'),start);
+    else if(gi.over)mkb('🌱 '+t('gr_again'),start);
+    else{if(gi.done){const d=mk('div','','✓ '+t('gr_ok'));d.style.color='var(--gold)';gr.appendChild(d)}
+      else mkb('🌱 '+t('gr_day').replace('{n}',gi.n),()=>attach(GR[S.lang][gi.n-1],'gratitude'));
+      mkb('✕ '+t('gr_stop'),()=>{LS('lahza-gr','');wBadge();hubUI()})}}}
+function attach(q,sec){if(ts.classList.contains('hidden'))openText();S.wq=q;S.wsec=sec||'lib';hubUI()}
+function nextQ(){const l=S.lang,k=S.nbSave;let pool;
+  if(k==='gratitude')pool=bank()[{ar:'امتنان',en:'Gratitude',sv:'Tacksamhet'}[l]];
+  else if(SUG[k])pool=SUG[k][l];
+  else pool=[].concat(...Object.values(bank()));
+  pool=pool||[];if(!pool.length)return;
+  let q=S.wq;for(let i=0;i<10&&q===S.wq;i++)q=pool[Math.floor(Math.random()*pool.length)];
+  attach(q,'lib')}
+bo.onclick=nextQ;
+bl.onclick=()=>$('moreQ').click();
+bx.onclick=()=>{S.wq=null;S.wsec=null;hubUI()};
+
+/* كل مداخل الأسئلة القديمة صارت تفتح شاشة الكتابة الموحّدة */
+openAnswer=function(q,sec){hide('questionSheet');hide('questionListSheet');attach(q,sec)};
+const _ot=openText;openText=function(){_ot();S.wq=null;S.wsec=null;S.nbSave='personal';hubUI()};
+/* ===== 11.0 · دفعة 3: حماية البيانات وتصدير أسرع ===== */
+Object.assign(I.ar,{st_t:'التخزين والحماية',st_used:'المستخدم',st_safe:'محمي من الحذف التلقائي ✓',st_unsafe:'غير مضمون: قد يمسحه النظام عند امتلاء الجهاز',st_ask:'اطلب حماية التخزين',st_last:'آخر نسخة احتياطية',st_never:'لم تُنشأ بعد',st_ago:'قبل {n} يوم',st_today:'اليوم',st_full:'مساحة التخزين ممتلئة، صدّر نسخة احتياطية ثم أفرغ مساحة',st_low:'مساحة التخزين تكاد تمتلئ، صدّر نسخة احتياطية',st_now:'تصدير نسخة احتياطية الآن',st_tip:'الأفضل أن تحفظ النسخة بملفات iCloud أو Google Drive، فهي أأمن من الجهاز وحده.',st_verify:'تعذّر التأكد من حفظ اللقطة، حاول مرة أخرى'});
+Object.assign(I.en,{st_t:'Storage and protection',st_used:'Used',st_safe:'Protected from automatic cleanup ✓',st_unsafe:'Not guaranteed: the system may clear it when the device is full',st_ask:'Request storage protection',st_last:'Last backup',st_never:'None yet',st_ago:'{n} days ago',st_today:'Today',st_full:'Storage is full. Export a backup, then free some space',st_low:'Storage is almost full. Export a backup',st_now:'Export a backup now',st_tip:'Best to save the backup in iCloud Files or Google Drive. It is safer than the device alone.',st_verify:'Could not confirm the moment was saved. Please try again'});
+Object.assign(I.sv,{st_t:'Lagring och skydd',st_used:'Använt',st_safe:'Skyddat från automatisk rensning ✓',st_unsafe:'Inte garanterat: systemet kan rensa det när enheten är full',st_ask:'Begär lagringsskydd',st_last:'Senaste backup',st_never:'Ingen än',st_ago:'för {n} dagar sedan',st_today:'Idag',st_full:'Lagringen är full. Exportera en backup och frigör utrymme',st_low:'Lagringen är nästan full. Exportera en backup',st_now:'Exportera en backup nu',st_tip:'Spara helst backupen i iCloud Filer eller Google Drive. Det är säkrare än enheten ensam.',st_verify:'Kunde inte bekräfta att ögonblicket sparades. Försök igen'});
+(function(){
+const mbs=n=>n>=1073741824?(n/1073741824).toFixed(1)+' GB':Math.max(1,Math.round(n/1048576))+' MB';
+async function stInfo(){const o={};try{const e=await navigator.storage.estimate();o.u=e.usage;o.q=e.quota}catch(x){}try{o.p=await navigator.storage.persisted()}catch(x){}return o}
+
+/* عنصر الإعدادات */
+const it=mk('button','settings-item');it.id='btnStorage';
+it.innerHTML='<span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></span><div class="info"><span class="label"></span><span class="value"></span></div><span class="arrow">›</span>';
+$('btnExport').before(it);
+async function paintSt(){it.querySelector('.label').textContent=t('st_t');const o=await stInfo();
+  it.querySelector('.value').textContent=(o.u!=null?mbs(o.u):'')+(o.p===true?' · ✓':o.p===false?' · !':'')}
+it.onclick=async()=>{const o=await stInfo();
+  overlay((c,close)=>{const h=mk('div','',t('st_t'));h.style.cssText='font:1.4rem var(--fd);color:var(--gold);margin-bottom:14px';c.appendChild(h);
+    const row=(a,b)=>{const r=mk('div');r.style.cssText='display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);text-align:start';r.append(mk('span','',a),mk('span','',b));r.lastChild.style.color='var(--gold)';c.appendChild(r)};
+    row(t('st_used'),o.u!=null?mbs(o.u)+(o.q?' / '+mbs(o.q):''):'—');
+    const last=+LS('lahza-last-backup')||0,d=last?Math.floor((Date.now()-last)/864e5):-1;
+    row(t('st_last'),d<0?t('st_never'):d===0?t('st_today'):t('st_ago').replace('{n}',d));
+    const st=mk('div','',o.p?t('st_safe'):t('st_unsafe'));st.style.cssText='margin:14px 0;color:'+(o.p?'var(--gold)':'#EF4444');c.appendChild(st);
+    if(o.p===false){const b=mk('button','btn',t('st_ask'));b.onclick=async()=>{try{await navigator.storage.persist()}catch(e){}close();paintSt();it.click()};c.appendChild(b)}
+    const ex=mk('button','btn primary',t('st_now'));ex.onclick=()=>{close();$('btnExport').click()};c.appendChild(ex);
+    const tip=mk('div','screen-subtitle',t('st_tip'));tip.style.cssText='font-size:.85rem;margin-top:10px';c.appendChild(tip);
+    const x=mk('button','btn',t('close'));x.onclick=close;c.appendChild(x)})};
+
+/* تحقق من كل حفظ + رسالة واضحة إذا امتلأت المساحة */
+const _am=addMoment;
+addMoment=async function(m,blob,bg,ex){
+  try{const id=await _am(m,blob,bg,ex);const chk=await getBlob(id);
+    if(!chk||chk.size!==blob.size){try{await delMoment(id)}catch(e){}throw new Error(t('st_verify'))}
+    return id}
+  catch(e){if(e&&(e.name==='QuotaExceededError'||/quota/i.test(e.message||'')))throw new Error(t('st_full'));throw e}};
+
+/* تصدير أسرع وأخف على الذاكرة (الصور والفيديو مضغوطة أصلاً) */
+buildZip=async function(ms){const zip=new JSZip(),meta=[];
+  for(const m of ms){const fn=m.id+'.'+extFor(m),b=await getBlob(m.id);if(b)zip.file('moments/'+fn,b);
+    const e={id:m.id,date:m.date,type:m.type,caption:m.caption||'',favorite:!!m.favorite,noTime:!!m.noTime,mood:m.mood||null,mime:m.mime||null,dur:m.dur||0,extra:m.extra||0,section:m.section||null,done:!!m.done,background:m.background||null,file:fn};
+    if(m.bgKey){const bb=await getBlob('bg'+m.id);if(bb){zip.file('bg/'+m.id,bb);e.bgFile='bg/'+m.id}}
+    for(let i=0;i<(m.extra||0);i++){const pb=await getBlob('p'+m.id+'_'+i);if(pb)zip.file('extra/'+m.id+'_'+i+'.jpg',pb)}
+    meta.push(e)}
+  zip.file('data.json',JSON.stringify({version:'11.0',date:new Date().toISOString(),count:ms.length,moments:meta,letters:getL(),gr:LS('lahza-gr')||null},null,2));
+  return zip.generateAsync({type:'blob',compression:'STORE',streamFiles:true})};
+
+/* استيراد يحفظ حالة "تحقق" للأهداف */
+$('importInput').onchange=async e=>{const f=e.target.files[0];if(!f)return;
+  try{const zip=await JSZip.loadAsync(f),df=zip.file('data.json');if(!df)throw new Error('Invalid file');const data=JSON.parse(await df.async('string'));if(!Array.isArray(data.moments))throw new Error('Invalid structure');
+    const key=m=>m.date+'|'+m.type+'|'+(m.caption||''),have=new Set((await getAll()).map(key));let added=0;
+    for(const x of data.moments){if(have.has(key(x)))continue;const file=zip.file('moments/'+x.file);if(!file)continue;
+      const m={date:x.date,type:x.type,caption:x.caption||'',favorite:!!x.favorite};if(x.noTime)m.noTime=true;if(x.mood)m.mood=x.mood;if(x.mime)m.mime=x.mime;if(x.dur)m.dur=x.dur;if(x.section)m.section=x.section;if(x.done)m.done=true;
+      const raw=await file.async('blob'),blob=new Blob([raw],{type:mimeFor({type:x.type,mime:x.mime})});
+      if(x.type==='text'||x.type==='answer')m.txt=await blob.text();
+      let bg=null;if(x.bgFile&&zip.file(x.bgFile))bg=await zip.file(x.bgFile).async('blob');else if(x.background)m.background=x.background;
+      const extras=[];for(let i=0;i<(x.extra||0);i++){const pf=zip.file('extra/'+x.id+'_'+i+'.jpg');if(pf)extras.push(new Blob([await pf.async('blob')],{type:'image/jpeg'}))}
+      await addMoment(m,blob,bg,extras);added++}
+    if(Array.isArray(data.letters)){const L=getL(),ids=new Set(L.map(l=>l.id));data.letters.forEach(l=>{if(l&&l.id&&!ids.has(l.id))L.push(l)});setL(L)}
+    if(data.gr&&!LS('lahza-gr'))LS('lahza-gr',data.gr);
+    toast(t('imp_ok')+' ('+added+')');refreshAll();syncNative()}catch(err){toast(t('err')+': '+err.message,1)}e.target.value=''};
+
+/* عند التشغيل: اطلب حماية التخزين ونبّه إذا اقتربت المساحة من الامتلاء */
+(async()=>{try{if(navigator.storage&&navigator.storage.persist&&!(await navigator.storage.persisted()))await navigator.storage.persist()}catch(e){}
+  const o=await stInfo();if(o.q&&o.u/o.q>.85)toast(t('st_low'),1);paintSt()})();
+
+const _ai=applyI18n;applyI18n=function(){_ai();paintSt()};
+applyI18n();
+$('verVal').textContent='11.0';
+})();
+/* حفظ الإجابة على سؤال */
+async function saveAnswer(x){try{
+  const k=S.nbSave,sec=S.wsec==='gratitude'?'gratitude':(k&&k!=='personal'?'nb:'+k:(S.wsec||'daily'));
+  const m={date:(S.oldDate||new Date()).toISOString(),type:'answer',caption:S.wq,favorite:false,section:sec,txt:x};if(S.oldDate)m.noTime=true;
+  await addMoment(m,new Blob([x],{type:'text/plain'}));hide('textScreen');resetPending();toast(t('saved_a'));refreshAll();wBadge()}
+  catch(e){toast(t('err')+': '+e.message,1)}}
+const _stb=$('saveTextBtn').onclick;
+$('saveTextBtn').onclick=()=>{const x=ti.value.trim();if(!x)return toast(t('write_first'),1);if(S.wq)return saveAnswer(x);_stb()};
+
+/* الشارة على العنوان تجمع: تحدّي الامتنان + الرسائل الواصلة */
+const _wb=wBadge;wBadge=async function(){await _wb();const n=$('whispers').getAttribute('data-n');if(n)ttl.setAttribute('data-n',n);else ttl.removeAttribute('data-n')};
+
+const _ai=applyI18n;applyI18n=function(){_ai();hubUI();setLn()};
+applyI18n();wBadge();
+})();
+
 </script>
 </body>
 </html>
