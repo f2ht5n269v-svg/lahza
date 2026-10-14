@@ -1806,6 +1806,161 @@ const _om=openModal;openModal=async function(id){await _om(id);
 const _ai=applyI18n;applyI18n=function(){_ai();if(!scr.classList.contains('hidden')){h.textContent=t('ba_t');paintModes();paintQuick()}};
 $('verVal').textContent='12.1';
 })();
+  /* ===== 13.0: إحصائيات متقدمة + ملخص الشهر + مقارنة شهر بشهر + كتاب السنة التفاعلي ===== */
+Object.assign(I.ar,{st_mood_t:'مشاعرك',st_notes:'ملاحظات',st_best:'أكثر يوم سعادة',st_hard:'أصعب يوم',st_up:'📈 مزاجك هذا الشهر أفضل من الشهر السابق بنسبة {p}%',st_dn:'📉 مزاجك هذا الشهر أقل من الشهر السابق بنسبة {p}%',st_cup:'📈 نشاطك هذا الشهر أكثر من الشهر السابق بنسبة {p}%',st_cdn:'📉 نشاطك هذا الشهر أقل من الشهر السابق بنسبة {p}%',st_streak:'🔥 سلسلتك الحالية: {n} من {m} أيام',st_streak_top:'🔥 سلسلتك الحالية: {n} يوماً',st_need:'سجّل مزاجك على لقطاتك لتظهر المشاعر والملاحظات هنا',p30:'30 يوماً',p90:'3 شهور',p365:'سنة',grid_t:'أيام التوثيق',sm_t:'ملخص الشهر',sm_moments:'لقطة',sm_days:'يوم موثّق',sm_streak:'أطول سلسلة: {n} أيام',sm_mood:'المشاعر',sm_hl:'أبرز لحظة',sm_more:'اقرأ المزيد',sm_song:'أغنية الشهر',sm_song_ph:'اسم الأغنية والفنان',sm_spot:'🔎 ابحث في Spotify',sm_share:'📤 شارك بطاقة الشهر',sm_cmp:'مقارنة شهر بشهر',sm_cnt:'لقطات',sm_mo:'مشاعر',sm_st:'سلسلة',sm_better:'أحسن',sm_lower:'أقل',sm_same:'ثابت',sm_none:'لا لقطات بهذا الشهر',bk_flip:'📖 كتاب السنة التفاعلي',bk_pdf:'📄 PDF للطباعة',bk_cover:'ذكرياتي',bk_jump:'انتقل إلى شهر'});
+Object.assign(I.en,{st_mood_t:'Your moods',st_notes:'Notes',st_best:'Happiest day',st_hard:'Hardest day',st_up:'📈 Your mood this month is {p}% better than last month',st_dn:'📉 Your mood this month is {p}% lower than last month',st_cup:'📈 You wrote {p}% more this month than last month',st_cdn:'📉 You wrote {p}% less this month than last month',st_streak:'🔥 Current streak: {n} of {m} days',st_streak_top:'🔥 Current streak: {n} days',st_need:'Add a mood to your moments to see moods and notes here',p30:'30 days',p90:'3 months',p365:'Year',grid_t:'Days recorded',sm_t:'Month summary',sm_moments:'moments',sm_days:'days recorded',sm_streak:'Longest streak: {n} days',sm_mood:'Moods',sm_hl:'Highlight',sm_more:'Read more',sm_song:'Song of the month',sm_song_ph:'Song and artist',sm_spot:'🔎 Search on Spotify',sm_share:'📤 Share month card',sm_cmp:'Month vs month',sm_cnt:'Moments',sm_mo:'Mood',sm_st:'Streak',sm_better:'better',sm_lower:'lower',sm_same:'same',sm_none:'No moments this month',bk_flip:'📖 Interactive year book',bk_pdf:'📄 PDF to print',bk_cover:'My memories',bk_jump:'Jump to month'});
+Object.assign(I.sv,{st_mood_t:'Dina känslor',st_notes:'Anteckningar',st_best:'Gladaste dagen',st_hard:'Tuffaste dagen',st_up:'📈 Ditt humör är {p}% bättre än förra månaden',st_dn:'📉 Ditt humör är {p}% lägre än förra månaden',st_cup:'📈 Du skrev {p}% mer än förra månaden',st_cdn:'📉 Du skrev {p}% mindre än förra månaden',st_streak:'🔥 Nuvarande svit: {n} av {m} dagar',st_streak_top:'🔥 Nuvarande svit: {n} dagar',st_need:'Lägg till humör på dina ögonblick för att se känslor här',p30:'30 dagar',p90:'3 månader',p365:'År',grid_t:'Dokumenterade dagar',sm_t:'Månadssammanfattning',sm_moments:'ögonblick',sm_days:'dagar',sm_streak:'Längsta svit: {n} dagar',sm_mood:'Känslor',sm_hl:'Höjdpunkt',sm_more:'Läs mer',sm_song:'Månadens låt',sm_song_ph:'Låt och artist',sm_spot:'🔎 Sök på Spotify',sm_share:'📤 Dela månadskort',sm_cmp:'Månad mot månad',sm_cnt:'Ögonblick',sm_mo:'Humör',sm_st:'Svit',sm_better:'bättre',sm_lower:'lägre',sm_same:'oförändrat',sm_none:'Inga ögonblick denna månad',bk_flip:'📖 Interaktiv årsbok',bk_pdf:'📄 PDF för utskrift',bk_cover:'Mina minnen',bk_jump:'Gå till månad'});
+(function(){
+const SC={'😄':5,'🙂':4,'😐':3,'😔':2,'😢':1},p2=n=>String(n).padStart(2,'0');
+const css=mk('style');css.textContent='.stp{display:flex;gap:8px;justify-content:center;margin:6px 0 12px}.mbar{display:flex;align-items:center;gap:10px;margin:8px 0}.mbar .e{font-size:1.5rem;width:2rem;text-align:center}.mbar .tr{flex:1;height:12px;border-radius:6px;background:var(--card);overflow:hidden}.mbar .fl{height:100%;border-radius:6px;background:var(--gold)}.mbar .pc{min-width:3.4ch;color:var(--text-3);font-size:.9rem;direction:ltr;text-align:end}.nl{padding:10px 4px;border-bottom:1px solid var(--border);text-align:start;font:1.05rem/1.7 var(--fb)}.sec-t{font:1.15rem var(--fd);color:var(--gold);margin:24px 0 8px;text-align:center}.mg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;direction:ltr;max-width:320px;margin:0 auto}.mg i,.mg button{aspect-ratio:1;border-radius:5px}.crow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 4px;border-bottom:1px solid var(--border);font:1.05rem var(--fb);text-align:start}.crow b{direction:ltr;color:var(--gold);font-weight:500}#bkv{position:fixed;inset:0;z-index:470;background:var(--bg);color:var(--text);display:flex;flex-direction:column;gap:10px;padding:calc(12px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom));direction:ltr}#bkv .bt{display:flex;align-items:center;justify-content:space-between;gap:8px}#bkv select{padding:8px;background:var(--card);color:var(--text);border:1px solid var(--border-strong);border-radius:10px;max-width:42vw}#bkst{flex:1;min-height:0;perspective:1400px;display:flex;touch-action:pan-y}.bkpg{flex:1;min-height:0;overflow-y:auto;background:var(--card);border:2px solid var(--gold);border-radius:6px 18px 18px 6px;padding:22px 18px;box-shadow:0 10px 30px rgba(0,0,0,.4);backface-visibility:hidden;text-align:start}.bkpg .d{font:1.1rem var(--fd);color:var(--gold);margin-bottom:10px}.bkpg .x{font:1.2rem/1.9 var(--fq);white-space:pre-wrap;word-break:break-word}.bkpg img{width:100%;border-radius:10px;margin:10px 0}#bkv .bb{display:flex;gap:10px;justify-content:center;align-items:center}#bkv .bb .btn{margin:0;max-width:140px;padding:12px}';
+document.head.appendChild(css);
+
+/* ---- أدوات حساب ---- */
+const sameM=(d,y,m)=>{d=new Date(d);return d.getFullYear()===y&&d.getMonth()===m};
+const pc=(n,d)=>d?Math.round(n/d*100):0;
+function moodDist(l){const c={};MOODS.forEach(e=>c[e]=0);let n=0;l.forEach(m=>{if(m.mood&&c[m.mood]!==undefined){c[m.mood]++;n++}});return{c,n}}
+function avg(l){let s=0,n=0;l.forEach(m=>{if(SC[m.mood]){s+=SC[m.mood];n++}});return n?s/n:null}
+function dom(l){const{c,n}=moodDist(l);return n?MOODS.reduce((a,e)=>c[e]>c[a]?e:a,MOODS[0]):null}
+function longest(l){const ds=[...new Set(l.map(m=>dstr(m.date)))].sort();let b=ds.length?1:0,c=1;for(let i=1;i<ds.length;i++){const d=Math.round((new Date(ds[i]+'T12:00:00')-new Date(ds[i-1]+'T12:00:00'))/864e5);if(d===1){c++;if(c>b)b=c}else c=1}return b}
+function curStreak(ms){const days=new Set(ms.map(m=>dstr(m.date)));let n=0,c=new Date();if(!days.has(dstr(c)))c.setDate(c.getDate()-1);while(days.has(dstr(c))){n++;c.setDate(c.getDate()-1)}return n}
+function bars(l){const w=mk('div'),{c,n}=moodDist(l);
+  if(!n){const e=mk('div','empty-state',t('st_need'));e.style.margin='10px 0';w.appendChild(e);return w}
+  MOODS.forEach(e=>{if(!c[e])return;const p=pc(c[e],n),r=mk('div','mbar'),tr=mk('div','tr'),fl=mk('div','fl');fl.style.width=p+'%';tr.appendChild(fl);r.append(mk('span','e',e),tr,mk('span','pc',p+'%'));w.appendChild(r)});return w}
+function notes(ms,days){const per=ms.filter(m=>new Date(m.date)>=Date.now()-days*864e5),out=[],wd={};
+  per.forEach(m=>{if(SC[m.mood]){const k=new Date(m.date).getDay();(wd[k]=wd[k]||[]).push(SC[m.mood])}});
+  const ks=Object.keys(wd),av=k=>wd[k].reduce((a,b)=>a+b,0)/wd[k].length;
+  if(ks.length>=2){let hi=ks[0],lo=ks[0];ks.forEach(k=>{if(av(k)>av(hi))hi=k;if(av(k)<av(lo))lo=k});
+    if(av(hi)!==av(lo)){out.push('🎉 '+t('st_best')+': '+DAYS[S.lang][hi]);out.push('😔 '+t('st_hard')+': '+DAYS[S.lang][lo])}}
+  const now=new Date(),y=now.getFullYear(),m0=now.getMonth(),py=m0?y:y-1,pm=m0?m0-1:11;
+  const cur=ms.filter(m=>sameM(m.date,y,m0)),prv=ms.filter(m=>sameM(m.date,py,pm));let line=null;
+  const a1=avg(cur),a0=avg(prv);
+  if(a1!=null&&a0!=null&&moodDist(cur).n>=3&&moodDist(prv).n>=3){const p=Math.round((a1-a0)/a0*100);line=p>0?t('st_up'):p<0?t('st_dn'):null;if(line)line=line.replace('{p}',Math.abs(p))}
+  else if(prv.length){const p=Math.round((cur.length-prv.length)/prv.length*100);line=p>0?t('st_cup'):p<0?t('st_cdn'):null;if(line)line=line.replace('{p}',Math.abs(p))}
+  if(line)out.push(line);
+  const n=curStreak(ms),tg=TH.find(x=>x>n);out.push(tg?t('st_streak').replace('{n}',n).replace('{m}',tg):t('st_streak_top').replace('{n}',n));
+  return out}
+function grid(ms,gm,again){const w=mk('div'),nav=mk('div');nav.style.cssText='display:flex;justify-content:space-between;align-items:center;max-width:320px;margin:0 auto 8px;direction:ltr';
+  const a=mk('button','filter-chip','‹'),b=mk('button','filter-chip','›'),h=mk('div','',MON[S.lang][gm.m]+' '+gm.y);h.style.cssText='font:1.1rem var(--fd);color:var(--gold)';
+  a.onclick=()=>{gm.m--;if(gm.m<0){gm.m=11;gm.y--}again()};b.onclick=()=>{gm.m++;if(gm.m>11){gm.m=0;gm.y++}again()};nav.append(a,h,b);w.appendChild(nav);
+  const cnt={};ms.forEach(m=>{const k=dstr(m.date);cnt[k]=(cnt[k]||0)+1});
+  const g=mk('div','mg'),first=new Date(gm.y,gm.m,1).getDay(),dim=new Date(gm.y,gm.m+1,0).getDate(),today=dstr(new Date());
+  for(let i=0;i<first;i++)g.appendChild(mk('i'));
+  for(let d=1;d<=dim;d++){const ds=gm.y+'-'+p2(gm.m+1)+'-'+p2(d),n=cnt[ds]||0,q=mk('button');
+    q.style.background=n?'var(--gold)':'var(--border)';q.style.opacity=n?(n>=5?1:n>=3?.75:n===2?.55:.35):1;
+    if(ds===today)q.style.outline='1.5px solid var(--text)';q.setAttribute('aria-label',ds);
+    if(n)q.onclick=()=>{hide('statsModal');openDay(ds,null)};g.appendChild(q)}
+  w.appendChild(g);return w}
+
+/* ---- شاشة الإحصائيات ---- */
+const now0=new Date(),P={days:30,gm:{y:now0.getFullYear(),m:now0.getMonth()}};
+const bookFn=$('btnBook')&&$('btnBook').onclick;
+const mc=document.querySelector('#statsModal .modal-content');
+async function renderStats(){const ms=await getAll();mc.innerHTML='';
+  mc.appendChild(mk('h2','stats-title',t('stats')));
+  const days=new Set(ms.map(m=>dstr(m.date))),now=new Date(),m0=new Date(now.getFullYear(),now.getMonth(),1);
+  const g=mk('div','stats-grid');
+  [[ms.length,t('moments')],[days.size,t('days_rec')],[longest(ms),t('best')],[ms.filter(m=>new Date(m.date)>=m0).length,t('this_month')]].forEach(a=>{const d=mk('div','stat-card');d.append(mk('span','stat-num',a[0]),mk('span','stat-label',a[1]));g.appendChild(d)});
+  mc.appendChild(g);
+  mc.appendChild(mk('div','sec-t','📊 '+t('st_mood_t')));
+  const pr=mk('div','stp');[[30,'p30'],[90,'p90'],[365,'p365']].forEach(a=>{const b=mk('button','filter-chip'+(P.days===a[0]?' active':''),t(a[1]));b.onclick=()=>{P.days=a[0];renderStats()};pr.appendChild(b)});mc.appendChild(pr);
+  const bb=bars(ms.filter(m=>new Date(m.date)>=Date.now()-P.days*864e5));bb.style.cssText='max-width:560px;margin:0 auto';mc.appendChild(bb);
+  mc.appendChild(mk('div','sec-t','📊 '+t('st_notes')));
+  const nw=mk('div');nw.style.cssText='max-width:560px;margin:0 auto';notes(ms,P.days).forEach(x=>nw.appendChild(mk('div','nl',x)));mc.appendChild(nw);
+  mc.appendChild(mk('div','sec-t','🗓 '+t('grid_t')));mc.appendChild(grid(ms,P.gm,renderStats));
+  const sm=mk('button','btn primary','📅 '+t('sm_t'));sm.style.marginTop='26px';sm.onclick=()=>{hide('statsModal');monthUI(now.getFullYear(),now.getMonth())};
+  const bk=mk('button','btn primary',t('bk_flip'));bk.onclick=()=>{hide('statsModal');flip()};
+  const pf=mk('button','btn',t('bk_pdf'));pf.onclick=()=>{if(bookFn)bookFn.call(pf)};
+  mc.append(sm,bk,pf)}
+$('homeStats').onclick=async()=>{await renderStats();show('statsModal')};
+
+/* ---- ملخص الشهر + مقارنة شهر بشهر + بطاقة المشاركة ---- */
+async function monthCard(y,m,song,f){const W=1080,H=1350,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');
+  try{await Promise.all([document.fonts.load('40px "Reem Kufi"'),document.fonts.load('60px "Great Vibes"')])}catch(e){}
+  const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#2a1c0a');g.addColorStop(1,'#0F0A08');x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.textBaseline='top';x.textAlign='center';x.fillStyle='#D4AF37';x.direction=S.lang==='ar'?'rtl':'ltr';
+  x.font='64px "Reem Kufi"';x.fillText(MON[S.lang][m]+' '+y,W/2,70);
+  x.font='220px "Reem Kufi"';x.fillText(String(f.length),W/2,160);
+  x.fillStyle='#F5F5F5';x.font='46px "Reem Kufi"';x.fillText(t('sm_moments'),W/2,410);
+  const days=new Set(f.map(a=>dstr(a.date))).size;x.font='34px "Reem Kufi"';x.fillText(days+' '+t('sm_days')+'  ·  '+t('sm_streak').replace('{n}',longest(f)),W/2,480);
+  const{c,n}=moodDist(f),top=MOODS.filter(e=>c[e]).sort((a,b)=>c[b]-c[a]).slice(0,3);let y0=560;x.textAlign='left';x.direction='ltr';
+  top.forEach(e=>{const p=pc(c[e],n);x.fillStyle='#F5F5F5';x.font='54px serif';x.fillText(e,200,y0);x.fillStyle='rgba(255,255,255,.12)';x.fillRect(290,y0+16,520,26);x.fillStyle='#D4AF37';x.fillRect(290,y0+16,520*p/100,26);x.fillStyle='#F5F5F5';x.font='34px "Reem Kufi"';x.fillText(p+'%',830,y0+6);y0+=76});
+  x.textAlign='center';x.direction=isAr(song||'')?'rtl':'ltr';
+  if(song){x.fillStyle='#D4AF37';x.font='36px "Reem Kufi"';x.fillText('🎵 '+song.slice(0,48),W/2,820)}
+  const ph=f.filter(a=>a.type==='photo').slice(-3);
+  for(let i=0;i<ph.length;i++){const b=await getBlob(ph[i].id);if(!b)continue;const u=URL.createObjectURL(b),im=await loadImg(u);URL.revokeObjectURL(u);if(!im)continue;
+    const s=300,px=60+i*330,py=900,k=Math.max(s/im.width,s/im.height);x.save();x.beginPath();x.rect(px,py,s,s);x.clip();x.drawImage(im,px+(s-im.width*k)/2,py+(s-im.height*k)/2,im.width*k,im.height*k);x.restore()}
+  x.direction='ltr';x.fillStyle='#D4AF37';x.font='72px "Great Vibes"';x.fillText('Lahza',W/2,H-130);
+  return new Promise(r=>cv.toBlob(r,'image/jpeg',.92))}
+async function monthUI(y,m){const ms=await getAll(),f=ms.filter(a=>sameM(a.date,y,m)),py=m?y:y-1,pm=m?m-1:11,pf=ms.filter(a=>sameM(a.date,py,pm));
+  overlay((c,close)=>{
+    const nav=mk('div');nav.style.cssText='display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;direction:ltr';
+    const a=mk('button','filter-chip','‹'),b=mk('button','filter-chip','›'),h=mk('div','','📅 '+MON[S.lang][m]+' '+y);h.style.cssText='font:1.35rem var(--fd);color:var(--gold)';
+    a.onclick=()=>{close();monthUI(py,pm)};b.onclick=()=>{close();monthUI(m===11?y+1:y,m===11?0:m+1)};nav.append(a,h,b);c.appendChild(nav);
+    const xb=mk('button','btn',t('close'));xb.onclick=close;
+    if(!f.length){const e=mk('div','empty-state',t('sm_none'));e.style.margin='20px 0';c.append(e,xb);return}
+    const days=new Set(f.map(q=>dstr(q.date))).size;
+    [['🎨',f.length+' '+t('sm_moments')],['📆',days+' '+t('sm_days')],['🔥',t('sm_streak').replace('{n}',longest(f))]].forEach(r=>{const d=mk('div','crow');d.append(mk('span','',r[1]),mk('span','',r[0]));c.appendChild(d)});
+    c.appendChild(mk('div','sec-t',t('sm_mood')));const bw=bars(f);bw.style.textAlign='start';c.appendChild(bw);
+    const tx=f.filter(q=>q.txt&&q.txt.length>10),hl=tx.find(q=>q.favorite)||tx.slice().sort((p,q)=>q.txt.length-p.txt.length)[0];
+    if(hl){c.appendChild(mk('div','sec-t','✨ '+t('sm_hl')));
+      const qq=mk('div','','«'+hl.txt.slice(0,140)+(hl.txt.length>140?'…':'')+'»');qq.style.cssText='font:1.15rem/1.9 var(--fq);color:var(--text);margin-bottom:8px;word-break:break-word';c.appendChild(qq);
+      const mr=mk('button','filter-chip',t('sm_more'));mr.onclick=()=>{close();openModal(hl.id)};c.appendChild(mr)}
+    c.appendChild(mk('div','sec-t','🎵 '+t('sm_song')));
+    const key='lahza-song-'+y+'-'+p2(m+1),si=document.createElement('input');si.type='text';si.value=LS(key)||'';si.placeholder=t('sm_song_ph');
+    si.style.cssText='width:100%;padding:12px;text-align:center;border-radius:10px;border:1px solid var(--border-strong);background:var(--bg);color:var(--text);margin-bottom:8px';si.onchange=()=>LS(key,si.value.trim());c.appendChild(si);
+    const sp=mk('button','filter-chip',t('sm_spot'));sp.onclick=()=>{const q=si.value.trim();window.open('https://open.spotify.com/search/'+encodeURIComponent(q),'_blank')};c.appendChild(sp);
+    if(pf.length){c.appendChild(mk('div','sec-t','📊 '+t('sm_cmp')));
+      const hd=mk('div','',MON[S.lang][pm]+'  →  '+MON[S.lang][m]);hd.style.cssText='direction:ltr;color:var(--text-3);margin-bottom:4px';c.appendChild(hd);
+      const row=(lab,from,to,verdict)=>{const r=mk('div','crow');r.append(mk('span','',lab),mk('b','',from+' → '+to+(verdict?'   '+verdict:'')));c.appendChild(r)};
+      const pcnt=Math.round((f.length-pf.length)/pf.length*100);
+      row(t('sm_cnt'),pf.length,f.length,(pcnt>0?'↑ +':pcnt<0?'↓ ':'= ')+pcnt+'%');
+      const d0=dom(pf),d1=dom(f);
+      if(d0&&d1){const s0=SC[d0],s1=SC[d1];row(t('sm_mo'),d0,d1,s1>s0?'↑ '+t('sm_better'):s1<s0?'↓ '+t('sm_lower'):'= '+t('sm_same'))}
+      const l0=longest(pf),l1=longest(f);row(t('sm_st'),l0,l1,l1>l0?'↑ '+t('sm_better'):l1<l0?'↓ '+t('sm_lower'):'= '+t('sm_same'))}
+    const sh=mk('button','btn primary',t('sm_share'));sh.style.marginTop='20px';
+    sh.onclick=async()=>{const song=si.value.trim();LS(key,song);try{const bl=await monthCard(y,m,song,f);shareFiles([new File([bl],'lahza-'+y+'-'+p2(m+1)+'.jpg',{type:'image/jpeg'})])}catch(e){toast(t('err'),1)}};
+    c.append(sh,xb)})}
+
+/* ---- كتاب السنة التفاعلي ---- */
+async function flip(){const ms=await getAll(),y=new Date().getFullYear();
+  const list=ms.filter(q=>new Date(q.date).getFullYear()===y&&!String(q.caption||'').startsWith('⇄')).sort((a,b)=>new Date(a.date)-new Date(b.date));
+  if(!list.length)return toast(t('no_moments'),1);
+  const pages=[{cover:1}].concat(list),LB2=[],UK=track(LB2);let i=0,busy=false;
+  const old=$('bkv');if(old)old.remove();
+  const v=mk('div');v.id='bkv';
+  const top=mk('div','bt'),xb=mk('button','xbtn','✕'),cn=mk('div'),sel=document.createElement('select');cn.style.cssText='color:var(--text-3);direction:ltr';
+  const o0=new Option(t('bk_jump'),'');sel.add(o0);MON[S.lang].forEach((n,k)=>sel.add(new Option(n,k)));top.append(xb,cn,sel);
+  const st=mk('div');st.id='bkst';const page=mk('div','bkpg');page.dir=document.documentElement.dir;st.appendChild(page);
+  const bb=mk('div','bb'),pv=mk('button','btn','‹'),pdf=mk('button','btn',t('bk_pdf')),nx=mk('button','btn','›');bb.append(pv,pdf,nx);
+  v.append(top,st,bb);document.body.appendChild(v);
+  async function render(){page.innerHTML='';free(LB2);const p=pages[i];page.scrollTop=0;
+    if(p.cover){const c=mk('div');c.style.cssText='text-align:center;padding-top:14vh';
+      const a=mk('div','',t('bk_cover'));a.style.cssText='font:2.4rem var(--fd);color:var(--gold)';
+      const b=mk('div','',String(y));b.style.cssText='font:3.4rem var(--fd);margin:14px 0';
+      const d=mk('div','',list.length+' '+t('moments'));d.style.cssText='color:var(--text-3);font:1.2rem var(--fb)';
+      const lg=mk('div','','Lahza');lg.style.cssText='font:3rem "Great Vibes",cursive;color:var(--gold);margin-top:40px';c.append(a,b,d,lg);page.appendChild(c)}
+    else{page.appendChild(mk('div','d',(p.mood?p.mood+' ':'')+fdate(p.date)+(p.noTime?'':' · '+ftime(p.date))));
+      if(p.type==='answer'&&p.caption){const q=mk('div','x',p.caption);q.style.cssText+=';color:var(--gold);margin-bottom:8px';page.appendChild(q)}
+      else if(p.caption)page.appendChild(mk('div','x',p.caption));
+      if(p.txt)page.appendChild(mk('div','x',p.txt));
+      if(p.type==='photo'){const bs=await photoBlobs(p);for(const b of bs.slice(0,3)){const im=new Image();im.src=UK(b);page.appendChild(im)}}
+      else if(p.type==='video'||p.type==='audio')page.appendChild(mk('div','x',p.type==='video'?'🎥':'🎙'))}
+    cn.textContent=(i+1)+' / '+pages.length}
+  async function go(d,jump){if(busy)return;const n=jump!=null?jump:i+d;if(n<0||n>=pages.length||n===i)return;busy=true;const dir=n>i?1:-1;
+    page.style.transition='transform .26s ease-in';page.style.transform='rotateY('+(dir>0?-90:90)+'deg)';
+    await new Promise(r=>setTimeout(r,260));i=n;await render();
+    page.style.transition='none';page.style.transform='rotateY('+(dir>0?90:-90)+'deg)';void page.offsetWidth;
+    page.style.transition='transform .26s ease-out';page.style.transform='rotateY(0deg)';setTimeout(()=>{busy=false},280)}
+  pv.onclick=()=>go(-1);nx.onclick=()=>go(1);
+  let sx=null;st.addEventListener('pointerdown',e=>{sx=e.clientX});
+  st.addEventListener('pointerup',e=>{if(sx==null)return;const dx=e.clientX-sx;sx=null;if(dx<-60)go(1);else if(dx>60)go(-1)});
+  sel.onchange=()=>{if(sel.value==='')return;const mo=+sel.value,k=pages.findIndex((q,j)=>j>0&&sameM(q.date,y,mo));if(k>0)go(0,k);sel.value=''};
+  pdf.onclick=()=>{if(bookFn)bookFn.call(pdf)};
+  xb.onclick=()=>{free(LB2);v.remove()};
+  await render()}
+
+$('verVal').textContent='13.0';
+})();
 </script>
 </body>
 </html>
