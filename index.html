@@ -1666,8 +1666,8 @@ const _ai=applyI18n;applyI18n=function(){_ai();hubUI();ln()};
 applyI18n();
 $('verVal').textContent='12.0';
 })();
-  /* ===== 12.1: قبل وبعد (مقارنة منزلقة مثل الصور) ===== */
-Object.assign(I.ar,{ba_slide:'منزلق',ba_side:'جنباً لجنب',ba_pick_b:'اختر صورة «قبل»',ba_pick_a:'اختر صورة «بعد»',ba_drag:'اسحبي الخط للمقارنة بين الصورتين',ba_1m:'قبل شهر',ba_save:'حفظ المقارنة',ba_share:'مشاركة',ba_saved:'تم حفظ المقارنة بين لقطاتك',ba_before:'قبل',ba_after:'بعد',ba_quick:'مقارنة سريعة',ba_tip:'لنتيجة أدق: صوّري بنفس الإضاءة والوضعية، واستخدمي «ظل آخر صورة» في الكاميرا.',ba_cmp:'⇄ قارن مع لقطة أقدم'});
+ /* ===== 12.1: قبل وبعد (مقارنة منزلقة مثل الصور) ===== */
+Object.assign(I.ar,{ba_slide:'منزلق',ba_side:'جنباً لجنب',ba_pick_b:'اختر صورة «قبل»',ba_pick_a:'اختر صورة «بعد»',ba_drag:'اسحب الخط للمقارنة بين الصورتين',ba_1m:'قبل شهر',ba_save:'حفظ المقارنة',ba_share:'مشاركة',ba_saved:'تم حفظ المقارنة بين لقطاتك',ba_before:'قبل',ba_after:'بعد',ba_quick:'مقارنة سريعة',ba_tip:'لنتيجة أدق: صوّر بنفس الإضاءة والوضعية، واستخدم «ظل آخر صورة» في الكاميرا.',ba_cmp:'⇄ قارن مع لقطة أقدم'});
 Object.assign(I.en,{ba_slide:'Slider',ba_side:'Side by side',ba_pick_b:'Pick the "before" photo',ba_pick_a:'Pick the "after" photo',ba_drag:'Drag the line to compare',ba_1m:'1 month ago',ba_save:'Save comparison',ba_share:'Share',ba_saved:'Comparison saved to your moments',ba_before:'Before',ba_after:'After',ba_quick:'Quick compare',ba_tip:'For better results: same light and pose. Use "Ghost of last photo" in the camera.',ba_cmp:'⇄ Compare with an older one'});
 Object.assign(I.sv,{ba_slide:'Reglage',ba_side:'Sida vid sida',ba_pick_b:'Välj "före"-foto',ba_pick_a:'Välj "efter"-foto',ba_drag:'Dra linjen för att jämföra',ba_1m:'För 1 månad sedan',ba_save:'Spara jämförelsen',ba_share:'Dela',ba_saved:'Jämförelsen sparades',ba_before:'Före',ba_after:'Efter',ba_quick:'Snabbjämförelse',ba_tip:'Bäst resultat: samma ljus och pose. Använd "Skugga av senaste foto" i kameran.',ba_cmp:'⇄ Jämför med en äldre'});
 (function(){
@@ -1716,10 +1716,8 @@ const sv=mk('button','btn primary'),sh=mk('button','btn primary'),tip=mk('div','
 [tB,tA,qTitle].forEach(e=>{e.style.cssText+=';text-align:center;max-width:560px;margin:14px auto 4px'});
 scr.append(xb,h,modes,cmp,side,hint,info,qTitle,quick,tB,stripB,tA,stripA,sv,sh,tip);document.body.appendChild(scr);
 
-/* نصوص مرافقة لكل يوم */
-function dayText(m){const day=dstr(m.date);
-  const parts=[m.caption&&m.type!=='answer'?m.caption:'',...st.all.filter(x=>x.id!==m.id&&dstr(x.date)===day&&(x.txt||(x.caption&&x.type!=='answer'))).map(x=>x.txt||x.caption)].filter(Boolean);
-  return parts.join(' · ').slice(0,140)}
+/* النص المرتبط بالصورة نفسها فقط: تعليقها الخاص (وإذا ما فيه تعليق ما يظهر شي) */
+function dayText(m){return m&&m.type!=='answer'?String(m.caption||'').slice(0,140):''}
 function fillInfo(w){const m=st[w],c=w==='b'?colB:colA;if(!m)return;c.d.style.direction=document.documentElement.dir;
   c.a.textContent=fdate(m.date);c.b.textContent=(m.mood?m.mood+' ':'')+(m.noTime?'':ftime(m.date))+(m.type==='video'?' 🎥':'');c.c.textContent=dayText(m)}
 
