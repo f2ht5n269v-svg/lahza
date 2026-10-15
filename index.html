@@ -1489,6 +1489,17 @@ async function monthUI(y,m){const ms=await getAll(),f=ms.filter(a=>sameM(a.date,
     audioWrap.append(upBtn,upInput);
     if(savedAudio){const del=mk('button','filter-chip','✕ '+t('sm_song_del')||'✕ حذف الأغنية');del.onclick=()=>{LS(keyA,'');audioEl.removeAttribute('src');audioEl.style.display='none';del.remove()};audioWrap.appendChild(del)}
     c.appendChild(audioWrap);
+    // زر فيديو ملخص الشهر
+    const vidBtn=mk('button','btn primary',t('sm_video_btn')||'🎬 أنشئ فيديو ملخص الشهر');
+    vidBtn.style.marginTop='12px';
+    vidBtn.onclick=()=>{
+        close();
+        setTimeout(()=>{
+            if(typeof diaryUI==='function') diaryUI();
+            else toast('الميزة غير متوفرة',1);
+        },300);
+    };
+    c.appendChild(vidBtn);
     if(pf.length){c.appendChild(mk('div','sec-t','📊 '+t('sm_cmp')));
       const hd=mk('div','',MON[S.lang][pm]+'  →  '+MON[S.lang][m]);hd.style.cssText='direction:ltr;color:var(--text-3);margin-bottom:4px';c.appendChild(hd);
       const row=(lab,from,to,verdict)=>{const r=mk('div','crow');r.append(mk('span','',lab),mk('b','',from+' → '+to+(verdict?'   '+verdict:'')));c.appendChild(r)};
