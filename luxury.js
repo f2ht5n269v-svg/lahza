@@ -1,424 +1,296 @@
-/* ===== Lahza Luxury Layer v3 — الكتاب والورقة الحقيقيين ===== */
+/* ===== Lahza Luxury Layer v4 — Matte Leather & Gold ===== */
 (function(){
 const css=`
+/* 1. الألوان والخطوط الأساسية */
 :root{
   --spring:cubic-bezier(.22,1,.36,1);
-  --soft:0 1px 0 rgba(255,255,255,.05) inset,0 -1px 0 rgba(0,0,0,.35) inset,0 22px 48px -18px rgba(0,0,0,.72),0 6px 14px -4px rgba(0,0,0,.35);
-  --hair:rgba(212,175,55,.3);
-  --lux-gold-metal:linear-gradient(135deg,#7A5C13 0%,#C9A227 22%,#F2DFA0 46%,#C9A227 68%,#8B6F1F 100%);
-  --lux-gold-soft:linear-gradient(135deg,rgba(212,175,55,.55),rgba(242,223,160,.95) 50%,rgba(122,92,19,.55));
-  --bg:#0B0706;--card:#15100D;--card-hover:#1C1511;
-  --border:rgba(212,175,55,.13);--border-strong:rgba(212,175,55,.28);
-  --text-4:#948A7C;
+  --bg:#0E0C0A; /* أسود فاحم دافئ */
+  --card:#1A1512; /* بني جلدي داكن */
+  --card-hover:#221B16;
+  --gold-matte:#C9A96E;
+  --gold-dark:#8B6F1F;
+  --gold-light:#E8D5A7;
+  --border:rgba(201,169,110,.2);
+  --text:#F2E8D5;
+  --text-muted:#A69B8D;
+  
+  --lux-gold-line:linear-gradient(90deg, transparent, var(--gold-matte), transparent);
+  --sh-soft:0 10px 30px -10px rgba(0,0,0,.8);
+  --sh-inset:inset 0 1px 0 rgba(255,255,255,.05), inset 0 0 0 1px rgba(201,169,110,.1);
 }
+
 :root[data-theme=light]{
-  --bg:#F6EFE0;--card:#FCF8EE;--card-hover:#F3EAD6;
-  --border:rgba(60,45,20,.13);--border-strong:rgba(90,70,25,.3);
-  --text:#21190F;--text-2:#3B2F20;
-  --soft:0 1px 0 rgba(255,255,255,.7) inset,0 22px 42px -18px rgba(70,50,15,.4),0 1px 4px rgba(70,50,15,.15);
-  --hair:rgba(139,117,36,.42);
+  --bg:#F3EBDB; /* ورق بردي */
+  --card:#FAF5E9;
+  --card-hover:#FFF9ED;
+  --gold-matte:#B08D43;
+  --gold-dark:#7A5C13;
+  --gold-light:#D4B775;
+  --border:rgba(176,141,67,.25);
+  --text:#2A2118;
+  --text-muted:#6B5D4A;
+  --sh-soft:0 10px 30px -10px rgba(80,60,20,.15);
+  --sh-inset:inset 0 1px 0 rgba(255,255,255,.8), inset 0 0 0 1px rgba(176,141,67,.15);
 }
 
-/* حبيبات فخمة فوق كل شي */
-body::after{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .9  0 0 0 0 .75  0 0 0 0 .35  0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.32'/></svg>");
-  opacity:.075;mix-blend-mode:overlay;
-}
-:root[data-theme=light] body::after{opacity:.05;mix-blend-mode:multiply}
-
-body{
-  background:
-    radial-gradient(60% 40% at 78% -6%,rgba(212,175,55,.16),transparent 62%),
-    radial-gradient(50% 35% at 8% 108%,rgba(160,40,40,.11),transparent 70%),
-    radial-gradient(120% 70% at 50% -10%,rgba(212,175,55,.07),transparent 60%),
-    var(--bg);
-}
-:root[data-theme=light] body{
-  background:
-    radial-gradient(60% 40% at 78% -6%,rgba(255,240,200,.85),transparent 62%),
-    radial-gradient(50% 35% at 8% 108%,rgba(220,200,150,.55),transparent 70%),
-    repeating-linear-gradient(45deg,rgba(120,95,40,.02) 0 2px,transparent 2px 4px),
-    var(--bg);
+/* خلفية لطيفة جداً */
+body {
+  background: radial-gradient(120% 80% at 50% 0%, rgba(201,169,110,.05), transparent 60%), var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* الحركة الواثقة */
-button,.btn,.tab,.filter-chip,.settings-item,.home-action,.moment-card,.wopt,.section-item,.question-item,.bg-option,.stat-card,.on-this-day-year,.xbtn,.capture-btn,.rec-btn,.switch-cam{transition:transform .55s var(--spring),box-shadow .5s cubic-bezier(.16,1,.3,1),background-color .35s,border-color .35s,color .35s,filter .35s;will-change:transform}
-button:active,.btn:active,.filter-chip:active,.wopt:active,.section-item:active,.question-item:active,.bg-option:active,.xbtn:active,.switch-cam:active,.on-this-day-year:active{transform:scale(.94);filter:brightness(.94)}
-.moment-card:active,.stat-card:active,.settings-item:active{transform:scale(.985)}
-.home-action:active{transform:scale(.97) translateX(-3px)}
-.capture-btn:active,.rec-btn:active{transform:scale(.9)}
-@media(hover:hover){
-  .btn:hover,.filter-chip:hover,.moment-card:hover,.home-action:hover{transform:translateY(-2px)}
+/* إزالة اللمعات تماماً وجعل الحركة ناعمة جداً */
+button,.btn,.tab,.filter-chip,.settings-item,.home-action,.moment-card,.wopt,.section-item,.question-item,.bg-option,.stat-card,.on-this-day-year,.xbtn,.capture-btn,.rec-btn,.switch-cam{
+  transition: all .4s var(--spring) !important;
+  -webkit-tap-highlight-color: transparent;
+}
+button:active, .btn:active { transform: scale(.96); }
+
+/* العناوين: ذهب مطفي وأقل سمكاً */
+.page-title, .home-greeting {
+  font-weight: 400;
+  color: var(--gold-matte) !important;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0,0,0,.3);
+}
+.page-title::after {
+  content: '❖';
+  display: block;
+  text-align: center;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--gold-matte);
+  opacity: 0.7;
+  background: none;
+  box-shadow: none;
 }
 
-input,textarea,select{transition:box-shadow .5s cubic-bezier(.16,1,.3,1),border-color .35s,transform .5s var(--spring)}
-.text-input:focus,.search:focus,.answer-input:focus{border-color:var(--gold,#D4AF37);box-shadow:0 0 0 4px rgba(212,175,55,.14),0 0 40px -8px rgba(242,223,160,.35),var(--soft)}
-
-/* عناوين ذهب معدني */
-.page-title,.home-greeting{
-  background:var(--lux-gold-metal);-webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;color:transparent;letter-spacing:.06em;
-  filter:drop-shadow(0 1px 0 rgba(0,0,0,.55)) drop-shadow(0 0 14px rgba(212,175,55,.18));
+/* =========================================
+   شاشة المكتب (المجلدات) - من صورة 1
+   ========================================= */
+.desk {
+  background: var(--bg) !important;
 }
-:root[data-theme=light] .page-title,:root[data-theme=light] .home-greeting{
-  filter:drop-shadow(0 1px 0 rgba(255,255,255,.6)) drop-shadow(0 0 12px rgba(139,117,36,.2));
+.deskgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
 }
-.page-title{margin-bottom:30px;padding-bottom:16px}
-.page-title::after{content:'';display:block;margin-top:14px;width:88px;height:1px;background:linear-gradient(90deg,transparent,rgba(242,223,160,.95),transparent);box-shadow:0 0 10px rgba(242,223,160,.6)}
-.home-greeting{font-size:1.55rem;margin-top:6px;letter-spacing:.03em}
-.home-date{margin-bottom:8px}.home-hijri{margin-bottom:28px}
-.content{padding:calc(34px + env(safe-area-inset-top)) 22px 150px}
-
-/* بطاقات الرئيسية */
-.home-actions{display:flex;flex-direction:column;gap:14px}
-.home-action{
-  position:relative;padding:22px 20px;border:1px solid var(--border);border-radius:26px;
-  background:linear-gradient(180deg,var(--card-hover),var(--card));
-  box-shadow:var(--soft);animation:fu .85s var(--spring) both;overflow:hidden;
-}
-.home-action::before{
-  content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;
-  background:var(--lux-gold-soft);
-  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;
-  pointer-events:none;opacity:.4;transition:opacity .6s;
-}
-.home-action:hover::before{opacity:.9}
-.home-action svg{filter:drop-shadow(0 0 8px rgba(242,223,160,.5))}
-.home-action:nth-child(2){animation-delay:.08s}
-.home-action:nth-child(3){animation-delay:.16s}
-.home-action:nth-child(4){animation-delay:.24s}
-.home-action:nth-child(5){animation-delay:.32s}
-
-.on-this-day{margin:36px auto;padding:24px;border-radius:28px;box-shadow:var(--soft);border-color:var(--hair)}
-.on-this-day-year{padding:16px 20px;margin:10px 0;border-radius:20px}
-.home-stats{margin-top:40px;padding:28px 0;gap:44px;border-color:var(--hair)}
-.moments-grid{gap:30px}
-.moment-card{position:relative;border-radius:30px;box-shadow:var(--soft);border-color:var(--border);background:linear-gradient(180deg,var(--card-hover),var(--card))}
-.moment-meta{padding:16px 22px}.moment-caption{padding:16px 22px 0}
-.filters{gap:10px;margin-bottom:20px}.filter-chip{padding:12px 22px}
-.search{padding:15px 24px;box-shadow:var(--soft)}
-.settings-list{border-radius:28px;box-shadow:var(--soft);background:linear-gradient(180deg,var(--card-hover),var(--card))}
-.settings-item{padding:22px 20px}.settings-group{margin-bottom:36px}
-.stat-card{position:relative;border-radius:26px;padding:30px 18px;box-shadow:var(--soft);background:linear-gradient(180deg,var(--card-hover),var(--card))}
-.stat-card::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;background:var(--lux-gold-soft);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.35}
-.sheet{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-.sheet-content{
-  position:relative;border-radius:36px;padding:36px 24px;border-color:var(--hair);
-  box-shadow:0 40px 90px -28px rgba(0,0,0,.85),0 0 0 1px rgba(212,175,55,.1);
-  animation:fu .65s var(--spring);background:linear-gradient(180deg,var(--card-hover),var(--card));
-}
-.sheet-content::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;background:var(--lux-gold-soft);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.45}
-
-.btn{margin:16px auto;padding:18px 22px;border-radius:18px;letter-spacing:.05em}
-.btn.primary{
-  background:linear-gradient(180deg,#F2DFA0 0%,#D4AF37 45%,#C9A227 55%,#8B6F1F 100%);
-  color:#1A1206;font-weight:600;
-  box-shadow:0 18px 38px -14px rgba(212,175,55,.55),0 6px 14px -4px rgba(0,0,0,.4),0 1px 0 rgba(255,255,255,.6) inset,0 -2px 0 rgba(122,92,19,.6) inset;
-  text-shadow:0 1px 0 rgba(255,255,255,.28);
-}
-.btn.primary:hover{filter:brightness(1.06) saturate(1.05)}
-.modal-actions button{box-shadow:var(--soft)}
-.section-item,.question-item,.wopt{border-radius:22px}
-.xbtn{backdrop-filter:blur(10px)}
-
-/* شريط تبويب عائم */
-.tabs{
-  left:14px;right:14px;bottom:calc(12px + env(safe-area-inset-bottom));
-  border:1px solid var(--hair);border-radius:32px;padding-bottom:0;
-  background:linear-gradient(180deg,rgba(28,21,17,.88),rgba(15,11,8,.95));
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  box-shadow:0 24px 54px -18px rgba(0,0,0,.9),0 4px 10px -2px rgba(0,0,0,.5),0 1px 0 rgba(255,255,255,.06) inset;
-}
-:root[data-theme=light] .tabs{background:linear-gradient(180deg,rgba(255,250,235,.94),rgba(240,230,205,.98))}
-.tabs::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(90deg,transparent 8%,rgba(242,223,160,.55) 50%,transparent 92%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
-.tab{padding:13px 0 11px}
-.tab svg{transition:transform .55s var(--spring)}
-.tab.active svg{transform:translateY(-2px) scale(1.14);filter:drop-shadow(0 0 10px rgba(242,223,160,.9)) drop-shadow(0 0 3px rgba(212,175,55,.7))}
-
-/* ═══════════════════════════════════════════════════════════
-   محل الكتابة — ورق حقيقي بتجليد وهامش وتعتيق
-   ═══════════════════════════════════════════════════════════ */
-#textScreen{
-  background:
-    radial-gradient(90% 60% at 50% 0,rgba(212,175,55,.1),transparent 70%),
-    radial-gradient(70% 40% at 20% 100%,rgba(160,50,40,.08),transparent 70%),
-    #080504;
-  padding-inline:22px;
-}
-:root[data-theme=light] #textScreen{
-  background:
-    radial-gradient(90% 60% at 50% 0,#fff8e6,#EADFC6),
-    repeating-linear-gradient(45deg,rgba(120,95,40,.02) 0 2px,transparent 2px 4px);
-}
-#textScreen .screen-title{opacity:.9;font-size:1.35rem;letter-spacing:.05em}
-
-#textScreen .text-input{
-  min-height: 54vh;
-  max-width: 540px;
-  margin: 0 auto;
-  padding: 44px 40px 44px 76px;
-  font: 1.22rem / 2.2rem var(--fq);
-  color: #2A1F12;
-  caret-color: #8B4A2F;
-  letter-spacing: .01em;
-  border: 1px solid rgba(201,162,39,.22);
-  border-inline-start: 3px solid rgba(122,20,16,.55);
-  border-inline-end: 2px solid #C9A227;
-  border-radius: 3px 14px 14px 3px;
-  background-color: #F5ECD2;
-  background-image:
-    /* خط الهامش الأحمر */
-    linear-gradient(90deg,
-      transparent 62px,
-      rgba(160,50,40,.55) 62px,
-      rgba(160,50,40,.55) 63px,
-      transparent 63px),
-    /* الأسطر المسطّرة */
-    repeating-linear-gradient(180deg,
-      transparent 0,
-      transparent calc(2.2rem - 1px),
-      rgba(90,70,25,.15) calc(2.2rem - 1px),
-      rgba(90,70,25,.15) 2.2rem),
-    /* نسيج الورق (ألياف) */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .45 0 0 0 0 .28 0 0 0 .16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"),
-    /* ظل التجليد من اليسار */
-    linear-gradient(90deg,
-      rgba(80,55,20,.45) 0%,
-      rgba(80,55,20,.18) 3%,
-      transparent 9%,
-      transparent 93%,
-      rgba(80,55,20,.05) 100%),
-    /* تعتيق الحواف */
-    radial-gradient(140% 100% at 50% 45%,
-      #FDF8EA 0%,
-      #F5ECD2 55%,
-      #E8DAB5 100%);
-  background-repeat: no-repeat;
-  background-size: 100% 100%, 100% 100%, 340px 340px, 100% 100%, 100% 100%;
-  box-shadow:
-    /* كومة صفحات تحت الورقة (كأنها دفتر) */
-    2px 3px 0 -1px #EBDDB8,
-    4px 6px 0 -2px #E5D5AE,
-    6px 9px 0 -3px #DDCB9C,
-    /* ظل التجليد الداخلي */
-    inset 16px 0 30px -14px rgba(80,55,20,.55),
-    inset -6px 0 16px -8px rgba(80,55,20,.12),
-    /* خط ضوء علوي */
-    inset 0 1px 0 rgba(255,255,255,.9),
-    inset 0 -1px 0 rgba(139,117,36,.2),
-    /* رفع الورقة عن الطاولة */
-    0 44px 80px -30px rgba(0,0,0,.85),
-    0 14px 28px -12px rgba(0,0,0,.45),
-    0 0 0 1px rgba(201,162,39,.12);
-  transition: box-shadow .5s cubic-bezier(.16,1,.3,1), transform .5s var(--spring);
-}
-:root[data-theme=light] #textScreen .text-input{
-  box-shadow:
-    2px 3px 0 -1px #E5D6AE,
-    4px 6px 0 -2px #DDCB9C,
-    6px 9px 0 -3px #D4C08A,
-    inset 16px 0 30px -14px rgba(80,55,20,.5),
-    inset -6px 0 16px -8px rgba(80,55,20,.1),
-    inset 0 1px 0 rgba(255,255,255,.95),
-    0 40px 70px -28px rgba(70,50,15,.55),
-    0 12px 24px -10px rgba(70,50,15,.3),
-    0 0 0 1px rgba(201,162,39,.15);
-}
-#textScreen .text-input:focus{
-  transform: none;
-  box-shadow:
-    2px 3px 0 -1px #EBDDB8,
-    4px 6px 0 -2px #E5D5AE,
-    6px 9px 0 -3px #DDCB9C,
-    inset 16px 0 30px -14px rgba(80,55,20,.55),
-    inset -6px 0 16px -8px rgba(80,55,20,.12),
-    inset 0 0 70px rgba(242,223,160,.1),
-    inset 0 1px 0 rgba(255,255,255,.95),
-    0 48px 88px -30px rgba(0,0,0,.9),
-    0 14px 28px -12px rgba(0,0,0,.45),
-    0 0 0 1.5px rgba(201,162,39,.4),
-    0 0 60px -10px rgba(242,223,160,.2);
-}
-#textScreen .text-input::selection{background:rgba(201,162,39,.25);color:#1A1206}
-#textScreen .text-input::placeholder{color:rgba(139,117,36,.45);font-style:italic;letter-spacing:.02em}
-
-#textScreen .background-section,#textScreen #qBox2{transition:opacity .6s}
-#textScreen:focus-within .background-section,#textScreen:focus-within .btn-close{opacity:.18}
-#textScreen:focus-within .background-section:active,#textScreen:focus-within .background-section:focus-within{opacity:1}
-
-/* ═══════════════════════════════════════════════════════════
-   كتاب السنة — ثلاثي الأبعاد حقيقي مع غلاف وصفحات ذهبية
-   ═══════════════════════════════════════════════════════════ */
-#bkst{
+.fold {
   position: relative;
-  perspective: 2600px;
-  perspective-origin: 62% 42%;
-  padding: 44px 22px 64px;
-  isolation: isolate;
-  transform-style: preserve-3d;
+  background: linear-gradient(145deg, var(--card-hover), var(--card)) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important; /* زوايا أقل استدارة = فخامة أكثر */
+  padding: 30px 16px !important;
+  box-shadow: var(--sh-soft), var(--sh-inset) !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
-/* ظل الكتاب على الطاولة */
-#bkst::before{
-  content:'';position:absolute;left:8%;right:8%;bottom:34px;height:80px;
-  background:radial-gradient(ellipse at 50% 55%,rgba(0,0,0,.9) 0%,rgba(0,0,0,.5) 30%,transparent 72%);
-  filter:blur(26px);pointer-events:none;z-index:-1;
+/* شلنا التاب اللي فوق المجلد لأنه كان يطلع شكله رخيص */
+.fold::before { display: none !important; }
+/* تحويل الإيموجي لألوان ذهبية/أحادية لتبدو كأنها محفورة */
+.fold .ic {
+  font-size: 2.2rem;
+  filter: grayscale(1) sepia(1) hue-rotate(5deg) brightness(1.2) contrast(1.5);
+  opacity: 0.9;
 }
-/* بقعة ضوء دافئة فوق الكتاب */
-#bkst::after{
-  content:'';position:absolute;left:18%;right:18%;top:16px;height:34px;
-  background:radial-gradient(ellipse at center,rgba(242,223,160,.42),transparent 70%);
-  filter:blur(22px);pointer-events:none;z-index:0;
+.fold b {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  letter-spacing: 0.5px;
+}
+.fold small {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+/* الرسالة (المظروف) */
+.fold.env {
+  grid-column: 1 / -1;
+  background: linear-gradient(145deg, #2A1F1A, #1A1512) !important;
+  border: 1px solid var(--gold-dark) !important;
+  flex-direction: row;
+  justify-content: center;
+  padding: 24px !important;
+}
+.fold.env b { color: var(--gold-matte); font-size: 1.4rem; }
+.fold.env small { color: #8B7355; }
+/* الختم الشمعي - تصميم مسطح وانيق */
+.seal {
+  width: 50px; height: 50px;
+  background: #7A1410 !important;
+  border: 2px solid #4A0805 !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,.5), inset 0 2px 4px rgba(255,255,255,.1) !important;
+  border-radius: 50% !important;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold-light) !important;
+}
+.seal::after { display: none; }
+.seal i {
+  background: var(--gold-matte) !important;
+  color: #000 !important;
+  font-weight: bold;
 }
 
-.bkpg{
+/* =========================================
+   شاشة الكتابة - من صورة 2
+   ========================================= */
+#textScreen {
+  background: var(--bg) !important;
+}
+/* الورقة */
+#textScreen .text-input {
+  background-color: #FAF5E9 !important; /* لون ورقي نقي */
+  background-image: 
+    linear-gradient(90deg, transparent 40px, rgba(180,50,40,.4) 40px, rgba(180,50,40,.4) 41px, transparent 41px),
+    repeating-linear-gradient(transparent, transparent 2.2rem, rgba(0,0,0,.05) 2.2rem, rgba(0,0,0,.05) calc(2.2rem + 1px)) !important;
+  color: #2A2118 !important;
+  border: 1px solid #D1C3A5 !important;
+  border-radius: 4px !important; /* زوايا حادة */
+  box-shadow: 
+    2px 2px 0 #E8DCC5, 
+    4px 4px 0 #DFCFB3, 
+    0 20px 40px -15px rgba(0,0,0,.15) !important;
+  font-family: var(--fq), serif !important;
+  font-size: 1.15rem !important;
+  line-height: 2.2rem !important;
+  padding: 30px 20px 30px 60px !important;
+}
+#textScreen .text-input:focus {
+  outline: none;
+  border-color: var(--gold-matte) !important;
+  box-shadow: 
+    2px 2px 0 #E8DCC5, 
+    4px 4px 0 #DFCFB3, 
+    0 0 0 3px rgba(201,169,110,.2) !important;
+}
+/* زر الإغلاق X */
+#textScreen .btn-close {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+  box-shadow: var(--sh-soft);
+}
+
+/* الأزرار السفلية (الملحقات) */
+#textScreen .btn-icon {
+  background: var(--card) !important;
+  border: 1px dashed var(--gold-matte) !important;
+  color: var(--gold-matte) !important;
+  box-shadow: none !important;
+}
+
+/* زر التالي (المطفي) - أهم تعديل */
+.btn.primary {
+  background: var(--gold-matte) !important; /* لون مطفي */
+  color: #0E0C0A !important; /* نص غامق */
+  border: none !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.2) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+  text-shadow: none !important; /* شلنا الظل */
+}
+.btn.primary:active {
+  box-shadow: inset 0 3px 6px rgba(0,0,0,.3) !important;
+}
+
+/* =========================================
+   شاشة اختيار التاريخ - من صورة 3
+   ========================================= */
+#datePickerSheet .sheet-content {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 30px 60px -15px rgba(0,0,0,.8) !important;
+}
+#datePickerSheet .sheet-content::before,
+#datePickerSheet .sheet-content::after { display: none !important; } /* شلنا التروس */
+
+#datePickerSheet select {
+  background: var(--bg) !important;
+  color: var(--gold-matte) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,.2) !important;
+  font-family: inherit !important;
+}
+#datePickerSheet select:focus {
+  border-color: var(--gold-matte) !important;
+}
+
+/* شلنا لمعة زر التأكيد */
+#datePickerSheet .btn.primary {
+  background: var(--gold-matte) !important;
+  color: #000 !important;
+}
+
+/* =========================================
+   كتاب السنة - The Flat Luxury Book
+   ========================================= */
+#bkst {
+  perspective: none !important; /* إلغاء الـ 3D الفاشل */
+  padding: 20px !important;
+}
+/* شكل المجلد الجلدي المسطح */
+.bkpg {
+  transform: none !important; /* إلغاء الدوران */
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+  box-shadow: var(--sh-soft), var(--sh-inset) !important;
+  padding: 30px 20px !important;
+  margin-bottom: 20px !important;
+  /* إضافة شريط ذهبي على اليسار كأنه تجليد */
+  border-left: 4px solid var(--gold-matte) !important; 
   position: relative;
-  transform-origin: left center;
-  transform-style: preserve-3d;
-  backface-visibility: visible;
-  border: none;
-  border-radius: 2px 10px 10px 2px;
-  padding: 48px 38px 52px 58px;
-  color: #2A1F12;
-  background-color: #F5ECD2;
-  background-image:
-    /* حافة ذهبية مخططة على اليمين (كومة صفحات) */
-    repeating-linear-gradient(180deg,
-      #F2DFA0 0px, #C9A227 1px, #8B6F1F 2px, #D4AF37 3px, #F2DFA0 4px),
-    /* ظل التجليد */
-    linear-gradient(90deg,
-      rgba(60,40,15,.6) 0%,
-      rgba(60,40,15,.28) 2%,
-      rgba(60,40,15,.08) 5%,
-      transparent 9%,
-      transparent 91%,
-      rgba(60,40,15,.06) 97%,
-      rgba(60,40,15,.16) 100%),
-    /* تعتيق الحواف */
-    radial-gradient(140% 100% at 50% 48%, transparent 55%, rgba(160,120,50,.16) 100%),
-    /* نسيج الورق */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='340'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .45 0 0 0 0 .28 0 0 0 .13 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"),
-    /* لون الورق */
-    linear-gradient(180deg, #FCF7E8 0%, #F5ECD2 55%, #EBDDB8 100%);
-  background-repeat: no-repeat;
-  background-position: right center, 0 0, 0 0, 0 0, 0 0;
-  background-size: 5px 100%, 100% 100%, 100% 100%, 340px 340px, 100% 100%;
-  box-shadow:
-    inset 14px 0 28px -14px rgba(60,40,15,.55),
-    inset -5px 0 14px -8px rgba(60,40,15,.15),
-    inset 0 1px 0 rgba(255,255,255,.9),
-    inset 0 -1px 0 rgba(139,117,36,.15),
-    0 30px 52px -22px rgba(0,0,0,.65),
-    0 10px 20px -10px rgba(0,0,0,.35);
-  transition: transform .85s cubic-bezier(.45,.05,.25,1), box-shadow .85s cubic-bezier(.16,1,.3,1), filter .4s;
-  will-change: transform;
+}
+/* زخرفة على الزاوية */
+.bkpg::after {
+  content: '❖';
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: var(--gold-matte);
+  opacity: 0.3;
+  font-size: 20px;
 }
 
-/* أثناء التقليب: الصفحة تعتم وتُطلق ظلاً ديناميكياً */
-.bkpg.is-flipping{
-  animation: pageShadow .85s ease-in-out;
+/* =========================================
+   شريط التبويب السفلي
+   ========================================= */
+.tabs {
+  background: rgba(14, 12, 10, 0.85) !important;
+  backdrop-filter: blur(15px) !important;
+  -webkit-backdrop-filter: blur(15px) !important;
+  border-top: 1px solid var(--border) !important;
+  border-radius: 20px 20px 0 0 !important;
+  box-shadow: 0 -10px 30px rgba(0,0,0,.5) !important;
 }
-@keyframes pageShadow{
-  0%, 100% { filter: brightness(1); }
-  45% { filter: brightness(.72) contrast(1.04) drop-shadow(-18px 24px 36px rgba(0,0,0,.5)); }
+:root[data-theme=light] .tabs {
+  background: rgba(250, 245, 233, 0.9) !important;
+}
+.tab.active {
+  color: var(--gold-matte) !important;
 }
 
-/* تذهيب العنوان داخل صفحة الكتاب إن وُجد */
-.bkpg h1,.bkpg h2,.bkpg .bk-title{
-  background:var(--lux-gold-metal);-webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;color:transparent;
-  filter:drop-shadow(0 1px 0 rgba(255,255,255,.7));
-}
+/* إخفاء الحبيبات القديمة لأنها كانت تزيد التعتيم */
+body::after { display: none !important; }
 
-/* ═══════════════════════════════════════════════════════════
-   المكتب والختم الشمعي
-   ═══════════════════════════════════════════════════════════ */
-.desk{background:radial-gradient(120% 80% at 50% 0,#2f2014,#120c08) !important;border-color:var(--hair)!important}
-:root[data-theme=light] .desk{background:radial-gradient(120% 80% at 50% 0,#E8D8B4,#CDB78A)!important}
-.deskgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:8px 0 6px}
-.fold{
-  position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;
-  padding:28px 12px 20px;border-radius:8px 24px 24px 24px;text-align:center;color:#F1E3C0;
-  background:linear-gradient(160deg,#3a2a18,#22170d);
-  border:1px solid rgba(212,175,55,.4);
-  box-shadow:0 16px 30px -14px rgba(0,0,0,.85),0 1px 0 rgba(255,255,255,.08) inset,0 0 0 1px rgba(0,0,0,.3) inset;
-  animation:fu .8s var(--spring) both;
-}
-.fold::before{content:'';position:absolute;top:-9px;inset-inline-start:14px;width:46%;height:12px;border-radius:8px 8px 0 0;background:#3a2a18;border:1px solid rgba(212,175,55,.4);border-bottom:0}
-.fold:nth-child(2n){transform:rotate(1.2deg);animation-delay:.08s}
-.fold:nth-child(2n+1){transform:rotate(-1.2deg)}
-.fold:nth-child(3){animation-delay:.16s}.fold:nth-child(4){animation-delay:.24s}.fold:nth-child(5){animation-delay:.32s}
-.fold.env{background:linear-gradient(165deg,#F4EAD2,#DCCBA0);color:#3A2C16;grid-column:1/-1;flex-direction:row;justify-content:center;gap:16px;border-radius:14px;box-shadow:0 18px 34px -12px rgba(0,0,0,.65),0 1px 0 rgba(255,255,255,.6) inset}
-.fold.env::before{display:none}
-.fold b{font:500 1.15rem var(--fd);letter-spacing:.02em}
-.fold small{font:.78rem var(--fb);opacity:.72}
-.fold .ic{font-size:2rem;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
-
-.seal{
-  width:48px;height:48px;border-radius:50%;
-  background:radial-gradient(circle at 35% 30%,#ff6b58 0%,#c83024 30%,#7a1410 70%,#4a0805 100%);
-  box-shadow:0 8px 16px -4px rgba(0,0,0,.7),0 2px 5px rgba(0,0,0,.5),0 1px 0 rgba(255,255,255,.35) inset,0 -3px 10px rgba(0,0,0,.55) inset;
-  display:flex;align-items:center;justify-content:center;color:#F4D98C;font-size:1.25rem;position:relative;
-}
-.seal::after{content:'';position:absolute;inset:4px;border-radius:50%;border:1px solid rgba(255,220,150,.3);box-shadow:inset 0 0 8px rgba(0,0,0,.4);pointer-events:none}
-.seal i{position:absolute;top:-6px;inset-inline-end:-6px;background:linear-gradient(180deg,#F2DFA0,#C9A227);color:#0F0A08;border-radius:999px;font:700 .72rem var(--fb);padding:2px 7px;font-style:normal;box-shadow:0 2px 5px rgba(0,0,0,.5)}
-
-/* آلة الزمن */
-#datePickerSheet .sheet-content{background:radial-gradient(100% 70% at 50% 0,#3b2c14,#150f08);border:1px solid rgba(212,175,55,.5);overflow:hidden}
-:root[data-theme=light] #datePickerSheet .sheet-content{background:radial-gradient(100% 70% at 50% 0,#EBD9AE,#C9B07A)}
-#datePickerSheet .sheet-content::before{content:'⚙';position:absolute;top:-22px;inset-inline-start:-20px;font-size:7rem;color:var(--gold,#D4AF37);opacity:.16;animation:spinG 28s linear infinite;pointer-events:none}
-#datePickerSheet .sheet-content::after{content:'⚙';position:absolute;bottom:-26px;inset-inline-end:-18px;font-size:6rem;color:var(--gold,#D4AF37);opacity:.14;animation:spinG 20s linear infinite reverse;pointer-events:none}
-@keyframes spinG{to{transform:rotate(360deg)}}
-#datePickerSheet select{appearance:none;-webkit-appearance:none;border-radius:16px!important;background:linear-gradient(180deg,#0a0705,#1d150d)!important;color:var(--gold-light,#F2DFA0)!important;border:1px solid rgba(212,175,55,.5)!important;box-shadow:inset 0 6px 14px rgba(0,0,0,.7),0 1px 0 rgba(255,255,255,.1);font-family:var(--fd)}
-#datePickerSheet select:focus{box-shadow:inset 0 6px 14px rgba(0,0,0,.7),0 0 0 3px var(--gold-soft,rgba(212,175,55,.15))}
-
-/* الصندوق المخملي */
-.velvet{
-  position:relative;padding:26px 18px 22px;margin-bottom:28px;border-radius:24px;text-align:center;color:#F1E3C0;
-  background:radial-gradient(120% 140% at 50% 0,#6b1826 0%,#3a0a15 50%,#20050c 100%);
-  border:1px solid rgba(212,175,55,.6);
-  box-shadow:inset 0 0 40px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.08),0 20px 40px -14px rgba(0,0,0,.85),0 0 0 1px rgba(212,175,55,.15) inset;
-}
-.velvet::before{content:'';position:absolute;inset:7px;border:1px dashed rgba(212,175,55,.45);border-radius:18px;pointer-events:none}
-.velvet b{font:500 1.3rem var(--fd);display:block;margin-bottom:8px;background:linear-gradient(135deg,#F2DFA0 0%,#D4AF37 50%,#8B6F1F 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.04em}
-
-/* البطاقات البريدية */
-.pcard{
-  position:relative;margin:-6px 0 24px;padding:14px 14px 18px;border-radius:6px;
-  background:linear-gradient(180deg,#FCF6E5,#F5ECD2);color:#2A1F12;text-align:start;
-  box-shadow:0 18px 34px -14px rgba(0,0,0,.75),0 2px 6px rgba(0,0,0,.25),0 1px 0 rgba(255,255,255,.9) inset;
-  animation:pcOut .9s var(--spring) both;transform-origin:top center;
-}
-.pcard:nth-of-type(odd){--r:-2deg}.pcard:nth-of-type(even){--r:1.8deg}
-@keyframes pcOut{from{opacity:0;transform:translateY(-140px) scale(.85) rotate(0)}to{opacity:1;transform:rotate(var(--r,0))}}
-.pcard img{width:100%;height:170px;object-fit:cover;border-radius:3px;display:block;margin-bottom:12px;filter:saturate(.95) contrast(1.02)}
-.pcard .pt{font:1.05rem/1.8 var(--fq);min-height:2.4em}
-.pcard .pd{font:.85rem var(--fd);color:#8B7524;margin-top:8px;display:flex;justify-content:space-between;align-items:center}
-.pcard .stamp{width:36px;height:42px;border:2px dotted #8B7524;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;color:#8B7524;background:rgba(139,117,36,.05)}
-
-@keyframes fu{from{opacity:0;transform:translateY(16px) scale(.98);filter:blur(3px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 `;
 const st=document.createElement('style');st.id='luxury-css';st.textContent=css;document.head.appendChild(st);
 
-/* لمسة اهتزاز خفيفة */
+/* الحفاظ على الاهتزاز فقط */
 const hap=()=>{try{const h=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.Haptics;if(h)h.impact({style:'LIGHT'});else if(navigator.vibrate)navigator.vibrate(6)}catch(e){}};
 document.addEventListener('pointerdown',e=>{if(e.target.closest&&e.target.closest('button,.tab,label.bg-option,.fold'))hap()},{passive:true});
 
-/* مراقبة تقليب الصفحات — يضيف ظل ديناميكي أثناء الحركة */
-document.addEventListener('transitionrun',e=>{
-  if(e.target&&e.target.classList&&e.target.classList.contains('bkpg')&&e.propertyName==='transform'){
-    e.target.classList.add('is-flipping');
-  }
-},true);
-document.addEventListener('transitionend',e=>{
-  if(e.target&&e.target.classList&&e.target.classList.contains('bkpg')&&e.propertyName==='transform'){
-    e.target.classList.remove('is-flipping');
-  }
-},true);
-
-/* المكتب: مجلدات ورسائل بختم شمعي */
+/* نفس دوال الجافاسكريبت الخاصة بك بدون تغيير */
 window.writeMenu=function(){overlay((c,close)=>{c.classList.add('desk');ttl(c,'text');
   const nl=getL().filter(l=>!l.s&&new Date(l.o)<=Date.now()).length,g=mk('div','deskgrid');
   [['✍️','m_journal','ws_journal',()=>openText('personal'),''],
@@ -433,7 +305,6 @@ window.writeMenu=function(){overlay((c,close)=>{c.classList.add('desk');ttl(c,'t
     b.onclick=()=>{close();a[3]()};g.appendChild(b)});
   c.appendChild(g);closeBtn(c,close)})};
 
-/* ملخص الأسبوع: صندوق مخملي تخرج منه بطاقات بريدية */
 window.weekly=async function(){free(LW);const ms=await getAll(),now=Date.now(),
   f=ms.filter(m=>now-new Date(m.date)<7*864e5).sort((a,b)=>new Date(b.date)-new Date(a.date));
   overlay((c,close)=>{c.classList.add('desk');const v=mk('div','velvet');
