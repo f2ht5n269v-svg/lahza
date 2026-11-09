@@ -1,296 +1,262 @@
-/* ===== Lahza Luxury Layer v4 — Matte Leather & Gold ===== */
+/* ===== Lahza Luxury Layer v5 — Royal Midnight & Gold ===== */
 (function(){
 const css=`
-/* 1. الألوان والخطوط الأساسية */
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@400;500;700&display=swap');
+
 :root{
-  --spring:cubic-bezier(.22,1,.36,1);
-  --bg:#0E0C0A; /* أسود فاحم دافئ */
-  --card:#1A1512; /* بني جلدي داكن */
-  --card-hover:#221B16;
-  --gold-matte:#C9A96E;
-  --gold-dark:#8B6F1F;
-  --gold-light:#E8D5A7;
-  --border:rgba(201,169,110,.2);
-  --text:#F2E8D5;
-  --text-muted:#A69B8D;
+  --spring:cubic-bezier(.25,1,.5,1);
+  /* Midnight & Gold Palette */
+  --bg-dark: #09090B; 
+  --surface: #141417;
+  --surface-hover: #1C1C21;
+  --gold-metallic: linear-gradient(135deg, #7A5C13 0%, #C9A227 25%, #F2DFA0 50%, #C9A227 75%, #8B6F1F 100%);
+  --gold-solid: #C9A227;
+  --gold-muted: #8B6F1F;
+  --parchment: #F4EFE6;
+  --text-main: #F4EFE6;
+  --text-muted: #A19D96;
+  --border-gold: rgba(201, 162, 39, 0.25);
   
-  --lux-gold-line:linear-gradient(90deg, transparent, var(--gold-matte), transparent);
-  --sh-soft:0 10px 30px -10px rgba(0,0,0,.8);
-  --sh-inset:inset 0 1px 0 rgba(255,255,255,.05), inset 0 0 0 1px rgba(201,169,110,.1);
+  --sh-deep: 0 20px 40px -10px rgba(0,0,0,0.8), 0 0 0 1px rgba(201, 162, 39, 0.1) inset;
+  --font-display: 'Amiri', serif;
+  --font-body: 'Tajawal', sans-serif;
 }
 
-:root[data-theme=light]{
-  --bg:#F3EBDB; /* ورق بردي */
-  --card:#FAF5E9;
-  --card-hover:#FFF9ED;
-  --gold-matte:#B08D43;
-  --gold-dark:#7A5C13;
-  --gold-light:#D4B775;
-  --border:rgba(176,141,67,.25);
-  --text:#2A2118;
-  --text-muted:#6B5D4A;
-  --sh-soft:0 10px 30px -10px rgba(80,60,20,.15);
-  --sh-inset:inset 0 1px 0 rgba(255,255,255,.8), inset 0 0 0 1px rgba(176,141,67,.15);
+/* إجبار التطبيق على استخدام الخطوط */
+body, input, textarea, button, select {
+  font-family: var(--font-body) !important;
+}
+h1, h2, h3, .page-title, .home-greeting, .fold b {
+  font-family: var(--font-display) !important;
 }
 
-/* خلفية لطيفة جداً */
+/* الخلفية الملكية */
 body {
-  background: radial-gradient(120% 80% at 50% 0%, rgba(201,169,110,.05), transparent 60%), var(--bg);
-  color: var(--text);
-  font-family: system-ui, -apple-system, sans-serif;
+  background: 
+    radial-gradient(circle at 50% 0%, rgba(201, 162, 39, 0.08) 0%, transparent 50%),
+    linear-gradient(180deg, #09090B 0%, #050505 100%) !important;
+  color: var(--text-main) !important;
 }
 
-/* إزالة اللمعات تماماً وجعل الحركة ناعمة جداً */
-button,.btn,.tab,.filter-chip,.settings-item,.home-action,.moment-card,.wopt,.section-item,.question-item,.bg-option,.stat-card,.on-this-day-year,.xbtn,.capture-btn,.rec-btn,.switch-cam{
-  transition: all .4s var(--spring) !important;
-  -webkit-tap-highlight-color: transparent;
-}
-button:active, .btn:active { transform: scale(.96); }
-
-/* العناوين: ذهب مطفي وأقل سمكاً */
+/* العناوين */
 .page-title, .home-greeting {
-  font-weight: 400;
-  color: var(--gold-matte) !important;
+  background: var(--gold-metallic);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  font-size: 1.6rem !important;
   letter-spacing: 1px;
-  text-shadow: 0 2px 4px rgba(0,0,0,.3);
-}
-.page-title::after {
-  content: '❖';
-  display: block;
   text-align: center;
-  margin-top: 8px;
-  font-size: 12px;
-  color: var(--gold-matte);
-  opacity: 0.7;
-  background: none;
-  box-shadow: none;
 }
+.page-title::after { display: none; } /* إزالة الخط القديم */
 
 /* =========================================
-   شاشة المكتب (المجلدات) - من صورة 1
+   شاشة المكتب (المجلدات)
    ========================================= */
 .desk {
-  background: var(--bg) !important;
+  background: radial-gradient(circle at 50% 0%, #1A1815 0%, #0A0908 100%) !important;
+  border: 1px solid var(--border-gold) !important;
 }
 .deskgrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  margin: 20px 0;
 }
 .fold {
-  position: relative;
-  background: linear-gradient(145deg, var(--card-hover), var(--card)) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 12px !important; /* زوايا أقل استدارة = فخامة أكثر */
-  padding: 30px 16px !important;
-  box-shadow: var(--sh-soft), var(--sh-inset) !important;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
+  background: var(--surface) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 16px !important;
+  padding: 24px 16px !important;
+  box-shadow: var(--sh-deep) !important;
+  display: flex; flex-direction: column; align-items: center;
+  transition: all .4s var(--spring) !important;
 }
-/* شلنا التاب اللي فوق المجلد لأنه كان يطلع شكله رخيص */
-.fold::before { display: none !important; }
-/* تحويل الإيموجي لألوان ذهبية/أحادية لتبدو كأنها محفورة */
+.fold:active { transform: scale(0.96) !important; }
+.fold::before { display: none !important; } /* إزالة التاب القديم */
+
+/* الميدالية الذهبية للإيموجي */
 .fold .ic {
-  font-size: 2.2rem;
-  filter: grayscale(1) sepia(1) hue-rotate(5deg) brightness(1.2) contrast(1.5);
-  opacity: 0.9;
+  font-size: 2rem;
+  width: 60px; height: 60px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201, 162, 39, 0.15) 0%, transparent 70%);
+  border: 1px solid var(--border-gold);
+  box-shadow: 0 0 20px rgba(201, 162, 39, 0.1) inset;
+  margin-bottom: 8px;
 }
+
 .fold b {
   font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--gold-light);
-  letter-spacing: 0.5px;
+  color: var(--gold-solid) !important;
+  margin-bottom: 4px;
 }
 .fold small {
-  font-size: 0.85rem;
-  color: var(--text-muted);
+  font-size: 0.8rem;
+  color: var(--text-muted) !important;
   line-height: 1.4;
 }
-/* الرسالة (المظروف) */
+
+/* رسالة إلى نفسي (المظروف) */
 .fold.env {
   grid-column: 1 / -1;
-  background: linear-gradient(145deg, #2A1F1A, #1A1512) !important;
-  border: 1px solid var(--gold-dark) !important;
-  flex-direction: row;
-  justify-content: center;
-  padding: 24px !important;
+  background: linear-gradient(135deg, #181512 0%, #0F0D0A 100%) !important;
+  border: 1px solid var(--gold-muted) !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  padding: 30px 24px !important;
 }
-.fold.env b { color: var(--gold-matte); font-size: 1.4rem; }
-.fold.env small { color: #8B7355; }
-/* الختم الشمعي - تصميم مسطح وانيق */
-.seal {
+.fold.env b { font-size: 1.5rem; }
+.fold.env .seal {
   width: 50px; height: 50px;
-  background: #7A1410 !important;
-  border: 2px solid #4A0805 !important;
-  box-shadow: 0 4px 10px rgba(0,0,0,.5), inset 0 2px 4px rgba(255,255,255,.1) !important;
-  border-radius: 50% !important;
+  background: radial-gradient(circle at 30% 30%, #B02418, #5A0E08);
+  border-radius: 50%;
+  border: 2px solid #7A1410;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.6), inset 0 2px 5px rgba(255,255,255,0.2);
+  color: #F2DFA0; font-size: 1.2rem;
   display: flex; align-items: center; justify-content: center;
-  color: var(--gold-light) !important;
-}
-.seal::after { display: none; }
-.seal i {
-  background: var(--gold-matte) !important;
-  color: #000 !important;
-  font-weight: bold;
-}
-
-/* =========================================
-   شاشة الكتابة - من صورة 2
-   ========================================= */
-#textScreen {
-  background: var(--bg) !important;
-}
-/* الورقة */
-#textScreen .text-input {
-  background-color: #FAF5E9 !important; /* لون ورقي نقي */
-  background-image: 
-    linear-gradient(90deg, transparent 40px, rgba(180,50,40,.4) 40px, rgba(180,50,40,.4) 41px, transparent 41px),
-    repeating-linear-gradient(transparent, transparent 2.2rem, rgba(0,0,0,.05) 2.2rem, rgba(0,0,0,.05) calc(2.2rem + 1px)) !important;
-  color: #2A2118 !important;
-  border: 1px solid #D1C3A5 !important;
-  border-radius: 4px !important; /* زوايا حادة */
-  box-shadow: 
-    2px 2px 0 #E8DCC5, 
-    4px 4px 0 #DFCFB3, 
-    0 20px 40px -15px rgba(0,0,0,.15) !important;
-  font-family: var(--fq), serif !important;
-  font-size: 1.15rem !important;
-  line-height: 2.2rem !important;
-  padding: 30px 20px 30px 60px !important;
-}
-#textScreen .text-input:focus {
-  outline: none;
-  border-color: var(--gold-matte) !important;
-  box-shadow: 
-    2px 2px 0 #E8DCC5, 
-    4px 4px 0 #DFCFB3, 
-    0 0 0 3px rgba(201,169,110,.2) !important;
-}
-/* زر الإغلاق X */
-#textScreen .btn-close {
-  background: var(--card) !important;
-  border: 1px solid var(--border) !important;
-  color: var(--text) !important;
-  box-shadow: var(--sh-soft);
-}
-
-/* الأزرار السفلية (الملحقات) */
-#textScreen .btn-icon {
-  background: var(--card) !important;
-  border: 1px dashed var(--gold-matte) !important;
-  color: var(--gold-matte) !important;
-  box-shadow: none !important;
-}
-
-/* زر التالي (المطفي) - أهم تعديل */
-.btn.primary {
-  background: var(--gold-matte) !important; /* لون مطفي */
-  color: #0E0C0A !important; /* نص غامق */
-  border: none !important;
-  border-radius: 8px !important;
-  box-shadow: 0 4px 15px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.2) !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.5px !important;
-  text-shadow: none !important; /* شلنا الظل */
-}
-.btn.primary:active {
-  box-shadow: inset 0 3px 6px rgba(0,0,0,.3) !important;
-}
-
-/* =========================================
-   شاشة اختيار التاريخ - من صورة 3
-   ========================================= */
-#datePickerSheet .sheet-content {
-  background: var(--card) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 20px !important;
-  box-shadow: 0 30px 60px -15px rgba(0,0,0,.8) !important;
-}
-#datePickerSheet .sheet-content::before,
-#datePickerSheet .sheet-content::after { display: none !important; } /* شلنا التروس */
-
-#datePickerSheet select {
-  background: var(--bg) !important;
-  color: var(--gold-matte) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 8px !important;
-  box-shadow: inset 0 2px 5px rgba(0,0,0,.2) !important;
-  font-family: inherit !important;
-}
-#datePickerSheet select:focus {
-  border-color: var(--gold-matte) !important;
-}
-
-/* شلنا لمعة زر التأكيد */
-#datePickerSheet .btn.primary {
-  background: var(--gold-matte) !important;
-  color: #000 !important;
-}
-
-/* =========================================
-   كتاب السنة - The Flat Luxury Book
-   ========================================= */
-#bkst {
-  perspective: none !important; /* إلغاء الـ 3D الفاشل */
-  padding: 20px !important;
-}
-/* شكل المجلد الجلدي المسطح */
-.bkpg {
-  transform: none !important; /* إلغاء الدوران */
-  background: var(--card) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 12px !important;
-  box-shadow: var(--sh-soft), var(--sh-inset) !important;
-  padding: 30px 20px !important;
-  margin-bottom: 20px !important;
-  /* إضافة شريط ذهبي على اليسار كأنه تجليد */
-  border-left: 4px solid var(--gold-matte) !important; 
   position: relative;
 }
-/* زخرفة على الزاوية */
-.bkpg::after {
-  content: '❖';
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  color: var(--gold-matte);
-  opacity: 0.3;
-  font-size: 20px;
+.fold.env .seal i {
+  position: absolute; top: -5px; right: -5px;
+  background: var(--gold-solid); color: #000;
+  border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; font-weight: bold;
 }
 
 /* =========================================
-   شريط التبويب السفلي
+   كتاب السنة (The Open Book Illusion)
    ========================================= */
+#bkst {
+  perspective: 2000px;
+  padding: 30px 10px;
+  /* خلفية الطاولة الخشبية */
+  background: radial-gradient(circle at 50% 50%, #1C1612 0%, #0A0806 100%);
+  border-radius: 20px;
+  margin-top: 20px;
+}
+.bkpg {
+  /* إلغاء دوران الكرت القديم */
+  transform: rotateX(15deg) !important; 
+  transform-origin: center center !important;
+  border-radius: 6px !important;
+  background: var(--parchment) !important;
+  color: #2B1F15 !important;
+  padding: 40px 30px !important;
+  box-shadow: 
+    /* ظل المنتصف (الغلاف) */
+    inset 20px 0 30px -20px rgba(0,0,0,0.5),
+    inset -20px 0 30px -20px rgba(0,0,0,0.5),
+    /* كومة الصفحات تحت */
+    0 10px 0 -2px #E6D9C5, 
+    0 20px 0 -4px #DBCBB1, 
+    /* ظل الكتاب على الطاولة */
+    0 40px 50px -10px rgba(0,0,0,0.9) !important;
+  border: 1px solid var(--border-gold) !important;
+  /* تأثير التجليد في المنتصف */
+  background-image: linear-gradient(to right, transparent 49%, rgba(0,0,0,0.06) 50%, rgba(0,0,0,0.1) 51%, transparent 52%) !important;
+}
+/* إضافة زخرفة ذهبية للصفحة */
+.bkpg::before {
+  content: '';
+  position: absolute; inset: 15px;
+  border: 1px solid rgba(201, 162, 39, 0.2);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/* =========================================
+   شاشة الكتابة (الورقة الملكية)
+   ========================================= */
+#textScreen {
+  background: var(--bg-dark) !important;
+}
+#textScreen .screen-title {
+  font-family: var(--font-display) !important;
+  color: var(--gold-solid) !important;
+}
+#textScreen .text-input {
+  background-color: var(--parchment) !important;
+  background-image: 
+    /* خط الهامش */
+    linear-gradient(90deg, transparent 45px, rgba(160,50,40,.3) 45px, rgba(160,50,40,.3) 46px, transparent 46px),
+    /* الأسطر */
+    repeating-linear-gradient(transparent, transparent 2.2rem, rgba(139,117,36,.15) 2.2rem, rgba(139,117,36,.15) calc(2.2rem + 1px)) !important;
+  color: #1A1109 !important;
+  border: 1px solid var(--border-gold) !important;
+  border-radius: 4px 12px 12px 4px !important;
+  font-family: var(--font-display) !important;
+  font-size: 1.2rem !important;
+  line-height: 2.2rem !important;
+  padding: 30px 25px 30px 60px !important;
+  box-shadow: 
+    0 10px 30px -10px rgba(0,0,0,0.6),
+    inset 12px 0 20px -10px rgba(0,0,0,0.4) !important;
+}
+#textScreen .text-input:focus {
+  box-shadow: 
+    0 15px 40px -10px rgba(0,0,0,0.8),
+    0 0 0 1px var(--gold-solid) inset,
+    inset 12px 0 20px -10px rgba(0,0,0,0.4) !important;
+}
+
+/* أزرار الملحقات في الورقة */
+#textScreen .btn-icon {
+  background: var(--surface) !important;
+  border: 1px solid var(--border-gold) !important;
+  color: var(--gold-solid) !important;
+}
+
+/* زر التالي (Matte Gold) */
+.btn.primary {
+  background: var(--gold-solid) !important;
+  color: #050505 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  font-size: 1.1rem !important;
+  letter-spacing: 0.5px !important;
+  box-shadow: 0 8px 20px -5px rgba(201, 162, 39, 0.4) !important;
+  text-shadow: none !important;
+}
+
+/* =========================================
+   شاشة اختيار التاريخ
+   ========================================= */
+#datePickerSheet .sheet-content {
+  background: var(--surface) !important;
+  border: 1px solid var(--gold-muted) !important;
+  border-radius: 20px !important;
+}
+#datePickerSheet .sheet-content::before,
+#datePickerSheet .sheet-content::after { display: none !important; }
+#datePickerSheet select {
+  background: var(--bg-dark) !important;
+  color: var(--gold-solid) !important;
+  border: 1px solid var(--border-gold) !important;
+  border-radius: 8px !important;
+  font-family: var(--font-body) !important;
+}
+
+/* شريط التبويب السفلي */
 .tabs {
-  background: rgba(14, 12, 10, 0.85) !important;
+  background: rgba(9, 9, 11, 0.9) !important;
   backdrop-filter: blur(15px) !important;
   -webkit-backdrop-filter: blur(15px) !important;
-  border-top: 1px solid var(--border) !important;
-  border-radius: 20px 20px 0 0 !important;
-  box-shadow: 0 -10px 30px rgba(0,0,0,.5) !important;
+  border-top: 1px solid var(--border-gold) !important;
+  border-radius: 24px 24px 0 0 !important;
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.8) !important;
 }
-:root[data-theme=light] .tabs {
-  background: rgba(250, 245, 233, 0.9) !important;
+.tab.active svg {
+  color: var(--gold-solid) !important;
+  filter: drop-shadow(0 0 8px rgba(201, 162, 39, 0.6)) !important;
 }
-.tab.active {
-  color: var(--gold-matte) !important;
-}
-
-/* إخفاء الحبيبات القديمة لأنها كانت تزيد التعتيم */
-body::after { display: none !important; }
-
-@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 `;
 const st=document.createElement('style');st.id='luxury-css';st.textContent=css;document.head.appendChild(st);
 
-/* الحفاظ على الاهتزاز فقط */
+/* الحفاظ على الاهتزاز */
 const hap=()=>{try{const h=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.Haptics;if(h)h.impact({style:'LIGHT'});else if(navigator.vibrate)navigator.vibrate(6)}catch(e){}};
 document.addEventListener('pointerdown',e=>{if(e.target.closest&&e.target.closest('button,.tab,label.bg-option,.fold'))hap()},{passive:true});
 
-/* نفس دوال الجافاسكريبت الخاصة بك بدون تغيير */
+/* نفس دوال الجافاسكريبت الخاصة بك */
 window.writeMenu=function(){overlay((c,close)=>{c.classList.add('desk');ttl(c,'text');
   const nl=getL().filter(l=>!l.s&&new Date(l.o)<=Date.now()).length,g=mk('div','deskgrid');
   [['✍️','m_journal','ws_journal',()=>openText('personal'),''],
