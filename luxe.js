@@ -43,7 +43,7 @@ var css=[
 '.lxribw{position:absolute;left:4.2Q;top:-1Q;width:2.8Q;height:calc(100% + 5Q);z-index:3;filter:drop-shadow(.2Q .3Q .4Q rgba(0,0,0,.4));pointer-events:none}',
 '.lxrib{width:100%;height:100%;background:linear-gradient(90deg,#5a0e1b,#a3202f 45%,#6b1020);clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 2.2Q),0 100%)}',
 '.lxcastw{position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;z-index:4;pointer-events:none}',
-'.lxcast{position:absolute;left:0;top:0;height:100%;width:22Q;opacity:0;background:linear-gradient(to right,rgba(40,25,8,.5),rgba(40,25,8,.18) 38%,transparent)}',
+'.lxcast{position:absolute;left:0;top:0;height:100%;width:30Q;opacity:0;background:linear-gradient(to right,rgba(40,25,8,.52),rgba(40,25,8,.3) 18%,rgba(40,25,8,.12) 48%,rgba(40,25,8,.04) 75%,transparent)}',
 '.lxleaf{position:absolute;left:0;top:0;width:100%;height:100%;z-index:5;perspective:320Q;perspective-origin:50% 50%}',
 '.lxs{position:absolute;top:0;transform-origin:0 50%;transform-style:preserve-3d;will-change:transform}',
 '.lxf,.lxb{position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}',
@@ -137,7 +137,7 @@ var st=document.createElement('style');st.textContent=css;document.head.appendCh
 /* ---------- حالة ---------- */
 var YEAR,list=[],pages=[],tocData={},i=0,W=0,H=0,UU=1,root,bk,stage,base,ribw,castEl,board,eF,eS,eB,meas,pill,sndBtn,hintEl;
 var leafEl=null,strips=[],turning=null,cur=0,busy=false,g=null,rtl=false,AC=null,purls={},rt=null;
-var CURL=24,N=9;
+var CURL=42,N=18;
 var fwd=function(){return rtl?1:-1};
 var clamp=function(v){return Math.max(0,Math.min(1,v))};
 
@@ -262,7 +262,7 @@ function photoHTML(p,urls){
 }
 function entryEl(p,urls){
  var m=p.m,d=new Date(m.date),mo=MON[S.lang][d.getMonth()];
- var h='<div class="lxhd">'+esc(mo+' · '+d.getFullYear())+'</div>';
+ var h=p.first?'':'<div class="lxhd">'+esc(mo+' · '+d.getFullYear())+'</div>';
  if(p.first)h+='<div class="lxdt"><span class="dn">'+d.getDate()+'</span><span class="dm"><b>'+esc(DAYS[S.lang][d.getDay()])+'</b><i>'+esc(mo+' '+d.getFullYear())+(m.noTime?'':' · '+ftime(m.date))+'</i></span>'+(m.mood?'<span class="mo">'+m.mood+'</span>':'')+'</div><div class="lxor"></div>';
  else h+='<div class="lxcont">'+esc(fdate(m.date))+'</div><div class="lxor"></div>';
  if(m.type==='answer'&&m.caption&&p.first)h+='<div class="lxq"><small>'+esc(X('q'))+'</small>'+esc(m.caption)+'</div>';
@@ -287,11 +287,11 @@ async function make(p){
  return pg;
 }
 
-/* ---------- الورقة المقلوبة (شرائح تنحني) ---------- */
+/* ---------- الورقة المقلوبة (شرائح تنحني بنعومة) ---------- */
 function buildLeaf(front,isCover){
  leafEl=el('div','lxleaf');strips=[];var sw=W/N,parent=leafEl;
  for(var j=0;j<N;j++){
-  var s=el('div','lxs');s.style.cssText='width:'+(sw+1)+'px;height:'+H+'px;left:'+(j?sw:0)+'px';
+  var s=el('div','lxs');s.style.cssText='width:'+(sw+1.2)+'px;height:'+H+'px;left:'+(j?sw:0)+'px';
   var f=el('div','lxf'),c=front.cloneNode(true);c.style.cssText+=';left:'+(-j*sw)+'px;top:0;width:'+W+'px;height:'+H+'px';
   var fs=el('i','sh');f.append(c,fs);
   var b=el('div','lxb'+(isCover?' end':'')+(j===0?' g':'')),bs=el('i','sh');b.appendChild(bs);
@@ -302,10 +302,10 @@ function buildLeaf(front,isCover){
 function setP(p){
  cur=p;var sw=W/N,sn=Math.sin(Math.PI*p),prev=0,xe=0;
  for(var j=0;j<N;j++){
-  var th=Math.max(0,Math.min(180,p*180+CURL*sn*Math.pow(j/(N-1),1.6))),a=th-prev,r=th*Math.PI/180,sv=Math.abs(Math.sin(r));
-  prev=th;strips[j].s.style.transform='rotateY('+(-a).toFixed(2)+'deg)';
-  strips[j].fs.style.opacity=th<90?(sv*.5).toFixed(3):0;
-  strips[j].bs.style.opacity=th>=90?(sv*.34).toFixed(3):0;
+  var u=j/(N-1),th=Math.max(0,Math.min(180,p*180+CURL*sn*Math.pow(u,1.35))),a=th-prev,r=th*Math.PI/180,sv=Math.abs(Math.sin(r));
+  prev=th;strips[j].s.style.transform='rotateY('+(-a).toFixed(3)+'deg)';
+  strips[j].fs.style.opacity=th<90?(sv*.55).toFixed(3):0;
+  strips[j].bs.style.opacity=th>=90?(sv*.36).toFixed(3):0;
   xe+=sw*Math.cos(r);
  }
  castEl.style.transform='translateX('+xe.toFixed(1)+'px)';
@@ -327,9 +327,9 @@ async function beginTurn(dir,target){
 function animate(to,slow){
  return new Promise(function(res){
   var from=cur,dist=Math.abs(to-from);if(dist<.002){setP(to);return res()}
-  var dur=(slow?860:540)*Math.min(1,.35+dist),t0=performance.now();
+  var dur=(slow?780:620)*Math.min(1,.4+dist),t0=performance.now();
   (function step(now){
-   var k=Math.min(1,(now-t0)/dur),e=slow?(k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2):1-Math.pow(1-k,3);
+   var k=Math.min(1,(now-t0)/dur),e=slow?(k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2):(k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2);
    setP(from+(to-from)*e);if(k<1)requestAnimationFrame(step);else res();
   })(t0);
  });
