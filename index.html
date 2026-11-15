@@ -4,542 +4,409 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <meta name="theme-color" content="#0F0A08">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
 <title>لحظة</title>
-<link rel="apple-touch-icon" href="icon.png">
-<link rel="icon" href="icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Amiri:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:dark;--bg:#0F0A08;--card:#1A1410;--card-hover:#221A15;--border:rgba(255,255,255,.08);--border-strong:rgba(255,255,255,.18);--gold:#D4AF37;--gold-light:#F4D98C;--gold-soft:rgba(212,175,55,.12);--on-gold:#0F0A08;--text:#F5F5F5;--text-2:#D0D0D0;--text-3:#A8A8A8;--text-4:#8A8A8A;--nav:rgba(15,10,8,.96);--veil:rgba(10,6,4,.98);--splash:radial-gradient(ellipse at center,#1F1508 0%,#0F0A08 65%);--grad:linear-gradient(135deg,#1F1508,#0F0A08);--shadow:0 4px 20px rgba(0,0,0,.5);--r:14px;--fd:'Reem Kufi',sans-serif;--fb:'IBM Plex Sans Arabic',sans-serif;--fq:'Amiri',serif}
-:root[data-theme=light]{color-scheme:light;--bg:#FAF6EE;--card:#FFF;--card-hover:#F5F0E4;--border:rgba(0,0,0,.1);--border-strong:rgba(0,0,0,.2);--gold:#8B7524;--gold-light:#6A5820;--gold-soft:rgba(139,117,36,.12);--on-gold:#fff;--text:#1A1410;--text-2:#3A3025;--text-3:#5A5045;--text-4:#756B60;--nav:rgba(250,246,238,.96);--veil:rgba(250,246,238,.99);--splash:radial-gradient(ellipse at center,#FFF8E6 0%,#FAF6EE 65%);--grad:linear-gradient(135deg,#3a2a12,#1a1410);--shadow:0 4px 20px rgba(0,0,0,.15)}
+:root{color-scheme:dark;--bg:#0F0A08;--card:#1A1410;--border:rgba(255,255,255,.08);--border-strong:rgba(255,255,255,.18);--gold:#D4AF37;--gold-light:#F4D98C;--gold-soft:rgba(212,175,55,.12);--on-gold:#0F0A08;--text:#F5F5F5;--text-2:#D0D0D0;--text-3:#A8A8A8;--text-4:#8A8A8A;--nav:rgba(15,10,8,.96);--veil:rgba(10,6,4,.98);--grad:linear-gradient(135deg,#1F1508,#0F0A08);--shadow:0 4px 20px rgba(0,0,0,.5);--r:14px;--fd:'Reem Kufi',sans-serif;--fb:'IBM Plex Sans Arabic',sans-serif;--fq:'Amiri',serif}
+:root[data-theme=light]{color-scheme:light;--bg:#FAF6EE;--card:#FFF;--border:rgba(0,0,0,.1);--border-strong:rgba(0,0,0,.2);--gold:#8B7524;--gold-light:#6A5820;--gold-soft:rgba(139,117,36,.12);--on-gold:#fff;--text:#1A1410;--text-2:#3A3025;--text-3:#5A5045;--text-4:#756B60;--nav:rgba(250,246,238,.96);--veil:rgba(250,246,238,.99);--grad:linear-gradient(135deg,#3a2a12,#1a1410);--shadow:0 4px 20px rgba(0,0,0,.15)}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{font-size:18px;height:100%;-webkit-text-size-adjust:100%}
-html,body{overflow:hidden;background:var(--bg)}
-body{height:100%;color:var(--text);font:1rem/1.65 var(--fb);display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
-button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}
-input,textarea,select{font-family:var(--fb);font-size:1rem;outline:none;border:none;background:none;color:inherit}
-textarea{resize:none}img{display:block;max-width:100%}a{text-decoration:none;color:inherit}
-audio{width:100%}
+html{font-size:18px;height:100%}html,body{overflow:hidden;background:var(--bg)}body{height:100%;color:var(--text);font:1rem/1.65 var(--fb);display:flex;flex-direction:column}
+button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}input,textarea{font-family:var(--fb);font-size:1rem;outline:none;border:none;background:none;color:inherit}textarea{resize:none}img{display:block;max-width:100%}
 .hidden{display:none!important}
-:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-@keyframes fi{from{opacity:0}to{opacity:1}}
-@keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes pulse{50%{transform:scale(1.04);opacity:.92}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@keyframes fi{from{opacity:0}to{opacity:1}}@keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .content{flex:1;overflow-y:auto;padding:calc(24px + env(safe-area-inset-top)) 16px 120px;animation:fi .3s}
-.content::-webkit-scrollbar{display:none}
-.page-title{font:600 1.7rem var(--fd);text-align:center;margin-bottom:20px;padding-bottom:8px;position:relative}
-.page-title::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:40px;height:2px;background:var(--gold);opacity:.6}
+.page-title{font:600 1.7rem var(--fd);text-align:center;margin-bottom:20px}
 .tabs{position:fixed;bottom:0;left:0;right:0;background:var(--nav);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:100}
-.tab{flex:1;padding:12px 0 10px;font-size:.8rem;font-weight:500;color:var(--text-4);display:flex;flex-direction:column;align-items:center;gap:4px;position:relative}
-.tab svg{width:24px;height:24px;stroke-width:1.8}
+.tab{flex:1;padding:12px 0;font-size:.8rem;font-weight:500;color:var(--text-4);display:flex;flex-direction:column;align-items:center;gap:4px}
+.tab svg{width:24px;height:24px;stroke-width:1.8;stroke:currentColor;fill:none}
 .tab.active{color:var(--gold)}
-.tab::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%) scaleX(0);width:28px;height:2px;background:var(--gold);transition:transform .3s}
-.tab.active::after{transform:translateX(-50%) scaleX(1)}
-#splash{position:fixed;inset:0;background:var(--splash);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s;pointer-events:none}
-#splash.hide{opacity:0}
-.splash-logo{font:400 5rem/1 'Great Vibes',cursive;color:var(--gold);animation:pulse 2.4s infinite}
-.splash-sub{color:var(--gold);font:1.2rem var(--fq);margin-top:16px}
-.home-greeting{font:400 1.25rem var(--fd);color:var(--text-2)}
-.home-date{font-size:.95rem;color:var(--text-3);margin-bottom:6px}
-.home-hijri{font:.95rem var(--fd);color:var(--gold);margin-bottom:18px}
+#splash{position:fixed;inset:0;background:var(--grad);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s}
+#splash.hide{opacity:0;pointer-events:none}
+.splash-logo{font:400 5rem/1 'Great Vibes',cursive;color:var(--gold)}
+.home-greeting{font:400 1.25rem var(--fd);color:var(--text-2)}.home-date{font-size:.95rem;color:var(--text-3);margin-bottom:6px}.home-hijri{font:.95rem var(--fd);color:var(--gold);margin-bottom:18px}
 .home-action{display:flex;align-items:center;gap:16px;padding:16px 8px;border-bottom:1px solid var(--border);font-size:1.1rem;width:100%;text-align:start}
-.home-action:last-child{border:none}
-.home-action:active{background:var(--gold-soft)}
-.home-action svg,.settings-item .icon svg{width:24px;height:24px;stroke:var(--gold);stroke-width:1.8;fill:none}
+.home-action svg{width:24px;height:24px;stroke:var(--gold);fill:none}
 .home-action .label{flex:1}
-.home-action.hasn .label::after{content:"●";color:var(--gold);margin-inline-start:.5em;font-size:.7em}
-.arrow{color:var(--text-4);font-family:var(--fq);font-size:1.2rem}
-.on-this-day{margin:24px auto;max-width:360px;padding:16px;background:var(--card);border:1px solid var(--border-strong);border-radius:var(--r)}
-.on-this-day-title{font:1rem var(--fd);color:var(--gold);text-align:center;margin-bottom:8px}
-.on-this-day-year{display:flex;justify-content:space-between;padding:10px 16px;margin:4px 0;border:1px solid var(--border);border-radius:10px;width:100%}
-.on-this-day-count{font-size:.88rem;color:var(--text-3)}
-.home-stats{margin-top:28px;display:flex;gap:32px;justify-content:center;padding:16px 0;border-block:1px solid var(--border);width:100%;color:var(--text-3)}
-.home-stat{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:80px}
-.home-stat .num{color:var(--text);font:600 1.6rem/1 var(--fd)}
-.home-stat .lbl{font-size:.85rem;color:var(--text-3)}
+.home-stats{margin-top:28px;display:flex;gap:32px;justify-content:center;padding:16px 0;border-block:1px solid var(--border);width:100%}
+.home-stat{display:flex;flex-direction:column;align-items:center;gap:4px}.home-stat .num{color:var(--text);font:600 1.6rem/1 var(--fd)}.home-stat .lbl{font-size:.85rem;color:var(--text-3)}
 .sheet{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:400;display:flex;align-items:center;justify-content:center;padding:16px;animation:fi .3s}
-.sheet-content{width:100%;max-width:480px;background:var(--card);color:var(--text);border-radius:28px;border:1px solid var(--border-strong);padding:24px 16px;max-height:85vh;overflow-y:auto;position:relative;box-shadow:0 12px 40px rgba(0,0,0,.6);text-align:center}
+.sheet-content{width:100%;max-width:480px;background:var(--card);border-radius:28px;border:1px solid var(--border-strong);padding:24px 16px;max-height:85vh;overflow-y:auto;text-align:center;position:relative}
 .xbtn{width:44px;height:44px;border-radius:50%;background:var(--card);border:1px solid var(--border-strong);color:var(--text);font-size:1.15rem;display:flex;align-items:center;justify-content:center}
-.xbtn:active{color:var(--gold);border-color:var(--gold)}
-.sheet-close{position:absolute;top:12px;left:12px;z-index:10}
-.btn-close,.modal-close{position:fixed;top:calc(16px + env(safe-area-inset-top));left:16px;z-index:410}
-.section-item,.question-item{border:1.5px solid var(--border-strong);border-radius:var(--r);background:var(--bg);color:var(--text);padding:16px 8px;min-height:60px}
-.section-item{font:500 1.1rem var(--fd)}
-.question-item{font:1.1rem/1.7 var(--fq);text-align:start;padding:16px}
-.section-item:hover,.question-item:hover{border-color:var(--gold);color:var(--gold)}
-.wopt{display:flex;align-items:center;gap:14px;width:100%;text-align:start;padding:14px 16px;margin:8px 0;border:1.5px solid var(--border-strong);border-radius:var(--r);background:var(--bg);color:var(--text)}
-.wopt:active{border-color:var(--gold)}
-.wopt .ic{font-size:1.7rem}
-.wopt b{display:block;font:500 1.15rem var(--fd);color:var(--text)}
-.wopt small{display:block;color:var(--text-3);font:.85rem var(--fb);margin-top:2px}
-.btn{display:block;width:100%;max-width:360px;margin:10px auto;padding:16px;border:1.5px solid var(--border-strong);border-radius:999px;font-weight:500;font-size:1.05rem;text-align:center;color:var(--text);background:var(--card)}
-.btn:active{transform:scale(.97)}
-.btn:disabled{opacity:.5}
-.btn.sel{border-color:var(--gold);color:var(--gold);background:var(--gold-soft)}
+.btn-close{position:fixed;top:16px;left:16px;z-index:410}
+.btn{display:block;width:100%;max-width:360px;margin:10px auto;padding:16px;border:1.5px solid var(--border-strong);border-radius:999px;text-align:center;background:var(--card)}
 .btn.primary{background:var(--gold);color:var(--on-gold);border-color:var(--gold);font-weight:600}
-.btn.small{padding:12px;font-size:.95rem;max-width:240px}
-.screen{position:fixed;inset:0;background:var(--bg);color:var(--text);z-index:200;overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 16px 120px;animation:fi .3s}
+.screen{position:fixed;inset:0;background:var(--bg);z-index:200;overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 16px 120px;animation:fi .3s}
 .screen-title{font:500 1.6rem var(--fd);text-align:center;margin-bottom:24px}
-.screen-subtitle{text-align:center;color:var(--text-3);font-size:.95rem;margin-bottom:20px}
-.camera-video{width:100%;display:block;background:#000;aspect-ratio:3/4;object-fit:cover;border-radius:var(--r)}
-.camera-actions{display:flex;gap:16px;justify-content:center;align-items:center}
-.capture-btn{width:76px;height:76px;border-radius:50%;background:var(--gold);border:4px solid var(--border-strong)}
-.capture-btn:active{transform:scale(.92)}
-.switch-cam{width:52px;height:52px;border-radius:50%;border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-size:1.4rem}
-.strip{display:flex;gap:10px;overflow-x:auto;margin:18px 0 6px;padding:6px 2px;justify-content:center;flex-wrap:wrap}
-.strip .th{position:relative;flex-shrink:0}
-.strip img{width:72px;height:72px;object-fit:cover;border-radius:10px;border:1px solid var(--border-strong)}
-.strip .th button{position:absolute;top:-6px;left:-6px;width:26px;height:26px;border-radius:50%;background:#EF4444;color:#fff;font-size:.8rem}
-.rec-time{font:600 3.2rem var(--fd);text-align:center;color:var(--gold);margin:20px 0}
-.rec-btn{width:100px;height:100px;border-radius:50%;background:var(--gold);margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:2.6rem;color:var(--on-gold)}
-.rec-btn.on{background:#EF4444;color:#fff;animation:pulse 1.2s infinite}
-.text-input,.answer-input,.search{width:100%;max-width:500px;margin:0 auto 16px;background:var(--card);border:1px solid var(--border-strong);border-radius:var(--r);padding:20px;font:1.15rem/1.9 var(--fq);display:block;color:var(--text)}
-.text-input{min-height:220px}
-.search{border-radius:999px;padding:12px 20px;font:1rem var(--fb);max-width:none;margin-bottom:8px}
-.search-info{text-align:center;color:var(--text-3);font-size:.88rem;margin:0 0 14px;min-height:1.4em}
-.text-input:focus,.search:focus{border-color:var(--gold)}
-::placeholder{color:var(--text-4);font-family:var(--fb);font-size:1rem}
-#qBox2{max-width:500px;margin:0 auto 14px;padding:14px;border:1px solid var(--gold);border-radius:var(--r);text-align:center}
-#qBox2 .qt{font:1.2rem/1.8 var(--fq);color:var(--gold-light);margin-bottom:8px;word-break:break-word}
-.background-section{max-width:500px;margin:0 auto 16px}
-.background-title{font:.95rem var(--fd);color:var(--text-3);display:block;margin-bottom:8px}
-.background-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.bg-option{aspect-ratio:1;border-radius:50%;border:2px solid var(--border-strong);display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--card);color:var(--text-3);cursor:pointer}
-.bg-option img{width:100%;height:100%;object-fit:cover}
-.bg-option.active{border-color:var(--gold)}
-.bg-option.upload{border-style:dashed;color:var(--gold);font-size:1.6rem}
-.moods{display:flex;justify-content:center;gap:10px;margin:8px 0 4px}
-.moods button{font-size:1.9rem;width:52px;height:52px;border-radius:50%;border:2px solid transparent;opacity:.65}
-.moods button.on{border-color:var(--gold);opacity:1}
-.preview{width:100%;max-width:500px;margin:0 auto;padding:48px 24px;border-radius:var(--r);font:1.3rem/1.9 var(--fq);text-align:center;color:#fff;min-height:200px;display:flex;align-items:center;justify-content:center;word-break:break-word;background:var(--grad) center/cover}
-.modal{position:fixed;inset:0;background:var(--veil);color:var(--text);z-index:300;overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 8px 130px;animation:fi .3s}
-.modal-content img,.modal-content video{width:100%;border-radius:var(--r);margin-bottom:16px;background:#000}
-.modal-text{padding:32px 24px;border-radius:var(--r);font:1.3rem/1.9 var(--fq);text-align:center;margin-bottom:16px;color:#fff;word-break:break-word;background:var(--grad) center/cover}
-.modal-date{text-align:center;color:var(--gold);font:.95rem var(--fd);margin-bottom:24px;padding:8px 16px;border-radius:999px;background:var(--gold-soft)}
-.modal-cap{text-align:center;color:var(--text-2);margin-bottom:16px}
-.modal-actions{position:fixed;bottom:calc(28px + env(safe-area-inset-bottom));left:0;right:0;display:flex;justify-content:space-between;padding:0 24px;z-index:320;max-width:560px;margin:0 auto;pointer-events:none}
-.modal-actions button{pointer-events:auto;width:62px;height:62px;border-radius:50%;background:var(--card);border:1px solid var(--border-strong);font-size:1.5rem;box-shadow:var(--shadow)}
-#modalHeart.active{background:#EF4444;border-color:#EF4444;color:#fff}
-#modalDelete{color:#EF4444;border-color:rgba(239,68,68,.5)}
+.text-input{width:100%;max-width:500px;margin:0 auto 16px;background:var(--card);border:1px solid var(--border-strong);border-radius:var(--r);padding:20px;font:1.15rem/1.9 var(--fq);display:block;color:var(--text);min-height:220px}
+.moods{display:flex;justify-content:center;gap:10px;margin:8px 0 4px}.moods button{font-size:1.9rem;width:52px;height:52px;border-radius:50%;border:2px solid transparent;opacity:.65}.moods button.on{border-color:var(--gold);opacity:1}
+.modal{position:fixed;inset:0;background:var(--veil);z-index:300;overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 8px 130px}
 .moments-grid{display:flex;flex-direction:column;gap:24px}
-.moment-card{border-radius:var(--r);overflow:hidden;background:var(--card);cursor:pointer;border:1px solid var(--border);animation:fu .4s both}
+.moment-card{border-radius:var(--r);overflow:hidden;background:var(--card);cursor:pointer;border:1px solid var(--border)}
 .moment-card img{width:100%;max-height:70vh;object-fit:contain;background:#000}
-.vthumb{position:relative;width:100%;aspect-ratio:16/9;background:#111 center/cover no-repeat}
-.vthumb::after{content:'▶';position:absolute;inset:0;margin:auto;width:64px;height:64px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;font-size:1.6rem;display:flex;align-items:center;justify-content:center;padding-inline-start:4px}
-.text-content{padding:32px 24px;text-align:center;font:1.2rem/1.9 var(--fq);color:#fff;min-height:160px;display:flex;align-items:center;justify-content:center;word-break:break-word;background:var(--grad) center/cover}
-.moment-caption{font-size:1rem;color:var(--text-2);padding:10px 16px 0}
-.moment-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 16px;border-top:1px solid var(--border);min-height:40px}
-.moment-time{font:.9rem var(--fd);color:var(--text-3)}
-.moment-fav{color:var(--gold);font-size:1.15rem}
-.filters{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
-.filters::-webkit-scrollbar{display:none}
-.filter-chip{padding:9px 18px;border-radius:999px;border:1px solid var(--border-strong);color:var(--text-3);font-size:.92rem;white-space:nowrap;flex-shrink:0;font-weight:500}
-.filter-chip.active{background:var(--gold);border-color:var(--gold);color:var(--on-gold);font-weight:600}
-.stats-title{font:500 1.6rem var(--fd);text-align:center;margin-bottom:28px;color:var(--gold)}
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:560px;margin:0 auto}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px 16px;text-align:center}
-.stat-num{font:600 2.1rem/1 var(--fd);color:var(--gold);display:block;margin-bottom:6px}
-.stat-label{color:var(--text-3);font-size:.9rem}
-.stp{display:flex;gap:8px;justify-content:center;margin:6px 0 12px}
-.mbar{display:flex;align-items:center;gap:10px;margin:8px 0}
-.mbar .e{font-size:1.5rem;width:2rem;text-align:center}
-.mbar .tr{flex:1;height:12px;border-radius:6px;background:var(--card);overflow:hidden}
-.mbar .fl{height:100%;border-radius:6px;background:var(--gold)}
-.mbar .pc{min-width:3.4ch;color:var(--text-3);font-size:.9rem;direction:ltr;text-align:end}
-.nl{padding:10px 4px;border-bottom:1px solid var(--border);text-align:start;font:1.05rem/1.7 var(--fb)}
-.sec-t{font:1.15rem var(--fd);color:var(--gold);margin:24px 0 8px;text-align:center}
-.mgh{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:340px;margin:0 auto 4px;text-align:center;color:var(--text-3);font-size:.7rem}
-.mg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:340px;margin:0 auto}
-.mg i,.mg button{aspect-ratio:1;border-radius:6px}
-.mg button{display:flex;align-items:center;justify-content:center;font-size:.72rem;color:var(--text-3);background:var(--border)}
-.crow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 4px;border-bottom:1px solid var(--border);font:1.05rem var(--fb);text-align:start}
-.crow b{direction:ltr;color:var(--gold);font-weight:500}
-.empty-state{text-align:center;color:var(--text-3);margin-top:70px;line-height:2;padding:24px}
-.empty-icon{font-size:3rem;display:block;opacity:.4;color:var(--gold)}
-.empty-title{font:500 1.2rem var(--fd);color:var(--text-2)}
-.settings-group{margin-bottom:24px}
-.settings-group-title{font:500 .85rem var(--fd);letter-spacing:.08em;color:var(--gold);padding:0 8px;margin-bottom:8px}
-.settings-list{background:var(--card);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;color:var(--text)}
-.settings-item{display:flex;align-items:center;gap:16px;padding:16px;border-bottom:1px solid var(--border);width:100%;text-align:start;min-height:60px;color:var(--text)}
-.settings-item:last-child{border:none}
-.settings-item:active{background:var(--card-hover)}
-.settings-item .icon{width:26px;display:flex;justify-content:center}
-.settings-item .info{flex:1;display:flex;flex-direction:column}
-.settings-item .value{font-size:.88rem;color:var(--text-3)}
-.settings-item.danger .label{color:#EF4444}.settings-item.danger svg{stroke:#EF4444}
-#toast{position:fixed;top:calc(12px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);max-width:90%;padding:12px 22px;border-radius:999px;background:var(--card);border:1px solid var(--gold);color:var(--gold);font-weight:500;font-size:.95rem;z-index:30000;box-shadow:var(--shadow);pointer-events:none;text-align:center}
-#toast.err{border-color:#EF4444;color:#EF4444}
-#remBanner{position:fixed;top:0;left:0;right:0;background:var(--card);border-bottom:2px solid var(--gold);padding:calc(14px + env(safe-area-inset-top)) 16px 14px;z-index:9998;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow)}
-#onb{position:fixed;inset:0;z-index:25000;background:var(--bg);color:var(--text);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:32px;text-align:center}
-#onb .e{font-size:4.5rem}
-#onb h2{font:600 1.8rem var(--fd);color:var(--gold)}
-#onb p{color:var(--text-2);max-width:340px}
-#onb .dt{display:flex;gap:10px}
-#onb .dt i{width:10px;height:10px;border-radius:50%;background:var(--border-strong)}
-#onb .dt i.on{background:var(--gold)}
-#bookView{position:fixed;inset:0;z-index:50000;background:#fff;color:#111;overflow:auto;padding:24px;font:18px/1.9 var(--fq)}
-#bookView .bar{display:flex;gap:10px;margin-bottom:20px}
-#bookView .bar button{padding:10px 18px;border-radius:999px;background:#8B7524;color:#fff}
-#bookView .e{border-bottom:1px solid #ddd;padding:14px 0;break-inside:avoid}
-#bookView .d{color:#8B7524;font-family:var(--fd)}
-#bookView img{max-width:100%;max-height:420px;margin-top:8px}
-@media print{body>*:not(#bookView){display:none!important}html,body{overflow:visible!important;height:auto!important}#bookView{position:static;overflow:visible}.nop{display:none!important}}
-#bkv{position:fixed;inset:0;z-index:470;background:var(--bg);color:var(--text);display:flex;flex-direction:column;gap:10px;padding:calc(12px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom));direction:ltr}
-#bkv .bt{display:flex;align-items:center;justify-content:space-between;gap:8px}
-#bkv select{padding:8px;background:var(--card);color:var(--text);border:1px solid var(--border-strong);border-radius:10px;max-width:42vw}
-#bkst{flex:1;min-height:0;perspective:1400px;display:flex;touch-action:pan-y}
-.bkpg{flex:1;min-height:0;overflow-y:auto;background:var(--card);border:2px solid var(--gold);border-radius:6px 18px 18px 6px;padding:22px 18px;box-shadow:0 10px 30px rgba(0,0,0,.4);backface-visibility:hidden;text-align:start}
-.bkpg .d{font:1.1rem var(--fd);color:var(--gold);margin-bottom:10px}
-.bkpg .x{font:1.2rem/1.9 var(--fq);white-space:pre-wrap;word-break:break-word}
-.bkpg img{width:100%;border-radius:10px;margin:10px 0}
-#bkv .bb{display:flex;gap:10px;justify-content:center;align-items:center}
-#bkv .bb .btn{margin:0;max-width:140px;padding:12px}
+.text-content{padding:32px 24px;text-align:center;font:1.2rem/1.9 var(--fq);color:#fff;background:var(--grad)}
+.moment-caption{font-size:1rem;color:var(--text-2);padding:10px 16px 0}.moment-meta{display:flex;justify-content:space-between;padding:10px 16px;border-top:1px solid var(--border)}
+.filters{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:8px}
+.filter-chip{padding:9px 18px;border-radius:999px;border:1px solid var(--border-strong);color:var(--text-3);font-size:.92rem;white-space:nowrap}
+.filter-chip.active{background:var(--gold);color:var(--on-gold);font-weight:600}
+#toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);padding:12px 22px;border-radius:999px;background:var(--card);border:1px solid var(--gold);color:var(--gold);z-index:30000;pointer-events:none;text-align:center;transition:opacity .3s}
 </style>
 </head>
 <body>
-<div id="toast" class="hidden" role="status" aria-live="polite"></div>
-<div id="splash"><div class="splash-logo">Lahza</div><div class="splash-sub" data-i18n="app">لحظة</div></div>
+<div id="toast" class="hidden"></div>
+<div id="splash"><div class="splash-logo">Lahza</div></div>
 <div class="content" id="tabHome">
   <div class="home-greeting" id="greeting"></div>
   <div class="home-date" id="todayDate"></div>
   <div class="home-hijri" id="hijriDate"></div>
   <div class="home-actions">
-    <button class="home-action" id="actionText"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span class="label" data-i18n="text"></span><span class="arrow">›</span></button>
-    <button class="home-action" id="actionPhoto"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span class="label" data-i18n="photo"></span><span class="arrow">›</span></button>
-    <button class="home-action" id="actionVideo"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span class="label" data-i18n="video"></span><span class="arrow">›</span></button>
-    <button class="home-action" id="actionAudio"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" y1="18" x2="12" y2="22"/></svg><span class="label" data-i18n="audio"></span><span class="arrow">›</span></button>
-    <button class="home-action" id="actionOldDate"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="label" data-i18n="old"></span><span class="arrow">›</span></button>
+    <button class="home-action" id="actionText"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span class="label">كتابة</span><span class="arrow">›</span></button>
+    <button class="home-action" id="actionPhoto"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span class="label">صورة</span><span class="arrow">›</span></button>
+    <button class="home-action" id="actionVideo"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span class="label">فيديو</span><span class="arrow">›</span></button>
+    <button class="home-action" id="actionAudio"><svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" y1="18" x2="12" y2="22"/></svg><span class="label">صوت</span><span class="arrow">›</span></button>
+    <button class="home-action" id="actionOldDate"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="label">تاريخ قديم</span><span class="arrow">›</span></button>
   </div>
-  <div class="on-this-day hidden" id="onThisDay"><div class="on-this-day-title" data-i18n="otd"></div><div id="onThisDayYears"></div></div>
   <button class="home-stats" id="homeStats">
-    <div class="home-stat"><span class="num" id="streakText">0</span><span class="lbl" data-i18n="streak"></span></div>
-    <div class="home-stat"><span class="num" id="counterText">0</span><span class="lbl" data-i18n="moments"></span></div>
+    <div class="home-stat"><span class="num" id="streakText">0</span><span class="lbl">يوم متواصل</span></div>
+    <div class="home-stat"><span class="num" id="counterText">0</span><span class="lbl">لقطة</span></div>
   </button>
 </div>
 <div class="content hidden" id="tabMoments">
-  <h1 class="page-title" data-i18n="mine"></h1>
-  <input class="search" id="searchInput" type="search" enterkeyhint="search" autocomplete="off" data-ph="search">
-  <div class="search-info" id="searchInfo"></div>
-  <div id="tbar" class="filters"></div>
-  <div id="tagsRow" class="filters"></div>
-  <div class="filters" id="filterRow"></div>
-  <div id="searchResults" class="moments-grid hidden"></div>
-  <div id="treeView">
-    <div id="yearsRow" class="filters"></div>
-    <div class="hidden" id="monthsSection"><div id="monthsGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 16px"></div></div>
-    <div class="hidden" id="calendarSection">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin:12px 0">
-        <button class="btn small" id="calPrev" aria-label="prev" style="width:48px;height:48px;padding:0;margin:0;font-size:1.3rem">›</button>
-        <div id="calTitle" style="font:1.15rem var(--fd)"></div>
-        <button class="btn small" id="calNext" aria-label="next" style="width:48px;height:48px;padding:0;margin:0;font-size:1.3rem">‹</button>
-      </div>
-      <div id="calHead" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px;text-align:center;color:var(--text-3);font-size:.8rem"></div>
-      <div id="calendarGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px"></div>
-    </div>
-  </div>
-  <div class="empty-state hidden" id="empty"><span class="empty-icon">✦</span><div class="empty-title" data-i18n="empty_t"></div><div data-i18n="empty_s"></div></div>
+  <h1 class="page-title">لقطاتي</h1>
+  <div id="filterRow" class="filters"></div>
+  <div id="momentsGrid" class="moments-grid"></div>
 </div>
 <div class="content hidden" id="tabSettings">
-  <h1 class="page-title" data-i18n="settings"></h1>
-  <div class="settings-group"><div class="settings-group-title" data-i18n="general"></div><div class="settings-list">
-    <button class="settings-item" id="btnReminder"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span><div class="info"><span class="label" data-i18n="reminder"></span><span class="value" id="reminderStatus"></span></div><span class="arrow">›</span></button>
-    <button class="settings-item" id="btnTheme"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg></span><div class="info"><span class="label" data-i18n="theme"></span><span class="value" id="themeStatus"></span></div><span class="arrow">›</span></button>
-    <button class="settings-item" id="btnFont"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg></span><div class="info"><span class="label" data-i18n="fontsize"></span><span class="value" id="fontStatus"></span></div><span class="arrow">›</span></button>
-    <button class="settings-item" id="btnLanguage"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span><div class="info"><span class="label" data-i18n="lang"></span><span class="value" id="languageStatus"></span></div><span class="arrow">›</span></button>
-    <button class="settings-item" id="btnIntro"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></span><div class="info"><span class="label" data-i18n="intro_again"></span></div><span class="arrow">›</span></button>
-  </div></div>
-  <div class="settings-group"><div class="settings-group-title" data-i18n="data"></div><div class="settings-list">
-    <button class="settings-item" id="btnStorage"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></span><div class="info"><span class="label"></span><span class="value"></span></div><span class="arrow">›</span></button>
-    <button class="settings-item" id="btnExport"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span><div class="info"><span class="label" data-i18n="exp"></span></div><span class="arrow">›</span></button>
-    <button class="settings-item" id="btnImport"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span><div class="info"><span class="label" data-i18n="imp"></span></div><span class="arrow">›</span></button>
-    <input type="file" id="importInput" accept=".zip" style="display:none">
-    <button class="settings-item danger" id="btnDeleteAll"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span><div class="info"><span class="label" data-i18n="delall"></span></div><span class="arrow">›</span></button>
-  </div></div>
-  <div class="settings-group"><div class="settings-group-title" data-i18n="about"></div><div class="settings-list">
-    <a href="privacy.html" class="settings-item"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><div class="info"><span class="label" data-i18n="privacy"></span></div><span class="arrow">›</span></a>
-    <button class="settings-item" id="btnRate"><span class="icon"><svg viewBox="0 0 24 24" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><div class="info"><span class="label" data-i18n="rate"></span></div><span class="arrow">›</span></button>
-    <button class="settings-item" id="btnContact"><span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span><div class="info"><span class="label" data-i18n="contact"></span></div><span class="arrow">›</span></button>
-    <div class="settings-item"><div class="info"><span class="label" data-i18n="ver"></span><span class="value">14.0</span></div></div>
-  </div></div>
+  <h1 class="page-title">الإعدادات</h1>
+  <button class="btn" id="btnExport">تصدير نسخة احتياطية</button>
+  <button class="btn" id="btnImport">استيراد نسخة احتياطية</button>
+  <input type="file" id="importInput" accept=".zip" hidden>
 </div>
 <div class="tabs">
-  <button class="tab active" id="tabBtnHome"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span data-i18n="home"></span></button>
-  <button class="tab" id="tabBtnMoments"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span data-i18n="mine"></span></button>
-  <button class="tab" id="tabBtnSettings"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span data-i18n="settings"></span></button>
+  <button class="tab active" id="tabBtnHome"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>الرئيسية</span></button>
+  <button class="tab" id="tabBtnMoments"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>لقطاتي</span></button>
+  <button class="tab" id="tabBtnSettings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>الإعدادات</span></button>
 </div>
+<div class="screen hidden" id="photoScreen"><button class="xbtn btn-close" id="photoClose">✕</button><h2 class="screen-title">صورة</h2><video id="photoVideo" autoplay playsinline style="width:100%;border-radius:14px;background:#000"></video><button class="btn primary" id="snapBtn" style="margin-top:16px">التقاط</button><div id="photoStrip" style="display:flex;gap:8px;margin-top:10px;overflow-x:auto"></div><button class="btn primary hidden" id="photoNext" style="margin-top:16px">التالي</button></div>
+<div class="screen hidden" id="textScreen"><button class="xbtn btn-close" id="textClose">✕</button><h2 class="screen-title">كتابة</h2><textarea class="text-input" id="textInput"></textarea><button class="btn primary" id="saveTextBtn">حفظ</button></div>
+<div class="screen hidden" id="saveScreen"><button class="xbtn btn-close" id="saveClose">✕</button><h2 class="screen-title">حفظ اللقطة</h2><div id="previewWrap"></div><div class="moods" id="moodRow"></div><textarea class="text-input" id="captionInput" placeholder="أضف جملة (اختياري)" style="min-height:80px"></textarea><button class="btn primary" id="saveBtn">حفظ</button></div>
+<div class="sheet hidden" id="datePickerSheet"><div class="sheet-content"><button class="xbtn" id="datePickerClose" style="position:absolute;top:10px;left:10px">✕</button><h3>اختر التاريخ</h3><div style="display:flex;gap:8px;margin:20px 0"><select id="pickYear"></select><select id="pickMonth"></select><select id="pickDay"></select></div><button class="btn primary" id="datePickerConfirm">تأكيد</button></div></div>
+<div class="sheet hidden" id="typePickerSheet"><div class="sheet-content"><button class="xbtn" id="typePickerClose" style="position:absolute;top:10px;left:10px">✕</button><h3>اختر النوع</h3><button class="btn primary" id="pickTypePhoto">صورة</button><button class="btn primary" id="pickTypeText">كتابة</button></div></div>
+<div class="modal hidden" id="momentModal"><button class="xbtn btn-close" id="modalClose">✕</button><div class="modal-content" id="modalContent" style="padding:20px"></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
-/* ============ بنك الأسئلة ============ */
-var QUESTIONS_BANK = {
-'ar': {'تأمل':['ما أكثر لحظة شعرت فيها بالراحة اليوم؟','ما الشيء الذي فاجأك اليوم؟','ما اللحظة التي تمنيت لو تدوم أطول؟','ما الذي أخذ من طاقتك اليوم؟','ما الذي جدّد طاقتك اليوم؟','ما اللحظة التي شعرت فيها بالامتنان؟','ما الذي كنت تتطلع إليه اليوم؟','ما الذي كان أصعب مما توقعت؟','ما اللحظة التي ابتسمت فيها من قلبك؟','ما الشيء الذي تعلمته عن نفسك اليوم؟','لو تعيد اليوم، ما الذي ستغيّره؟','ما الذي احتاج منك صبراً اليوم؟','ما القرار الصغير الذي اتخذته اليوم؟'], 'مشاعر':['ما الشعور الذي سيطر عليك اليوم؟','ما الذي أضحكك اليوم؟','ما الذي أزعجك اليوم؟','متى شعرت بالفخر اليوم؟','كيف كان مزاجك من 1 إلى 10؟','ما الذي أشعرك بالأمان؟','متى شعرت بالحب اليوم؟','ما الذي أشعرك بالرضا؟','متى شعرت بالقوة اليوم؟','ما الشعور الذي تريد أن تشعر به غداً؟'], 'إنجاز':['ما الشيء الذي فعلته اليوم ولو كان صغيراً؟','ما الخطوة التي قرّبتك من هدفك؟','ما الذي تغلّبت عليه اليوم؟','ما الشيء الذي فعلته أفضل من الأمس؟','ما القرار الذي اتخذته اليوم؟','ما الشيء الذي ساعدت به أحداً اليوم؟','ما الشيء الذي أنهيته اليوم؟'], 'أفكار':['ما الفكرة التي راودتك اليوم؟','ما السؤال الذي حيّرك اليوم؟','ما الذي فتح عقلك على شيء جديد؟','ما الفكرة التي تريد تطويرها؟','ما الذي غيّر نظرتك؟','ما الشيء الذي فهمته أخيراً؟'], 'علاقات':['من الشخص الذي أسعدك حضوره اليوم؟','ما الكلمة الجميلة التي سمعتها؟','من الشخص الذي تريد أن تشكره؟','من الشخص الذي ساعدته اليوم؟','من الشخص الذي ساعدك اليوم؟','من الشخص الذي تشتاق إليه؟'], 'نمو':['ما الشيء الذي تعلمته اليوم؟','ما العادة التي بدأت تبنيها؟','ما الخطأ الذي استفدت منه؟','ما الذي جعلك أقوى اليوم؟','ما التغيير الذي تريد إحداثه؟','ما الخطوة الصغيرة التي قمت بها لنفسك؟'], 'امتنان':['ما ثلاثة أشياء أنت ممتن لها اليوم؟','من الشخص الذي أنت ممتن لوجوده؟','ما التفصيل الصغير الذي أسعدك؟','ما النعمة التي لاحظتها اليوم؟','على ما أنت ممتن في صحتك؟'], 'لحظة':['صف يومك بثلاث كلمات.','لو كان يومك لوناً، ما هو؟','ما اللحظة التي تريد تذكرها بعد سنة؟','اختصر يومك بجملة واحدة.','ما الذي كنت تريد قوله ولم تقله؟','لو كتبت عنواناً ليومك، ما هو؟']},
-'en': {'Reflection':['When did you feel most at ease today?','What surprised you today?','What did you learn about yourself today?','If you could redo today, what would you change?'],'Emotions':['What emotion dominated your day?','What made you laugh today?','When did you feel proud today?','What do you want to feel tomorrow?'],'Achievement':['What did you do today, even if small?','What step brought you closer to your goal?','What did you overcome today?','What did you finish today?'],'Thoughts':['What thought crossed your mind today?','What question puzzled you?','What sparked your curiosity?','What did you finally understand?'],'Relationships':['Who made you happy today?','Who do you want to thank?','Who helped you today?','Who do you miss?'],'Growth':['What did you learn today?','What habit are you building?','What mistake did you learn from?','What small step did you take for yourself?'],'Gratitude':['What three things are you grateful for?','Who are you grateful for?','What small detail made you happy?','What blessing did you notice today?'],'Moment':['Describe your day in three words.','If your day was a colour, what would it be?','Summarize your day in one sentence.','What moment do you want to keep?']},
-'sv': {'Reflektion':['När kände du dig mest avslappnad idag?','Vad överraskade dig idag?','Vad lärde du dig om dig själv idag?','Vad skulle du ändra om du fick göra om dagen?'],'Känslor':['Vilken känsla dominerade din dag?','Vad fick dig att skratta idag?','När kände du dig stolt idag?','Vilken känsla vill du känna imorgon?'],'Prestation':['Vad gjorde du idag, även om det var litet?','Vilket steg tog dig närmare ditt mål?','Vad övervann du idag?','Vad avslutade du idag?'],'Tankar':['Vilken tanke dök upp idag?','Vilken fråga förbryllade dig?','Vad väckte din nyfikenhet?','Vad förstod du äntligen?'],'Relationer':['Vem gjorde dig glad idag?','Vem vill du tacka?','Vem hjälpte dig idag?','Vem saknar du?'],'Tillväxt':['Vad lärde du dig idag?','Vilken vana bygger du?','Vilket misstag lärde du dig av?','Vilket litet steg tog du för dig själv?'],'Tacksamhet':['Vilka tre saker är du tacksam för?','Vem är du tacksam för?','Vilken liten detalj gjorde dig glad?','Vilken välsignelse märkte du idag?'],'Ögonblick':['Beskriv din dag med tre ord.','Om din dag var en färg, vilken?','Sammanfatta din dag i en mening.','Vilket ögonblick vill du behålla?']}
-};
+const $ = s => document.querySelector(s);
+const mk = (t, c, h) => { const e = document.createElement(t); if (c) e.className = c; if (h) e.innerHTML = h; return e; };
+const toastEl = $('#toast');
+function toast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.remove('hidden');
+  setTimeout(() => toastEl.classList.add('hidden'), 3000);
+}
 
-/* ============ الأساسيات ============ */
-const $=id=>document.getElementById(id);
-const mk=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e};
-const S={lang:'ar',theme:'auto',fs:'m',filter:'all',year:null,month:null,day:null,dayF:false,fac:'environment',vfac:'environment',blob:null,photos:[],dur:0,type:null,bg:null,mood:null,oldDate:null,cur:null,kind:'personal',wq:null,wsec:null,sq:null,stream:null,word:null,filtered:[],dirty:false,seq:0,retM:null,retD:null,nbEdit:'personal'};
-const CAP=window.Capacitor,PLG=n=>CAP&&CAP.Plugins&&CAP.Plugins[n];
-const LD=[],LM=[],LP=[],LG=[],LW=[],LO=[];
-const track=l=>b=>{const u=URL.createObjectURL(b);l.push(u);return u};
-const free=l=>{l.forEach(u=>URL.revokeObjectURL(u));l.length=0};
-const UD=track(LD),UM=track(LM),UP=track(LP),UG=track(LG),UW=track(LW),UO=track(LO);
-const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}};
-const MOODS=['😄','🙂','😐','😔','😢'],SC={'😄':5,'🙂':4,'😐':3,'😔':2,'😢':1},TH=[7,30,100,365],MAXP=10,MAXREC=600,p2=n=>String(n).padStart(2,'0');
-let openDraw,lettersUI,openCmp,weekly,diaryUI,otdUI,audioEditor,renderStats;
+// قاعدة البيانات
+let db;
+function openDB() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open('lahza-db', 1);
+    r.onupgradeneeded = () => {
+      const d = r.result;
+      if (!d.objectStoreNames.contains('moments')) d.createObjectStore('moments', { keyPath: 'id', autoIncrement: true });
+      if (!d.objectStoreNames.contains('blobs')) d.createObjectStore('blobs');
+    };
+    r.onsuccess = () => { db = r.result; res(); };
+    r.onerror = () => rej(r.error);
+  });
+}
+const getAll = () => new Promise((res) => {
+  const req = db.transaction('moments').objectStore('moments').getAll();
+  req.onsuccess = () => res(req.result);
+});
+const getBlob = (id) => new Promise((res) => {
+  const req = db.transaction('blobs').objectStore('blobs').get(id);
+  req.onsuccess = () => res(req.result);
+});
+async function addMoment(m, blob) {
+  return new Promise((res, rej) => {
+    const tx = db.transaction(['moments', 'blobs'], 'readwrite');
+    const req = tx.objectStore('moments').add(m);
+    req.onsuccess = () => {
+      const id = req.result;
+      tx.objectStore('blobs').put(blob, id);
+      tx.oncomplete = () => res(id);
+      tx.onerror = () => rej(tx.error);
+    };
+  });
+}
+async function delMoment(id) {
+  return new Promise((res) => {
+    const tx = db.transaction(['moments', 'blobs'], 'readwrite');
+    tx.objectStore('moments').delete(id);
+    tx.objectStore('blobs').delete(id);
+    tx.oncomplete = () => res();
+  });
+}
 
-/* ============ الترجمة ============ */
-const I={
-ar:{app:'لحظة',gm:'صباح الخير',ge:'مساء الخير',photo:'صورة',video:'فيديو',audio:'صوت',text:'كتابة',old:'إضافة بتاريخ قديم',otd:'في مثل هذا اليوم',streak:'يوم متواصل',moments:'لقطة',mine:'لقطاتي',settings:'الإعدادات',home:'الرئيسية',all:'الكل',photos:'صور',videos:'فيديو',audios:'صوتيات',texts:'كتابة',answers:'إجاباتي',empty_t:'لا توجد لقطات بعد',empty_s:'ارجع إلى الرئيسية ووثّق أول لحظة',general:'عام',data:'البيانات',about:'عن التطبيق',reminder:'التذكير اليومي',on:'مفعّل',off:'معطّل',theme:'المظهر',dark:'غامق',light:'فاتح',auto:'تلقائي',lang:'اللغة',intro_again:'عرض شاشة الترحيب',exp:'تصدير نسخة احتياطية',imp:'استيراد نسخة احتياطية',delall:'حذف كل اللقطات',privacy:'سياسة الخصوصية',rate:'قيّم التطبيق',contact:'تواصل معنا وملاحظات',ver:'الإصدار',ph_text:'ماذا حدث اليوم؟ يمكنك إضافة وسم مثل #عمل',bg:'الخلفية',next:'التالي',save_moment:'حفظ اللقطة',ph_cap:'أضف جملة أو وسماً #...(اختياري)',save:'احفظ',your_ans:'جوابك',ph_ans:'اكتب جوابك...',rec_hint:'سجّل مقطعاً من الكاميرا',start_rec:'ابدأ التسجيل',switch_cam:'تبديل الكاميرا',rec_again:'إعادة التسجيل',stats:'إحصائياتي',days_rec:'يوم موثّق',best:'أطول سلسلة',this_month:'هذا الشهر',rem_time:'وقت التذكير',rem_on:'تفعيل التذكير',rem_off:'إيقاف التذكير',pick_date:'اختر التاريخ',confirm:'تأكيد',choose_type:'اختر النوع',cancel:'إلغاء',ok:'تأكيد',close:'إغلاق',saved:'تم الحفظ',saved_a:'تم حفظ الجواب',write_first:'اكتب شيئاً أولاً',err:'خطأ',no_data:'لا توجد لقطات',no_moments:'لا توجد لقطات بعد',no_day:'لا توجد لقطات في هذا اليوم',del_c:'هل تريد حذف هذه اللقطة؟',deleted:'تم الحذف',theme_ok:'تم تغيير الوضع',exp_ok:'تم التصدير',imp_ok:'تم الاستيراد',prep:'جاري تجهيز النسخة الاحتياطية...',cam_err:'تعذّر فتح الكاميرا',cam_perm:'لم يتم إعطاء إذن الكاميرا',cam_nf:'لا توجد كاميرا',cam_busy:'الكاميرا مشغولة',mic_err:'تعذّر الوصول للميكروفون',max_photos:'الحد الأقصى 10 صور',delall_q:'هل أنت متأكد أنك تريد حذف جميع اللقطات ({n} لقطة)؟',backup:'نسخة احتياطية',backup_q:'هل تريد تصدير نسخة احتياطية قبل الحذف؟',yes_exp:'نعم، تصدير',skip:'لا، تخطي',exp_fail:'فشل التصدير',exp_fail_q:'لم تُنشأ النسخة الاحتياطية. هل تريد الحذف بدونها؟',del_anyway:'احذف بدون نسخة',final:'تأكيد نهائي',final_q:'سيتم حذف كل اللقطات نهائياً ولا يمكن التراجع. اكتب كلمة "حذف" للتأكيد.',del_word:'حذف',type_word:'اكتب الكلمة المطلوبة بالضبط',del_final:'حذف نهائي',nudge_q:'مرّ أسبوع على آخر نسخة احتياطية. احفظ نسخة الآن في ملفاتك أو iCloud.',later:'لاحقاً',rem_title:'لم توثق لحظتك اليوم',rem_sub:'اضغط لإضافة لقطة',mem_body:'عندك ذكرى بنفس هذا اليوم',now:'الآن',one:'لقطة واحدة',two:'لقطتان',many:'لقطات',mail_sub:'تواصل من تطبيق لحظة',sep:'، ',search:'ابحث بكلمة أو وسم أو تاريخ...',search_hint:'مثال: مارس 2024 أو 2024-03-15 أو 15/3/2024 أو #عمل',results:'نتيجة',nothing:'لا نتائج',mood:'كيف كان مزاجك؟ (اختياري)',edit:'تعديل اللقطة',fontsize:'حجم الخط',small:'صغير',medium:'متوسط',large:'كبير',share_t:'مشاركة اللقطة',share_img:'كصورة',share_txt:'كنص',share_saved:'تم حفظ الملف، شاركه من ملفاتك',share_copied:'تم نسخ النص',prep_share:'جاري تجهيز الصورة...',print:'اطبع / احفظ PDF',onb1t:'أهلاً بك في لحظة',onb1:'مكان خاص لتوثّق أيامك. كل شي يبقى على جهازك فقط.',onb2t:'سؤال كل يوم',onb2:'سؤال جديد كل يوم يساعدك تكتب حتى لو ما عندك شي تقوله.',onb3t:'متى نذكّرك؟',go:'ابدأ',letter:'رسالة إلى نفسي',l_ph:'اكتب لنفسك في المستقبل...',l_new:'رسالة جديدة',l_1m:'افتحها بعد شهر',l_6m:'افتحها بعد 6 أشهر',l_1y:'افتحها بعد سنة',l_lock:'مغلقة حتى',l_saved:'تم قفل الرسالة',l_got:'📬 وصلتك رسالة من نفسك',l_nt:'رسالة من نفسك 📬',l_nb:'حان وقت فتحها',l_empty:'ما كتبت رسائل بعد',bd_streak:'{n} يوم متواصل',bd_new:'🏅 شارة جديدة:',rec_tap:'اضغط على الميكروفون لبدء التسجيل',rec_on:'جاري التسجيل... اضغط ⏹ للإيقاف',rec_ready:'تم التسجيل، استمع ثم احفظ',m_journal:'يومياتي',m_goals:'أهدافي',m_questions:'أسئلة',ws_journal:'اكتب ما تشاء بحرية',ws_goals:'اكتب أهدافك وتابع تحقيقها',ws_letter:'تُفتح في تاريخ تختاره',ws_draw:'بإصبعك أو بقلم الجهاز',ws_q:'اختر قسماً ثم سؤالاً',q_today:'اقتراح اليوم',q_back:'رجوع',q_change:'تغيير السؤال',ph_goal:'ما هدفك؟ وما الخطوة القادمة نحوه؟',g_open:'جارٍ',g_done:'تحقق ✓',draw:'رسم وكتابة بالقلم',dr_er:'ممحاة',dr_undo:'تراجع',dr_clear:'مسح',dr_empty:'ارسم شيئاً أولاً',otd_t:'في مثل هذا اليوم',otd_none:'لا ذكريات في هذا اليوم',ba_t:'قبل وبعد',ba_6m:'قبل 6 أشهر',ba_1y:'قبل سنة',ba_1m:'قبل شهر',ba_first:'الأقدم',ba_need:'أضف صورتين أو فيديوهين على الأقل',ba_slide:'منزلق',ba_side:'جنباً لجنب',ba_pick_b:'اختر صورة «قبل»',ba_pick_a:'اختر صورة «بعد»',ba_drag:'اسحب الخط للمقارنة بين الصورتين',ba_save:'حفظ المقارنة',ba_share:'مشاركة',ba_saved:'تم حفظ المقارنة بين لقطاتك',ba_before:'قبل',ba_after:'بعد',ba_quick:'مقارنة سريعة',ba_tip:'لنتيجة أدق: صوّر بنفس الإضاءة والوضعية، واستخدم «ظل آخر صورة» في الكاميرا.',ba_cmp:'⇄ قارن مع لقطة أقدم',wk_t:'ملخص الأسبوع',wk_mood:'مزاج الأسبوع',wk_tag:'أكثر وسم',dv_t:'فيديو اليوميات',dv_week:'آخر أسبوع',dv_month:'آخر شهر',dv_year:'آخر سنة',dv_sec:'ثواني لكل لقطة',dv_perday:'لقطة واحدة من كل يوم',dv_music:'🎵 موسيقى من جهازك',dv_voice:'🎙 تعليق صوتي',dv_voice_stop:'⏹ إيقاف التعليق',dv_make:'ابدأ إنشاء الفيديو',dv_info:'{n} لقطة · حوالي {s} ثانية',dv_few:'تحتاج لقطتين على الأقل بهذه الفترة',dv_busy:'جاري الإنشاء... أبقِ الشاشة مفتوحة ولا تخرج من التطبيق',dv_cancel:'إلغاء الإنشاء',dv_done:'اكتمل الفيديو',dv_save:'حفظ كلقطة',dv_share:'مشاركة',dv_unsup:'تعذّر إنشاء الفيديو على هذا الجهاز',dv_aerr:'تعذّرت قراءة ملف الصوت، سيُنشأ الفيديو بدونه',dv_saved:'تم حفظ الفيديو بين لقطاتك',dv_note:'الإنشاء يتم بالزمن الحقيقي فيستغرق بقدر مدة الفيديو. الحد الأقصى حوالي 90 ثانية، وتُختار اللقطات بالتساوي على الفترة.',dv_hidden:'توقّف الإنشاء لأنك غادرت التطبيق. أعد المحاولة وأبقِ الشاشة مفتوحة',gh_on:'👻 ظل آخر صورة (لضبط الوضعية)',gh_off:'إخفاء الظل',gh_none:'لا توجد صورة سابقة',av_btn:'🎵 أضف صوتاً أو موسيقى',av_t:'صوت وموسيقى للفيديو',av_music:'🎵 اختر موسيقى من جهازك',av_voice:'🎙 سجّل تعليقاً صوتياً',av_voice_stop:'⏹ إيقاف التسجيل',av_keep:'الاحتفاظ بصوت الفيديو الأصلي',av_vol:'مستوى الموسيقى',av_low:'منخفض',av_mid:'متوسط',av_high:'عالٍ',av_make:'إنشاء الفيديو بالصوت',av_busy:'جاري الإنشاء... اترك الشاشة مفتوحة، يستغرق بقدر مدة الفيديو',av_cancel:'إلغاء',av_ready:'جاهز، استمع للنتيجة',av_use:'استخدام هذا الفيديو',av_save2:'حفظ كلقطة جديدة',av_back:'تعديل الإعدادات',av_applied:'تم تطبيق الصوت على الفيديو',av_saved:'تم حفظ النسخة الجديدة',av_none:'اختر موسيقى أو سجّل تعليقاً أولاً',av_hint:'للتعليق: اضغط تسجيل وتكلّم، وسيعمل الفيديو لحاله أثناء التسجيل',st_t:'التخزين والحماية',st_used:'المستخدم',st_safe:'محمي من الحذف التلقائي ✓',st_unsafe:'غير مضمون: قد يمسحه النظام عند امتلاء الجهاز',st_ask:'اطلب حماية التخزين',st_last:'آخر نسخة احتياطية',st_never:'لم تُنشأ بعد',st_ago:'قبل {n} يوم',st_today:'اليوم',st_full:'مساحة التخزين ممتلئة، صدّر نسخة احتياطية ثم أفرغ مساحة',st_low:'مساحة التخزين تكاد تمتلئ، صدّر نسخة احتياطية',st_now:'تصدير نسخة احتياطية الآن',st_tip:'الأفضل أن تحفظ النسخة بملفات iCloud أو Google Drive، فهي أأمن من الجهاز وحده.',st_verify:'تعذّر التأكد من حفظ اللقطة، حاول مرة أخرى',st_mood_t:'مشاعرك',st_notes:'ملاحظات',st_best:'أكثر يوم سعادة',st_hard:'أصعب يوم',st_up:'📈 مزاجك هذا الشهر أفضل من الشهر السابق بنسبة {p}%',st_dn:'📉 مزاجك هذا الشهر أقل من الشهر السابق بنسبة {p}%',st_cup:'📈 نشاطك هذا الشهر أكثر من الشهر السابق بنسبة {p}%',st_cdn:'📉 نشاطك هذا الشهر أقل من الشهر السابق بنسبة {p}%',st_streak:'🔥 سلسلتك الحالية: {n} من {m} أيام',st_streak_top:'🔥 سلسلتك الحالية: {n} يوماً',st_need:'سجّل مزاجك على لقطاتك لتظهر المشاعر والملاحظات هنا',p30:'30 يوماً',p90:'3 شهور',p365:'سنة',grid_t:'أيام التوثيق',sm_t:'ملخص الشهر',sm_moments:'لقطة',sm_days:'يوم موثّق',sm_streak:'أطول سلسلة: {n} أيام',sm_mood:'المشاعر',sm_hl:'أبرز لحظة',sm_more:'اقرأ المزيد',sm_song:'أغنية الشهر',sm_song_ph:'اسم الأغنية والفنان',sm_spot:'🔎 ابحث في Spotify',sm_share:'📤 شارك بطاقة الشهر',sm_cmp:'مقارنة شهر بشهر',sm_cnt:'لقطات',sm_mo:'مشاعر',sm_st:'سلسلة',sm_better:'أحسن',sm_lower:'أقل',sm_same:'ثابت',sm_none:'لا لقطات بهذا الشهر',bk_flip:'📖 كتاب السنة التفاعلي',bk_pdf:'📄 PDF للطباعة',bk_cover:'ذكرياتي',bk_jump:'انتقل إلى شهر'},
-en:{app:'Lahza',gm:'Good morning',ge:'Good evening',photo:'Photo',video:'Video',audio:'Voice',text:'Write',old:'Add with old date',otd:'On this day',streak:'day streak',moments:'moments',mine:'My Moments',settings:'Settings',home:'Home',all:'All',photos:'Photos',videos:'Videos',audios:'Voice',texts:'Texts',answers:'My answers',empty_t:'No moments yet',empty_s:'Go to Home and capture your first moment',general:'General',data:'Data',about:'About',reminder:'Daily reminder',on:'On',off:'Off',theme:'Appearance',dark:'Dark',light:'Light',auto:'Auto',lang:'Language',intro_again:'Show intro again',exp:'Export backup',imp:'Import backup',delall:'Delete all moments',privacy:'Privacy policy',rate:'Rate the app',contact:'Contact & feedback',ver:'Version',ph_text:'What happened today? Add a tag like #work',bg:'Background',next:'Next',save_moment:'Save moment',ph_cap:'Add a caption or #tag (optional)...',save:'Save',your_ans:'Your answer',ph_ans:'Write your answer...',rec_hint:'Record a clip with the camera',start_rec:'Start recording',switch_cam:'Switch camera',rec_again:'Record again',stats:'My stats',days_rec:'days recorded',best:'Best streak',this_month:'This month',rem_time:'Reminder time',rem_on:'Turn on reminder',rem_off:'Turn off reminder',pick_date:'Pick a date',confirm:'Confirm',choose_type:'Choose type',cancel:'Cancel',ok:'Confirm',close:'Close',saved:'Saved',saved_a:'Answer saved',write_first:'Write something first',err:'Error',no_data:'No moments',no_moments:'No moments yet',no_day:'No moments on this day',del_c:'Delete this moment?',deleted:'Deleted',theme_ok:'Appearance changed',exp_ok:'Exported',imp_ok:'Imported',prep:'Preparing backup...',cam_err:'Cannot open camera',cam_perm:'Camera permission denied',cam_nf:'No camera found',cam_busy:'Camera is busy',mic_err:'Cannot access the microphone',max_photos:'Maximum 10 photos',delall_q:'Delete all moments ({n})?',backup:'Backup',backup_q:'Export a backup before deleting?',yes_exp:'Yes, export',skip:'No, skip',exp_fail:'Export failed',exp_fail_q:'No backup was created. Delete anyway?',del_anyway:'Delete anyway',final:'Final confirmation',final_q:'All moments will be deleted permanently. Type "delete" to confirm.',del_word:'delete',type_word:'Type the exact word',del_final:'Delete forever',nudge_q:'It has been a week since your last backup. Save one now to Files or iCloud.',later:'Later',rem_title:"You haven't captured today",rem_sub:'Tap to add a moment',mem_body:'You have a memory from this day',now:'Now',one:'1 moment',two:'2 moments',many:'moments',mail_sub:'Message from Lahza app',sep:', ',search:'Search by word, tag or date...',search_hint:'Example: March 2024, 2024-03-15, 15/3/2024 or #work',results:'results',nothing:'No results',mood:'How was your mood? (optional)',edit:'Edit moment',fontsize:'Text size',small:'Small',medium:'Medium',large:'Large',share_t:'Share moment',share_img:'As image',share_txt:'As text',share_saved:'File saved, share it from Files',share_copied:'Text copied',prep_share:'Preparing image...',print:'Print / Save PDF',onb1t:'Welcome to Lahza',onb1:'A private place to record your days. Everything stays on your device.',onb2t:'A question every day',onb2:'A new question daily helps you write even when you have nothing to say.',onb3t:'When should we remind you?',go:'Start',letter:'Letter to myself',l_ph:'Write to your future self...',l_new:'New letter',l_1m:'Open in 1 month',l_6m:'Open in 6 months',l_1y:'Open in 1 year',l_lock:'Sealed until',l_saved:'Letter sealed',l_got:'📬 A letter from your past self',l_nt:'A letter from yourself 📬',l_nb:'Time to open it',l_empty:'No letters yet',bd_streak:'{n}-day streak',bd_new:'🏅 New badge:',rec_tap:'Tap the microphone to start',rec_on:'Recording... tap ⏹ to stop',rec_ready:'Recorded. Listen, then save',m_journal:'Journal',m_goals:'Goals',m_questions:'Questions',ws_journal:'Write freely whatever you like',ws_goals:'Write your goals and track them',ws_letter:'Opens on a date you choose',ws_draw:'With your finger or a stylus',ws_q:'Pick a section, then a question',q_today:"Today's suggestion",q_back:'Back',q_change:'Change question',ph_goal:'What is your goal? What is the next step?',g_open:'In progress',g_done:'Achieved ✓',draw:'Draw / handwrite',dr_er:'Eraser',dr_undo:'Undo',dr_clear:'Clear',dr_empty:'Draw something first',otd_t:'On this day',otd_none:'No memories on this day',ba_t:'Before & after',ba_6m:'6 months ago',ba_1y:'1 year ago',ba_1m:'1 month ago',ba_first:'Oldest',ba_need:'Add at least two photos or videos',ba_slide:'Slider',ba_side:'Side by side',ba_pick_b:'Pick the "before" photo',ba_pick_a:'Pick the "after" photo',ba_drag:'Drag the line to compare',ba_save:'Save comparison',ba_share:'Share',ba_saved:'Comparison saved to your moments',ba_before:'Before',ba_after:'After',ba_quick:'Quick compare',ba_tip:'For better results: same light and pose. Use "Ghost of last photo" in the camera.',ba_cmp:'⇄ Compare with an older one',wk_t:'Week summary',wk_mood:'Mood of the week',wk_tag:'Top tag',dv_t:'Diary video',dv_week:'Last week',dv_month:'Last month',dv_year:'Last year',dv_sec:'Seconds per clip',dv_perday:'One clip per day',dv_music:'🎵 Music from your device',dv_voice:'🎙 Voice-over',dv_voice_stop:'⏹ Stop voice-over',dv_make:'Create the video',dv_info:'{n} clips · about {s} seconds',dv_few:'You need at least two clips in this period',dv_busy:'Creating... keep the screen on and stay in the app',dv_cancel:'Cancel',dv_done:'Video is ready',dv_save:'Save as moment',dv_share:'Share',dv_unsup:'Could not create the video on this device',dv_aerr:'Could not read the audio file, creating the video without it',dv_saved:'Video saved to your moments',dv_note:'Creation runs in real time, so it takes as long as the video. Maximum about 90 seconds; clips are picked evenly across the period.',dv_hidden:'Creation stopped because you left the app. Try again and keep the screen on',gh_on:'👻 Ghost of last photo (to align)',gh_off:'Hide ghost',gh_none:'No previous photo',av_btn:'🎵 Add sound or music',av_t:'Sound and music for video',av_music:'🎵 Choose music from your device',av_voice:'🎙 Record a voice-over',av_voice_stop:'⏹ Stop recording',av_keep:'Keep the original video sound',av_vol:'Music volume',av_low:'Low',av_mid:'Medium',av_high:'High',av_make:'Create video with sound',av_busy:'Creating... keep the screen on, it takes as long as the video',av_cancel:'Cancel',av_ready:'Ready, listen to the result',av_use:'Use this video',av_save2:'Save as new moment',av_back:'Change settings',av_applied:'Sound applied to the video',av_saved:'New copy saved',av_none:'Choose music or record a voice-over first',av_hint:'For voice-over: tap record and speak, the video plays by itself while recording',st_t:'Storage and protection',st_used:'Used',st_safe:'Protected from automatic cleanup ✓',st_unsafe:'Not guaranteed: the system may clear it when the device is full',st_ask:'Request storage protection',st_last:'Last backup',st_never:'None yet',st_ago:'{n} days ago',st_today:'Today',st_full:'Storage is full. Export a backup, then free some space',st_low:'Storage is almost full. Export a backup',st_now:'Export a backup now',st_tip:'Best to save the backup in iCloud Files or Google Drive. It is safer than the device alone.',st_verify:'Could not confirm the moment was saved. Please try again',st_mood_t:'Your moods',st_notes:'Notes',st_best:'Happiest day',st_hard:'Hardest day',st_up:'📈 Your mood this month is {p}% better than last month',st_dn:'📉 Your mood this month is {p}% lower than last month',st_cup:'📈 You wrote {p}% more this month than last month',st_cdn:'📉 You wrote {p}% less this month than last month',st_streak:'🔥 Current streak: {n} of {m} days',st_streak_top:'🔥 Current streak: {n} days',st_need:'Add a mood to your moments to see moods and notes here',p30:'30 days',p90:'3 months',p365:'Year',grid_t:'Days recorded',sm_t:'Month summary',sm_moments:'moments',sm_days:'days recorded',sm_streak:'Longest streak: {n} days',sm_mood:'Moods',sm_hl:'Highlight',sm_more:'Read more',sm_song:'Song of the month',sm_song_ph:'Song and artist',sm_spot:'🔎 Search on Spotify',sm_share:'📤 Share month card',sm_cmp:'Month vs month',sm_cnt:'Moments',sm_mo:'Mood',sm_st:'Streak',sm_better:'better',sm_lower:'lower',sm_same:'same',sm_none:'No moments this month',bk_flip:'📖 Interactive year book',bk_pdf:'📄 PDF to print',bk_cover:'My memories',bk_jump:'Jump to month'},
-sv:{app:'Lahza',gm:'God morgon',ge:'God kväll',photo:'Foto',video:'Video',audio:'Röst',text:'Skriv',old:'Lägg till med gammalt datum',otd:'På denna dag',streak:'dagar i rad',moments:'ögonblick',mine:'Mina ögonblick',settings:'Inställningar',home:'Hem',all:'Alla',photos:'Foton',videos:'Videor',audios:'Röster',texts:'Texter',answers:'Mina svar',empty_t:'Inga ögonblick än',empty_s:'Gå till Hem och skapa ditt första ögonblick',general:'Allmänt',data:'Data',about:'Om',reminder:'Daglig påminnelse',on:'På',off:'Av',theme:'Utseende',dark:'Mörkt',light:'Ljust',auto:'Auto',lang:'Språk',intro_again:'Visa intro igen',exp:'Exportera backup',imp:'Importera backup',delall:'Radera alla ögonblick',privacy:'Integritetspolicy',rate:'Betygsätt appen',contact:'Kontakt och feedback',ver:'Version',ph_text:'Vad hände idag? Lägg till en tagg som #jobb',bg:'Bakgrund',next:'Nästa',save_moment:'Spara ögonblick',ph_cap:'Lägg till bildtext eller #tagg (valfritt)...',save:'Spara',your_ans:'Ditt svar',ph_ans:'Skriv ditt svar...',rec_hint:'Spela in ett klipp med kameran',start_rec:'Starta inspelning',switch_cam:'Byt kamera',rec_again:'Spela in igen',stats:'Min statistik',days_rec:'dagar',best:'Bästa svit',this_month:'Denna månad',rem_time:'Tid för påminnelse',rem_on:'Aktivera påminnelse',rem_off:'Stäng av påminnelse',pick_date:'Välj datum',confirm:'Bekräfta',choose_type:'Välj typ',cancel:'Avbryt',ok:'Bekräfta',close:'Stäng',saved:'Sparat',saved_a:'Svar sparat',write_first:'Skriv något först',err:'Fel',no_data:'Inga ögonblick',no_moments:'Inga ögonblick än',no_day:'Inga ögonblick denna dag',del_c:'Radera detta ögonblick?',deleted:'Raderat',theme_ok:'Utseende ändrat',exp_ok:'Exporterad',imp_ok:'Importerad',prep:'Förbereder backup...',cam_err:'Kan inte öppna kameran',cam_perm:'Kamerabehörighet nekad',cam_nf:'Ingen kamera hittad',cam_busy:'Kameran är upptagen',mic_err:'Kan inte komma åt mikrofonen',max_photos:'Högst 10 foton',delall_q:'Radera alla ögonblick ({n})?',backup:'Backup',backup_q:'Exportera en backup före radering?',yes_exp:'Ja, exportera',skip:'Nej, hoppa över',exp_fail:'Exporten misslyckades',exp_fail_q:'Ingen backup skapades. Radera ändå?',del_anyway:'Radera ändå',final:'Slutlig bekräftelse',final_q:'Alla ögonblick raderas permanent. Skriv "radera" för att bekräfta.',del_word:'radera',type_word:'Skriv exakt ordet',del_final:'Radera för alltid',nudge_q:'Det har gått en vecka sedan din senaste backup. Spara en nu i Filer eller iCloud.',later:'Senare',rem_title:'Du har inte fångat något idag',rem_sub:'Tryck för att lägga till',mem_body:'Du har ett minne från samma dag',now:'Nu',one:'1 ögonblick',two:'2 ögonblick',many:'ögonblick',mail_sub:'Meddelande från Lahza',sep:', ',search:'Sök med ord, tagg eller datum...',search_hint:'Exempel: mars 2024, 2024-03-15, 15/3/2024 eller #jobb',results:'resultat',nothing:'Inga resultat',mood:'Hur var ditt humör? (valfritt)',edit:'Redigera ögonblick',fontsize:'Textstorlek',small:'Liten',medium:'Medel',large:'Stor',share_t:'Dela ögonblick',share_img:'Som bild',share_txt:'Som text',share_saved:'Filen sparades, dela den från Filer',share_copied:'Texten kopierades',prep_share:'Förbereder bild...',print:'Skriv ut / Spara PDF',onb1t:'Välkommen till Lahza',onb1:'En privat plats för dina dagar. Allt stannar på din enhet.',onb2t:'En fråga varje dag',onb2:'En ny fråga dagligen hjälper dig skriva även när du inget har att säga.',onb3t:'När ska vi påminna dig?',go:'Börja',letter:'Brev till mig själv',l_ph:'Skriv till ditt framtida jag...',l_new:'Nytt brev',l_1m:'Öppna om 1 månad',l_6m:'Öppna om 6 månader',l_1y:'Öppna om 1 år',l_lock:'Förseglat till',l_saved:'Brevet är förseglat',l_got:'📬 Ett brev från dig själv',l_nt:'Ett brev från dig själv 📬',l_nb:'Dags att öppna det',l_empty:'Inga brev än',bd_streak:'{n} dagar i rad',bd_new:'🏅 Nytt märke:',rec_tap:'Tryck på mikrofonen för att börja',rec_on:'Spelar in... tryck ⏹ för att stoppa',rec_ready:'Inspelat. Lyssna och spara',m_journal:'Dagbok',m_goals:'Mål',m_questions:'Frågor',ws_journal:'Skriv fritt vad du vill',ws_goals:'Skriv dina mål och följ upp dem',ws_letter:'Öppnas på ett datum du väljer',ws_draw:'Med fingret eller en penna',ws_q:'Välj en avdelning och sedan en fråga',q_today:'Dagens förslag',q_back:'Tillbaka',q_change:'Byt fråga',ph_goal:'Vad är ditt mål? Vad är nästa steg?',g_open:'Pågår',g_done:'Uppnått ✓',draw:'Rita / skriv för hand',dr_er:'Sudd',dr_undo:'Ångra',dr_clear:'Rensa',dr_empty:'Rita något först',otd_t:'På denna dag',otd_none:'Inga minnen denna dag',ba_t:'Före och efter',ba_6m:'För 6 månader sedan',ba_1y:'För ett år sedan',ba_1m:'För 1 månad sedan',ba_first:'Äldsta',ba_need:'Lägg till minst två foton eller videor',ba_slide:'Reglage',ba_side:'Sida vid sida',ba_pick_b:'Välj "före"-foto',ba_pick_a:'Välj "efter"-foto',ba_drag:'Dra linjen för att jämföra',ba_save:'Spara jämförelsen',ba_share:'Dela',ba_saved:'Jämförelsen sparades',ba_before:'Före',ba_after:'Efter',ba_quick:'Snabbjämförelse',ba_tip:'Bäst resultat: samma ljus och pose. Använd "Skugga av senaste foto" i kameran.',ba_cmp:'⇄ Jämför med en äldre',wk_t:'Veckosammanfattning',wk_mood:'Veckans humör',wk_tag:'Vanligaste taggen',dv_t:'Dagboksvideo',dv_week:'Senaste veckan',dv_month:'Senaste månaden',dv_year:'Senaste året',dv_sec:'Sekunder per klipp',dv_perday:'Ett klipp per dag',dv_music:'🎵 Musik från din enhet',dv_voice:'🎙 Berättarröst',dv_voice_stop:'⏹ Stoppa berättarröst',dv_make:'Skapa videon',dv_info:'{n} klipp · ungefär {s} sekunder',dv_few:'Du behöver minst två klipp under perioden',dv_busy:'Skapar... låt skärmen vara på och stanna i appen',dv_cancel:'Avbryt',dv_done:'Videon är klar',dv_save:'Spara som ögonblick',dv_share:'Dela',dv_unsup:'Kunde inte skapa videon på den här enheten',dv_aerr:'Kunde inte läsa ljudfilen, skapar videon utan den',dv_saved:'Videon sparades bland dina ögonblick',dv_note:'Skapandet sker i realtid och tar lika lång tid som videon. Högst ungefär 90 sekunder; klippen väljs jämnt över perioden.',dv_hidden:'Skapandet stoppades eftersom du lämnade appen. Försök igen och låt skärmen vara på',gh_on:'👻 Skugga av senaste foto (för att passa in)',gh_off:'Dölj skugga',gh_none:'Inget tidigare foto',av_btn:'🎵 Lägg till ljud eller musik',av_t:'Ljud och musik till video',av_music:'🎵 Välj musik från din enhet',av_voice:'🎙 Spela in berättarröst',av_voice_stop:'⏹ Stoppa inspelning',av_keep:'Behåll videons originalljud',av_vol:'Musikvolym',av_low:'Låg',av_mid:'Medel',av_high:'Hög',av_make:'Skapa video med ljud',av_busy:'Skapar... låt skärmen vara på, det tar lika lång tid som videon',av_cancel:'Avbryt',av_ready:'Klart, lyssna på resultatet',av_use:'Använd den här videon',av_save2:'Spara som nytt ögonblick',av_back:'Ändra inställningar',av_applied:'Ljudet lades till i videon',av_saved:'Ny kopia sparad',av_none:'Välj musik eller spela in berättarröst först',av_hint:'För berättarröst: tryck på spela in och prata, videon spelas av sig själv under inspelningen',st_t:'Lagring och skydd',st_used:'Använt',st_safe:'Skyddat från automatisk rensning ✓',st_unsafe:'Inte garanterat: systemet kan rensa det när enheten är full',st_ask:'Begär lagringsskydd',st_last:'Senaste backup',st_never:'Ingen än',st_ago:'för {n} dagar sedan',st_today:'Idag',st_full:'Lagringen är full. Exportera en backup och frigör utrymme',st_low:'Lagringen är nästan full. Exportera en backup',st_now:'Exportera en backup nu',st_tip:'Spara helst backupen i iCloud Filer eller Google Drive. Det är säkrare än enheten ensam.',st_verify:'Kunde inte bekräfta att ögonblicket sparades. Försök igen',st_mood_t:'Dina känslor',st_notes:'Anteckningar',st_best:'Gladaste dagen',st_hard:'Tuffaste dagen',st_up:'📈 Ditt humör är {p}% bättre än förra månaden',st_dn:'📉 Ditt humör är {p}% lägre än förra månaden',st_cup:'📈 Du skrev {p}% mer än förra månaden',st_cdn:'📉 Du skrev {p}% mindre än förra månaden',st_streak:'🔥 Nuvarande svit: {n} av {m} dagar',st_streak_top:'🔥 Nuvarande svit: {n} dagar',st_need:'Lägg till humör på dina ögonblick för att se känslor här',p30:'30 dagar',p90:'3 månader',p365:'År',grid_t:'Dokumenterade dagar',sm_t:'Månadssammanfattning',sm_moments:'ögonblick',sm_days:'dagar',sm_streak:'Längsta svit: {n} dagar',sm_mood:'Känslor',sm_hl:'Höjdpunkt',sm_more:'Läs mer',sm_song:'Månadens låt',sm_song_ph:'Låt och artist',sm_spot:'🔎 Sök på Spotify',sm_share:'📤 Dela månadskort',sm_cmp:'Månad mot månad',sm_cnt:'Ögonblick',sm_mo:'Humör',sm_st:'Svit',sm_better:'bättre',sm_lower:'lägre',sm_same:'oförändrat',sm_none:'Inga ögonblick denna månad',bk_flip:'📖 Interaktiv årsbok',bk_pdf:'📄 PDF för utskrift',bk_cover:'Mina minnen',bk_jump:'Gå till månad'}
-};
-const t=k=>(I[S.lang]&&I[S.lang][k])||I.ar[k]||k;
-const DAYS={ar:['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],en:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],sv:['söndag','måndag','tisdag','onsdag','torsdag','fredag','lördag']};
-const WD={ar:['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'],en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],sv:['sön','mån','tis','ons','tors','fre','lör']};
-const MON={ar:['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'],en:['January','February','March','April','May','June','July','August','September','October','November','December'],sv:['januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december']};
-const LN={ar:'العربية',en:'English',sv:'Svenska'};
-const FSZ={s:16,m:18,l:20},FSK={s:'small',m:'medium',l:'large'};
+// الحالة
+let S = { photos: [], blob: null, type: null, mood: null, oldDate: null };
 
-/* ============ أدوات عامة ============ */
-function toast(msg,isErr){const e=$('toast');e.textContent=msg;e.className=isErr?'err':'';clearTimeout(e._t);e._t=setTimeout(()=>e.classList.add('hidden'),3500)}
-const dstr=d=>{d=new Date(d);return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())};
-const fdate=d=>{d=new Date(d);return DAYS[S.lang][d.getDay()]+t('sep')+d.getDate()+' '+MON[S.lang][d.getMonth()]+' '+d.getFullYear()};
-const ftime=d=>{d=new Date(d);return p2(d.getHours())+':'+p2(d.getMinutes())};
-const fdur=s=>Math.floor(s/60)+':'+p2(s%60);
-function hijri(){if(S.lang!=='ar')return '';try{return new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{day:'numeric',month:'long',year:'numeric'}).format(new Date())}catch(e){return ''}}
-function showToday(){$('todayDate').textContent=fdate(new Date());$('hijriDate').textContent=hijri();const h=new Date().getHours();$('greeting').textContent=(h>=5&&h<12)?t('gm'):t('ge')}
-const show=id=>$(id).classList.remove('hidden'),hide=id=>$(id).classList.add('hidden');
-const extFor=m=>{if(m.type==='photo')return 'jpg';if(m.type==='video')return (m.mime||'').includes('quicktime')?'mov':'mp4';if(m.type==='audio'){const x=m.mime||'';return x.includes('webm')?'webm':x.includes('ogg')?'ogg':'m4a'}return 'txt'};
-const mimeFor=m=>m.type==='photo'?'image/jpeg':m.type==='video'?(m.mime||'video/mp4'):m.type==='audio'?(m.mime||'audio/mp4'):'text/plain';
-function overlay(build){const s=mk('div','sheet');s.style.zIndex=460;const c=mk('div','sheet-content');s.appendChild(c);const close=()=>s.remove();build(c,close);s.addEventListener('click',e=>{if(e.target===s)close()});document.body.appendChild(s)}
-function ttl(c,k){const h=mk('div','',t(k));h.style.cssText='font:1.4rem var(--fd);color:var(--gold);margin-bottom:14px';c.appendChild(h)}
-const closeBtn=(c,close)=>{const x=mk('button','btn',t('close'));x.style.marginTop='12px';x.onclick=close;c.appendChild(x)};
-const loadImg=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
-const isAr=s=>/[\u0600-\u06FF]/.test(s);
-function wrapLines(x,txt,maxW){const out=[];txt.split('\n').forEach(par=>{let line='';par.split(' ').forEach(w=>{const s=line?line+' '+w:w;if(line&&x.measureText(s).width>maxW){out.push(line);line=w}else line=s});out.push(line)});return out}
-function fitText(x,txt,font,maxW,maxH,max,min){let lines;for(let sz=max;sz>=min;sz-=4){x.font=font(sz);lines=wrapLines(x,txt,maxW);if(lines.length*sz*1.55<=maxH)return{sz,lines}}const n=Math.max(1,Math.floor(maxH/(min*1.55)));lines=lines.slice(0,n);lines[n-1]=lines[n-1].replace(/\s+\S*$/,'')+'…';return{sz:min,lines}}
-function drawLines(x,o,font,color,cx,top){x.font=font(o.sz);x.fillStyle=color;o.lines.forEach((l,i)=>x.fillText(l,cx,top+i*o.sz*1.55))}
-function dl(file){const u=URL.createObjectURL(file),a=document.createElement('a');a.href=u;a.download=file.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),30000)}
-async function shareFiles(files,text){if(navigator.canShare&&navigator.canShare({files})){try{await navigator.share(text?{files,text}:{files});return}catch(e){if(e.name==='AbortError')return}}files.forEach(dl);toast(t('share_saved'))}
-async function shareText(txt){try{if(navigator.share){await navigator.share({text:txt});return}}catch(e){if(e.name==='AbortError')return}try{await navigator.clipboard.writeText(txt);toast(t('share_copied'))}catch(e){toast(t('err'),1)}}
-let _res=null;
-function ask(title,msg,o){o=o||{};return new Promise(r=>{_res=r;$('cTitle').textContent=title;$('cMsg').textContent=msg;$('cMsg').classList.toggle('hidden',!msg);$('cOk').textContent=o.ok||t('ok');$('cNo').textContent=o.no||t('cancel');S.word=o.word||null;$('cInWrap').classList.toggle('hidden',!o.word);$('cIn').value='';show('cSheet')})}
-$('cNo').onclick=()=>{hide('cSheet');_res&&_res(false)};
-$('cOk').onclick=()=>{if(S.word&&$('cIn').value.trim()!==S.word)return toast(t('type_word'),1);hide('cSheet');_res&&_res(true)};
+// التبويبات
+function switchTab(name) {
+  ['Home', 'Moments', 'Settings'].forEach(x => {
+    $('#tabBtn' + x).classList.toggle('active', x === name);
+    $('#tab' + x).classList.toggle('hidden', x !== name);
+  });
+  if (name === 'Home') updateHome();
+  if (name === 'Moments') renderMoments();
+}
+$('#tabBtnHome').onclick = () => switchTab('Home');
+$('#tabBtnMoments').onclick = () => switchTab('Moments');
+$('#tabBtnSettings').onclick = () => switchTab('Settings');
 
-/* ============ قاعدة البيانات ============ */
-const M='moments',B='blobs';let db;
-const rq=r=>new Promise((s,j)=>{r.onsuccess=()=>s(r.result);r.onerror=()=>j(r.error)});
-const txDone=tx=>new Promise((s,j)=>{tx.oncomplete=s;tx.onerror=tx.onabort=()=>j(tx.error)});
-function openDB(){return new Promise((s,j)=>{const r=indexedDB.open('lahza-db',2);
-  r.onupgradeneeded=()=>{const d=r.result,tx=r.transaction;
-    if(!d.objectStoreNames.contains(M))d.createObjectStore(M,{keyPath:'id',autoIncrement:true});
-    if(!d.objectStoreNames.contains(B))d.createObjectStore(B);
-    tx.objectStore(M).openCursor().onsuccess=ev=>{const c=ev.target.result;if(!c)return;const v=c.value;
-      if(v.blob){tx.objectStore(B).put(v.blob,v.id);delete v.blob;c.update(v)}c.continue()}};
-  r.onsuccess=()=>{db=r.result;s()};r.onerror=()=>j(r.error)})}
-const getAll=()=>rq(db.transaction(M).objectStore(M).getAll());
-const getMeta=id=>rq(db.transaction(M).objectStore(M).get(id));
-const getBlob=k=>rq(db.transaction(B).objectStore(B).get(k));
-const putBlob=(k,b)=>rq(db.transaction(B,'readwrite').objectStore(B).put(b,k));
-const upd=m=>rq(db.transaction(M,'readwrite').objectStore(M).put(m));
-async function addMoment(m,blob,bg,extras){extras=extras||[];
-  try{const tx=db.transaction([M,B],'readwrite');if(bg)m.bgKey=true;if(extras.length)m.extra=extras.length;
-    const id=await rq(tx.objectStore(M).add(m)),bs=tx.objectStore(B);
-    bs.put(blob,id);if(bg)bs.put(bg,'bg'+id);extras.forEach((b,i)=>bs.put(b,'p'+id+'_'+i));
-    await txDone(tx);
-    const chk=await getBlob(id);if(!chk||chk.size!==blob.size){try{await delMoment(id)}catch(e){}throw new Error(t('st_verify'))}
-    return id}
-  catch(e){if(e&&(e.name==='QuotaExceededError'||/quota/i.test(e.message||'')))throw new Error(t('st_full'));throw e}}
-async function delMoment(id){const m=await getMeta(id),tx=db.transaction([M,B],'readwrite'),bs=tx.objectStore(B);
-  tx.objectStore(M).delete(id);bs.delete(id);bs.delete('bg'+id);bs.delete('th'+id);for(let i=0;i<((m&&m.extra)||0);i++)bs.delete('p'+id+'_'+i);await txDone(tx)}
-async function clearAll(){const tx=db.transaction([M,B],'readwrite');tx.objectStore(M).clear();tx.objectStore(B).clear();await txDone(tx)}
-async function backfill(){for(const m of await getAll()){if((m.type==='text'||m.type==='answer')&&m.txt===undefined){const b=await getBlob(m.id);if(b){m.txt=await b.text();await upd(m)}}}}
-async function photoBlobs(m){const a=[await getBlob(m.id)];for(let i=0;i<(m.extra||0);i++)a.push(await getBlob('p'+m.id+'_'+i));return a.filter(Boolean)}
-function videoThumb(blob){return new Promise(res=>{const u=URL.createObjectURL(blob),v=document.createElement('video');let done=false;
-  const fin=b=>{if(done)return;done=true;URL.revokeObjectURL(u);v.removeAttribute('src');try{v.load()}catch(e){}res(b)};
-  v.muted=true;v.playsInline=true;v.preload='auto';v.setAttribute('playsinline','');
-  v.onloadeddata=()=>{try{v.currentTime=Math.min(.5,(v.duration||1)/2)}catch(e){fin(null)}};
-  v.onseeked=()=>{try{const w=480,h=Math.round(w*(v.videoHeight||9)/(v.videoWidth||16)),c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(v,0,0,w,h);c.toBlob(b=>fin(b),'image/jpeg',.7)}catch(e){fin(null)}};
-  v.onerror=()=>fin(null);setTimeout(()=>fin(null),8000);v.src=u})}
-let tq=Promise.resolve();
-function getThumb(m,blob){const p=tq.then(async()=>{let th=await getBlob('th'+m.id);if(th)return th;th=await videoThumb(blob);if(th)await putBlob('th'+m.id,th);return th});tq=p.catch(()=>{});return p}
-/* ============ المظهر والخط ============ */
-const mq=window.matchMedia('(prefers-color-scheme: dark)');
-function markSel(){document.querySelectorAll('#themeModal [data-mode]').forEach(b=>b.classList.toggle('sel',b.dataset.mode===S.theme));document.querySelectorAll('#fontModal [data-fs]').forEach(b=>b.classList.toggle('sel',b.dataset.fs===S.fs))}
-function applyTheme(){let m=S.theme;if(m==='auto')m=mq.matches?'dark':'light';document.documentElement.dataset.theme=m;document.querySelector('meta[name=theme-color]').content=m==='dark'?'#0F0A08':'#FAF6EE';LS('lahza-theme',S.theme);$('themeStatus').textContent=t(S.theme);markSel()}
-mq.addEventListener&&mq.addEventListener('change',()=>S.theme==='auto'&&applyTheme());
-function applyFs(){document.documentElement.style.fontSize=FSZ[S.fs]+'px';LS('lahza-fs',S.fs);$('fontStatus').textContent=t(FSK[S.fs]);markSel()}
+// الرئيسية
+async function updateHome() {
+  const d = new Date();
+  $('#todayDate').textContent = d.toLocaleDateString('ar-EG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const h = d.getHours();
+  $('#greeting').textContent = (h >= 5 && h < 12) ? 'صباح الخير' : 'مساء الخير';
+  
+  const ms = await getAll();
+  $('#counterText').textContent = ms.length;
+  const days = new Set(ms.map(m => new Date(m.date).toDateString()));
+  $('#streakText').textContent = days.size;
+}
 
-/* ============ الفلاتر والترجمة ============ */
-const isGoal=m=>m.section==='nb:goals';
-const PRED={all:()=>true,photo:m=>m.type==='photo',video:m=>m.type==='video',audio:m=>m.type==='audio',answer:m=>m.type==='answer'&&!isGoal(m),journal:m=>m.type==='text'&&!isGoal(m),goals:isGoal};
-const FL=[['all','all'],['photo','photos'],['video','videos'],['audio','audios'],['answer','answers'],['journal','m_journal'],['goals','m_goals']];
-function paintFilters(){const fr=$('filterRow');fr.innerHTML='';FL.forEach(a=>{const b=mk('button','filter-chip'+(S.filter===a[0]?' active':''),t(a[1]));b.onclick=()=>{S.filter=a[0];S.year=S.month=S.day=null;paintFilters();renderTree()};fr.appendChild(b)})}
-function paintTbar(){const r=$('tbar');r.innerHTML='';[['⇄','ba_t',()=>openCmp()],['📅','wk_t',()=>weekly()],['🎞','dv_t',()=>diaryUI()],['🕰','otd_t',()=>otdUI()]].forEach(a=>{const b=mk('button','filter-chip',a[0]+' '+t(a[1]));b.onclick=a[2];r.appendChild(b)})}
-function applyI18n(){document.documentElement.lang=S.lang;document.documentElement.dir=S.lang==='ar'?'rtl':'ltr';document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=t(e.dataset.i18n));document.querySelectorAll('[data-ph]').forEach(e=>e.placeholder=t(e.dataset.ph));document.querySelectorAll('.xbtn').forEach(e=>e.setAttribute('aria-label',t('close')));$('calHead').innerHTML=WD[S.lang].map(d=>'<div>'+d+'</div>').join('');$('languageStatus').textContent=LN[S.lang];$('themeStatus').textContent=t(S.theme);$('fontStatus').textContent=t(FSK[S.fs]);if(!$('searchInput').value.trim())$('searchInfo').textContent=t('search_hint');loadReminder();showToday();markSel();paintFilters();paintTbar();hubUI();paintRec();gLab();paintSt()}
-
-/* ============ الرئيسية ============ */
-function checkBadges(n){try{const bd=JSON.parse(LS('lahza-bd')||'{}');let nw=null;TH.forEach(x=>{if(n>=x&&!bd[x]){bd[x]=dstr(new Date());nw=x}});if(nw){LS('lahza-bd',JSON.stringify(bd));toast(t('bd_new')+' '+t('bd_streak').replace('{n}',nw))}}catch(e){}}
-function curStreak(ms){const days=new Set(ms.map(m=>dstr(m.date)));let n=0,c=new Date();if(!days.has(dstr(c)))c.setDate(c.getDate()-1);while(days.has(dstr(c))){n++;c.setDate(c.getDate()-1)}return n}
-function updateHome(ms){$('counterText').textContent=ms.length;const n=curStreak(ms);$('streakText').textContent=n;checkBadges(n)}
-function renderOnThisDay(ms){const now=new Date(),mo=now.getMonth(),dy=now.getDate(),yr=now.getFullYear(),ys={};ms.forEach(m=>{const d=new Date(m.date);if(d.getMonth()===mo&&d.getDate()===dy&&d.getFullYear()<yr)ys[d.getFullYear()]=(ys[d.getFullYear()]||0)+1});const keys=Object.keys(ys).sort((a,b)=>b-a);if(!keys.length){hide('onThisDay');return}const box=$('onThisDayYears');box.innerHTML='';keys.forEach(y=>{const n=ys[y],b=mk('button','on-this-day-year');b.append(mk('span','',y),mk('span','on-this-day-count',n===1?t('one'):n===2?t('two'):n+' '+t('many')));b.onclick=()=>openDay(y+'-'+p2(mo+1)+'-'+p2(dy),false);box.appendChild(b)});show('onThisDay')}
-function ln(){try{$('actionText').classList.toggle('hasn',getL().some(l=>!l.s&&new Date(l.o)<=Date.now()))}catch(e){}}
-async function refreshAll(){const ms=await getAll();updateHome(ms);renderOnThisDay(ms);ln();await smartRefresh(ms);if(!$('tabMoments').classList.contains('hidden'))await renderTree(ms);if(!$('dayMomentsScreen').classList.contains('hidden')&&S.day)await openDay(S.day,S.dayF)}
-async function refreshKeep(){const els=[$('dayMomentsScreen'),$('tabMoments'),$('tabHome')],pos=els.map(e=>e.scrollTop);await refreshAll();els.forEach((e,i)=>e.scrollTop=pos[i]);setTimeout(()=>els.forEach((e,i)=>e.scrollTop=pos[i]),300)}
-function switchTab(n){['Home','Moments','Settings'].forEach(x=>{$('tabBtn'+x).classList.toggle('active',x===n);$('tab'+x).classList.toggle('hidden',x!==n)});S.retD=null;closeDay();if(n==='Moments')renderTree()}
-['Home','Moments','Settings'].forEach(n=>$('tabBtn'+n).onclick=()=>switchTab(n));
-
-/* ============ الكاميرا والصوت والكتابة ============ */
-async function openCamera(v){try{closeCamera();S.stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:S.fac},audio:false});v.srcObject=S.stream;v.muted=true;v.style.transform=S.fac==='user'?'scaleX(-1)':'none'}catch(e){toast(e.name==='NotAllowedError'?t('cam_perm'):e.name==='NotFoundError'?t('cam_nf'):e.name==='NotReadableError'?t('cam_busy'):t('cam_err'),1)}}
-function closeCamera(){if(S.stream){S.stream.getTracks().forEach(x=>x.stop());S.stream=null}}
-function resetPending(){S.blob=null;S.photos=[];S.dur=0;S.type=null;S.bg=null;S.mood=null;S.oldDate=null;S.kind='personal';free(LP)}
-const gh=$('ghost');let gOn=false;const gLab=()=>{$('ghostBtn').textContent=t(gOn?'gh_off':'gh_on')};const gMirror=()=>{gh.style.transform=S.fac==='user'?'scaleX(-1)':'none'};
-function gOff(){gOn=false;gh.style.display='none';gh.removeAttribute('src');free(LG);gLab()}
-$('ghostBtn').onclick=async()=>{if(gOn)return gOff();const ms=(await getAll()).filter(m=>m.type==='photo').sort((a,b)=>new Date(b.date)-new Date(a.date));if(!ms.length)return toast(t('gh_none'),1);const b=await getBlob(ms[0].id);if(!b)return toast(t('gh_none'),1);free(LG);gh.src=UG(b);gh.style.display='block';gOn=true;gMirror();gLab()};
-function renderStrip(){free(LP);const s=$('photoStrip');s.innerHTML='';S.photos.forEach((b,i)=>{const w=mk('div','th'),im=new Image();im.src=UP(b);const x=mk('button','','✕');x.onclick=()=>{S.photos.splice(i,1);renderStrip()};w.append(im,x);s.appendChild(w)});$('photoNext').classList.toggle('hidden',!S.photos.length)}
-function openPhoto(){S.photos=[];renderStrip();gOff();show('photoScreen');openCamera($('photoVideo'))}
-$('actionPhoto').onclick=()=>{S.oldDate=null;openPhoto()};
-$('photoClose').onclick=()=>{closeCamera();gOff();hide('photoScreen');resetPending()};
-$('switchPhotoCam').onclick=()=>{S.fac=S.fac==='environment'?'user':'environment';openCamera($('photoVideo'));setTimeout(gMirror,80)};
-$('snapBtn').onclick=()=>{const v=$('photoVideo');if(!v.videoWidth)return;if(S.photos.length>=MAXP)return toast(t('max_photos'),1);const cv=document.createElement('canvas');cv.width=v.videoWidth;cv.height=v.videoHeight;cv.getContext('2d').drawImage(v,0,0);cv.toBlob(b=>{S.photos.push(b);renderStrip()},'image/jpeg',.85)};
-$('galleryBtn').onclick=()=>$('photoInput').click();
-$('photoInput').onchange=e=>{[...e.target.files].forEach(f=>{if(S.photos.length<MAXP)S.photos.push(f);else toast(t('max_photos'),1)});e.target.value='';renderStrip()};
-$('photoNext').onclick=()=>{if(!S.photos.length)return;closeCamera();gOff();S.type='photo';S.blob=S.photos[0];hide('photoScreen');showPreview();show('saveScreen')};
-const vin=$('videoInput');$('actionVideo').onclick=()=>{S.oldDate=null;show('videoScreen')};$('videoClose').onclick=()=>{hide('videoScreen');resetPending()};$('switchVideoCam').onclick=()=>{S.vfac=S.vfac==='environment'?'user':'environment';vin.setAttribute('capture',S.vfac)};$('startVideoRec').onclick=()=>{vin.value='';vin.click()};
-vin.onchange=e=>{const f=e.target.files[0];if(!f)return;S.blob=f;S.type='video';S.bg=null;hide('videoScreen');showPreview();show('saveScreen')};
-let rec=null,recChunks=[],recT=0,recInt=null,recStream=null,recSt='idle';
-const pickMime=()=>['audio/mp4','audio/webm;codecs=opus','audio/webm','audio/ogg'].find(x=>window.MediaRecorder&&MediaRecorder.isTypeSupported(x))||'';
-function killMic(){if(recStream){recStream.getTracks().forEach(x=>x.stop());recStream=null}}
-function paintRec(){const st=recSt;$('recMsg').textContent=t(st==='rec'?'rec_on':st==='done'?'rec_ready':'rec_tap');const b=$('recBtn');b.className='rec-btn'+(st==='rec'?' on':'');b.textContent=st==='rec'?'⏹':'🎙';b.classList.toggle('hidden',st==='done');$('recDone').classList.toggle('hidden',st!=='done');$('recCancel').classList.toggle('hidden',st!=='rec')}
-function setRec(st){recSt=st;paintRec()}
-async function startRec(){if(!window.MediaRecorder||!navigator.mediaDevices)return toast(t('mic_err'),1);try{recStream=await navigator.mediaDevices.getUserMedia({audio:true});const mt=pickMime();try{rec=new MediaRecorder(recStream,mt?{mimeType:mt}:undefined)}catch(e){rec=new MediaRecorder(recStream)}recChunks=[];rec.ondataavailable=e=>{if(e.data&&e.data.size)recChunks.push(e.data)};rec.onstop=finishRec;rec.start(1000);recT=0;$('recTime').textContent='0:00';setRec('rec');clearInterval(recInt);recInt=setInterval(()=>{recT++;$('recTime').textContent=fdur(recT);if(recT>=MAXREC)stopRec(false)},1000)}catch(e){killMic();setRec('idle');toast(t('mic_err'),1)}}
-function stopRec(discard){clearInterval(recInt);if(rec&&rec.state!=='inactive'){rec.onstop=discard?null:finishRec;rec.stop()}if(discard){killMic();rec=null}}
-function finishRec(){killMic();const type=(rec&&rec.mimeType)||pickMime()||'audio/mp4';S.blob=new Blob(recChunks,{type});S.dur=recT;if(!S.blob||S.blob.size<100){S.blob=null;setRec('idle');return toast(t('mic_err'),1)}free(LP);$('recPlayer').src=UP(S.blob);setRec('done')}
-function openAudio(){S.blob=null;S.dur=0;$('recTime').textContent='0:00';$('recPlayer').removeAttribute('src');setRec('idle');show('audioScreen')}
-$('actionAudio').onclick=()=>{S.oldDate=null;openAudio()};$('recBtn').onclick=()=>{if(rec&&rec.state==='recording')stopRec(false);else startRec()};$('recAgain').onclick=()=>{S.blob=null;$('recPlayer').removeAttribute('src');$('recTime').textContent='0:00';setRec('idle')};$('recNext').onclick=()=>{if(!S.blob)return;S.type='audio';hide('audioScreen');showPreview();show('saveScreen')};
-const closeAudio=()=>{stopRec(true);hide('audioScreen');resetPending()};$('audioClose').onclick=closeAudio;$('recCancel').onclick=closeAudio;$('recDiscard').onclick=closeAudio;
-function bgGrid(){const g=$('bgGrid');g.querySelectorAll('.dyn').forEach(e=>e.remove());if(S.bg){const b=mk('button','bg-option dyn active'),im=new Image();im.src=UP(S.bg);b.appendChild(im);g.insertBefore(b,$('uploadBg'));$('bgNone').classList.remove('active')}else $('bgNone').classList.add('active')}
-function hubUI(){const q=S.wq,g=S.kind==='goals';$('textTitle').textContent=q?t('your_ans'):t(g?'m_goals':'m_journal');$('qBox2').style.display=q?'block':'none';$('qt').textContent=q||'';$('qc').textContent=t('q_change');$('textInput').placeholder=q?t('ph_ans'):t(g?'ph_goal':'ph_text');$('saveTextBtn').textContent=q?t('save'):t('next')}
-function openText(kind){$('textInput').value='';S.bg=null;bgGrid();S.wq=null;S.wsec=null;S.kind=kind||'personal';hubUI();show('textScreen')}
-function attach(q,sec){if($('textScreen').classList.contains('hidden'))openText('personal');S.wq=q;S.wsec=sec;hubUI()}
-$('qc').onclick=()=>qHub();$('actionText').onclick=()=>{S.oldDate=null;writeMenu()};$('textClose').onclick=()=>{hide('textScreen');S.wq=null;S.wsec=null;resetPending()};$('bgNone').onclick=()=>{S.bg=null;bgGrid()};$('bgInput').onchange=e=>{const f=e.target.files[0];if(!f)return;S.bg=f;bgGrid();e.target.value=''};
-async function saveAnswer(x){try{const m={date:(S.oldDate||new Date()).toISOString(),type:'answer',caption:S.wq,favorite:false,section:S.wsec||'lib',txt:x};if(S.oldDate)m.noTime=true;await addMoment(m,new Blob([x],{type:'text/plain'}),S.bg||null);hide('textScreen');S.wq=null;S.wsec=null;resetPending();toast(t('saved_a'));refreshAll()}catch(e){toast(t('err')+': '+e.message,1)}}
-$('saveTextBtn').onclick=()=>{const x=$('textInput').value.trim();if(!x)return toast(t('write_first'),1);if(S.wq)return saveAnswer(x);S.blob=new Blob([x],{type:'text/plain'});S.type='text';hide('textScreen');showPreview();show('saveScreen')};
-async function bgUrl(m,tr){if(m.bgKey){const b=await getBlob('bg'+m.id);return b?tr(b):null}return m.background||null}
-const bgCss=u=>u?'linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),url("'+u+'")':'';
-
-/* ============ المعاينة والحفظ ============ */
-function paintMoods(){const r=$('moodRow');r.innerHTML='';MOODS.forEach(e=>{const b=mk('button',S.mood===e?'on':'',e);b.onclick=()=>{S.mood=S.mood===e?null:e;paintMoods()};r.appendChild(b)})}
-function showPreview(){const w=$('previewWrap');w.innerHTML='';free(LP);paintMoods();$('avBtn').style.display=S.type==='video'?'block':'none';if(S.type==='photo'){S.photos.forEach(b=>{const el=new Image();el.src=UP(b);el.style.cssText='width:100%;border-radius:14px;margin-bottom:10px';w.appendChild(el)})}else if(S.type==='video'){const el=document.createElement('video');el.src=UP(S.blob);el.controls=true;el.playsInline=true;el.style.cssText='width:100%;border-radius:14px';w.appendChild(el)}else if(S.type==='audio'){const el=document.createElement('audio');el.src=UP(S.blob);el.controls=true;const d=mk('div','','🎙 '+fdur(S.dur));d.style.cssText='text-align:center;font:1.4rem var(--fd);color:var(--gold);margin-bottom:10px';w.append(d,el)}else{S.blob.text().then(x=>{const d=mk('div','preview',x);if(S.bg)d.style.background=bgCss(UP(S.bg))+' center/cover';w.appendChild(d)})}}
-$('avBtn').onclick=()=>{if(S.blob)audioEditor(S.blob,nb=>{S.blob=nb;showPreview();toast(t('av_applied'))})};
-function closeSave(){$('captionInput').value='';$('previewWrap').innerHTML='';closeCamera();resetPending();hide('saveScreen')}
-$('saveClose').onclick=closeSave;
-$('saveBtn').onclick=async()=>{if(!S.blob)return;try{const m={date:(S.oldDate||new Date()).toISOString(),type:S.type,caption:$('captionInput').value.trim(),favorite:false};if(S.oldDate)m.noTime=true;if(S.mood)m.mood=S.mood;if(S.type==='text'){m.txt=await S.blob.text();if(S.kind==='goals')m.section='nb:goals'}if(S.type==='audio'){m.mime=S.blob.type;m.dur=S.dur}if(S.type==='video')m.mime=S.blob.type||'video/mp4';const extras=S.type==='photo'?S.photos.slice(1):[];await addMoment(m,S.blob,S.bg,extras);closeSave();refreshAll();toast(t('saved'))}catch(e){toast(t('err')+': '+e.message,1)}};
-
-/* ============ تاريخ قديم ============ */
-$('actionOldDate').onclick=()=>{const ys=$('pickYear'),ms=$('pickMonth'),ds=$('pickDay');ys.innerHTML=ms.innerHTML='';for(let y=new Date().getFullYear();y>=1900;y--)ys.add(new Option(y,y));MON[S.lang].forEach((n,i)=>ms.add(new Option(n,i+1)));const fill=()=>{const dim=new Date(+ys.value,+ms.value,0).getDate(),cv=+ds.value||1;ds.innerHTML='';for(let d=1;d<=dim;d++)ds.add(new Option(d,d));ds.value=Math.min(cv,dim)};fill();ys.onchange=ms.onchange=fill;[ys,ms,ds].forEach(s=>s.style.cssText='flex:1;width:100%;padding:14px 6px;background:var(--bg);color:var(--text);border:1.5px solid var(--border-strong);border-radius:10px;text-align:center;font-size:1.05rem');show('datePickerSheet')};
-$('datePickerClose').onclick=()=>{hide('datePickerSheet');S.oldDate=null};$('datePickerConfirm').onclick=()=>{S.oldDate=new Date(+$('pickYear').value,+$('pickMonth').value-1,+$('pickDay').value,12,0,0);hide('datePickerSheet');show('typePickerSheet')};
-const closeType=()=>{hide('typePickerSheet');S.oldDate=null};$('typePickerClose').onclick=closeType;$('pickTypeCancel').onclick=closeType;$('pickTypePhoto').onclick=()=>{hide('typePickerSheet');openPhoto()};$('pickTypeVideo').onclick=()=>{hide('typePickerSheet');show('videoScreen')};$('pickTypeAudio').onclick=()=>{hide('typePickerSheet');openAudio()};$('pickTypeText').onclick=()=>{hide('typePickerSheet');writeMenu()};
-
-/* ============ البطاقات والبحث والتقويم ============ */
-async function makeCard(m){const card=mk('div','moment-card');card.dataset.id=m.id;const b=await getBlob(m.id);let c;if(m.type==='answer'&&m.caption){const q=mk('div','moment-caption',m.caption);q.style.cssText+=';color:var(--gold);padding-top:12px';card.appendChild(q)}if(m.type==='photo'){if(!b)return null;c=new Image();c.loading='lazy';c.src=UD(b);card.appendChild(c)}else if(m.type==='video'){if(!b)return null;const w=mk('div','vthumb');card.appendChild(w);getThumb(m,b).then(th=>{if(th&&w.isConnected)w.style.backgroundImage='url("'+UD(th)+'")'}).catch(()=>{})}else if(m.type==='audio'){const w=mk('div');w.style.cssText='padding:22px 16px;text-align:center';const h=mk('div','','🎙 '+fdur(m.dur||0));h.style.cssText='font:1.3rem var(--fd);color:var(--gold);margin-bottom:12px';w.appendChild(h);if(b){const a=document.createElement('audio');a.controls=true;a.preload='metadata';a.src=UD(b);a.onclick=e=>e.stopPropagation();w.appendChild(a)}card.appendChild(w)}else{c=mk('div','text-content',b?await b.text():'');if(m.type==='answer')c.style.fontSize='1.05rem';if(m.bgKey||m.background){const u=await bgUrl(m,UD);if(u)c.style.background=bgCss(u)+' center/cover'}card.appendChild(c)}if(m.caption&&m.type!=='answer')card.appendChild(mk('div','moment-caption',m.caption));const meta=mk('div','moment-meta'),tm=mk('div','moment-time',(m.mood?m.mood+' ':'')+(m.extra?'🖼'+(m.extra+1)+' ':'')+(m.noTime?'':ftime(m.date)));meta.appendChild(tm);if(isGoal(m)){const g=mk('button','filter-chip'+(m.done?' active':''),m.done?t('g_done'):t('g_open'));g.style.padding='6px 14px';g.onclick=async e=>{e.stopPropagation();const mm=await getMeta(m.id);if(!mm)return;mm.done=!mm.done;await upd(mm);m.done=mm.done;g.textContent=mm.done?t('g_done'):t('g_open');g.classList.toggle('active',mm.done)};meta.appendChild(g)}if(m.favorite)meta.appendChild(mk('span','moment-fav','♥'));card.appendChild(meta);card.onclick=()=>openModal(m.id);return card}
-function syncFavUI(id,flag){document.querySelectorAll('.moment-card[data-id="'+id+'"]').forEach(card=>{const meta=card.querySelector('.moment-meta'),ex=meta.querySelector('.moment-fav');if(flag&&!ex)meta.appendChild(mk('span','moment-fav','♥'));else if(!flag&&ex)ex.remove()})}
-function hay(m){const d=new Date(m.date),dd=d.getDate(),mo=d.getMonth(),y=d.getFullYear();const w=[m.caption,m.txt,m.mood,dstr(d),dd+'/'+(mo+1)+'/'+y,p2(dd)+'/'+p2(mo+1)+'/'+y,dd+'-'+(mo+1)+'-'+y,dd+'.'+(mo+1)+'.'+y,(mo+1)+'/'+y,p2(mo+1)+'/'+y,String(y)];['ar','en','sv'].forEach(l=>{w.push(DAYS[l][d.getDay()],dd+' '+MON[l][mo],MON[l][mo]+' '+y,MON[l][mo],I[l][m.type==='answer'?'answers':m.type+'s']||'')});return norm(w.join(' '))}
-let stm;['input','search'].forEach(ev=>$('searchInput').addEventListener(ev,()=>{clearTimeout(stm);stm=setTimeout(doSearch,250)}));
-async function doSearch(){const raw=$('searchInput').value.trim(),r=$('searchResults'),info=$('searchInfo'),seq=++S.seq;if(!raw){r.classList.add('hidden');r.innerHTML='';free(LD);show('filterRow');show('tbar');info.textContent=t('search_hint');return renderTree()}hide('treeView');hide('empty');hide('filterRow');hide('tbar');const toks=norm(raw).split(/\s+/).filter(Boolean),ms=await getAll();if(seq!==S.seq)return;const f=ms.filter(m=>{const h=hay(m);return toks.every(k=>h.includes(k))}).sort((a,b)=>new Date(b.date)-new Date(a.date));info.textContent=f.length?f.length+' '+t('results'):t('nothing');free(LD);r.innerHTML='';r.classList.remove('hidden');for(const m of f.slice(0,60)){const c=await makeCard(m);if(seq!==S.seq)return;if(c)r.appendChild(c)}}
-function renderTags(ms){const c={};ms.forEach(m=>{const mt=((m.caption||'')+' '+(m.txt||'')).match(/#[\p{L}\p{N}_]+/gu);if(mt)mt.forEach(x=>{x=x.toLowerCase();c[x]=(c[x]||0)+1})});const row=$('tagsRow');row.innerHTML='';Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,12).forEach(([tag,n])=>{const b=mk('button','filter-chip',tag+' ('+n+')');b.onclick=()=>{$('searchInput').value=tag;doSearch()};row.appendChild(b)})}
-async function renderTree(ms){ms=ms||await getAll();renderTags(ms);if($('searchInput').value.trim())return doSearch();const f=ms.filter(PRED[S.filter]||PRED.all);S.filtered=f;const ys=[...new Set(f.map(m=>new Date(m.date).getFullYear()))].sort((a,b)=>b-a);const row=$('yearsRow');row.innerHTML='';if(!ys.length){hide('treeView');show('empty');return}show('treeView');hide('empty');ys.forEach(y=>{const n=f.filter(m=>new Date(m.date).getFullYear()===y).length,b=mk('button','filter-chip'+(S.year===y?' active':''),y+' ('+n+')');b.onclick=()=>{S.year=y;S.month=S.day=null;renderTree()};row.appendChild(b)});if(S.year){show('monthsSection');const g=$('monthsGrid');g.innerHTML='';const now=new Date();MON[S.lang].forEach((n,mo)=>{const c=f.filter(m=>{const d=new Date(m.date);return d.getFullYear()===S.year&&d.getMonth()===mo}).length,b=mk('button','filter-chip'+(S.month===mo?' active':''),n+(c?' ('+c+')':''));b.style.cssText='padding:10px 4px';if(S.year===now.getFullYear()&&mo===now.getMonth())b.style.borderColor='var(--gold)';b.onclick=()=>{S.month=mo;S.day=null;renderTree()};g.appendChild(b)})}else hide('monthsSection');if(S.year!==null&&S.month!==null){show('calendarSection');renderCalendar()}else hide('calendarSection')}
-function renderCalendar(){const y=S.year,mo=S.month,g=$('calendarGrid');g.innerHTML='';$('calTitle').textContent=MON[S.lang][mo]+' '+y;const has=new Set(S.filtered.map(m=>dstr(m.date))),today=dstr(new Date()),first=new Date(y,mo,1).getDay(),dim=new Date(y,mo+1,0).getDate();for(let i=0;i<first;i++)g.appendChild(document.createElement('div'));for(let d=1;d<=dim;d++){const ds=y+'-'+p2(mo+1)+'-'+p2(d),el=mk('button','',d);el.style.cssText='aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;position:relative;color:var(--text-2)';if(ds===S.day){el.style.background='var(--gold)';el.style.color='var(--on-gold)';el.style.fontWeight='600'}else if(ds===today){el.style.border='1.5px solid var(--gold)';el.style.color='var(--gold)'}else if(has.has(ds)){el.style.background='var(--gold-soft)';el.style.color='var(--text)'}if(has.has(ds)&&ds!==S.day){const dot=mk('span');dot.style.cssText='position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:var(--gold)';el.appendChild(dot)}el.onclick=()=>{S.day=ds;renderCalendar();openDay(ds,true)};g.appendChild(el)}}
-$('calPrev').onclick=()=>{if(S.month===null)return;S.month--;if(S.month<0){S.month=11;S.year--}S.day=null;renderTree()};$('calNext').onclick=()=>{if(S.month===null)return;S.month++;if(S.month>11){S.month=0;S.year++}S.day=null;renderTree()};
-async function openDay(day,f){S.day=day;if(f!==undefined)S.dayF=f;const all=await getAll(),src=S.dayF?all.filter(PRED[S.filter]||PRED.all):all;const dm=src.filter(m=>dstr(m.date)===day).sort((a,b)=>new Date(a.date)-new Date(b.date));$('dayMomentsTitle').textContent=fdate(new Date(day+'T12:00:00'));free(LD);const g=$('dayMomentsGrid');g.innerHTML='';if(!dm.length){g.innerHTML='<div class="empty-state"><span class="empty-icon">✦</span><div></div></div>';g.querySelector('div div').textContent=t('no_day')}else for(const m of dm){const c=await makeCard(m);if(c)g.appendChild(c)}show('dayMomentsScreen')}
-function closeDay(){hide('dayMomentsScreen');free(LD);$('dayMomentsGrid').innerHTML='';S.day=null}
-$('dayMomentsClose').onclick=()=>{const r=S.retD;S.retD=null;closeDay();if(r)r();else if(!$('tabMoments').classList.contains('hidden'))renderTree()};
-
-/* ============ نافذة اللقطة والمشاركة ============ */
-function openModalFrom(id,ret){S.retM=ret;openModal(id)}
-async function openModal(id){const m=await getMeta(id);if(!m)return;S.cur=id;const c=$('modalContent');c.innerHTML='';free(LM);const b=await getBlob(id);if(m.type==='photo'){for(const pb of await photoBlobs(m)){const i=new Image();i.src=UM(pb);c.appendChild(i)}}else if(m.type==='video'){const v=document.createElement('video');v.src=UM(b);v.controls=true;v.playsInline=true;v.preload='metadata';const th=await getBlob('th'+id);if(th)v.poster=UM(th);c.appendChild(v)}else if(m.type==='audio'){const w=mk('div','modal-text');w.style.cssText+=';display:flex;flex-direction:column;align-items:center;gap:14px';const ic=mk('div','','🎙');ic.style.fontSize='3rem';const d=mk('div','',fdur(m.dur||0));d.style.cssText='font:1.3rem var(--fd);color:var(--gold-light)';w.append(ic,d);if(b){const a=document.createElement('audio');a.controls=true;a.src=UM(b);w.appendChild(a)}c.appendChild(w)}else{const d=mk('div','modal-text'),txt=b?await b.text():'';if(m.type==='answer'){d.style.textAlign='start';const q=mk('div','',m.caption||'');q.style.cssText='color:var(--gold);margin-bottom:16px;font-family:var(--fd);font-size:1.1rem';const a=mk('div','',txt);a.style.fontSize='1.1rem';d.append(q,a)}else{d.style.minHeight='55vh';d.style.display='flex';d.style.alignItems='center';d.style.justifyContent='center';d.textContent=txt}if(m.bgKey||m.background){const u=await bgUrl(m,UM);if(u)d.style.background=bgCss(u)+' center/cover'}c.appendChild(d)}if(m.caption&&m.type!=='answer')c.appendChild(mk('div','modal-cap',m.caption));c.appendChild(mk('div','modal-date',(m.mood?m.mood+'  ':'')+fdate(m.date)+(m.noTime?'':' - '+ftime(m.date))));if(m.type==='photo'||m.type==='video'){const b2=mk('button','btn',t('ba_cmp'));b2.onclick=()=>openCmp(id);c.appendChild(b2)}if(m.type==='video'){const b3=mk('button','btn',t('av_btn'));b3.onclick=async()=>{const bl=await getBlob(id);if(bl)audioEditor(bl,async nb=>{await addMoment({date:m.date,type:'video',caption:m.caption||'',favorite:false,mime:nb.type,noTime:!!m.noTime,mood:m.mood||null},nb,null,[]);toast(t('av_saved'));S.dirty=true},t('av_save2'))};c.appendChild(b3)}const hb=$('modalHeart'),paint=f=>{hb.textContent=f?'♥':'♡';hb.className=f?'active':''};paint(m.favorite);hb.onclick=async()=>{const mm=await getMeta(id);if(!mm)return;mm.favorite=!mm.favorite;await upd(mm);paint(mm.favorite);syncFavUI(id,mm.favorite)};$('momentModal').scrollTop=0;show('momentModal')}
-function closeModalNow(){hide('momentModal');free(LM);$('modalContent').innerHTML='';S.cur=null}
-$('modalClose').onclick=async()=>{closeModalNow();const r=S.retM;S.retM=null;if(S.dirty){S.dirty=false;await refreshKeep()}if(r)r()};$('modalDelete').onclick=async()=>{if(!S.cur)return;if(!await ask(t('del_c'),''))return;await delMoment(S.cur);closeModalNow();S.dirty=false;toast(t('deleted'));await refreshKeep();const r=S.retM;S.retM=null;if(r)r()};
-function paintE(){const r=$('eRow');r.innerHTML='';[['personal','m_journal'],['goals','m_goals']].forEach(a=>{const b=mk('button','filter-chip'+(S.nbEdit===a[0]?' active':''),t(a[1]));b.onclick=()=>{S.nbEdit=a[0];paintE()};r.appendChild(b)})}
-$('modalEdit').onclick=async()=>{if(!S.cur)return;const m=await getMeta(S.cur),b=await getBlob(S.cur),body=(m.type==='text'||m.type==='answer');$('eBodyWrap').classList.toggle('hidden',!body);$('eCapWrap').classList.toggle('hidden',m.type==='answer');$('eBody').value=body&&b?await b.text():'';$('eCap').value=m.caption||'';S.nbEdit=isGoal(m)?'goals':'personal';$('eRow').style.display=m.type==='text'?'flex':'none';paintE();show('eSheet')};
-$('eNo').onclick=()=>hide('eSheet');
-$('eOk').onclick=async()=>{const id=S.cur,m=await getMeta(id);if(!m)return;if(m.type!=='answer')m.caption=$('eCap').value.trim();if(m.type==='text'||m.type==='answer'){const x=$('eBody').value.trim();if(!x)return toast(t('write_first'),1);m.txt=x;await putBlob(id,new Blob([x],{type:'text/plain'}))}if(m.type==='text'){if(S.nbEdit==='goals')m.section='nb:goals';else if(isGoal(m))delete m.section}await upd(m);hide('eSheet');toast(t('saved'));S.dirty=true;openModal(id)};
-async function cardBlob(m,txt){const W=1080,H=1350,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');try{await Promise.all([document.fonts.load('60px Amiri'),document.fonts.load('40px "Reem Kufi"'),document.fonts.load('60px "Great Vibes"')])}catch(e){}const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#2a1c0a');g.addColorStop(1,'#0F0A08');x.fillStyle=g;x.fillRect(0,0,W,H);if(m.bgKey||m.background){let u=null,own=false;if(m.bgKey){const bb=await getBlob('bg'+m.id);if(bb){u=URL.createObjectURL(bb);own=true}}else u=m.background;if(u){const im=await loadImg(u);if(own)URL.revokeObjectURL(u);if(im){const k=Math.max(W/im.width,H/im.height),w=im.width*k,h=im.height*k;x.drawImage(im,(W-w)/2,(H-h)/2,w,h);x.fillStyle='rgba(0,0,0,.5)';x.fillRect(0,0,W,H)}}}x.textBaseline='top';x.textAlign='center';const pad=110,maxW=W-pad*2,cx=W/2;let top=140;if(m.type==='answer'&&m.caption){x.direction=isAr(m.caption)?'rtl':'ltr';const qf=s=>s+'px "Reem Kufi"',q=fitText(x,m.caption,qf,maxW,300,50,34);drawLines(x,q,qf,'#D4AF37',cx,top);top+=q.lines.length*q.sz*1.55+24;x.fillStyle='#D4AF37';x.fillRect(cx-40,top,80,3);top+=48}x.direction=isAr(txt)?'rtl':'ltr';const bf=s=>s+'px Amiri',availH=(H-280)-top,body=fitText(x,txt,bf,maxW,availH,80,34),bh=body.lines.length*body.sz*1.55;if(bh<availH)top+=(availH-bh)/2;drawLines(x,body,bf,'#FFFFFF',cx,top);x.direction='ltr';x.fillStyle='#D4AF37';x.font='34px "Reem Kufi"';x.fillText(fdate(m.date),cx,H-200);x.font='72px "Great Vibes"';x.fillText('Lahza',cx,H-150);return new Promise(r=>cv.toBlob(r,'image/png'))}
-$('modalShare').onclick=async()=>{if(!S.cur)return;const m=await getMeta(S.cur);if(!m)return;const d=dstr(m.date);if(m.type==='photo'){const bs=await photoBlobs(m);return shareFiles(bs.map((b,i)=>new File([b],'lahza-'+d+(bs.length>1?'-'+(i+1):'')+'.jpg',{type:b.type||'image/jpeg'})),m.caption||'')}if(m.type==='video'||m.type==='audio'){const b=await getBlob(S.cur);if(!b)return;return shareFiles([new File([b],'lahza-'+d+'.'+extFor(m),{type:b.type||mimeFor(m)})],m.caption||'')}show('shareSheet')};
-$('shareImg').onclick=async()=>{hide('shareSheet');const m=await getMeta(S.cur),b=await getBlob(S.cur);if(!m||!b)return;toast(t('prep_share'));const png=await cardBlob(m,await b.text());shareFiles([new File([png],'lahza-'+dstr(m.date)+'.png',{type:'image/png'})])};
-$('shareTxt').onclick=async()=>{hide('shareSheet');const m=await getMeta(S.cur),b=await getBlob(S.cur);if(!m||!b)return;const x=await b.text();shareText(m.type==='answer'&&m.caption?m.caption+'\n\n'+x:x)};$('shareNo').onclick=()=>hide('shareSheet');
-
-/* ============ قائمة الكتابة والرسائل ============ */
-function writeMenu(){overlay((c,close)=>{ttl(c,'text');const nl=getL().filter(l=>!l.s&&new Date(l.o)<=Date.now()).length;[['✍️','m_journal','ws_journal',()=>openText('personal')],['🎯','m_goals','ws_goals',()=>openText('goals')],['💌','letter','ws_letter',()=>lettersUI()],['🖌','draw','ws_draw',()=>openDraw()],['❓','m_questions','ws_q',()=>qHub()]].forEach(a=>{const b=mk('button','wopt'),w=mk('span');w.append(mk('b','',t(a[1])+(a[1]==='letter'&&nl?' ('+nl+')':'')),mk('small','',t(a[2])));b.append(mk('span','ic',a[0]),w);b.onclick=()=>{close();a[3]()};c.appendChild(b)});closeBtn(c,close)})}
-function qHub(){overlay((c,close)=>{const Bk=QUESTIONS_BANK[S.lang]||QUESTIONS_BANK.ar;const draw=s=>{c.innerHTML='';const h=mk('div','',s||t('m_questions'));h.style.cssText='font:1.5rem var(--fd);color:var(--gold);margin-bottom:12px';c.appendChild(h);if(!s){const q=dailyQ(),sg=mk('button','wopt'),w=mk('span');w.append(mk('b','',t('q_today')),mk('small','',q));sg.append(mk('span','ic','✨'),w);sg.onclick=()=>{close();attach(q,'daily')};c.appendChild(sg);const g=mk('div');g.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px';Object.keys(Bk).forEach(k=>{const b=mk('button','section-item',k);b.onclick=()=>draw(k);g.appendChild(b)});c.appendChild(g)}else{const bk=mk('button','filter-chip','‹ '+t('q_back'));bk.style.marginBottom='10px';bk.onclick=()=>draw();c.appendChild(bk);(Bk[s]||[]).forEach(q=>{const b=mk('button','question-item',q);b.style.cssText='display:block;width:100%;margin:8px 0';b.onclick=()=>{close();attach(q,s)};c.appendChild(b)})}closeBtn(c,close)};draw()})}
-const getL=()=>{try{return JSON.parse(LS('lahza-letters'))||[]}catch(e){return[]}};const setL=a=>LS('lahza-letters',JSON.stringify(a));
-lettersUI=function(){const L=getL().sort((a,b)=>new Date(a.o)-new Date(b.o));overlay((c,close)=>{ttl(c,'letter');const nb=mk('button','btn primary',t('l_new'));nb.onclick=()=>{close();writeLetter()};c.appendChild(nb);if(!L.length)c.appendChild(mk('div','empty-state',t('l_empty')));let ch=false;const now=Date.now();L.forEach(l=>{const r=mk('div');r.style.cssText='padding:14px;border:1px solid var(--border-strong);border-radius:var(--r);margin:10px 0;text-align:start';if(new Date(l.o)<=now){const d=mk('div','',fdate(l.c));d.style.cssText='color:var(--gold);font:.95rem var(--fd);margin-bottom:6px';const x=mk('div','',l.x);x.style.cssText='font:1.1rem/1.8 var(--fq);white-space:pre-wrap';r.append(d,x);if(!l.s){l.s=1;ch=true}}else r.textContent='🔒 '+t('l_lock')+' '+fdate(l.o);c.appendChild(r)});if(ch){setL(L);ln()}closeBtn(c,close)})};
-function writeLetter(){overlay((c,close)=>{ttl(c,'letter');const ta=mk('textarea','text-input');ta.placeholder=t('l_ph');ta.style.minHeight='180px';c.appendChild(ta);[['l_1m',1],['l_6m',6],['l_1y',12]].forEach(a=>{const b=mk('button','btn primary',t(a[0]));b.onclick=()=>{const x=ta.value.trim();if(!x)return toast(t('write_first'),1);const o=new Date();o.setMonth(o.getMonth()+a[1]);o.setHours(9,0,0,0);const L=getL();L.push({id:Date.now(),c:new Date().toISOString(),o:o.toISOString(),x});setL(L);toast(t('l_saved'));close();ln();syncNative()};c.appendChild(b)});closeBtn(c,close)})}
-function checkLetters(){if(getL().some(l=>!l.s&&new Date(l.o)<=Date.now()))toast(t('l_got'))}
-
-/* ============ الرسم ============ */
-openDraw=function(){overlay((c,close)=>{ttl(c,'draw');const cv=document.createElement('canvas');cv.style.cssText='width:100%;height:60vh;background:var(--bg);border-radius:14px;touch-action:none;border:1px solid var(--border-strong)';c.appendChild(cv);let ctx=cv.getContext('2d'),drawing=false;cv.width=cv.offsetWidth;cv.height=cv.offsetHeight;ctx.strokeStyle='var(--gold)';ctx.lineWidth=4;ctx.lineCap='round';const pos=e=>{const r=cv.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}};cv.onpointerdown=e=>{drawing=true;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y)};cv.onpointermove=e=>{if(!drawing)return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke()};cv.onpointerup=()=>drawing=false;const sv=mk('button','btn primary',t('save'));sv.onclick=()=>{cv.toBlob(b=>{S.photos=[b];S.blob=b;S.type='photo';S.bg=null;close();showPreview();show('saveScreen')},'image/jpeg',.92)};c.append(sv);closeBtn(c,close)})};
-
-/* ============ التذكير ============ */
-function loadReminder(){const on=LS('lahza-reminder')==='true';$('reminderStatus').textContent=on?t('on'):t('off');$('reminderTime').value=LS('lahza-reminder-time')||'20:00';$('reminderToggleBtn').textContent=on?t('rem_off'):t('rem_on')}
-async function syncNative(){const p=PLG('LocalNotifications');if(!p)return;try{const ids=[{id:1}];for(let i=0;i<30;i++)ids.push({id:100+i});await p.cancel({notifications:ids});const list=[],ms=await getAll(),now=new Date();if(LS('lahza-reminder')==='true'){const tm=(LS('lahza-reminder-time')||'20:00').split(':').map(Number);for(let i=0;i<30;i++){const d=new Date(now.getFullYear(),now.getMonth(),now.getDate()+i,tm[0],tm[1]);if(d<=now)continue;list.push({id:100+i,title:t('rem_title'),body:t('rem_sub'),schedule:{at:d,allowWhileIdle:true}})}}if(!list.length)return;const pm=await p.requestPermissions();if(pm.display!=='granted')return;await p.schedule({notifications:list})}catch(e){}}
-$('btnReminder').onclick=()=>{loadReminder();show('reminderModal')};$('reminderClose2').onclick=()=>hide('reminderModal');$('reminderToggleBtn').onclick=()=>{const on=LS('lahza-reminder')==='true';LS('lahza-reminder',on?'false':'true');loadReminder();syncNative()};$('reminderTime').onchange=e=>{LS('lahza-reminder-time',e.target.value);syncNative()};
-async function checkReminder(){}
-
-/* ============ إعدادات المظهر والإعدادات ============ */
-$('btnTheme').onclick=()=>{markSel();show('themeModal')};$('themeClose').onclick=()=>hide('themeModal');document.querySelectorAll('#themeModal [data-mode]').forEach(b=>b.onclick=()=>{S.theme=b.dataset.mode;applyTheme();toast(t('theme_ok'))});
-$('btnFont').onclick=()=>{markSel();show('fontModal')};$('fontClose').onclick=()=>hide('fontModal');document.querySelectorAll('#fontModal [data-fs]').forEach(b=>b.onclick=()=>{S.fs=b.dataset.fs;applyFs()});
-$('btnLanguage').onclick=()=>show('languageModal');$('languageClose').onclick=()=>hide('languageModal');document.querySelectorAll('#languageModal [data-lang]').forEach(b=>b.onclick=()=>{S.lang=b.dataset.lang;LS('lahza-lang',S.lang);applyTheme();applyI18n();hide('languageModal');refreshAll();syncNative()});
-async function buildZip(ms){const zip=new JSZip(),meta=[];for(const m of ms){const fn=m.id+'.'+extFor(m),b=await getBlob(m.id);if(b)zip.file('moments/'+fn,b);const e={id:m.id,date:m.date,type:m.type,caption:m.caption||'',favorite:!!m.favorite,noTime:!!m.noTime,mood:m.mood||null,mime:m.mime||null,dur:m.dur||0,extra:m.extra||0,section:m.section||null,done:!!m.done,background:m.background||null,file:fn};if(m.bgKey){const bb=await getBlob('bg'+m.id);if(bb){zip.file('bg/'+m.id,bb);e.bgFile='bg/'+m.id}}for(let i=0;i<(m.extra||0);i++){const pb=await getBlob('p'+m.id+'_'+i);if(pb)zip.file('extra/'+m.id+'_'+i+'.jpg',pb)}meta.push(e)}zip.file('data.json',JSON.stringify({version:'14.0',date:new Date().toISOString(),count:ms.length,moments:meta,letters:getL()},null,2));return zip.generateAsync({type:'blob',compression:'STORE',streamFiles:true})}
-async function exportZip(ms){toast(t('prep'));const blob=await buildZip(ms),name='lahza-backup-'+dstr(new Date())+'.zip',f=new File([blob],name,{type:'application/zip'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:name})}else{dl(f)}LS('lahza-last-backup',String(Date.now()));toast(t('exp_ok')+' ('+ms.length+')')}
-$('btnExport').onclick=async()=>{try{const ms=await getAll();if(!ms.length)return toast(t('no_data'),1);await exportZip(ms)}catch(e){if(e.name!=='AbortError')toast(t('err')+': '+e.message,1)}};
-$('btnImport').onclick=()=>$('importInput').click();
-$('importInput').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const zip=await JSZip.loadAsync(f),df=zip.file('data.json');if(!df)throw new Error('Invalid file');const data=JSON.parse(await df.async('string'));if(!Array.isArray(data.moments))throw new Error('Invalid structure');const key=m=>m.date+'|'+m.type+'|'+(m.caption||''),have=new Set((await getAll()).map(key));let added=0;for(const x of data.moments){if(have.has(key(x)))continue;const file=zip.file('moments/'+x.file);if(!file)continue;const m={date:x.date,type:x.type,caption:x.caption||'',favorite:!!x.favorite};if(x.noTime)m.noTime=true;if(x.mood)m.mood=x.mood;if(x.mime)m.mime=x.mime;if(x.dur)m.dur=x.dur;if(x.section)m.section=x.section;if(x.done)m.done=true;const raw=await file.async('blob'),blob=new Blob([raw],{type:mimeFor({type:x.type,mime:x.mime})});if(x.type==='text'||x.type==='answer')m.txt=await blob.text();let bg=null;if(x.bgFile&&zip.file(x.bgFile))bg=await zip.file(x.bgFile).async('blob');else if(x.background)m.background=x.background;const extras=[];for(let i=0;i<(x.extra||0);i++){const pf=zip.file('extra/'+x.id+'_'+i+'.jpg');if(pf)extras.push(new Blob([await pf.async('blob')],{type:'image/jpeg'}))}await addMoment(m,blob,bg,extras);added++}if(Array.isArray(data.letters)){const L=getL(),ids=new Set(L.map(l=>l.id));data.letters.forEach(l=>{if(l&&l.id&&!ids.has(l.id))L.push(l)});setL(L)}toast(t('imp_ok')+' ('+added+')');refreshAll();syncNative()}catch(err){toast(t('err')+': '+err.message,1)}e.target.value=''};
-$('btnDeleteAll').onclick=async()=>{const ms=await getAll();if(!ms.length)return toast(t('no_data'),1);if(!await ask(t('delall'),t('delall_q').replace('{n}',ms.length)))return;if(await ask(t('backup'),t('backup_q'),{ok:t('yes_exp'),no:t('skip')})){try{await exportZip(ms)}catch(e){if(!await ask(t('exp_fail'),t('exp_fail_q'),{ok:t('del_anyway')}))return}}if(!await ask(t('final'),t('final_q'),{word:t('del_word'),ok:t('del_final')}))return;await clearAll();toast(t('deleted'));closeDay();refreshAll()};
-$('btnContact').onclick=()=>{location.href='mailto:lahzalaqta@gmail.com?subject='+encodeURIComponent(t('mail_sub'))};
-$('btnRate').onclick=async()=>{const p=PLG('InAppReview');try{if(p)await p.requestReview();else window.open('https://apps.apple.com/app/idYOUR_APP_ID?action=write-review','_blank')}catch(e){}};
-async function nudge(){const ms=await getAll();if(ms.length<3)return;const now=Date.now(),last=+LS('lahza-last-backup')||0;if(!last){LS('lahza-last-backup',String(now));return}if(now-last<6048e5||LS('lahza-nudged')===dstr(now))return;LS('lahza-nudged',dstr(now));if(await ask(t('backup'),t('nudge_q'),{ok:t('yes_exp'),no:t('later')}))try{await exportZip(ms)}catch(e){}}
-const mbs=n=>n>=1073741824?(n/1073741824).toFixed(1)+' GB':Math.max(1,Math.round(n/1048576))+' MB';async function stInfo(){const o={};try{const e=await navigator.storage.estimate();o.u=e.usage;o.q=e.quota}catch(x){}try{o.p=await navigator.storage.persisted()}catch(x){}return o}
-async function paintSt(){const el=$('btnStorage');el.querySelector('.label').textContent=t('st_t');const o=await stInfo();el.querySelector('.value').textContent=(o.u!=null?mbs(o.u):'')+(o.p===true?' · ✓':o.p===false?' · !':'')}
-$('btnStorage').onclick=async()=>{const o=await stInfo();overlay((c,close)=>{ttl(c,'st_t');const row=(a,b)=>{const r=mk('div');r.style.cssText='display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);text-align:start';r.append(mk('span','',a),mk('span','',b));r.lastChild.style.color='var(--gold)';c.appendChild(r)};row(t('st_used'),o.u!=null?mbs(o.u)+(o.q?' / '+mbs(o.q):''):'—');const last=+LS('lahza-last-backup')||0,d=last?Math.floor((Date.now()-last)/864e5):-1;row(t('st_last'),d<0?t('st_never'):d===0?t('st_today'):t('st_ago').replace('{n}',d));const st=mk('div','',o.p?t('st_safe'):t('st_unsafe'));st.style.cssText='margin:14px 0;color:'+(o.p?'var(--gold)':'#EF4444');c.appendChild(st);const ex=mk('button','btn primary',t('st_now'));ex.onclick=()=>{close();$('btnExport').click()};c.appendChild(ex);closeBtn(c,close)})};
-/* ============ الدوال الناقصة (الأسئلة الذكية، المقارنة، اليوميات، الخزنة، الترحيب) ============ */
-const KW={tired:['تعب','مرهق','منهك','إرهاق','ارهاق','نعسان','tired','exhaust','drained','sleepy','burnt','trött','utmattad','orkar inte'],sad:['حزين','زعلان','بكيت','وحيد','ضيق','مهموم','sad','lonely','cried','depress','ledsen','ensam','grät','deppig'],anx:['قلق','خايف','خوف','متوتر','توتر','anxious','worried','stress','scared','nervous','overwhelm','orolig','rädd','nervös','ångest'],ang:['غضب','معصب','عصبي','غاضب','angry','annoyed','frustrat','furious','irriterad','frustrerad','förbannad'],joy:['سعيد','مبسوط','فرحان','ممتن','الحمد','happy','grateful','proud','excited','thankful','tacksam','lycklig','stolt','nöjd']};
-const SQ={ar:{tired:['ما أصغر خطوة ممكنة تعيد لك بعض الطاقة؟','ما الذي أتعبك فعلاً، وما الذي يمكنك تأجيله؟'],sad:['ما الذي يخفف عنك قليلاً حين تحزن؟','من تثق به ويمكنك أن تحكي له اليوم؟'],anx:['ما أسوأ ما تخاف منه، وما احتمال حدوثه فعلاً؟','ما الذي في يدك أن تفعله اليوم بشأنه؟'],ang:['ما الذي وراء هذا الغضب فعلاً؟','ماذا تحتاج لتشعر أن حقك محفوظ؟'],joy:['ما الذي صنع هذه السعادة، وكيف تكرّره؟','من تحب أن تشاركه هذه الفرحة؟']},en:{tired:['What is the smallest step that could bring back a little energy?','What is draining you most, and what can wait?'],sad:['What softens things a little when you feel low?','Who could you talk to today?'],anx:['What is in your hands to do about it today?','What usually calms you? Try it for five minutes.'],ang:['What is really underneath this anger?','What do you need to feel respected?'],joy:['What created this joy, and how can you repeat it?','Who would you love to share it with?']},sv:{tired:['Vilket är det minsta steg som kan ge dig lite energi?','Vad tröttar ut dig mest, och vad kan vänta?'],sad:['Vad mjukar upp det lite när du är nere?','Vem kan du prata med idag?'],anx:['Vad kan du göra åt det idag?','Vad brukar lugna dig? Prova i fem minuter.'],ang:['Vad ligger egentligen under ilskan?','Vad behöver du för att känna dig respekterad?'],joy:['Vad skapade glädjen, och hur kan du upprepa den?','Vem vill du dela den med?']}};
-const AD={'٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9'};const norm=s=>(s||'').replace(/[٠-٩]/g,c=>AD[c]).toLowerCase();
-async function smartRefresh(ms){try{ms=ms||await getAll();const now=Date.now();S.sq=null;const rs=ms.filter(m=>now-new Date(m.date)<4*864e5&&(m.txt||m.caption||m.mood)).sort((a,b)=>new Date(b.date)-new Date(a.date));for(const m of rs){let th=null;const x=norm(' '+(m.txt||'')+' '+(m.type==='answer'?'':(m.caption||''))+' ');for(const k of Object.keys(KW)){if(KW[k].some(w=>x.includes(norm(w)))){th=k;break}}if(!th&&(m.mood==='😔'||m.mood==='😢'))th='sad';if(th){const arr=(SQ[S.lang]||SQ.ar)[th];S.sq=arr[Math.floor(now/864e5)%arr.length];break}}}catch(e){}}
-function baseQ(){const all=[].concat(...Object.values(QUESTIONS_BANK[S.lang]||QUESTIONS_BANK.ar)),d=new Date(),n=Math.floor(new Date(d.getFullYear(),d.getMonth(),d.getDate())/864e5);return all[n%all.length]}
-const dailyQ=()=>S.sq||baseQ();
-
-openCmp=async function(){toast('ميزة المقارنة ستتوفر قريباً',1);};
-weekly=async function(){toast('ملخص الأسبوع سيتوفر قريباً',1);};
-diaryUI=async function(){toast('فيديو اليوميات سيتوفر قريباً',1);};
-otdUI=async function(){toast('في مثل هذا اليوم سيتوفر قريباً',1);};
-audioEditor=function(src,onDone){onDone(src);toast('تم حفظ الفيديو',1);};
-function onboard(){if(LS('lahza-onb'))return;let i=0,tm='20:00';const o=mk('div');o.id='onb';document.body.appendChild(o);const SL=[['✦','onb1t','onb1'],['❓','onb2t','onb2'],['🔔','onb3t']];const draw=()=>{o.innerHTML='';const s=SL[i];o.appendChild(mk('div','e',s[0]));o.appendChild(mk('h2','',t(s[1])));if(s[2])o.appendChild(mk('p','',t(s[2])));else{const ti=document.createElement('input');ti.type='time';ti.value=tm;ti.style.cssText='padding:14px;background:var(--card);border:1px solid var(--border-strong);border-radius:14px;font-size:1.3rem;text-align:center;color:var(--text)';ti.onchange=()=>tm=ti.value||tm;o.appendChild(ti)}const dt=mk('div','dt');SL.forEach((_,k)=>dt.appendChild(mk('i',k===i?'on':'')));o.appendChild(dt);const b=mk('button','btn primary',t(i<2?'next':'go'));b.style.maxWidth='300px';b.onclick=()=>{if(i<2){i++;draw()}else{LS('lahza-reminder-time',tm);LS('lahza-reminder','true');LS('lahza-reminder-dismissed','');LS('lahza-onb','1');o.remove();loadReminder();syncNative()}};o.appendChild(b);const k=mk('button','',t('skip'));k.style.cssText='color:var(--text-3);padding:10px';k.onclick=()=>{LS('lahza-onb','1');o.remove()};o.appendChild(k)};draw()}
-$('btnIntro').onclick=()=>{LS('lahza-onb','');switchTab('Home');onboard()};
-/* ============ التشغيل (Init) ============ */
-setTimeout(()=>{const sp=$('splash');if(sp){sp.classList.add('hide');setTimeout(()=>sp.style.display='none',800)}},1600);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden){try{checkLetters();syncNative();ln()}catch(e){}}});
-(async function init(){
-  try{
-    S.theme=LS('lahza-theme')||'auto';if(!['dark','light','auto'].includes(S.theme))S.theme='auto';
-    S.fs=LS('lahza-fs')||'m';if(!FSZ[S.fs])S.fs='m';
-    const l=LS('lahza-lang');S.lang=I[l]?l:'ar';
-    applyFs();applyTheme();applyI18n();
-    await openDB();
-    try{if(navigator.storage&&navigator.storage.persist&&!(await navigator.storage.persisted()))await navigator.storage.persist()}catch(e){}
-    refreshAll();backfill();syncNative();checkReminder();setInterval(checkReminder,60000);
-    setTimeout(nudge,5000);setTimeout(checkLetters,3000);
-    stInfo().then(o=>{if(o.q&&o.u/o.q>.85)toast(t('st_low'),1)});
-  }catch(e){
-    console.error(e);
-    toast(t('err')+': '+e.message,1);
+// الكاميرا
+async function openCamera() {
+  $('#photoScreen').classList.remove('hidden');
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+    $('#photoVideo').srcObject = stream;
+  } catch (e) {
+    toast('تعذر فتح الكاميرا');
   }
-})();
+}
+$('#actionPhoto').onclick = () => { S.oldDate = null; S.photos = []; renderStrip(); openCamera(); };
+$('#photoClose').onclick = () => {
+  const v = $('#photoVideo');
+  if (v.srcObject) v.srcObject.getTracks().forEach(t => t.stop());
+  $('#photoScreen').classList.add('hidden');
+  S.photos = []; S.blob = null;
+};
+$('#snapBtn').onclick = () => {
+  const v = $('#photoVideo');
+  if (!v.videoWidth) return;
+  const cv = document.createElement('canvas');
+  cv.width = v.videoWidth; cv.height = v.videoHeight;
+  cv.getContext('2d').drawImage(v, 0, 0);
+  cv.toBlob(b => { S.photos.push(b); renderStrip(); }, 'image/jpeg', 0.85);
+};
+function renderStrip() {
+  const s = $('#photoStrip'); s.innerHTML = '';
+  S.photos.forEach(b => {
+    const img = new Image(); img.src = URL.createObjectURL(b); img.style.width = '60px'; img.style.borderRadius = '8px';
+    s.appendChild(img);
+  });
+  $('#photoNext').classList.toggle('hidden', S.photos.length === 0);
+}
+$('#photoNext').onclick = () => {
+  if (!S.photos.length) return;
+  $('#photoVideo').srcObject.getTracks().forEach(t => t.stop());
+  S.type = 'photo'; S.blob = S.photos[0];
+  $('#photoScreen').classList.add('hidden');
+  showPreview(); $('#saveScreen').classList.remove('hidden');
+};
+
+// الكتابة
+$('#actionText').onclick = () => { S.oldDate = null; $('#textInput').value = ''; $('#textScreen').classList.remove('hidden'); };
+$('#textClose').onclick = () => $('#textScreen').classList.add('hidden');
+$('#saveTextBtn').onclick = () => {
+  const txt = $('#textInput').value.trim();
+  if (!txt) return toast('اكتب شيئاً أولاً');
+  S.blob = new Blob([txt], { type: 'text/plain' });
+  S.type = 'text';
+  $('#textScreen').classList.add('hidden');
+  showPreview(); $('#saveScreen').classList.remove('hidden');
+};
+
+// الفيديو والصوت (نسخة سريعة ومستقرة)
+$('#actionVideo').onclick = () => {
+  const i = document.createElement('input'); i.type = 'file'; i.accept = 'video/*';
+  i.onchange = () => {
+    if (!i.files[0]) return;
+    S.blob = i.files[0]; S.type = 'video'; S.oldDate = null;
+    showPreview(); $('#saveScreen').classList.remove('hidden');
+  };
+  i.click();
+};
+$('#actionAudio').onclick = () => {
+  const i = document.createElement('input'); i.type = 'file'; i.accept = 'audio/*';
+  i.onchange = () => {
+    if (!i.files[0]) return;
+    S.blob = i.files[0]; S.type = 'audio'; S.oldDate = null;
+    showPreview(); $('#saveScreen').classList.remove('hidden');
+  };
+  i.click();
+};
+
+// شاشة الحفظ
+function showPreview() {
+  const w = $('#previewWrap'); w.innerHTML = '';
+  if (S.type === 'photo') {
+    const im = new Image(); im.src = URL.createObjectURL(S.blob); im.style.cssText = 'width:100%;border-radius:14px;margin-bottom:12px';
+    w.appendChild(im);
+  } else if (S.type === 'video' || S.type === 'audio') {
+    const el = document.createElement(S.type); el.src = URL.createObjectURL(S.blob); el.controls = true; el.style.cssText = 'width:100%;border-radius:14px;margin-bottom:12px';
+    w.appendChild(el);
+  } else if (S.type === 'text') {
+    S.blob.text().then(t => {
+      const d = mk('div', 'text-content', t); d.style.borderRadius = '14px'; d.style.marginBottom = '12px';
+      w.appendChild(d);
+    });
+  }
+  paintMoods();
+}
+function paintMoods() {
+  const r = $('#moodRow'); r.innerHTML = '';
+  ['😄','🙂','😐','😔','😢'].forEach(e => {
+    const b = mk('button', S.mood === e ? 'on' : '', e);
+    b.onclick = () => { S.mood = S.mood === e ? null : e; paintMoods(); };
+    r.appendChild(b);
+  });
+}
+$('#saveClose').onclick = () => {
+  $('#saveScreen').classList.add('hidden');
+  $('#captionInput').value = ''; S.blob = null; S.photos = []; S.mood = null;
+};
+$('#saveBtn').onclick = async () => {
+  if (!S.blob) return;
+  try {
+    const m = { date: (S.oldDate || new Date()).toISOString(), type: S.type, caption: $('#captionInput').value.trim(), favorite: false };
+    if (S.mood) m.mood = S.mood;
+    if (S.type === 'text') m.txt = await S.blob.text();
+    await addMoment(m, S.blob);
+    toast('تم الحفظ بنجاح');
+    $('#saveScreen').classList.add('hidden');
+    $('#captionInput').value = ''; S.blob = null; S.photos = []; S.mood = null;
+    switchTab('Home');
+  } catch (e) {
+    toast('حدث خطأ أثناء الحفظ');
+  }
+};
+
+// لقطاتي
+async function renderMoments() {
+  const grid = $('#momentsGrid'); grid.innerHTML = '';
+  const ms = (await getAll()).sort((a, b) => new Date(b.date) - new Date(a.date));
+  if (!ms.length) { grid.innerHTML = '<div style="text-align:center;color:#888;margin-top:40px;">لا توجد لقطات بعد</div>'; return; }
+  
+  for (const m of ms) {
+    const c = mk('div', 'moment-card');
+    const b = await getBlob(m.id);
+    if (m.type === 'photo' && b) {
+      const im = new Image(); im.src = URL.createObjectURL(b); c.appendChild(im);
+    } else if (m.type === 'text' && b) {
+      const t = await b.text();
+      c.appendChild(mk('div', 'text-content', t));
+    } else {
+      c.appendChild(mk('div', 'text-content', m.type === 'video' ? '🎥 فيديو' : '🎙 صوت'));
+    }
+    if (m.caption) c.appendChild(mk('div', 'moment-caption', m.caption));
+    const meta = mk('div', 'moment-meta');
+    meta.innerHTML = `<span>${m.mood || ''}</span><span>${new Date(m.date).toLocaleDateString('ar-EG')}</span>`;
+    c.appendChild(meta);
+    c.onclick = () => {
+      if (confirm('هل تريد حذف هذه اللقطة؟')) {
+        delMoment(m.id).then(() => { toast('تم الحذف'); renderMoments(); });
+      }
+    };
+    grid.appendChild(c);
+  }
+}
+
+// تاريخ قديم
+$('#actionOldDate').onclick = () => {
+  const y = $('#pickYear'), m = $('#pickMonth'), d = $('#pickDay');
+  y.innerHTML = ''; m.innerHTML = ''; d.innerHTML = '';
+  for (let i = new Date().getFullYear(); i >= 1900; i--) y.add(new Option(i, i));
+  const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+  months.forEach((name, i) => m.add(new Option(name, i + 1)));
+  const fillDays = () => {
+    d.innerHTML = '';
+    const days = new Date(y.value, m.value, 0).getDate();
+    for (let i = 1; i <= days; i++) d.add(new Option(i, i));
+  };
+  y.onchange = fillDays; m.onchange = fillDays; fillDays();
+  
+  [y, m, d].forEach(sel => { sel.style.cssText = 'flex:1;padding:10px;border-radius:8px;background:var(--bg);color:var(--text);border:1px solid var(--border-strong)'; });
+  $('#datePickerSheet').classList.remove('hidden');
+};
+$('#datePickerClose').onclick = () => $('#datePickerSheet').classList.add('hidden');
+$('#datePickerConfirm').onclick = () => {
+  S.oldDate = new Date($('#pickYear').value, $('#pickMonth').value - 1, $('#pickDay').value, 12, 0, 0);
+  $('#datePickerSheet').classList.add('hidden');
+  $('#typePickerSheet').classList.remove('hidden');
+};
+$('#typePickerClose').onclick = () => $('#typePickerSheet').classList.add('hidden');
+$('#pickTypePhoto').onclick = () => { $('#typePickerSheet').classList.add('hidden'); S.photos = []; renderStrip(); openCamera(); };
+$('#pickTypeText').onclick = () => {
+  $('#typePickerSheet').classList.add('hidden');
+  $('#textInput').value = '';
+  $('#textScreen').classList.remove('hidden');
+};
+
+// الإعدادات (تصدير واستيراد)
+$('#btnExport').onclick = async () => {
+  const ms = await getAll();
+  if (!ms.length) return toast('لا توجد لقطات');
+  toast('جاري التصدير...');
+  const zip = new JSZip();
+  for (const m of ms) {
+    const b = await getBlob(m.id);
+    if (b) zip.file(`m_${m.id}`, b);
+  }
+  zip.file('data.json', JSON.stringify(ms));
+  const content = await zip.generateAsync({ type: 'blob' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(content); a.download = `lahza-backup-${Date.now()}.zip`;
+  a.click();
+  toast('تم التصدير');
+};
+
+$('#btnImport').onclick = () => $('#importInput').click();
+$('#importInput').onchange = async (e) => {
+  const f = e.target.files[0];
+  if (!f) return;
+  try {
+    const zip = await JSZip.loadAsync(f);
+    const data = JSON.parse(await zip.file('data.json').async('string'));
+    for (const m of data) {
+      const b = zip.file(`m_${m.id}`);
+      if (b) {
+        const blob = await b.async('blob');
+        delete m.id;
+        await addMoment(m, blob);
+      }
+    }
+    toast('تم الاستيراد بنجاح');
+    switchTab('Home');
+  } catch (err) {
+    toast('فشل الاستيراد');
+  }
+};
+
+// التشغيل النهائي
+async function startApp() {
+  try {
+    await openDB();
+    updateHome();
+  } catch (e) {
+    console.error(e);
+  }
+  setTimeout(() => {
+    const sp = $('#splash');
+    if (sp) sp.classList.add('hide');
+  }, 1500);
+}
+startApp();
 </script>
 </body>
 </html>
