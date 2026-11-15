@@ -7,115 +7,69 @@
 <title>لحظة</title>
 <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Amiri:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:dark;--bg:#0F0A08;--card:#1A1410;--card-hover:#221A15;--border:rgba(255,255,255,.08);--border-strong:rgba(255,255,255,.18);--gold:#D4AF37;--gold-light:#F4D98C;--gold-soft:rgba(212,175,55,.12);--on-gold:#0F0A08;--text:#F5F5F5;--text-2:#D0D0D0;--text-3:#A8A8A8;--text-4:#8A8A8A;--nav:rgba(15,10,8,.96);--veil:rgba(10,6,4,.98);--splash:radial-gradient(ellipse at center,#1F1508 0%,#0F0A08 65%);--grad:linear-gradient(135deg,#1F1508,#0F0A08);--shadow:0 4px 20px rgba(0,0,0,.5);--r:14px;--fd:'Reem Kufi',sans-serif;--fb:'IBM Plex Sans Arabic',sans-serif;--fq:'Amiri',serif}
-:root[data-theme=light]{color-scheme:light;--bg:#FAF6EE;--card:#FFF;--card-hover:#F5F0E4;--border:rgba(0,0,0,.1);--border-strong:rgba(0,0,0,.2);--gold:#8B7524;--gold-light:#6A5820;--gold-soft:rgba(139,117,36,.12);--on-gold:#fff;--text:#1A1410;--text-2:#3A3025;--text-3:#5A5045;--text-4:#756B60;--nav:rgba(250,246,238,.96);--veil:rgba(250,246,238,.99);--splash:radial-gradient(ellipse at center,#FFF8E6 0%,#FAF6EE 65%);--grad:linear-gradient(135deg,#3a2a12,#1a1410);--shadow:0 4px 20px rgba(0,0,0,.15)}
+:root{color-scheme:dark;--bg:#0F0A08;--card:#1A1410;--border:rgba(255,255,255,.08);--border-strong:rgba(255,255,255,.18);--gold:#D4AF37;--gold-soft:rgba(212,175,55,.12);--on-gold:#0F0A08;--text:#F5F5F5;--text-2:#D0D0D0;--text-3:#A8A8A8;--text-4:#8A8A8A;--nav:rgba(15,10,8,.96);--grad:linear-gradient(135deg,#1F1508,#0F0A08);--shadow:0 4px 20px rgba(0,0,0,.5);--fd:'Reem Kufi',sans-serif;--fb:'IBM Plex Sans Arabic',sans-serif;--fq:'Amiri',serif}
+:root[data-theme=light]{color-scheme:light;--bg:#FAF6EE;--card:#FFF;--border:rgba(0,0,0,.1);--border-strong:rgba(0,0,0,.2);--gold:#8B7524;--gold-soft:rgba(139,117,36,.12);--on-gold:#fff;--text:#1A1410;--text-2:#3A3025;--text-3:#5A5045;--text-4:#756B60;--nav:rgba(250,246,238,.96);--grad:linear-gradient(135deg,#3a2a12,#1a1410);--shadow:0 4px 20px rgba(0,0,0,.15)}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{font-size:18px;height:100%;-webkit-text-size-adjust:100%}
-html,body{overflow:hidden;background:var(--bg)}
-body{height:100%;color:var(--text);font:1rem/1.65 var(--fb);display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
-button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}
-input,textarea,select{font-family:var(--fb);font-size:1rem;outline:none;border:none;background:none;color:inherit}
-textarea{resize:none}img{display:block;max-width:100%}a{text-decoration:none;color:inherit}
-audio{width:100%}
+html{font-size:18px;height:100%}html,body{overflow:hidden;background:var(--bg)}body{height:100%;color:var(--text);font:1rem/1.65 var(--fb);display:flex;flex-direction:column}
+button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}input,textarea{font-family:var(--fb);font-size:1rem;outline:none;border:none;background:none;color:inherit}textarea{resize:none}img{display:block;max-width:100%}
 .hidden{display:none!important}
-@keyframes fi{from{opacity:0}to{opacity:1}}@keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}@keyframes pulse{50%{transform:scale(1.04);opacity:.92}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@keyframes fi{from{opacity:0}to{opacity:1}}
 .content{flex:1;overflow-y:auto;padding:calc(24px + env(safe-area-inset-top)) 16px 120px;animation:fi .3s}
-.content::-webkit-scrollbar{display:none}
-.page-title{font:600 1.7rem var(--fd);text-align:center;margin-bottom:20px;padding-bottom:8px;position:relative}
-.page-title::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:40px;height:2px;background:var(--gold);opacity:.6}
+.page-title{font:600 1.7rem var(--fd);text-align:center;margin-bottom:20px}
 .tabs{position:fixed;bottom:0;left:0;right:0;background:var(--nav);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:100}
-.tab{flex:1;padding:12px 0 10px;font-size:.8rem;font-weight:500;color:var(--text-4);display:flex;flex-direction:column;align-items:center;gap:4px;position:relative}
-.tab svg{width:24px;height:24px;stroke-width:1.8}
+.tab{flex:1;padding:12px 0;font-size:.8rem;font-weight:500;color:var(--text-4);display:flex;flex-direction:column;align-items:center;gap:4px}
+.tab svg{width:24px;height:24px;stroke-width:1.8;stroke:currentColor;fill:none}
 .tab.active{color:var(--gold)}
-.tab::after{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%) scaleX(0);width:28px;height:2px;background:var(--gold);transition:transform .3s}
-.tab.active::after{transform:translateX(-50%) scaleX(1)}
-#splash{position:fixed;inset:0;background:var(--splash);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s;pointer-events:none}
-#splash.hide{opacity:0}
-.splash-logo{font:400 5rem/1 'Great Vibes',cursive;color:var(--gold);animation:pulse 2.4s infinite}
-.splash-sub{color:var(--gold);font:1.2rem var(--fq);margin-top:16px}
-.home-greeting{font:400 1.25rem var(--fd);color:var(--text-2)}
-.home-date{font-size:.95rem;color:var(--text-3);margin-bottom:6px}
-.home-hijri{font:.95rem var(--fd);color:var(--gold);margin-bottom:18px}
+#splash{position:fixed;inset:0;background:var(--grad);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s}
+#splash.hide{opacity:0;pointer-events:none}
+.splash-logo{font:400 5rem/1 'Great Vibes',cursive;color:var(--gold)}
+.home-greeting{font:400 1.25rem var(--fd);color:var(--text-2)}.home-date{font-size:.95rem;color:var(--text-3);margin-bottom:6px}.home-hijri{font:.95rem var(--fd);color:var(--gold);margin-bottom:18px}
 .home-action{display:flex;align-items:center;gap:16px;padding:16px 8px;border-bottom:1px solid var(--border);font-size:1.1rem;width:100%;text-align:start}
-.home-action:last-child{border:none}
-.home-action:active{background:var(--gold-soft)}
-.home-action svg,.settings-item .icon svg{width:24px;height:24px;stroke:var(--gold);stroke-width:1.8;fill:none}
+.home-action svg{width:24px;height:24px;stroke:var(--gold);fill:none}
 .home-action .label{flex:1}
-.arrow{color:var(--text-4);font-family:var(--fq);font-size:1.2rem}
-.home-stats{margin-top:28px;display:flex;gap:32px;justify-content:center;padding:16px 0;border-block:1px solid var(--border);width:100%;color:var(--text-3)}
-.home-stat{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:80px}
-.home-stat .num{color:var(--text);font:600 1.6rem/1 var(--fd)}
-.home-stat .lbl{font-size:.85rem;color:var(--text-3)}
+.home-stats{margin-top:28px;display:flex;gap:32px;justify-content:center;padding:16px 0;border-block:1px solid var(--border);width:100%}
+.home-stat{display:flex;flex-direction:column;align-items:center;gap:4px}.home-stat .num{color:var(--text);font:600 1.6rem/1 var(--fd)}.home-stat .lbl{font-size:.85rem;color:var(--text-3)}
 .sheet{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:400;display:flex;align-items:center;justify-content:center;padding:16px;animation:fi .3s}
-.sheet-content{width:100%;max-width:480px;background:var(--card);color:var(--text);border-radius:28px;border:1px solid var(--border-strong);padding:24px 16px;max-height:85vh;overflow-y:auto;position:relative;box-shadow:0 12px 40px rgba(0,0,0,.6);text-align:center}
+.sheet-content{width:100%;max-width:480px;background:var(--card);border-radius:28px;border:1px solid var(--border-strong);padding:24px 16px;max-height:85vh;overflow-y:auto;text-align:center;position:relative}
 .xbtn{width:44px;height:44px;border-radius:50%;background:var(--card);border:1px solid var(--border-strong);color:var(--text);font-size:1.15rem;display:flex;align-items:center;justify-content:center}
-.xbtn:active{color:var(--gold);border-color:var(--gold)}
-.sheet-close{position:absolute;top:12px;left:12px;z-index:10}
-.btn-close,.modal-close{position:fixed;top:calc(16px + env(safe-area-inset-top));left:16px;z-index:410}
-.wopt{display:flex;align-items:center;gap:14px;width:100%;text-align:start;padding:14px 16px;margin:8px 0;border:1.5px solid var(--border-strong);border-radius:var(--r);background:var(--bg);color:var(--text)}
-.wopt:active{border-color:var(--gold)}
-.wopt .ic{font-size:1.7rem}
-.wopt b{display:block;font:500 1.15rem var(--fd);color:var(--text)}
-.wopt small{display:block;color:var(--text-3);font:.85rem var(--fb);margin-top:2px}
-.btn{display:block;width:100%;max-width:360px;margin:10px auto;padding:16px;border:1.5px solid var(--border-strong);border-radius:999px;font-weight:500;font-size:1.05rem;text-align:center;color:var(--text);background:var(--card)}
-.btn:active{transform:scale(.97)}
+.btn-close{position:fixed;top:16px;left:16px;z-index:410}
+.btn{display:block;width:100%;max-width:360px;margin:10px auto;padding:16px;border:1.5px solid var(--border-strong);border-radius:999px;text-align:center;background:var(--card)}
 .btn.primary{background:var(--gold);color:var(--on-gold);border-color:var(--gold);font-weight:600}
-.screen{position:fixed;inset:0;background:var(--bg);color:var(--text);z-index:200;overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 16px 120px;animation:fi .3s}
+.screen{position:fixed;inset:0;background:var(--bg);z-index:200;overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 16px 120px;animation:fi .3s}
 .screen-title{font:500 1.6rem var(--fd);text-align:center;margin-bottom:24px}
-.text-input{width:100%;max-width:500px;margin:0 auto 16px;background:var(--card);border:1px solid var(--border-strong);border-radius:var(--r);padding:20px;font:1.15rem/1.9 var(--fq);display:block;color:var(--text);min-height:220px}
-.moods{display:flex;justify-content:center;gap:10px;margin:8px 0 4px}
-.moods button{font-size:1.9rem;width:52px;height:52px;border-radius:50%;border:2px solid transparent;opacity:.65}
-.moods button.on{border-color:var(--gold);opacity:1}
-.modal{position:fixed;inset:0;background:var(--veil);color:var(--text);z-index:300;overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 8px 130px;animation:fi .3s}
-.modal-content img,.modal-content video{width:100%;border-radius:var(--r);margin-bottom:16px;background:#000}
-.text-content{padding:32px 24px;text-align:center;font:1.2rem/1.9 var(--fq);color:#fff;min-height:160px;display:flex;align-items:center;justify-content:center;word-break:break-word;background:var(--grad) center/cover}
-.modal-text{padding:32px 24px;border-radius:var(--r);font:1.3rem/1.9 var(--fq);text-align:center;margin-bottom:16px;color:#fff;word-break:break-word;background:var(--grad) center/cover}
-.modal-date{text-align:center;color:var(--gold);font:.95rem var(--fd);margin-bottom:24px;padding:8px 16px;border-radius:999px;background:var(--gold-soft)}
-.modal-actions{position:fixed;bottom:calc(28px + env(safe-area-inset-bottom));left:0;right:0;display:flex;justify-content:space-between;padding:0 24px;z-index:320;max-width:560px;margin:0 auto;pointer-events:none}
-.modal-actions button{pointer-events:auto;width:62px;height:62px;border-radius:50%;background:var(--card);border:1px solid var(--border-strong);font-size:1.5rem;box-shadow:var(--shadow)}
+.text-input{width:100%;max-width:500px;margin:0 auto 16px;background:var(--card);border:1px solid var(--border-strong);border-radius:14px;padding:20px;font:1.15rem/1.9 var(--fq);display:block;color:var(--text);min-height:220px}
+.moods{display:flex;justify-content:center;gap:10px;margin:8px 0 4px}.moods button{font-size:1.9rem;width:52px;height:52px;border-radius:50%;border:2px solid transparent;opacity:.65}.moods button.on{border-color:var(--gold);opacity:1}
+.modal{position:fixed;inset:0;background:var(--bg);z-index:300;overflow-y:auto;padding:calc(84px + env(safe-area-inset-top)) 8px 130px}
 .moments-grid{display:flex;flex-direction:column;gap:24px}
-.moment-card{border-radius:var(--r);overflow:hidden;background:var(--card);cursor:pointer;border:1px solid var(--border);animation:fu .4s both}
+.moment-card{border-radius:14px;overflow:hidden;background:var(--card);cursor:pointer;border:1px solid var(--border)}
 .moment-card img{width:100%;max-height:70vh;object-fit:contain;background:#000}
-.vthumb{position:relative;width:100%;aspect-ratio:16/9;background:#111 center/cover no-repeat}
-.vthumb::after{content:'▶';position:absolute;inset:0;margin:auto;width:64px;height:64px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;font-size:1.6rem;display:flex;align-items:center;justify-content:center;padding-inline-start:4px}
-.moment-caption{font-size:1rem;color:var(--text-2);padding:10px 16px 0}
-.moment-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 16px;border-top:1px solid var(--border);min-height:40px}
-.moment-time{font:.9rem var(--fd);color:var(--text-3)}
-.filters{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
-.filters::-webkit-scrollbar{display:none}
-.filter-chip{padding:9px 18px;border-radius:999px;border:1px solid var(--border-strong);color:var(--text-3);font-size:.92rem;white-space:nowrap;flex-shrink:0;font-weight:500}
-.filter-chip.active{background:var(--gold);border-color:var(--gold);color:var(--on-gold);font-weight:600}
-.empty-state{text-align:center;color:var(--text-3);margin-top:70px;line-height:2;padding:24px}
-.empty-icon{font-size:3rem;display:block;opacity:.4;color:var(--gold)}
-.settings-group{margin-bottom:24px}
-.settings-group-title{font:500 .85rem var(--fd);letter-spacing:.08em;color:var(--gold);padding:0 8px;margin-bottom:8px}
-.settings-list{background:var(--card);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;color:var(--text)}
-.settings-item{display:flex;align-items:center;gap:16px;padding:16px;border-bottom:1px solid var(--border);width:100%;text-align:start;min-height:60px;color:var(--text)}
+.text-content{padding:32px 24px;text-align:center;font:1.2rem/1.9 var(--fq);color:#fff;background:var(--grad)}
+.moment-caption{font-size:1rem;color:var(--text-2);padding:10px 16px 0}.moment-meta{display:flex;justify-content:space-between;padding:10px 16px;border-top:1px solid var(--border)}
+.filters{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:8px}
+.filter-chip{padding:9px 18px;border-radius:999px;border:1px solid var(--border-strong);color:var(--text-3);font-size:.92rem;white-space:nowrap}
+.filter-chip.active{background:var(--gold);color:var(--on-gold);font-weight:600}
+.settings-list{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden}
+.settings-item{display:flex;align-items:center;gap:16px;padding:16px;border-bottom:1px solid var(--border);width:100%;text-align:start}
 .settings-item:last-child{border:none}
-.settings-item:active{background:var(--card-hover)}
-.settings-item .icon{width:26px;display:flex;justify-content:center}
-.settings-item .info{flex:1;display:flex;flex-direction:column}
-.settings-item .value{font-size:.88rem;color:var(--text-3)}
-#toast{position:fixed;top:calc(12px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);max-width:90%;padding:12px 22px;border-radius:999px;background:var(--card);border:1px solid var(--gold);color:var(--gold);font-weight:500;font-size:.95rem;z-index:30000;box-shadow:var(--shadow);pointer-events:none;text-align:center;transition:opacity .3s}
+.settings-item .icon svg{width:24px;height:24px;stroke:var(--gold);fill:none}
+.settings-item .label{flex:1}
+#toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);padding:12px 22px;border-radius:999px;background:var(--card);border:1px solid var(--gold);color:var(--gold);z-index:30000;pointer-events:none;text-align:center;transition:opacity .3s;font-weight:500}
 </style>
 </head>
 <body>
 <div id="toast" class="hidden"></div>
-<div id="splash"><div class="splash-logo">Lahza</div><div class="splash-sub">لحظة</div></div>
+<div id="splash"><div class="splash-logo">Lahza</div><div style="color:var(--gold);font:1.2rem var(--fq);margin-top:16px">لحظة</div></div>
 
 <div class="content" id="tabHome">
   <div class="home-greeting" id="greeting"></div>
   <div class="home-date" id="todayDate"></div>
-  <div class="home-hijri" id="hijriDate"></div>
+  <div style="height:20px"></div>
   <div class="home-actions">
-    <button class="home-action" id="actionText"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span class="label">كتابة</span><span class="arrow">›</span></button>
-    <button class="home-action" id="actionPhoto"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span class="label">صورة</span><span class="arrow">›</span></button>
-    <button class="home-action" id="actionVideo"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span class="label">فيديو</span><span class="arrow">›</span></button>
-    <button class="home-action" id="actionAudio"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" y1="18" x2="12" y2="22"/></svg><span class="label">صوت</span><span class="arrow">›</span></button>
-    <button class="home-action" id="actionOldDate"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="label">تاريخ قديم</span><span class="arrow">›</span></button>
+    <button class="home-action" id="actionText"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span class="label">كتابة</span><span class="arrow">›</span></button>
+    <button class="home-action" id="actionPhoto"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span class="label">صورة</span><span class="arrow">›</span></button>
+    <button class="home-action" id="actionVideo"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span class="label">فيديو</span><span class="arrow">›</span></button>
+    <button class="home-action" id="actionAudio"><svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" y1="18" x2="12" y2="22"/></svg><span class="label">صوت</span><span class="arrow">›</span></button>
   </div>
-  <div class="on-this-day hidden" id="onThisDay" style="display:none;"><div class="on-this-day-title">في مثل هذا اليوم</div><div id="onThisDayYears"></div></div>
   <button class="home-stats" id="homeStats">
     <div class="home-stat"><span class="num" id="streakText">0</span><span class="lbl">يوم متواصل</span></div>
     <div class="home-stat"><span class="num" id="counterText">0</span><span class="lbl">لقطة</span></div>
@@ -124,29 +78,13 @@ audio{width:100%}
 
 <div class="content hidden" id="tabMoments">
   <h1 class="page-title">لقطاتي</h1>
-  <input class="search" id="searchInput" type="search" placeholder="ابحث..." style="width:100%;padding:12px 20px;border-radius:999px;background:var(--card);color:var(--text);border:1px solid var(--border-strong);margin-bottom:16px;">
-  <div class="filters" id="filterRow"></div>
   <div id="momentsGrid" class="moments-grid"></div>
-  <div class="empty-state hidden" id="empty"><span class="empty-icon">✦</span><div>لا توجد لقطات بعد</div></div>
 </div>
 
 <div class="content hidden" id="tabSettings">
   <h1 class="page-title">الإعدادات</h1>
-  <div class="settings-group">
-    <div class="settings-group-title">عام</div>
-    <div class="settings-list">
-      <button class="settings-item" id="btnTheme"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg></span><div class="info"><span class="label">المظهر</span><span class="value" id="themeStatus">غامق</span></div><span class="arrow">›</span></button>
-      <button class="settings-item" id="btnFont"><span class="icon"><svg viewBox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg></span><div class="info"><span class="label">حجم الخط</span><span class="value" id="fontStatus">متوسط</span></div><span class="arrow">›</span></button>
-      <button class="settings-item" id="btnLanguage"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg></span><div class="info"><span class="label">اللغة</span><span class="value" id="languageStatus">العربية</span></div><span class="arrow">›</span></button>
-    </div>
-  </div>
-  <div class="settings-group">
-    <div class="settings-group-title">البيانات</div>
-    <div class="settings-list">
-      <button class="settings-item" id="btnExport"><span class="icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span><div class="info"><span class="label">تصدير نسخة احتياطية</span></div><span class="arrow">›</span></button>
-      <button class="settings-item" id="btnImport"><span class="icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span><div class="info"><span class="label">استيراد نسخة احتياطية</span></div><span class="arrow">›</span></button>
-      <input type="file" id="importInput" accept=".zip" hidden>
-    </div>
+  <div class="settings-list">
+    <button class="settings-item" id="btnTheme"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg></span><span class="label">المظهر (غامق/فاتح)</span></button>
   </div>
 </div>
 
@@ -156,43 +94,26 @@ audio{width:100%}
   <button class="tab" id="tabBtnSettings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>الإعدادات</span></button>
 </div>
 
-<div class="screen hidden" id="photoScreen"><button class="xbtn btn-close" id="photoClose">✕</button><h2 class="screen-title">صورة</h2><video id="photoVideo" autoplay playsinline style="width:100%;border-radius:14px;background:#000"></video><button class="btn primary" id="snapBtn" style="margin-top:16px">التقاط</button><div id="photoStrip" style="display:flex;gap:8px;margin-top:10px;overflow-x:auto"></div><button class="btn primary hidden" id="photoNext" style="margin-top:16px">التالي</button></div>
+<div class="screen hidden" id="photoScreen"><button class="xbtn btn-close" id="photoClose">✕</button><h2 class="screen-title">صورة</h2><video id="photoVideo" autoplay playsinline style="width:100%;border-radius:14px;background:#000"></video><button class="btn primary" id="snapBtn" style="margin-top:16px">التقاط</button><button class="btn primary hidden" id="photoNext" style="margin-top:16px">التالي</button></div>
 <div class="screen hidden" id="textScreen"><button class="xbtn btn-close" id="textClose">✕</button><h2 class="screen-title">كتابة</h2><textarea class="text-input" id="textInput"></textarea><button class="btn primary" id="saveTextBtn">حفظ</button></div>
-<div class="screen hidden" id="saveScreen"><button class="xbtn btn-close" id="saveClose">✕</button><h2 class="screen-title">حفظ اللقطة</h2><div id="previewWrap"></div><div class="moods" id="moodRow"></div><textarea class="text-input" id="captionInput" placeholder="أضف جملة (اختياري)" style="min-height:80px"></textarea><button class="btn primary" id="saveBtn">حفظ</button></div>
-<div class="screen hidden" id="dayMomentsScreen"><button class="xbtn btn-close" id="dayMomentsClose">✕</button><h2 class="screen-title" id="dayMomentsTitle"></h2><div id="dayMomentsGrid" class="moments-grid"></div></div>
-
-<div class="sheet hidden" id="datePickerSheet"><div class="sheet-content"><button class="xbtn sheet-close" id="datePickerClose">✕</button><h3>اختر التاريخ</h3><div style="display:flex;gap:8px;margin:20px 0"><select id="pickYear"></select><select id="pickMonth"></select><select id="pickDay"></select></div><button class="btn primary" id="datePickerConfirm">تأكيد</button></div></div>
-<div class="sheet hidden" id="typePickerSheet"><div class="sheet-content"><button class="xbtn sheet-close" id="typePickerClose">✕</button><h3>اختر النوع</h3><button class="btn primary" id="pickTypePhoto">صورة</button><button class="btn primary" id="pickTypeText">كتابة</button><button class="btn" id="pickTypeCancel">إلغاء</button></div></div>
-
-<div class="modal hidden" id="momentModal"><button class="xbtn modal-close" id="modalClose">✕</button><div class="modal-content" id="modalContent" style="padding:20px"></div><div class="modal-actions"><button id="modalDelete">🗑</button></div></div>
-<div class="modal hidden" id="themeModal"><button class="xbtn modal-close" id="themeClose">✕</button><div class="modal-content"><h2 class="screen-title">المظهر</h2><button class="btn" data-mode="dark">غامق</button><button class="btn" data-mode="light">فاتح</button><button class="btn" data-mode="auto">تلقائي</button></div></div>
-<div class="modal hidden" id="fontModal"><button class="xbtn modal-close" id="fontClose">✕</button><div class="modal-content"><h2 class="screen-title">حجم الخط</h2><button class="btn" data-fs="s">صغير</button><button class="btn" data-fs="m">متوسط</button><button class="btn" data-fs="l">كبير</button></div></div>
-<div class="modal hidden" id="languageModal"><button class="xbtn modal-close" id="languageClose">✕</button><div class="modal-content"><h2 class="screen-title">اللغة</h2><div class="settings-list"><button class="settings-item" data-lang="ar"><div class="info"><span class="label">العربية</span></div></button><button class="settings-item" data-lang="en"><div class="info"><span class="label">English</span></div></button><button class="settings-item" data-lang="sv"><div class="info"><span class="label">Svenska</span></div></button></div></div></div>
+<div class="screen hidden" id="saveScreen"><button class="xbtn btn-close" id="saveClose">✕</button><h2 class="screen-title">حفظ اللقطة</h2><div id="previewWrap"></div><div class="moods" id="moodRow"></div><button class="btn primary" id="saveBtn" style="margin-top:20px">حفظ</button></div>
+<div class="modal hidden" id="momentModal"><button class="xbtn btn-close" id="modalClose">✕</button><div class="modal-content" id="modalContent" style="padding:20px"></div></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
-  /* ============ الأساسيات ============ */
-const $ = id => document.getElementById(id);
-const mk = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
-const LS = (k, v) => { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } };
-const S = { lang: 'ar', theme: 'dark', fs: 'm', photos: [], blob: null, type: null, mood: null, oldDate: null, cur: null };
-const MOODS = ['😄','🙂','😐','😔','😢'];
-let db;
-
-function toast(msg, isErr) {
-  const e = $('toast');
-  e.textContent = msg;
-  e.style.borderColor = isErr ? '#EF4444' : 'var(--gold)';
-  e.style.color = isErr ? '#EF4444' : 'var(--gold)';
-  e.classList.remove('hidden');
-  clearTimeout(e._t);
-  e._t = setTimeout(() => e.classList.add('hidden'), 3000);
+const $ = s => document.querySelector(s);
+const mk = (t, c, h) => { const e = document.createElement(t); if (c) e.className = c; if (h) e.innerHTML = h; return e; };
+const toastEl = $('#toast');
+function toast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.remove('hidden');
+  clearTimeout(toastEl._t);
+  toastEl._t = setTimeout(() => toastEl.classList.add('hidden'), 3000);
 }
 
-const dstr = d => { d = new Date(d); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); };
-const fdate = d => { d = new Date(d); return d.toLocaleDateString('ar-EG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); };
+let db, S = { blob: null, type: null, mood: null };
 
-/* ============ قاعدة البيانات ============ */
+// قاعدة البيانات
 function openDB() {
   return new Promise((res, rej) => {
     const r = indexedDB.open('lahza-db', 2);
@@ -205,423 +126,195 @@ function openDB() {
     r.onerror = () => rej(r.error);
   });
 }
-const rq = r => new Promise((s, j) => { r.onsuccess = () => s(r.result); r.onerror = () => j(r.error); });
-const txDone = tx => new Promise((s, j) => { tx.oncomplete = s; tx.onerror = tx.onabort = () => j(tx.error); });
-const getAll = () => rq(db.transaction('moments').objectStore('moments').getAll());
-const getMeta = id => rq(db.transaction('moments').objectStore('moments').get(id));
-const getBlob = k => rq(db.transaction('blobs').objectStore('blobs').get(k));
-const putBlob = (k, b) => rq(db.transaction('blobs', 'readwrite').objectStore('blobs').put(b, k));
-const upd = m => rq(db.transaction('moments', 'readwrite').objectStore('moments').put(m));
-
+const getAll = () => new Promise(res => { const q = db.transaction('moments').objectStore('moments').getAll(); q.onsuccess = () => res(q.result); });
+const getBlob = (id) => new Promise(res => { const q = db.transaction('blobs').objectStore('blobs').get(id); q.onsuccess = () => res(q.result); });
 async function addMoment(m, blob) {
-  try {
+  return new Promise((res, rej) => {
     const tx = db.transaction(['moments', 'blobs'], 'readwrite');
-    const id = await rq(tx.objectStore('moments').add(m));
-    tx.objectStore('blobs').put(blob, id);
-    await txDone(tx);
-    return id;
-  } catch (e) {
-    throw new Error('فشل الحفظ');
-  }
+    const req = tx.objectStore('moments').add(m);
+    req.onsuccess = () => { tx.objectStore('blobs').put(blob, req.result); tx.oncomplete = () => res(); };
+    tx.onerror = () => rej(tx.error);
+  });
 }
 async function delMoment(id) {
-  const tx = db.transaction(['moments', 'blobs'], 'readwrite');
-  tx.objectStore('moments').delete(id);
-  tx.objectStore('blobs').delete(id);
-  await txDone(tx);
+  return new Promise(res => {
+    const tx = db.transaction(['moments', 'blobs'], 'readwrite');
+    tx.objectStore('moments').delete(id);
+    tx.objectStore('blobs').delete(id);
+    tx.oncomplete = () => res();
+  });
 }
 
-/* ============ التبويبات والرئيسية ============ */
+// التبويبات
 function switchTab(n) {
   ['Home', 'Moments', 'Settings'].forEach(x => {
-    $('tabBtn' + x).classList.toggle('active', x === n);
-    $('tab' + x).classList.toggle('hidden', x !== n);
+    $('#tabBtn' + x).classList.toggle('active', x === n);
+    $('#tab' + x).classList.toggle('hidden', x !== n);
   });
   if (n === 'Home') updateHome();
   if (n === 'Moments') renderMoments();
 }
-$('tabBtnHome').onclick = () => switchTab('Home');
-$('tabBtnMoments').onclick = () => switchTab('Moments');
-$('tabBtnSettings').onclick = () => switchTab('Settings');
+$('#tabBtnHome').onclick = () => switchTab('Home');
+$('#tabBtnMoments').onclick = () => switchTab('Moments');
+$('#tabBtnSettings').onclick = () => switchTab('Settings');
 
 async function updateHome() {
-  $('todayDate').textContent = fdate(new Date());
-  const h = new Date().getHours();
-  $('greeting').textContent = (h >= 5 && h < 12) ? 'صباح الخير' : 'مساء الخير';
-  
+  const d = new Date();
+  $('#todayDate').textContent = d.toLocaleDateString('ar-EG', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  $('#greeting').textContent = (d.getHours() >= 5 && d.getHours() < 12) ? 'صباح الخير' : 'مساء الخير';
   try {
     const ms = await getAll();
-    $('counterText').textContent = ms.length;
-    const days = new Set(ms.map(m => dstr(m.date)));
-    let streak = 0, c = new Date();
-    if (!days.has(dstr(c))) c.setDate(c.getDate() - 1);
-    while (days.has(dstr(c))) { streak++; c.setDate(c.getDate() - 1); }
-    $('streakText').textContent = streak;
-  } catch (e) {}
+    $('#counterText').textContent = ms.length;
+    const days = new Set(ms.map(m => new Date(m.date).toDateString()));
+    $('#streakText').textContent = days.size;
+  } catch(e){}
 }
 
-/* ============ الكاميرا ============ */
-let cameraStream = null;
-async function openCamera() {
-  $('photoScreen').classList.remove('hidden');
+// الكاميرا
+let stream = null;
+$('#actionPhoto').onclick = async () => {
+  $('#photoScreen').classList.remove('hidden');
   try {
-    cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-    $('photoVideo').srcObject = cameraStream;
-  } catch (e) { toast('تعذر فتح الكاميرا', true); }
-}
-function closeCamera() {
-  if (cameraStream) { cameraStream.getTracks().forEach(t => t.stop()); cameraStream = null; }
-}
-
-$('actionPhoto').onclick = () => { S.oldDate = null; S.photos = []; renderStrip(); openCamera(); };
-$('photoClose').onclick = () => { closeCamera(); $('photoScreen').classList.add('hidden'); resetState(); };
-$('snapBtn').onclick = () => {
-  const v = $('photoVideo');
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+    $('#photoVideo').srcObject = stream;
+  } catch (e) { toast('تعذر فتح الكاميرا'); }
+};
+$('#photoClose').onclick = () => {
+  if (stream) stream.getTracks().forEach(t => t.stop());
+  $('#photoScreen').classList.add('hidden');
+  S.blob = null; $('#photoNext').classList.add('hidden');
+};
+$('#snapBtn').onclick = () => {
+  const v = $('#photoVideo');
   if (!v.videoWidth) return;
   const cv = document.createElement('canvas');
   cv.width = v.videoWidth; cv.height = v.videoHeight;
   cv.getContext('2d').drawImage(v, 0, 0);
-  cv.toBlob(b => { S.photos.push(b); renderStrip(); }, 'image/jpeg', 0.85);
+  cv.toBlob(b => {
+    S.blob = b; S.type = 'photo';
+    $('#photoNext').classList.remove('hidden');
+    toast('تم التقاط الصورة');
+  }, 'image/jpeg', 0.85);
 };
-function renderStrip() {
-  const s = $('photoStrip'); s.innerHTML = '';
-  S.photos.forEach(b => {
-    const im = new Image(); im.src = URL.createObjectURL(b);
-    im.style.cssText = 'width:60px;height:60px;object-fit:cover;border-radius:8px;border:1px solid var(--border-strong)';
-    s.appendChild(im);
-  });
-  $('photoNext').classList.toggle('hidden', S.photos.length === 0);
-}
-$('photoNext').onclick = () => {
-  if (!S.photos.length) return;
-  closeCamera(); S.type = 'photo'; S.blob = S.photos[0];
-  $('photoScreen').classList.add('hidden');
-  showPreview(); $('saveScreen').classList.remove('hidden');
+$('#photoNext').onclick = () => {
+  if (!S.blob) return;
+  if (stream) stream.getTracks().forEach(t => t.stop());
+  $('#photoScreen').classList.add('hidden');
+  showPreview(); $('#saveScreen').classList.remove('hidden');
 };
 
-/* ============ الفيديو والصوت ============ */
-$('actionVideo').onclick = () => {
+// الفيديو والصوت
+$('#actionVideo').onclick = () => {
   const i = document.createElement('input'); i.type = 'file'; i.accept = 'video/*';
-  i.onchange = () => {
-    if (!i.files[0]) return;
-    S.blob = i.files[0]; S.type = 'video'; S.oldDate = null;
-    showPreview(); $('saveScreen').classList.remove('hidden');
-  };
+  i.onchange = () => { if (i.files[0]) { S.blob = i.files[0]; S.type = 'video'; showPreview(); $('#saveScreen').classList.remove('hidden'); } };
   i.click();
 };
-$('actionAudio').onclick = () => {
+$('#actionAudio').onclick = () => {
   const i = document.createElement('input'); i.type = 'file'; i.accept = 'audio/*';
-  i.onchange = () => {
-    if (!i.files[0]) return;
-    S.blob = i.files[0]; S.type = 'audio'; S.oldDate = null;
-    showPreview(); $('saveScreen').classList.remove('hidden');
-  };
+  i.onchange = () => { if (i.files[0]) { S.blob = i.files[0]; S.type = 'audio'; showPreview(); $('#saveScreen').classList.remove('hidden'); } };
   i.click();
 };
 
-/* ============ الكتابة ============ */
-$('actionText').onclick = () => { S.oldDate = null; $('textInput').value = ''; $('textScreen').classList.remove('hidden'); };
-$('textClose').onclick = () => { $('textScreen').classList.add('hidden'); resetState(); };
-$('saveTextBtn').onclick = () => {
-  const txt = $('textInput').value.trim();
-  if (!txt) return toast('اكتب شيئاً أولاً', true);
-  S.blob = new Blob([txt], { type: 'text/plain' });
-  S.type = 'text';
-  $('textScreen').classList.add('hidden');
-  showPreview(); $('saveScreen').classList.remove('hidden');
+// الكتابة
+$('#actionText').onclick = () => { $('#textInput').value = ''; $('#textScreen').classList.remove('hidden'); };
+$('#textClose').onclick = () => $('#textScreen').classList.add('hidden');
+$('#saveTextBtn').onclick = () => {
+  const txt = $('#textInput').value.trim();
+  if (!txt) return toast('اكتب شيئاً أولاً');
+  S.blob = new Blob([txt], { type: 'text/plain' }); S.type = 'text';
+  $('#textScreen').classList.add('hidden');
+  showPreview(); $('#saveScreen').classList.remove('hidden');
 };
 
-/* ============ شاشة الحفظ ============ */
-function resetState() { S.photos = []; S.blob = null; S.type = null; S.mood = null; S.oldDate = null; }
+// الحفظ
 function showPreview() {
-  const w = $('previewWrap'); w.innerHTML = '';
-  if (S.type === 'photo') {
-    const im = new Image(); im.src = URL.createObjectURL(S.blob); im.style.cssText = 'width:100%;border-radius:14px;margin-bottom:12px';
-    w.appendChild(im);
-  } else if (S.type === 'video' || S.type === 'audio') {
-    const el = document.createElement(S.type); el.src = URL.createObjectURL(S.blob); el.controls = true; el.style.cssText = 'width:100%;border-radius:14px;margin-bottom:12px';
+  const w = $('#previewWrap'); w.innerHTML = '';
+  if (S.type === 'photo' || S.type === 'video') {
+    const el = document.createElement(S.type === 'photo' ? 'img' : 'video');
+    el.src = URL.createObjectURL(S.blob);
+    if (S.type === 'video') el.controls = true;
+    el.style.cssText = 'width:100%;border-radius:14px;margin-bottom:12px';
     w.appendChild(el);
+  } else if (S.type === 'audio') {
+    const el = document.createElement('audio'); el.src = URL.createObjectURL(S.blob); el.controls = true; w.appendChild(el);
   } else if (S.type === 'text') {
-    S.blob.text().then(t => {
-      const d = mk('div', 'text-content', t); d.style.borderRadius = '14px'; d.style.marginBottom = '12px';
-      w.appendChild(d);
-    });
+    S.blob.text().then(t => { const d = mk('div', 'text-content', t); w.appendChild(d); });
   }
   paintMoods();
 }
 function paintMoods() {
-  const r = $('moodRow'); r.innerHTML = '';
-  MOODS.forEach(e => {
+  const r = $('#moodRow'); r.innerHTML = '';
+  ['😄','🙂','😐','😔','😢'].forEach(e => {
     const b = mk('button', S.mood === e ? 'on' : '', e);
     b.onclick = () => { S.mood = S.mood === e ? null : e; paintMoods(); };
     r.appendChild(b);
   });
 }
-$('saveClose').onclick = () => { $('saveScreen').classList.add('hidden'); $('captionInput').value = ''; resetState(); };
-$('saveBtn').onclick = async () => {
+$('#saveClose').onclick = () => { $('#saveScreen').classList.add('hidden'); S.blob = null; S.type = null; S.mood = null; };
+$('#saveBtn').onclick = async () => {
   if (!S.blob) return;
   try {
-    const m = { date: (S.oldDate || new Date()).toISOString(), type: S.type, caption: $('captionInput').value.trim(), favorite: false };
+    const m = { date: new Date().toISOString(), type: S.type, favorite: false };
     if (S.mood) m.mood = S.mood;
     if (S.type === 'text') m.txt = await S.blob.text();
     await addMoment(m, S.blob);
-    toast('تم الحفظ بنجاح');
-    $('saveScreen').classList.add('hidden');
-    $('captionInput').value = '';
-    resetState();
+    toast('تم الحفظ');
+    $('#saveClose').click();
     switchTab('Home');
-  } catch (e) { toast('حدث خطأ أثناء الحفظ', true); }
+  } catch (e) { toast('خطأ في الحفظ'); }
 };
-  /* ============ عرض اللقطات (لقطاتي) ============ */
-async function renderMoments() {
-  const grid = $('momentsGrid'); 
-  if(!grid) return;
-  grid.innerHTML = '';
-  try {
-    const ms = (await getAll()).sort((a, b) => new Date(b.date) - new Date(a.date));
-    if (!ms.length) { 
-      $('empty').classList.remove('hidden'); 
-      return; 
-    }
-    $('empty').classList.add('hidden');
-    
-    for (const m of ms) {
-      const c = mk('div', 'moment-card');
-      const b = await getBlob(m.id);
-      if (m.type === 'photo' && b) {
-        const im = new Image(); 
-        im.src = URL.createObjectURL(b); 
-        c.appendChild(im);
-      } else if (m.type === 'video' && b) {
-        const w = mk('div', 'vthumb');
-        const v = document.createElement('video');
-        v.src = URL.createObjectURL(b);
-        v.muted = true; v.playsInline = true;
-        // إنشاء صورة مصغرة للفيديو
-        setTimeout(() => {
-          try {
-            v.currentTime = 0.1;
-            v.onseeked = () => {
-              const cv = document.createElement('canvas');
-              cv.width = v.videoWidth || 640; cv.height = v.videoHeight || 360;
-              cv.getContext('2d').drawImage(v, 0, 0, cv.width, cv.height);
-              w.style.backgroundImage = `url(${cv.toDataURL('image/jpeg')})`;
-            };
-          } catch(e){}
-        }, 500);
-        c.appendChild(w);
-      } else if (m.type === 'text' && b) {
-        const t = await b.text();
-        c.appendChild(mk('div', 'text-content', t));
-      } else if (m.type === 'audio') {
-        c.appendChild(mk('div', 'text-content', '🎙 مقطع صوتي'));
-      } else {
-        c.appendChild(mk('div', 'text-content', 'لقطة غير معروفة'));
-      }
 
-      if (m.caption) c.appendChild(mk('div', 'moment-caption', m.caption));
-      
-      const meta = mk('div', 'moment-meta');
-      meta.innerHTML = `<span style="font-size:1.2rem">${m.mood || ''}</span><span style="font-size:.9rem;color:var(--text-3)">${fdate(m.date)}</span>`;
-      c.appendChild(meta);
-      
-      c.onclick = () => openModal(m.id);
-      grid.appendChild(c);
+// عرض اللقطات
+async function renderMoments() {
+  const grid = $('#momentsGrid'); grid.innerHTML = '';
+  const ms = (await getAll()).sort((a,b) => new Date(b.date) - new Date(a.date));
+  if (!ms.length) { grid.innerHTML = '<div style="text-align:center;color:#888;margin-top:40px;">لا توجد لقطات بعد</div>'; return; }
+  
+  for (const m of ms) {
+    const c = mk('div', 'moment-card');
+    const b = await getBlob(m.id);
+    if (m.type === 'photo' && b) {
+      const im = new Image(); im.src = URL.createObjectURL(b); c.appendChild(im);
+    } else if (m.type === 'text' && b) {
+      c.appendChild(mk('div', 'text-content', m.txt || await b.text()));
+    } else {
+      c.appendChild(mk('div', 'text-content', m.type === 'video' ? '🎥 فيديو' : '🎙 صوت'));
     }
+    const meta = mk('div', 'moment-meta');
+    meta.innerHTML = `<span>${m.mood || ''}</span><span style="font-size:.9rem;color:var(--text-3)">${new Date(m.date).toLocaleDateString('ar-EG')}</span>`;
+    c.appendChild(meta);
+    c.onclick = () => {
+      if (confirm('هل تريد حذف هذه اللقطة؟')) {
+        delMoment(m.id).then(() => { toast('تم الحذف'); renderMoments(); updateHome(); });
+      }
+    };
+    grid.appendChild(c);
+  }
+}
+
+// المظهر
+$('#btnTheme').onclick = () => {
+  const curr = document.documentElement.dataset.theme || 'dark';
+  const next = curr === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem('lahza-theme', next);
+  toast('تم تغيير المظهر');
+};
+
+// التشغيل
+async function init() {
+  try {
+    const savedTheme = localStorage.getItem('lahza-theme');
+    if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+    await openDB();
+    updateHome();
   } catch (e) {
     console.error(e);
-  }
-}
-
-/* ============ نافذة عرض اللقطة ============ */
-async function openModal(id) {
-  const m = await getMeta(id);
-  if (!m) return;
-  S.cur = id;
-  const c = $('modalContent');
-  c.innerHTML = '';
-  const b = await getBlob(id);
-
-  if (m.type === 'photo' && b) {
-    const im = new Image(); im.src = URL.createObjectURL(b); c.appendChild(im);
-  } else if (m.type === 'video' && b) {
-    const v = document.createElement('video'); v.src = URL.createObjectURL(b); v.controls = true; v.playsInline = true; c.appendChild(v);
-  } else if (m.type === 'audio' && b) {
-    const a = document.createElement('audio'); a.src = URL.createObjectURL(b); a.controls = true; c.appendChild(a);
-  } else if (m.type === 'text' && b) {
-    const t = await b.text();
-    const d = mk('div', 'modal-text'); d.textContent = t; c.appendChild(d);
-  }
-
-  if (m.caption) c.appendChild(mk('div', 'moment-caption', m.caption));
-  c.appendChild(mk('div', 'modal-date', (m.mood ? m.mood + '  ' : '') + fdate(m.date)));
-  
-  $('momentModal').classList.remove('hidden');
-  $('momentModal').scrollTop = 0;
-}
-
-$('modalClose').onclick = () => { $('momentModal').classList.add('hidden'); $('modalContent').innerHTML = ''; S.cur = null; };
-$('modalDelete').onclick = async () => {
-  if (!S.cur) return;
-  if (confirm('هل تريد حذف هذه اللقطة؟')) {
-    await delMoment(S.cur);
-    $('momentModal').classList.add('hidden');
-    $('modalContent').innerHTML = '';
-    S.cur = null;
-    toast('تم الحذف');
-    updateHome();
-    renderMoments();
-  }
-};
-
-/* ============ التاريخ القديم ============ */
-$('actionOldDate').onclick = () => {
-  const y = $('pickYear'), m = $('pickMonth'), d = $('pickDay');
-  y.innerHTML = ''; m.innerHTML = ''; d.innerHTML = '';
-  for (let i = new Date().getFullYear(); i >= 1900; i--) y.add(new Option(i, i));
-  const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-  months.forEach((name, i) => m.add(new Option(name, i + 1)));
-  
-  const fillDays = () => {
-    d.innerHTML = '';
-    const days = new Date(y.value, m.value, 0).getDate();
-    for (let i = 1; i <= days; i++) d.add(new Option(i, i));
-  };
-  y.onchange = fillDays; m.onchange = fillDays; fillDays();
-  
-  [y, m, d].forEach(sel => { sel.style.cssText = 'flex:1;padding:10px;border-radius:8px;background:var(--bg);color:var(--text);border:1px solid var(--border-strong)'; });
-  $('datePickerSheet').classList.remove('hidden');
-};
-$('datePickerClose').onclick = () => $('datePickerSheet').classList.add('hidden');
-$('datePickerConfirm').onclick = () => {
-  S.oldDate = new Date($('pickYear').value, $('pickMonth').value - 1, $('pickDay').value, 12, 0, 0);
-  $('datePickerSheet').classList.add('hidden');
-  $('typePickerSheet').classList.remove('hidden');
-};
-$('typePickerClose').onclick = () => $('typePickerSheet').classList.add('hidden');
-$('pickTypeCancel').onclick = () => $('typePickerSheet').classList.add('hidden');
-$('pickTypePhoto').onclick = () => { $('typePickerSheet').classList.add('hidden'); S.photos = []; renderStrip(); openCamera(); };
-$('pickTypeText').onclick = () => {
-  $('typePickerSheet').classList.add('hidden');
-  $('textInput').value = '';
-  $('textScreen').classList.remove('hidden');
-};
-
-/* ============ الإعدادات (المظهر والخط) ============ */
-$('btnTheme').onclick = () => $('themeModal').classList.remove('hidden');
-$('themeClose').onclick = () => $('themeModal').classList.add('hidden');
-document.querySelectorAll('#themeModal [data-mode]').forEach(b => {
-  b.onclick = () => {
-    S.theme = b.dataset.mode;
-    document.documentElement.dataset.theme = S.theme;
-    LS('lahza-theme', S.theme);
-    $('themeStatus').textContent = b.textContent;
-    $('themeModal').classList.add('hidden');
-  };
-});
-
-$('btnFont').onclick = () => $('fontModal').classList.remove('hidden');
-$('fontClose').onclick = () => $('fontModal').classList.add('hidden');
-document.querySelectorAll('#fontModal [data-fs]').forEach(b => {
-  b.onclick = () => {
-    S.fs = b.dataset.fs;
-    const sizes = { s: '16px', m: '18px', l: '20px' };
-    document.documentElement.style.fontSize = sizes[S.fs];
-    LS('lahza-fs', S.fs);
-    $('fontStatus').textContent = b.textContent;
-    $('fontModal').classList.add('hidden');
-  };
-});
-
-$('btnLanguage').onclick = () => $('languageModal').classList.remove('hidden');
-$('languageClose').onclick = () => $('languageModal').classList.add('hidden');
-document.querySelectorAll('#languageModal [data-lang]').forEach(b => {
-  b.onclick = () => {
-    // لتجنب التعقيد، اللغة الحالية هي العربية فقط في هذه النسخة المستقرة
-    $('languageModal').classList.add('hidden');
-    toast('سيتم دعم اللغات قريباً');
-  };
-});
-
-/* ============ النسخ الاحتياطي والاستيراد ============ */
-$('btnExport').onclick = async () => {
-  const ms = await getAll();
-  if (!ms.length) return toast('لا توجد لقطات للتصدير', true);
-  toast('جاري التصدير...');
-  const zip = new JSZip();
-  for (const m of ms) {
-    const b = await getBlob(m.id);
-    if (b) zip.file(`m_${m.id}`, b);
-  }
-  zip.file('data.json', JSON.stringify(ms));
-  const content = await zip.generateAsync({ type: 'blob' });
-  const a = document.createElement('a'); 
-  a.href = URL.createObjectURL(content); 
-  a.download = `lahza-backup-${Date.now()}.zip`;
-  a.click();
-  toast('تم التصدير بنجاح');
-};
-
-$('btnImport').onclick = () => $('importInput').click();
-$('importInput').onchange = async (e) => {
-  const f = e.target.files[0];
-  if (!f) return;
-  toast('جاري الاستيراد...');
-  try {
-    const zip = await JSZip.loadAsync(f);
-    const data = JSON.parse(await zip.file('data.json').async('string'));
-    let count = 0;
-    for (const m of data) {
-      const b = zip.file(`m_${m.id}`);
-      if (b) {
-        const blob = await b.async('blob');
-        delete m.id; // مسح المعرف القديم لإنشاء معرف جديد
-        await addMoment(m, blob);
-        count++;
-      }
-    }
-    toast(`تم استيراد ${count} لقطة بنجاح`);
-    updateHome();
-    renderMoments();
-  } catch (err) {
-    toast('فشل الاستيراد: الملف غير صالح', true);
-  }
-  e.target.value = '';
-};
-
-/* ============ التشغيل النهائي ============ */
-async function startApp() {
-  try {
-    // تطبيق الإعدادات المحفوظة
-    S.theme = LS('lahza-theme') || 'dark';
-    document.documentElement.dataset.theme = S.theme;
-    
-    S.fs = LS('lahza-fs') || 'm';
-    document.documentElement.style.fontSize = { s: '16px', m: '18px', l: '20px' }[S.fs];
-
-    // فتح قاعدة البيانات
-    await openDB();
-    
-    // تحديث الواجهات
-    updateHome();
-    
-  } catch (e) {
-    console.error('Error initializing app:', e);
-    toast('حدث خطأ في التهيئة، حاول إعادة التشغيل', true);
   } finally {
-    // إخفاء شاشة البداية دائماً حتى لو حدث خطأ
-    setTimeout(() => {
-      const sp = $('splash');
-      if (sp) {
-        sp.classList.add('hide');
-        setTimeout(() => sp.style.display = 'none', 800);
-      }
-    }, 1500);
+    setTimeout(() => { $('#splash').classList.add('hide'); }, 1500);
   }
 }
-
-// بدء التطبيق
-startApp();
+init();
 </script>
 </body>
 </html>
