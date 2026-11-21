@@ -3746,5 +3746,27 @@ clean(document.body);
  for(var k in M){var b=document.getElementById(k);if(b)b.innerHTML=M[k]}
 })();
 </script>
+
+<style id="lx-unify-fix3">
+/* إصلاح: الأزرار المخفية رجعت تظهر بسبب دفعة الأزرار */
+.btn.hidden,.btn[style*="display: none"],.btn[style*="display:none"]{display:none!important}
+/* أزرار التنقّل بين الشهور: دوائر صغيرة */
+.sheet-content div[style*="justify-content: space-between"][style*="direction: ltr"]>.filter-chip{width:36px!important;height:36px!important;padding:0!important;display:flex!important;align-items:center;justify-content:center;font-size:1.1rem!important}
+audio{height:42px}
+</style>
+<script>
+(function(){
+ /* ترجمات الأزرار الجديدة بملخص الشهر */
+ var A={
+  ar:{sm_song_up:'اختر ملفاً صوتياً',sm_song_del:'حذف الأغنية',sm_video_btn:'أنشئ فيديو ملخص الشهر'},
+  en:{sm_song_up:'Choose an audio file',sm_song_del:'Remove the song',sm_video_btn:'Create the month video'},
+  sv:{sm_song_up:'Välj en ljudfil',sm_song_del:'Ta bort låten',sm_video_btn:'Skapa månadsvideon'}
+ };
+ ['ar','en','sv'].forEach(function(l){for(var k in A[l])I[l][k]=A[l][k]});
+ /* أيقونة المعرض بالكاميرا بدل الإيموجي */
+ var g=document.getElementById('galleryBtn');
+ if(g)g.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
+})();
+</script>
 </body>
 </html>
