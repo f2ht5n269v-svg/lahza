@@ -3544,5 +3544,49 @@ $('pickTypeText').onclick=function(){
 };
 })();
 </script>
+
+<style id="lx-unify-buttons">
+/* ===== لحظة: لغة الأزرار الموحّدة (أنعم وأرقى) ===== */
+.btn{display:flex!important;align-items:center;justify-content:center;gap:8px;min-height:46px!important;padding:0 26px!important;max-width:330px!important;margin:10px auto!important;border-radius:99px!important;border:1px solid var(--border-strong)!important;background:transparent!important;color:var(--text)!important;font:500 .98rem var(--fb)!important;letter-spacing:.02em;box-shadow:none!important;transition:transform .4s cubic-bezier(.34,1.56,.64,1),background .3s,border-color .3s!important}
+.btn:active{transform:scale(.97)!important;background:var(--gold-soft)!important}
+.btn.small{min-height:38px!important;padding:0 18px!important;font-size:.88rem!important;max-width:240px!important}
+.btn.sel{border-color:var(--gold)!important;color:var(--gold)!important;background:var(--gold-soft)!important}
+.btn.primary{border:0!important;background:linear-gradient(180deg,var(--gold-light),var(--gold))!important;color:var(--on-gold)!important;font-weight:500!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 6px 16px rgba(0,0,0,.18)!important}
+:root[data-theme=light] .btn.primary{background:linear-gradient(180deg,#9b832d,#7d6820)!important}
+.btn.primary:active{background:linear-gradient(180deg,var(--gold-light),var(--gold))!important}
+.btn:disabled{opacity:.45!important}
+/* أزرار الإغلاق الدائرية */
+.xbtn{width:38px!important;height:38px!important;font-size:.95rem!important;border:1px solid var(--border-strong)!important;box-shadow:none!important}
+.btn-close,.modal-close{top:calc(14px + env(safe-area-inset-top))!important;left:14px!important}
+.sheet-close{top:10px!important;left:10px!important}
+/* شرائح وفلاتر */
+.filter-chip{padding:7px 15px!important;font-size:.86rem!important;border-radius:99px!important;font-weight:500!important}
+/* أزرار النافذة السفلية للقطة */
+.modal-actions button{width:48px!important;height:48px!important;font-size:1.1rem!important;box-shadow:0 4px 14px rgba(0,0,0,.18)!important}
+/* كاميرا وتسجيل */
+.capture-btn{width:62px!important;height:62px!important;border:3px solid var(--bg)!important;box-shadow:0 0 0 1.5px var(--gold)!important}
+.switch-cam{width:42px!important;height:42px!important;font-size:1.15rem!important}
+.rec-btn{width:80px!important;height:80px!important;font-size:2rem!important}
+.moods button{width:44px!important;height:44px!important;font-size:1.5rem!important}
+/* التبويبات */
+.tab{padding:9px 0 7px!important;font-size:.74rem!important;gap:3px!important}
+.tab svg{width:22px!important;height:22px!important}
+/* الخزنة */
+.vplus{width:48px!important;height:48px!important}
+/* الشاشات الجلدية والورقية */
+.lxbtn{width:38px!important;height:38px!important;font-size:.95rem!important}
+.lxchip{padding:8px 16px!important;font-size:.85rem!important}
+.lxpill{padding:6px 14px!important;font-size:.82rem!important}
+.lxd-b{width:38px!important;height:38px!important;font-size:1rem!important}
+.lxd-n,#saveTextBtn,#datePickerConfirm,#cmpScreen>.btn.primary{min-height:44px!important;padding:0 24px!important;font:500 .98rem var(--fd)!important;letter-spacing:.03em!important;animation:none!important;background:linear-gradient(180deg,#e2c978,#bb9638)!important;color:#2a1a08!important;border:0!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 6px 16px rgba(0,0,0,.35)!important}
+#saveTextBtn{max-width:340px!important;bottom:calc(16px + env(safe-area-inset-bottom))!important}
+#cmpScreen>.btn{min-height:44px!important;padding:0 24px!important;font-size:.98rem!important}
+#cmpScreen>.btn.primary+.btn.primary{background:transparent!important;color:#f2dc8f!important;border:1px solid rgba(212,175,55,.6)!important;box-shadow:none!important}
+.lxm-x{padding:8px 26px!important;font:500 .92rem var(--fd)!important}
+.lxo-grid .btn{min-height:0!important;padding:18px 8px 14px!important;max-width:none!important;margin:0!important}
+#typePickerSheet #pickTypeCancel{min-height:42px!important;padding:0 22px!important}
+</style>
 </body>
 </html>
+
+
