@@ -3640,5 +3640,76 @@ $('pickTypeText').onclick=function(){
 .on-this-day-year{border-radius:0!important}
 .empty-state .empty-title{font:400 1.2rem var(--fq)!important}
 </style>
+
+<style id="lx-unify-fix1">
+/* ورقة الكتابة: الحقل شفاف على الرق مع الخطوط */
+#textScreen .lxw-in .text-input{background-color:transparent!important;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--lh) - 1px),rgba(110,78,30,.3) calc(var(--lh) - 1px),rgba(110,78,30,.3) var(--lh))!important;background-attachment:local!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important}
+/* دوائر الخلفية أصغر */
+#textScreen .background-grid{display:flex!important;flex-wrap:wrap;gap:10px!important}
+#textScreen .bg-option{width:44px!important;height:44px!important;aspect-ratio:auto!important;flex:none}
+#textScreen .bg-option.upload{font-size:1.3rem!important}
+</style>
+<script>
+/* شرائح لقطاتي بدون أيقونات */
+paintTbar=function(){
+ var r=$('tbar');r.innerHTML='';
+ [['ba_t',function(){openCmp()}],['wk_t',function(){weekly()}],['dv_t',function(){diaryUI()}],['otd_t',function(){otdUI()}]].forEach(function(a){
+  var b=mk('button','filter-chip',t(a[0]));b.onclick=a[1];r.appendChild(b);
+ });
+};
+paintTbar();
+</script>
+
+<script>
+/* ===== لحظة: شيل الأيقونات من الأزرار والعناوين والجمل ===== */
+(function(){
+'use strict';
+var RE=/^[\s\u200e\u200f]*(?:\p{Extended_Pictographic}[\uFE0F\u200D\u{1F3FB}-\u{1F3FF}]*)+\s*/u;
+
+/* الترجمات: لازم تتعدّل هي كمان، لأنو بعض الأزرار الكود بيتعرّف عليها من نصها */
+['ar','en','sv'].forEach(function(l){
+ var d=I[l];
+ for(var k in d){if(typeof d[k]==='string'&&RE.test(d[k]))d[k]=d[k].replace(RE,'')}
+});
+
+var SEL='.btn,.filter-chip,.sec-t,.nl,.vl,.crow span:last-child,.sheet-content div[style*="1.35rem"]';
+
+function strip(el){
+ for(var n=el.firstChild;n;n=n.nextSibling){
+  if(n.nodeType===3){
+   if(!n.nodeValue.trim())continue;
+   if(RE.test(n.nodeValue))n.nodeValue=n.nodeValue.replace(RE,'');
+   return;
+  }
+ }
+}
+function clean(root){
+ if(!root||root.nodeType!==1)return;
+ var list=[];
+ if(root.matches&&root.matches(SEL))list.push(root);
+ var c=root.closest&&root.closest(SEL);
+ if(c&&c!==root)list.push(c);
+ [].slice.call(root.querySelectorAll(SEL)).forEach(function(e){list.push(e)});
+ list.forEach(strip);
+}
+
+var q=[],pend=false;
+new MutationObserver(function(ms){
+ ms.forEach(function(m){
+  [].forEach.call(m.addedNodes,function(n){
+   if(n.nodeType===1)q.push(n);
+   else if(n.nodeType===3&&n.parentNode)q.push(n.parentNode);
+  });
+  if(m.type==='characterData'&&m.target.parentNode)q.push(m.target.parentNode);
+ });
+ if(!pend){
+  pend=true;
+  requestAnimationFrame(function(){pend=false;var a=q;q=[];a.forEach(clean)});
+ }
+}).observe(document.body,{childList:true,subtree:true,characterData:true});
+
+clean(document.body);
+})();
+</script>
 </body>
 </html>
